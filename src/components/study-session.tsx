@@ -1,0 +1,169 @@
+"use client";
+
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
+import { conceptById } from "@/lib/study/content";
+import {
+  currentSession,
+  planSession,
+  sessionMinutes,
+} from "@/lib/study/planner";
+import type { Rating } from "@/lib/study/types";
+import { useStudy } from "./study-provider";
+import { Loading } from "./loading";
+import { ReviewCard } from "./review-card";
+
+export function StudySessionView() {
+  const { state, now, dispatch, busy } = useStudy();
+  if (!state) return <Loading />;
+  const session = currentSession(state, now);
+  if (!session) {
+    const items = planSession(state, now);
+    return (
+      <div className="empty-state panel">
+        <span className="eyebrow">A MOMENT FOR JAPANESE</span>
+        <h1>
+          {items.length ? "Your session is ready." : "You’re all caught up."}
+        </h1>
+        <p>
+          {items.length
+            ? `${items.length} steps · About ${sessionMinutes(items)} minutes · Your pace`
+            : "Your next reviews will appear when they’re due. Take a look around the collection in the meantime."}
+        </p>
+        {!!items.length && (
+          <button
+            className="primary-button"
+            disabled={busy}
+            onClick={() =>
+              void dispatch({ type: "start", id: crypto.randomUUID() })
+            }
+          >
+            Start Today’s Japanese
+            <ArrowRight size={17} />
+          </button>
+        )}
+        <Link href="/" className="text-link">
+          Back to Today
+        </Link>
+      </div>
+    );
+  }
+  const reviews = state.reviews.filter(
+    (review) => review.sessionId === session.id,
+  );
+  const reviewed = new Set(reviews.map((review) => review.conceptId));
+  const conceptId = session.conceptIds.find((id) => !reviewed.has(id));
+  const concept = conceptId ? conceptById.get(conceptId) : undefined;
+  if (session.completedAt) {
+    const recall = reviews.filter(
+      (review) => review.rating === "good" || review.rating === "easy",
+    ).length;
+    return (
+      <div className="completion panel">
+        <span className="completion-icon">
+          <Check size={27} strokeWidth={1.6} />
+        </span>
+        <span className="eyebrow">TODAY’S PRACTICE, COMPLETE</span>
+        <h1>A little more understood.</h1>
+        <p>You made time for Japanese. That’s a good day.</p>
+        <div className="completion-stats">
+          <div>
+            <strong>{reviews.length}</strong>
+            <span>concepts reviewed</span>
+          </div>
+          <div>
+            <strong>{recall}</strong>
+            <span>recalled comfortably</span>
+          </div>
+        </div>
+        <div className="completion-reviews">
+          {reviews.map((review) => (
+            <div key={review.id}>
+              <span lang="ja">
+                {conceptById.get(review.conceptId)?.expression}
+              </span>
+              <span className={`review-rating rating-text-${review.rating}`}>
+                {review.rating}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="completion-note">
+          Your progress is saved. Tomorrow’s session will build on your reviews.
+        </p>
+        <Link href="/" className="primary-button">
+          Back to Today
+          <ArrowRight size={17} />
+        </Link>
+        <Link href="/progress" className="text-link">
+          See your progress
+        </Link>
+      </div>
+    );
+  }
+  if (!concept)
+    return (
+      <div className="empty-state">
+        <h1>This card isn’t available.</h1>
+        <Link href="/" className="text-link">
+          Back to Today
+        </Link>
+      </div>
+    );
+  function rate(rating: Rating) {
+    if (!session || !concept) return;
+    void dispatch({
+      type: "review",
+      id: crypto.randomUUID(),
+      sessionId: session.id,
+      conceptId: concept.id,
+      rating,
+    });
+  }
+  const remaining = session.conceptIds
+    .filter((id) => !reviewed.has(id))
+    .map((id) => conceptById.get(id)!)
+    .filter(Boolean);
+  return (
+    <div className="study-container">
+      <div className="study-navigation">
+        <Link href="/" className="text-link">
+          <ArrowLeft size={16} />
+          Save & leave
+        </Link>
+        <span>
+          <Clock3 size={14} />
+          About {sessionMinutes(remaining)} min left
+        </span>
+      </div>
+      <div className="study-progress-label">
+        <span>Today’s Japanese</span>
+        <span>
+          {reviews.length + 1}{" "}
+          <span className="muted">of {session.conceptIds.length}</span>
+        </span>
+      </div>
+      <div
+        className="study-progress-track"
+        role="progressbar"
+        aria-label="Session progress"
+        aria-valuenow={reviews.length}
+        aria-valuemin={0}
+        aria-valuemax={session.conceptIds.length}
+      >
+        <span
+          style={{
+            width: `${(reviews.length / session.conceptIds.length) * 100}%`,
+          }}
+        />
+      </div>
+      <ReviewCard
+        key={concept.id}
+        concept={concept}
+        progress={state.progress.find((item) => item.conceptId === concept.id)}
+        busy={busy}
+        onRate={rate}
+      />
+    </div>
+  );
+}

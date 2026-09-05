@@ -1,0 +1,450 @@
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.tiny-sun {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.page-heading h1 {
+  font-size: clamp(25px, 2.5vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.3;
+  margin-top: 12px;
+}
+.page-heading p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 9px;
+}
+.heading-date {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  padding: 5px 9px;
+  font-size: 9px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.53fr) minmax(265px, 1fr);
+  gap: 22px;
+}
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.today-card {
+  padding: 24px 28px 16px;
+}
+.card-topline,
+.trip-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.today-card > h2 {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-top: 17px;
+}
+.card-description {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.session-list {
+  margin: 16px 0 20px;
+}
+.session-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 68px;
+  border-bottom: 1px solid var(--line);
+}
+.session-row:last-child {
+  border-bottom: none;
+}
+.subject-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+}
+.subject-vocabulary {
+  background: var(--green-soft);
+  color: var(--green);
+}
+.subject-kanji {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.subject-grammar {
+  background: color-mix(in srgb, #b29878 12%, var(--surface));
+  color: #a38863;
+}
+.subject-reading {
+  background: color-mix(in srgb, #8392a7 12%, var(--surface));
+  color: #82919f;
+}
+.session-row-text {
+  flex: 1;
+  min-width: 0;
+}
+.session-row h3 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  font-weight: 550;
+}
+.session-row h3 > span {
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.session-row p {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.row-duration {
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.primary-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 17px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: var(--button);
+  color: var(--background);
+  font-size: 12px;
+  font-weight: 500;
+}
+.primary-button:hover {
+  background: var(--accent);
+  color: var(--surface);
+}
+.primary-button > svg:last-child:not(:first-child) {
+  margin-left: auto;
+}
+.today-card .primary-button {
+  justify-content: flex-start;
+}
+.today-card .primary-button > svg:last-child {
+  margin-left: auto;
+}
+.session-footnote {
+  text-align: center;
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 11px;
+}
+.trip-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px 28px 0;
+  border-radius: 12px;
+  border: 1px solid #e1e2d5;
+  background: #eeeee3;
+  color: #424c3d;
+  display: flex;
+  flex-direction: column;
+}
+.trip-card .eyebrow {
+  color: #7b816e;
+}
+.trip-topline .icon-button {
+  height: 24px;
+  width: 24px;
+  color: #7b816e;
+}
+.trip-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.trip-title h2 {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+.trip-title > span {
+  font-size: 24px;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  letter-spacing: 0.22em;
+  color: #7b816e;
+}
+.trip-date {
+  font-size: 10px;
+  color: #7b816e;
+  margin-top: 7px;
+}
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  z-index: 1;
+  margin-top: 24px;
+}
+.countdown strong {
+  font-size: 64px;
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+}
+.countdown > span {
+  font-size: 8px;
+  letter-spacing: 0.17em;
+  color: #7b816e;
+}
+.landscape {
+  width: calc(100% + 56px);
+  margin: -4px -28px 0;
+  flex: 1;
+  min-height: 120px;
+}
+.trip-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+}
+.trip-caption > span:first-child {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.trip-caption > span:last-child {
+  font-size: 9px;
+  color: #5b6857;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+.section-heading h2 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.section-heading p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 10px;
+  background: transparent;
+  border: none;
+  padding: 3px 0;
+}
+.text-link:hover {
+  color: var(--accent);
+}
+.progress-section {
+  margin-top: 32px;
+}
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.skill-card {
+  padding: 19px 18px 17px;
+  border-right: 1px solid var(--line);
+}
+.skill-card:last-child {
+  border: none;
+}
+.skill-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+}
+.skill-card-heading svg {
+  color: var(--muted);
+}
+.skill-count {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  height: 49px;
+  padding-top: 12px;
+}
+.skill-count strong {
+  font-weight: 450;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+.skill-count > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.skill-count strong.not-yet {
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--muted);
+  padding-top: 7px;
+}
+.progress-track {
+  position: relative;
+  height: 3px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 9px;
+}
+.progress-track > span {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 4px;
+}
+.progress-learning {
+  background: #c4b18f;
+}
+.progress-learned {
+  background: var(--green);
+}
+.skill-card > p {
+  color: var(--muted);
+  font-size: 8px;
+  margin-top: 9px;
+}
+.progress-note {
+  margin-top: 11px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.travel-focus {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin-top: 29px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+.focus-icon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--green);
+}
+.travel-focus .eyebrow {
+  font-size: 8px;
+}
+.travel-focus h2 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+.travel-focus p {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 4px;
+}
+.travel-focus .text-link {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.closing-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin: 26px 0 16px;
+  color: var(--muted);
+  font-size: 9px;
+}
+.closing-note > span:first-child {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  letter-spacing: 0.08em;
+}
+.page-footer {
+  padding: 15px 44px 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  color: var(--muted);
+  font-size: 8px;
+}

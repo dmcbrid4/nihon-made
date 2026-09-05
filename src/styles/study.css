@@ -1,0 +1,327 @@
+.study-main {
+  padding-top: 34px;
+}
+.study-container {
+  max-width: 710px;
+  margin: 0 auto 45px;
+}
+.study-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.study-navigation > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.study-navigation .text-link {
+  font-size: 12px;
+}
+.study-progress-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.study-progress-track {
+  height: 3px;
+  border-radius: 3px;
+  background: var(--line);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.study-progress-track > span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+}
+.review-card {
+  padding: 25px 34px 30px;
+}
+.review-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.concept-badge {
+  padding: 4px 9px;
+  font-size: 10px;
+  background: var(--green-soft);
+  color: var(--green);
+  border-radius: 4px;
+}
+.level-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.review-question {
+  text-align: center;
+  padding: 47px 0 32px;
+}
+.review-question .eyebrow {
+  justify-content: center;
+}
+.review-question h1 {
+  margin-top: 27px;
+  font-size: clamp(32px, 4.7vw, 57px);
+  font-weight: 400;
+  line-height: 1.6;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", serif;
+  letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
+}
+.review-question h1.kanji-expression {
+  font-size: 90px;
+}
+.reveal-area {
+  padding: 20px 0 5px;
+  border-top: 1px solid var(--line);
+}
+.reveal-area > p {
+  font-size: 11px;
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 17px;
+}
+.reveal-button {
+  max-width: 345px;
+  margin: 0 auto;
+}
+.keyboard-hint {
+  border: 1px solid color-mix(in srgb, var(--background) 30%, transparent);
+  font-size: 9px;
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-left: auto;
+  opacity: 0.75;
+}
+.review-answer {
+  border-top: 1px solid var(--line);
+  padding-top: 23px;
+}
+.answer-main {
+  text-align: center;
+}
+.answer-reading {
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}
+.answer-main h2 {
+  font-size: 19px;
+  font-weight: 500;
+  margin-top: 9px;
+}
+.example {
+  padding: 18px 20px;
+  background: var(--background);
+  border-radius: 7px;
+  margin-top: 23px;
+}
+.example > p[lang="ja"] {
+  font-size: 18px;
+  line-height: 1.9;
+  margin-top: 8px;
+}
+.example-translation {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.concept-note {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.rating-area {
+  margin-top: 22px;
+}
+.rating-area > p:first-child {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.rating-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.rating-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 17px 8px 13px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.rating-button:hover {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+.rating-button strong {
+  font-size: 13px;
+  font-weight: 550;
+}
+.rating-key {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.rating-interval {
+  font-size: 10px;
+  color: var(--muted);
+}
+.rating-again strong {
+  color: var(--accent);
+}
+.rating-hard strong {
+  color: #a48962;
+}
+.rating-good strong,
+.rating-easy strong {
+  color: var(--green);
+}
+.rating-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 15px;
+}
+.reading-card .review-question {
+  padding-top: 30px;
+  padding-bottom: 22px;
+}
+.reading-card .review-question h1 {
+  font-size: 31px;
+  margin-top: 17px;
+}
+.reading-passage {
+  text-align: left;
+  font-size: 19px;
+  line-height: 2.3;
+  letter-spacing: 0.035em;
+  margin-top: 22px;
+}
+.comprehension-question {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 22px;
+  text-align: left;
+}
+.translation {
+  font-size: 12px;
+  margin-top: 20px;
+}
+.translation summary {
+  color: var(--accent);
+  padding: 8px 0;
+}
+.translation > p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-top: 5px;
+}
+.completion {
+  max-width: 580px;
+  margin: 15px auto 40px;
+  padding: 36px 42px;
+  text-align: center;
+}
+.completion-icon {
+  display: inline-grid;
+  place-items: center;
+  height: 57px;
+  width: 57px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  margin-bottom: 20px;
+}
+.completion > .eyebrow {
+  justify-content: center;
+}
+.completion h1 {
+  font-size: 29px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  margin-top: 14px;
+}
+.completion > p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+.completion-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 23px 0;
+  margin: 23px 0 12px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.completion-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.completion-stats > div:first-child {
+  border-right: 1px solid var(--line);
+}
+.completion-stats strong {
+  font-size: 29px;
+  font-weight: 450;
+}
+.completion-stats span {
+  color: var(--muted);
+  font-size: 11px;
+}
+.completion-reviews > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  text-align: left;
+}
+.completion-reviews > div > span:first-child {
+  font-size: 15px;
+}
+.review-rating {
+  font-size: 10px;
+  text-transform: capitalize;
+}
+.rating-text-again {
+  color: var(--accent);
+}
+.rating-text-hard {
+  color: #a48962;
+}
+.rating-text-good,
+.rating-text-easy {
+  color: var(--green);
+}
+.completion p.completion-note {
+  font-size: 11px;
+  margin: 23px 0;
+}
+.completion > .text-link {
+  margin-top: 16px;
+}

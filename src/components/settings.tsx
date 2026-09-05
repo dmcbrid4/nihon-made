@@ -1,0 +1,178 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
+import { Check, Download, Save } from "lucide-react";
+import { goalSchema, type StudyState } from "@/lib/study/types";
+import { useStudy } from "./study-provider";
+import { Loading } from "./loading";
+import { STORAGE_KEY } from "@/lib/storage/browser";
+
+function GoalForm({ state }: { state: StudyState }) {
+  const { dispatch, busy } = useStudy();
+  const [targetDate, setTargetDate] = useState(state.goal.targetDate);
+  const [dailyMinutes, setDailyMinutes] = useState(state.goal.dailyMinutes);
+  const [timeZone, setTimeZone] = useState(state.goal.timeZone);
+  const [message, setMessage] = useState("");
+  const [saved, setSaved] = useState(false);
+
+  async function submit(event: FormEvent) {
+    event.preventDefault();
+    setSaved(false);
+    const goal = goalSchema.safeParse({
+      targetDate,
+      dailyMinutes,
+      timeZone,
+      targetLevel: "N4",
+    });
+    if (!goal.success) {
+      setMessage(goal.error.issues[0].message);
+      return;
+    }
+    if (await dispatch({ type: "goal", goal: goal.data })) {
+      setSaved(true);
+      setMessage("Your settings are saved.");
+    }
+  }
+  return (
+    <form
+      className="panel settings-panel"
+      onSubmit={(event) => void submit(event)}
+      onChange={() => {
+        setSaved(false);
+        setMessage("");
+      }}
+    >
+      <div className="settings-section-heading">
+        <span className="eyebrow">YOUR DESTINATION</span>
+        <h2>A trip to look forward to.</h2>
+        <p>Give your practice a place and a date.</p>
+      </div>
+      <label className="field-label" htmlFor="target-date">
+        Japan trip date
+      </label>
+      <input
+        id="target-date"
+        type="date"
+        value={targetDate}
+        onChange={(event) => setTargetDate(event.target.value)}
+        required
+      />
+      <p className="field-help">
+        January 15, 2027 is a starting point. Set your actual departure date.
+      </p>
+      <div className="form-grid">
+        <div>
+          <label className="field-label" htmlFor="daily-minutes">
+            Daily study budget
+          </label>
+          <select
+            id="daily-minutes"
+            value={dailyMinutes}
+            onChange={(event) => setDailyMinutes(Number(event.target.value))}
+          >
+            {[10, 15, 20, 25, 30, 40, 60].map((value) => (
+              <option key={value} value={value}>
+                {value} minutes
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="field-label" htmlFor="target-level">
+            Learning goal
+          </label>
+          <input id="target-level" value="JLPT N4" readOnly />
+        </div>
+      </div>
+      <p className="field-help">
+        Sessions fit within your budget. The starter collection may make for a
+        shorter day.
+      </p>
+      <label className="field-label" htmlFor="time-zone">
+        Your time zone
+      </label>
+      <input
+        id="time-zone"
+        list="time-zones"
+        value={timeZone}
+        onChange={(event) => setTimeZone(event.target.value)}
+        required
+      />
+      <datalist id="time-zones">
+        {Intl.supportedValuesOf("timeZone").map((zone) => (
+          <option key={zone} value={zone} />
+        ))}
+      </datalist>
+      <p className="field-help">
+        Used for the trip countdown and when a new study day begins.
+      </p>
+      <div className="form-footer">
+        <button className="primary-button" disabled={busy} type="submit">
+          {saved ? <Check size={16} /> : <Save size={16} />}
+          {busy ? "Saving…" : "Save settings"}
+        </button>
+        <span
+          role="status"
+          className={saved ? "success-message" : "form-error"}
+        >
+          {message}
+        </span>
+      </div>
+    </form>
+  );
+}
+
+export function SettingsView() {
+  const { state, mode, error } = useStudy();
+  function exportData() {
+    const raw = state
+      ? JSON.stringify(state, null, 2)
+      : localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const url = URL.createObjectURL(
+      new Blob([raw], { type: "application/json" }),
+    );
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "nihon-made-study-history.json";
+    anchor.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  return (
+    <>
+      <div className="page-heading">
+        <div>
+          <div className="eyebrow">MAKE IT YOURS</div>
+          <h1>Your journey, your pace.</h1>
+          <p>A few details to shape your daily Japanese.</p>
+        </div>
+      </div>
+      <div className="settings-layout">
+        {state ? <GoalForm state={state} /> : !error ? <Loading /> : null}
+        <aside className="panel data-panel">
+          <span className="eyebrow">YOUR STUDY HISTORY</span>
+          <h2>
+            {mode === "browser"
+              ? "At home on this device."
+              : "Saved to your workspace."}
+          </h2>
+          <p>
+            {mode === "browser"
+              ? "Reviews and settings are saved in this browser. They stay here when you close the app, but won’t follow you to another device."
+              : "Reviews and settings are saved to your PostgreSQL database, so you can pick up on another device."}
+          </p>
+          <p>Keep a copy of your progress whenever you like.</p>
+          <button className="secondary-button" onClick={exportData}>
+            <Download size={16} />
+            Export study history
+          </button>
+          <div className="data-note">
+            {mode === "browser"
+              ? "Clearing browser data also clears your study history. Export a copy first."
+              : "Browser history from before database setup is kept separately and is not automatically imported."}
+          </div>
+        </aside>
+      </div>
+    </>
+  );
+}
