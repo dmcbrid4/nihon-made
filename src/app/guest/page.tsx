@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { GuestStudy } from "@/components/guest-study";
+import { GuestDashboard } from "@/components/guest-demo";
 
-export const metadata: Metadata = { title: "Guest lesson" };
+export const metadata: Metadata = { title: "Guest demo" };
 
-export default function GuestPage() {
-  return <GuestStudy />;
-}
+export default function GuestPage() { return <GuestDashboard />; }

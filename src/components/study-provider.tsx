@@ -55,7 +55,7 @@ export function StudyProvider({
   }, [repository]);
 
   useEffect(() => {
-    if (window.location.pathname === "/guest") return;
+    if (window.location.pathname.startsWith("/guest")) return;
     let active = true;
     repository.load().then(
       (next) => {

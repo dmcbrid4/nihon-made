@@ -35,7 +35,7 @@ export async function proxy(request: NextRequest) {
     },
   );
   const path = request.nextUrl.pathname;
-  if (path.startsWith("/auth/") || path.startsWith("/api/") || path === "/guest") return response;
+  if (path.startsWith("/auth/") || path.startsWith("/api/") || path.startsWith("/guest")) return response;
   const {
     data: { user },
   } = await supabase.auth.getUser();
