@@ -7,48 +7,48 @@
 @import "../styles/responsive.css";
 
 :root {
-  --background: #f6f6f2;
-  --surface: #fff;
-  --sidebar: #f0f1ec;
-  --text: #292d29;
-  --muted: #787d75;
-  --line: #e6e8e0;
-  --accent: #963f38;
-  --accent-soft: #f2e7e1;
-  --green: #758a6c;
-  --green-soft: #edf1e8;
-  --button: #303b31;
-  --shadow: 0 3px 8px #29302903, 0 1px 2px #29302902;
+  --background: #f4f6f8;
+  --surface: #ffffff;
+  --sidebar: #e8eef3;
+  --text: #14232d;
+  --muted: #657681;
+  --line: #d6e0e6;
+  --accent: #c74336;
+  --accent-soft: #fbe9e5;
+  --green: #236b62;
+  --green-soft: #e1f0ec;
+  --button: #152d39;
+  --shadow: 0 12px 30px #1834440a, 0 2px 6px #1834440b;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --background: #171b18;
-  --surface: #1f2420;
-  --sidebar: #1b201c;
-  --text: #e7e9e1;
-  --muted: #a0a79b;
-  --line: #333b32;
-  --accent: #dda28f;
-  --accent-soft: #372b25;
-  --green: #adc29f;
-  --green-soft: #2d382a;
-  --button: #c4d1b9;
+  --background: #101b24;
+  --surface: #172732;
+  --sidebar: #13232e;
+  --text: #e4edf1;
+  --muted: #9cafb8;
+  --line: #2c414d;
+  --accent: #ef8a73;
+  --accent-soft: #3c292a;
+  --green: #83c9bc;
+  --green-soft: #1d3939;
+  --button: #d8ebe9;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --background: #171b18;
-    --surface: #1f2420;
-    --sidebar: #1b201c;
-    --text: #e7e9e1;
-    --muted: #a0a79b;
-    --line: #333b32;
-    --accent: #dda28f;
-    --accent-soft: #372b25;
-    --green: #adc29f;
-    --green-soft: #2d382a;
-    --button: #c4d1b9;
+    --background: #101b24;
+    --surface: #172732;
+    --sidebar: #13232e;
+    --text: #e4edf1;
+    --muted: #9cafb8;
+    --line: #2c414d;
+    --accent: #ef8a73;
+    --accent-soft: #3c292a;
+    --green: #83c9bc;
+    --green-soft: #1d3939;
+    --button: #d8ebe9;
     color-scheme: dark;
   }
 }
@@ -66,7 +66,11 @@
 }
 body {
   margin: 0;
-  background: var(--background);
+  background-color: var(--background);
+  background-image:
+    linear-gradient(#1d526d0a 1px, transparent 1px),
+    linear-gradient(90deg, #1d526d0a 1px, transparent 1px);
+  background-size: 34px 34px;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 14px;

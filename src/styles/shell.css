@@ -2,9 +2,9 @@
   position: fixed;
   inset: 0 auto 0 0;
   width: 232px;
-  padding: 38px 22px 20px;
+  padding: 34px 22px 20px;
   background: var(--sidebar);
-  border-right: 1px solid var(--line);
+  border-right: 2px solid var(--line);
   display: flex;
   flex-direction: column;
   z-index: 20;
@@ -21,9 +21,9 @@
   place-items: center;
   width: 39px;
   height: 43px;
-  background: var(--accent);
+  background: var(--button);
   color: var(--surface);
-  border-radius: 10px;
+  border-radius: 5px;
   font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
   font-size: 27px;
   line-height: 1;
@@ -35,12 +35,12 @@
   border-radius: 50%;
   top: 6px;
   right: 5px;
-  background: #e1ba98;
+  background: var(--accent);
 }
 .brand-japanese {
   display: block;
   font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.15em;
   font-size: 21px;
   line-height: 1.4;
   font-weight: 600;
@@ -150,9 +150,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 75px;
+  height: 71px;
   padding: 0 44px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px solid var(--line);
 }
 .breadcrumb {
   display: flex;
