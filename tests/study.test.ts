@@ -31,13 +31,13 @@ test("trip countdown uses calendar days across daylight saving and respects time
   assert.equal(dateSchema.safeParse("2026-02-30").success, false);
 });
 
-test("a new session balances four subjects and never exceeds the time budget", () => {
+test("a new session balances five subjects and never exceeds the time budget", () => {
   const state = initialState();
   const plan = planSession(state, now);
-  assert.equal(plan.length, 8);
+  assert.equal(plan.length, 9);
   assert.deepEqual(
     new Set(plan.map((item) => item.type)),
-    new Set(["vocabulary", "kanji", "grammar", "reading"]),
+    new Set(["vocabulary", "kanji", "grammar", "reading", "listening"]),
   );
   assert.ok(sessionMinutes(plan) <= state.goal.dailyMinutes);
   state.goal.dailyMinutes = 10;
@@ -106,7 +106,7 @@ test("only the current session card can be reviewed, and completion is persisted
   for (const id of session.conceptIds)
     state = applyAction(state, review(id), now);
   assert.equal(state.sessions[0].completedAt, now.toISOString());
-  assert.equal(state.reviews.length, 8);
+  assert.equal(state.reviews.length, 9);
   assert.equal(
     applyAction(state, { type: "start", id: randomUUID() }, now),
     state,
@@ -131,7 +131,7 @@ test("learning requires repeated comfortable recall, and a lapse resets it", () 
   assert.equal(Date.parse(lapse.dueAt) - now.getTime(), 600_000);
 });
 
-test("all starter concepts have unique identities and complete teaching content", () => {
+test("all curriculum concepts have unique identities, teaching content, and traceable metadata", () => {
   assert.equal(new Set(concepts.map((item) => item.id)).size, concepts.length);
   assert.ok(
     concepts.every(
@@ -140,7 +140,12 @@ test("all starter concepts have unique identities and complete teaching content"
         item.reading &&
         item.meaning &&
         item.example &&
-        item.note,
+        item.note &&
+        item.curriculumUnit &&
+        item.source &&
+        item.sequence > 0 &&
+        item.difficulty >= 1 &&
+        item.difficulty <= 5,
     ),
   );
   assert.equal(

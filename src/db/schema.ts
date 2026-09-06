@@ -19,6 +19,7 @@ export const conceptType = pgEnum("concept_type", [
   "kanji",
   "grammar",
   "reading",
+  "listening",
 ]);
 export const jlptLevel = pgEnum("jlpt_level", ["N5", "N4"]);
 export const rating = pgEnum("review_rating", [
@@ -62,7 +63,17 @@ export const studyConcepts = pgTable("study_concepts", {
     .$type<
       Pick<
         Concept,
-        "example" | "exampleMeaning" | "note" | "topic" | "question" | "answer"
+        | "example"
+        | "exampleMeaning"
+        | "note"
+        | "topic"
+        | "question"
+        | "answer"
+        | "curriculumUnit"
+        | "sequence"
+        | "difficulty"
+        | "prerequisites"
+        | "source"
       >
     >()
     .notNull(),

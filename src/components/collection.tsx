@@ -74,7 +74,7 @@ export function CollectionView() {
                   {concept.meaning}
                   <span>
                     {typeLabels[concept.type]} · {concept.level} ·{" "}
-                    {concept.topic}
+                    {concept.topic} · difficulty {concept.difficulty}/5
                   </span>
                 </span>
                 <span
@@ -91,6 +91,9 @@ export function CollectionView() {
                 <p lang="ja">{concept.example}</p>
                 <p className="muted">{concept.exampleMeaning}</p>
                 <p className="concept-note">{concept.note}</p>
+                <p className="field-help">
+                  {concept.curriculumUnit} · Source: {concept.source}
+                </p>
                 {progress && (
                   <p className="field-help">
                     Reviewed {progress.reviewCount}{" "}

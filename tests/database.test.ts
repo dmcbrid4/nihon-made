@@ -10,14 +10,15 @@ import { PostgresRepository } from "../src/db/repository";
 import { seedContent } from "../src/db/seed-content";
 
 test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals persist in PostgreSQL", async () => {
-  const client = new PGlite();
+    const client = new PGlite();
   try {
     await client.exec(await readFile("drizzle/0000_tough_malice.sql", "utf8"));
+    await client.exec(await readFile("drizzle/0001_add_listening_concepts.sql", "utf8"));
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
     await seedContent(db);
     await seedContent(db);
-    assert.equal((await db.select().from(schema.studyConcepts)).length, 19);
+    assert.equal((await db.select().from(schema.studyConcepts)).length, 74);
     const userId = "00000000-0000-4000-8000-000000000001";
     const repository = new PostgresRepository(db, userId);
     const empty = await repository.load();
@@ -51,10 +52,10 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     for (const conceptId of session.conceptIds.slice(1))
       await repository.dispatch({ ...action, id: randomUUID(), conceptId });
     const finished = await repository.load();
-    assert.equal(finished.reviews.length, 8);
+    assert.equal(finished.reviews.length, 9);
     assert.ok(finished.sessions[0].completedAt);
     await seedContent(db);
-    assert.equal((await repository.load()).reviews.length, 8);
+    assert.equal((await repository.load()).reviews.length, 9);
     await repository.dispatch({
       type: "goal",
       goal: {

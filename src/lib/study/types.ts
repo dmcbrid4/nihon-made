@@ -5,6 +5,7 @@ export const conceptTypes = [
   "kanji",
   "grammar",
   "reading",
+  "listening",
 ] as const;
 export type ConceptType = (typeof conceptTypes)[number];
 export const ratings = ["again", "hard", "good", "easy"] as const;
@@ -17,6 +18,11 @@ export interface Concept {
   reading: string;
   meaning: string;
   level: "N5" | "N4";
+  curriculumUnit: string;
+  sequence: number;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  prerequisites: string[];
+  source: string;
   example: string;
   exampleMeaning: string;
   note: string;

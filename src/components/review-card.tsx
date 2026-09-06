@@ -23,7 +23,7 @@ export function ReviewCard({
   onRate: (rating: Rating) => void;
 }) {
   const [revealed, setRevealed] = useState(false);
-  const reading = concept.type === "reading";
+  const passage = concept.type === "reading" || concept.type === "listening";
   useEffect(() => {
     function keydown(event: KeyboardEvent) {
       if (
@@ -56,7 +56,7 @@ export function ReviewCard({
 
   return (
     <>
-      <article className={`review-card panel ${reading ? "reading-card" : ""}`}>
+      <article className={`review-card panel ${passage ? "reading-card" : ""}`}>
         <div className="review-card-top">
           <span className="concept-badge">{typeLabels[concept.type]}</span>
           <span className="level-tag">
@@ -67,8 +67,10 @@ export function ReviewCard({
         </div>
         <div className="review-question">
           <p className="eyebrow">
-            {reading
-              ? "READ AT YOUR OWN PACE"
+            {passage
+              ? concept.type === "listening"
+                ? "LISTENING SCRIPT"
+                : "READ AT YOUR OWN PACE"
               : concept.type === "grammar"
                 ? "HOW WOULD YOU USE THIS?"
                 : "WHAT DOES THIS MEAN?"}
@@ -79,7 +81,7 @@ export function ReviewCard({
           >
             {concept.expression}
           </h1>
-          {reading && (
+          {passage && (
             <>
               <p className="reading-passage" lang="ja">
                 {concept.example}
@@ -91,14 +93,14 @@ export function ReviewCard({
         {revealed ? (
           <div className="review-answer" aria-live="polite">
             <div className="answer-main">
-              {!reading && (
+              {!passage && (
                 <p className="answer-reading" lang="ja">
                   {concept.reading}
                 </p>
               )}
-              <h2>{reading ? concept.answer : concept.meaning}</h2>
+              <h2>{passage ? concept.answer : concept.meaning}</h2>
             </div>
-            {reading ? (
+            {passage ? (
               <details className="translation">
                 <summary>Show passage translation</summary>
                 <p>{concept.exampleMeaning}</p>
@@ -115,7 +117,7 @@ export function ReviewCard({
         ) : (
           <div className="reveal-area">
             <p>
-              {reading
+              {passage
                 ? "Think of your answer, then check your understanding."
                 : "Take a moment to recall it. There’s no timer."}
             </p>
@@ -124,7 +126,7 @@ export function ReviewCard({
               onClick={() => setRevealed(true)}
             >
               <Eye size={17} />
-              {reading ? "Check understanding" : "Reveal answer"}
+              {passage ? "Check understanding" : "Reveal answer"}
               <span className="keyboard-hint">space</span>
             </button>
           </div>

@@ -7,6 +7,7 @@ export const minutesPerType = {
   kanji: 1,
   grammar: 3,
   reading: 4,
+  listening: 4,
 };
 
 export function currentSession(state: StudyState, now: Date) {
@@ -32,7 +33,9 @@ export function planSession(state: StudyState, now: Date): Concept[] {
         Date.parse(progress.get(a.id)!.dueAt) -
         Date.parse(progress.get(b.id)!.dueAt),
     );
-  const unseen = concepts.filter((item) => !progress.has(item.id));
+  const unseen = concepts
+    .filter((item) => !progress.has(item.id))
+    .sort((a, b) => a.sequence - b.sequence);
   const selected: Concept[] = [];
   let minutes = 0;
   const add = (item: Concept) => {
@@ -48,8 +51,8 @@ export function planSession(state: StudyState, now: Date): Concept[] {
   // Due reviews get priority. New material is deliberately capped for a short,
   // balanced starter session rather than filling the time budget with new cards.
   due.forEach(add);
-  const limits = { vocabulary: 4, kanji: 2, grammar: 1, reading: 1 };
-  for (const type of ["vocabulary", "kanji", "grammar", "reading"] as const) {
+  const limits = { vocabulary: 4, kanji: 2, grammar: 1, reading: 1, listening: 1 };
+  for (const type of ["vocabulary", "kanji", "grammar", "reading", "listening"] as const) {
     unseen
       .filter((item) => item.type === type)
       .slice(0, limits[type])
