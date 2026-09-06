@@ -1,22 +1,29 @@
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { checkAccess } from "@/lib/server/access";
+import { getAppConfig, isOwner } from "@/lib/server/config";
 
-export function proxy(request: NextRequest) {
-  const access = checkAccess(request.headers.get("authorization"));
-  if (access === 503) {
-    return new NextResponse(
-      "Set APP_PASSWORD before using database mode in production.",
-      { status: 503 },
-    );
-  }
-  if (access === 200) return NextResponse.next();
-  return new NextResponse("Sign in to Nihon Made.", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="Nihon Made", charset="UTF-8"',
-      "Cache-Control": "no-store",
+export async function proxy(request: NextRequest) {
+  const config = getAppConfig();
+  if (config.mode === "browser") return NextResponse.next();
+  if (config.mode === "unavailable") return new NextResponse("Cloud setup is incomplete. Configure Supabase and OWNER_EMAIL before using this deployment.", { status: 503, headers: { "Cache-Control": "no-store" } });
+  let response = NextResponse.next({ request });
+  const supabase = createServerClient(config.supabaseUrl, config.publishableKey, {
+    cookieOptions: { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/" },
+    cookies: {
+      getAll: () => request.cookies.getAll(),
+      setAll: (values) => {
+        values.forEach(({ name, value }) => request.cookies.set(name, value));
+        response = NextResponse.next({ request });
+        values.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+      },
     },
   });
+  const path = request.nextUrl.pathname;
+  if (path.startsWith("/auth/") || path.startsWith("/api/")) return response;
+  const { data: { user } } = await supabase.auth.getUser();
+  if (path !== "/sign-in" && !isOwner(user, config.ownerEmail)) return NextResponse.redirect(new URL("/sign-in", request.url));
+  response.headers.set("Cache-Control", "private, no-store");
+  return response;
 }
 
 export const config = {

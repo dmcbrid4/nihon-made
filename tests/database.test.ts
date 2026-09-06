@@ -18,7 +18,8 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     await seedContent(db);
     await seedContent(db);
     assert.equal((await db.select().from(schema.studyConcepts)).length, 19);
-    const repository = new PostgresRepository(db);
+    const userId = "00000000-0000-4000-8000-000000000001";
+    const repository = new PostgresRepository(db, userId);
     const empty = await repository.load();
     assert.equal(empty.reviews.length, 0);
     const started = await repository.dispatch({
@@ -35,7 +36,7 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     };
     await repository.dispatch(action);
     await repository.dispatch(action);
-    const reloaded = await new PostgresRepository(db).load();
+    const reloaded = await new PostgresRepository(db, userId).load();
     assert.equal(reloaded.reviews.length, 1);
     assert.equal(reloaded.progress[0].reviewCount, 1);
     assert.equal(reloaded.progress[0].intervalDays, 1);

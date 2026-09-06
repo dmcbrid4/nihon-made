@@ -2,27 +2,23 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getDatabase } from "@/db/client";
 import { PostgresRepository } from "@/db/repository";
 import { actionSchema } from "@/lib/study/types";
-import { checkAccess } from "@/lib/server/access";
+import { authenticate } from "@/lib/server/supabase";
+import { isSameOrigin, noStore, readJson } from "@/lib/server/requests";
 
 export const dynamic = "force-dynamic";
-const headers = { "Cache-Control": "no-store" };
 
-export async function GET(request: NextRequest) {
-  const access = checkAccess(request.headers.get("authorization"));
-  if (access !== 200)
-    return NextResponse.json(
-      { error: "Workspace access is required." },
-      { status: access, headers },
-    );
+export async function GET() {
+  const auth = await authenticate();
+  if (auth.status !== 200) return NextResponse.json({ error: "Sign in to load your study history." }, { status: auth.status, headers: noStore });
   if (!process.env.DATABASE_URL)
     return NextResponse.json(
       { error: "Database mode is not configured." },
-      { status: 404, headers },
+      { status: 404, headers: noStore },
     );
   try {
     return NextResponse.json(
-      await new PostgresRepository(getDatabase()).load(),
-      { headers },
+      await new PostgresRepository(getDatabase(), auth.userId).load(),
+      { headers: noStore },
     );
   } catch {
     return NextResponse.json(
@@ -30,62 +26,44 @@ export async function GET(request: NextRequest) {
         error:
           "Couldn’t load your study history. Check the database connection and run migrations and seeds.",
       },
-      { status: 503, headers },
+      { status: 503, headers: noStore },
     );
   }
 }
 
 export async function POST(request: NextRequest) {
-  const access = checkAccess(request.headers.get("authorization"));
-  if (access !== 200)
-    return NextResponse.json(
-      { error: "Workspace access is required." },
-      { status: access, headers },
-    );
+  const auth = await authenticate();
+  if (auth.status !== 200) return NextResponse.json({ error: "Sign in to save your progress." }, { status: auth.status, headers: noStore });
   if (!process.env.DATABASE_URL)
     return NextResponse.json(
       { error: "Database mode is not configured." },
-      { status: 404, headers },
+      { status: 404, headers: noStore },
     );
-  const origin = request.headers.get("origin");
-  let sameOrigin = false;
-  try {
-    sameOrigin =
-      !!origin && new URL(origin).host === request.headers.get("host");
-  } catch {
-    /* Malformed origins are rejected below. */
-  }
-  if (!sameOrigin) {
+  if (!isSameOrigin(request)) {
     return NextResponse.json(
       { error: "Request origin is not allowed." },
-      { status: 403, headers },
+      { status: 403, headers: noStore },
     );
   }
   let input: unknown;
   try {
-    const body = await request.text();
-    if (body.length > 4096)
-      return NextResponse.json(
-        { error: "Request is too large." },
-        { status: 413, headers },
-      );
-    input = JSON.parse(body);
+    input = await readJson(request);
   } catch {
     return NextResponse.json(
       { error: "Invalid JSON." },
-      { status: 400, headers },
+      { status: 400, headers: noStore },
     );
   }
   const action = actionSchema.safeParse(input);
   if (!action.success)
     return NextResponse.json(
       { error: "Check the submitted study details." },
-      { status: 400, headers },
+      { status: 400, headers: noStore },
     );
   try {
     return NextResponse.json(
-      await new PostgresRepository(getDatabase()).dispatch(action.data),
-      { headers },
+      await new PostgresRepository(getDatabase(), auth.userId).dispatch(action.data),
+      { headers: noStore },
     );
   } catch {
     return NextResponse.json(
@@ -93,7 +71,7 @@ export async function POST(request: NextRequest) {
         error:
           "Your change couldn’t be saved. Reload to check your latest progress, then try again.",
       },
-      { status: 409, headers },
+      { status: 409, headers: noStore },
     );
   }
 }

@@ -2,7 +2,6 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 import { seedContent } from "./seed-content";
-import { PostgresRepository } from "./repository";
 
 async function main() {
   if (!process.env.DATABASE_URL)
@@ -11,9 +10,8 @@ async function main() {
   try {
     const db = drizzle(client, { schema });
     await seedContent(db);
-    await new PostgresRepository(db).load();
     console.log(
-      "Seeded 19 concepts and the personal study goal. Existing reviews were preserved.",
+      "Seeded 19 concepts. Existing users and reviews were preserved.",
     );
   } finally {
     await client.end();

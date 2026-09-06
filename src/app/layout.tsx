@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { AppShell } from "@/components/app-shell";
 import { StudyProvider } from "@/components/study-provider";
+import { getAppConfig } from "@/lib/server/config";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <StudyProvider mode={process.env.DATABASE_URL ? "database" : "browser"}>
+        <StudyProvider mode={getAppConfig().mode === "database" ? "database" : "browser"}>
           <AppShell>{children}</AppShell>
         </StudyProvider>
       </body>

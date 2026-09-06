@@ -1,4 +1,5 @@
 import { asc, eq } from "drizzle-orm";
+import { z } from "zod";
 import { initialState, applyAction } from "../lib/study/state";
 import {
   stateSchema,
@@ -9,10 +10,8 @@ import {
 import type { Database } from "./client";
 import * as s from "./schema";
 
-export const PERSONAL_USER_ID = "00000000-0000-4000-8000-000000000001";
-
 export class PostgresRepository implements StudyRepository {
-  constructor(private db: Database) {}
+  constructor(private db: Database, private userId: string) { z.uuid().parse(userId); }
   load() {
     return this.transact();
   }
@@ -22,7 +21,7 @@ export class PostgresRepository implements StudyRepository {
 
   private async transact(action?: StudyAction): Promise<StudyState> {
     return this.db.transaction(async (tx) => {
-      const userId = PERSONAL_USER_ID;
+      const userId = this.userId;
       await tx
         .insert(s.users)
         .values({ id: userId, name: "Personal learner" })
