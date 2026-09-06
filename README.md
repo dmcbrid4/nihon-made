@@ -110,6 +110,7 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
 
 - [x] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. The curriculum contains 742 N5 terms plus 710 N4-only terms (1,452 total), alongside kanji, grammar, practical reading, and listening scripts. Separate N5 and N4 study modes keep queues, sessions, collections, and progress distinct. Vocabulary terms include readings, meanings, part of speech, and examples.
+- [ ] **Collection organization and commonality groups** — GPT-5.6 Luna, medium reasoning. Organize the N5 and N4 collection by useful frequency/commonality groups (for example, essential, common, and less common) without changing the sequenced order in which new terms are introduced. Define the grouping source and show it as a browse/filter dimension.
 - [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
 - [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
 - [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
