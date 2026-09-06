@@ -1,1 +1,1 @@
-ALTER TYPE "public"."concept_type" ADD VALUE IF NOT EXISTS 'listening';
+ALTER TYPE "concept_type" ADD VALUE IF NOT EXISTS 'listening';
