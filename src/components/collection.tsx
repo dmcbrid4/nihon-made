@@ -88,12 +88,21 @@ export function CollectionView() {
                 <p className="answer-reading" lang="ja">
                   {concept.reading}
                 </p>
+                {concept.type === "vocabulary" && concept.partOfSpeech && (
+                  <p className="field-help">
+                    {concept.kanjiForm ? `Kanji form: ${concept.kanjiForm} · ` : ""}
+                    Part of speech: {concept.partOfSpeech}
+                  </p>
+                )}
                 <p lang="ja">{concept.example}</p>
                 <p className="muted">{concept.exampleMeaning}</p>
                 <p className="concept-note">{concept.note}</p>
                 <p className="field-help">
                   {concept.curriculumUnit} · Source: {concept.source}
                 </p>
+                {concept.classificationNote && (
+                  <p className="field-help">Level note: {concept.classificationNote}</p>
+                )}
                 {progress && (
                   <p className="field-help">
                     Reviewed {progress.reviewCount}{" "}
@@ -128,8 +137,8 @@ export function CollectionView() {
         )}
       </div>
       <p className="progress-note">
-        A starter collection, not a complete curriculum. JLPT labels are
-        approximate learning levels.
+        A source-backed N5 → N4 vocabulary curriculum alongside grammar, kanji,
+        reading, and listening practice. JLPT labels are approximate learning levels.
       </p>
     </>
   );

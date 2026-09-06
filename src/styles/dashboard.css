@@ -348,8 +348,58 @@
 .progress-learning {
   background: #c4b18f;
 }
-.progress-learned {
+.progress-mastered {
   background: var(--green);
+}
+.vocabulary-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px 0;
+  background: var(--surface);
+}
+.vocabulary-progress-card {
+  padding: 18px;
+  border-right: 1px solid var(--line);
+}
+.vocabulary-progress-card:last-child {
+  border-right: 0;
+}
+.vocabulary-progress-card > span,
+.vocabulary-progress-card > p,
+.vocabulary-progress-card > small {
+  display: block;
+  color: var(--muted);
+}
+.vocabulary-progress-card > span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.vocabulary-progress-card > strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 25px;
+  line-height: 1;
+}
+.vocabulary-progress-card > strong small {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+.vocabulary-progress-card > p {
+  margin-top: 4px;
+  font-size: 12px;
+}
+.vocabulary-progress-card .progress-track {
+  margin-top: 12px;
+}
+.vocabulary-progress-card > small {
+  margin-top: 8px;
+  font-size: 10px;
 }
 .skill-card > p {
   color: var(--muted);

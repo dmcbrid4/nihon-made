@@ -29,8 +29,9 @@ export const rating = pgEnum("review_rating", [
   "easy",
 ]);
 export const learningStatus = pgEnum("learning_status", [
+  "introduced",
   "learning",
-  "learned",
+  "mastered",
 ]);
 const at = (name: string) =>
   timestamp(name, { withTimezone: true, mode: "string" });
@@ -74,6 +75,9 @@ export const studyConcepts = pgTable("study_concepts", {
         | "difficulty"
         | "prerequisites"
         | "source"
+        | "kanjiForm"
+        | "partOfSpeech"
+        | "classificationNote"
       >
     >()
     .notNull(),

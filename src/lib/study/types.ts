@@ -23,6 +23,9 @@ export interface Concept {
   difficulty: 1 | 2 | 3 | 4 | 5;
   prerequisites: string[];
   source: string;
+  kanjiForm?: string;
+  partOfSpeech?: string;
+  classificationNote?: string;
   example: string;
   exampleMeaning: string;
   note: string;
@@ -59,9 +62,13 @@ export const goalSchema = z.object({
 });
 export type StudyGoal = z.infer<typeof goalSchema>;
 
+export const progressStatusSchema = z
+  .enum(["introduced", "learning", "mastered", "learned"])
+  .transform((status) => (status === "learned" ? "mastered" : status));
+
 export const progressSchema = z.object({
   conceptId: z.string(),
-  status: z.enum(["learning", "learned"]),
+  status: progressStatusSchema,
   reviewCount: z.number().int().nonnegative(),
   successStreak: z.number().int().nonnegative(),
   intervalDays: z.number().nonnegative(),

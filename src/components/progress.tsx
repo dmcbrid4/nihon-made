@@ -10,8 +10,8 @@ export function ProgressView() {
   const { state } = useStudy();
   if (!state) return <Loading />;
   const completed = state.sessions.filter((session) => session.completedAt);
-  const learned = state.progress.filter(
-    (item) => item.status === "learned",
+  const mastered = state.progress.filter(
+    (item) => item.status === "mastered",
   ).length;
   return (
     <>
@@ -35,8 +35,8 @@ export function ProgressView() {
         </div>
         <div className="panel stat-panel">
           <Clock3 size={19} />
-          <strong>{learned}</strong>
-          <span>concepts learned</span>
+          <strong>{mastered}</strong>
+          <span>concepts mastered</span>
         </div>
       </div>
       <ProgressOverview showLink={false} />
@@ -99,14 +99,15 @@ export function ProgressView() {
           <span className="eyebrow">WHAT THE NUMBERS MEAN</span>
           <h2>Practice, without the guesswork.</h2>
           <p>
-            <strong>Explored</strong> means you’ve reviewed a concept at least
-            once.
+            <strong>Unseen</strong> means the concept has not appeared in a
+            reviewed card yet.
           </p>
           <p>
-            <strong>Learning</strong> means it’s in your review rotation.
+            <strong>Introduced</strong> means you have reviewed it once. It
+            enters <strong>learning</strong> after its next review.
           </p>
           <p>
-            <strong>Learned</strong> means three consecutive Good or Easy
+            <strong>Mastered</strong> means three consecutive Good or Easy
             ratings, with a review interval of at least seven days.
           </p>
           <div className="data-note">

@@ -15,8 +15,11 @@ export async function seedContent(db: Database) {
       if (type === "vocabulary")
         await tx
           .insert(s.vocabularyItems)
-          .values({ conceptId: id })
-          .onConflictDoNothing();
+          .values({ conceptId: id, partOfSpeech: content.partOfSpeech ?? null })
+          .onConflictDoUpdate({
+            target: s.vocabularyItems.conceptId,
+            set: { partOfSpeech: content.partOfSpeech ?? null },
+          });
       if (type === "kanji")
         await tx
           .insert(s.kanjiItems)

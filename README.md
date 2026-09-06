@@ -21,7 +21,7 @@ On another machine, install Node.js 24 LTS first (`brew install node@24` on macO
 - **Today:** configurable Japan countdown, a daily session, and progress based on actual reviews.
 - **Study:** eight initial steps covering vocabulary, kanji, grammar, and a short reading. Reveal an answer, then select Again / Hard / Good / Easy. Ratings are saved immediately; leaving or refreshing preserves your place.
 - **Collection:** browse and search 19 original starter concepts (8 vocabulary, 5 kanji, 4 grammar, 2 readings), including readings, meanings, examples, approximate JLPT levels, and learning status.
-- **Progress:** review counts, completed sessions, and concepts explored or learned. No fabricated proficiency scores.
+- **Progress:** review counts, completed sessions, and concepts introduced or mastered. No fabricated proficiency scores.
 - **Settings:** departure date, daily time budget, time zone, and JSON history export. January 15, 2027 is an editable initial date, not an assumed itinerary.
 - Responsive mobile navigation, keyboard study shortcuts (Space, then 1–4), system appearance with a saved light/dark toggle, and accessible form controls.
 
@@ -109,7 +109,7 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 
 Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
 
-- [~] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. A 303-item N5 → N4 corpus now covers vocabulary, kanji, grammar, practical reading, and listening scripts, with ordered units, examples, explanations, difficulty, and source alignment. Continue expanding toward full N4 coverage, add active recall exercises, and replace listening scripts with recorded audio.
+- [~] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. The vocabulary corpus now has 742 N5 terms plus 710 N4-only terms (1,452 total), alongside kanji, grammar, practical reading, and listening scripts. Every vocabulary term has a reading, meaning, part of speech, and example. Continue expanding active recall exercises and replace listening scripts with recorded audio.
 - [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
 - [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
 - [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
@@ -119,7 +119,7 @@ Work through these in order. The model and reasoning level are recommendations f
 - [ ] **Study analytics and goals** — GPT-5.6 Luna, medium reasoning. Track time, consistency, weak areas, review health, and weekly targets.
 - [ ] **Progress backup and export** — GPT-5.6 Luna, medium reasoning. Improve export, restore, and recovery workflows for the private account.
 
-The curriculum uses the [official JLPT N5/N4 level summaries](https://www.jlpt.jp/e/about/levelsummary.html) as its level-alignment source. The JLPT describes N5 through basic written phrases and slow, familiar conversations, and N4 through familiar everyday texts and somewhat slowly spoken everyday conversations. It does not make this app’s vocabulary and kanji set an official JLPT list; each example is original teaching material.
+The curriculum uses the [official JLPT N5/N4 level summaries](https://www.jlpt.jp/e/about/levelsummary.html) as its level-alignment source. The JLPT describes N5 through basic written phrases and slow, familiar conversations, and N4 through familiar everyday texts and somewhat slowly spoken everyday conversations. It does not make this app’s vocabulary and kanji set an official JLPT list. See [ATTRIBUTION.md](ATTRIBUTION.md) for the openly licensed vocabulary sources and example-sentence attribution.
 
 The first implementation target is the curriculum and content model. The current corpus supports a sustained beginner-to-intermediate study plan, but it is not yet a complete N4 corpus. The review scheduler also remains a placeholder until the next roadmap item is complete.
 

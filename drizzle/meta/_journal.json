@@ -15,6 +15,13 @@
       "when": 1788580276694,
       "tag": "0001_add_listening_concepts",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788580276695,
+      "tag": "0002_vocabulary_progress_statuses",
+      "breakpoints": true
     }
   ]
 }

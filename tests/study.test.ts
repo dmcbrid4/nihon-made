@@ -7,6 +7,7 @@ import { planSession, sessionMinutes } from "../src/lib/study/planner";
 import { applyAction, initialState } from "../src/lib/study/state";
 import { scheduleReview } from "../src/lib/study/scheduler";
 import { actionSchema, dateSchema } from "../src/lib/study/types";
+import { vocabularyProgress } from "../src/lib/study/vocabulary-progress";
 
 const now = new Date("2026-09-04T15:00:00Z");
 
@@ -121,14 +122,36 @@ test("only the current session card can be reviewed, and completion is persisted
 
 test("learning requires repeated comfortable recall, and a lapse resets it", () => {
   let progress = scheduleReview("v-maniau", "easy", now);
+  assert.equal(progress.status, "introduced");
+  progress = scheduleReview("v-maniau", "good", now, progress);
   assert.equal(progress.status, "learning");
   progress = scheduleReview("v-maniau", "good", now, progress);
-  progress = scheduleReview("v-maniau", "good", now, progress);
-  assert.equal(progress.status, "learned");
+  assert.equal(progress.status, "mastered");
   const lapse = scheduleReview("v-maniau", "again", now, progress);
   assert.equal(lapse.status, "learning");
   assert.equal(lapse.successStreak, 0);
   assert.equal(Date.parse(lapse.dueAt) - now.getTime(), 600_000);
+});
+
+test("vocabulary progress keeps N5, N4-only, combined, and learning stages distinct", () => {
+  const state = initialState();
+  const [n5] = concepts.filter(
+    (concept) => concept.type === "vocabulary" && concept.level === "N5",
+  );
+  const [n4] = concepts.filter(
+    (concept) => concept.type === "vocabulary" && concept.level === "N4",
+  );
+  state.progress = [
+    { ...scheduleReview(n5.id, "easy", now), status: "introduced" },
+    { ...scheduleReview(n4.id, "easy", now), status: "mastered" },
+  ];
+  const [n5Cohort, n4Cohort, total] = vocabularyProgress(state);
+  assert.equal(n5Cohort.introduced, 1);
+  assert.equal(n5Cohort.mastered, 0);
+  assert.equal(n4Cohort.mastered, 1);
+  assert.equal(total.introduced, 1);
+  assert.equal(total.mastered, 1);
+  assert.equal(total.total, n5Cohort.total + n4Cohort.total);
 });
 
 test("all curriculum concepts have unique identities, teaching content, and traceable metadata", () => {

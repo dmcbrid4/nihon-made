@@ -30,9 +30,14 @@ export function scheduleReview(
     rating === "again" || rating === "hard"
       ? 0
       : (previous?.successStreak ?? 0) + 1;
+  const status = !previous
+    ? "introduced"
+    : successStreak >= 3 && intervalDays >= 7
+      ? "mastered"
+      : "learning";
   return {
     conceptId,
-    status: successStreak >= 3 && intervalDays >= 7 ? "learned" : "learning",
+    status,
     reviewCount: (previous?.reviewCount ?? 0) + 1,
     successStreak,
     intervalDays,

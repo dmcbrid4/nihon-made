@@ -5,15 +5,14 @@ import {
   ArrowUpRight,
   BookOpen,
   Headphones,
-  Languages,
   Layers3,
   PenLine,
 } from "lucide-react";
 import { concepts } from "@/lib/study/content";
+import { vocabularyProgress } from "@/lib/study/vocabulary-progress";
 import { useStudy } from "./study-provider";
 
 const skills = [
-  { type: "vocabulary", label: "Vocabulary", icon: Languages },
   { type: "kanji", label: "Kanji", icon: PenLine },
   { type: "grammar", label: "Grammar", icon: Layers3 },
   { type: "reading", label: "Reading", icon: BookOpen },
@@ -23,6 +22,7 @@ const skills = [
 export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
   const { state } = useStudy();
   if (!state) return null;
+  const vocabulary = vocabularyProgress(state);
   return (
     <section className="progress-section" aria-labelledby="progress-heading">
       <div className="section-heading">
@@ -36,16 +36,53 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
           </Link>
         )}
       </div>
+      <div className="vocabulary-progress-grid" aria-label="Vocabulary progress">
+        {vocabulary.map((cohort) => {
+          const introducedOrFurther =
+            cohort.introduced + cohort.learning + cohort.mastered;
+          return (
+            <div key={cohort.id} className="vocabulary-progress-card">
+              <span>{cohort.label}</span>
+              <strong>
+                {cohort.mastered} <small>/ {cohort.total}</small>
+              </strong>
+              <p>mastered</p>
+              <div
+                className="progress-track"
+                role="progressbar"
+                aria-label={`${cohort.label} mastered`}
+                aria-valuenow={cohort.mastered}
+                aria-valuemin={0}
+                aria-valuemax={cohort.total}
+              >
+                <span
+                  className="progress-learning"
+                  style={{
+                    width: `${(introducedOrFurther / cohort.total) * 100}%`,
+                  }}
+                />
+                <span
+                  className="progress-mastered"
+                  style={{ width: `${(cohort.mastered / cohort.total) * 100}%` }}
+                />
+              </div>
+              <small>
+                {cohort.unseen} unseen · {cohort.introduced} introduced · {cohort.learning} learning
+              </small>
+            </div>
+          );
+        })}
+      </div>
       <div className="progress-grid">
         {skills.map(({ type, label, icon: Icon }) => {
           const ids = concepts
             .filter((item) => item.type === type)
             .map((item) => item.id);
-          const explored = state.progress.filter((item) =>
+          const introduced = state.progress.filter((item) =>
             ids.includes(item.conceptId),
           );
-          const learned = explored.filter(
-            (item) => item.status === "learned",
+          const mastered = introduced.filter(
+            (item) => item.status === "mastered",
           ).length;
           return (
             <div key={type} className="skill-card">
@@ -56,7 +93,7 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
               <div className="skill-count">
                 {ids.length ? (
                   <>
-                    <strong>{explored.length}</strong>
+                    <strong>{introduced.length}</strong>
                     <span>/ {ids.length}</span>
                   </>
                 ) : (
@@ -67,28 +104,28 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
                 className="progress-track"
                 role={ids.length ? "progressbar" : undefined}
                 aria-label={
-                  ids.length ? `${label} concepts explored` : undefined
+                  ids.length ? `${label} concepts introduced` : undefined
                 }
-                aria-valuenow={ids.length ? explored.length : undefined}
+                aria-valuenow={ids.length ? introduced.length : undefined}
                 aria-valuemin={ids.length ? 0 : undefined}
                 aria-valuemax={ids.length || undefined}
               >
                 <span
                   className="progress-learning"
                   style={{
-                    width: `${ids.length ? (explored.length / ids.length) * 100 : 0}%`,
+                    width: `${ids.length ? (introduced.length / ids.length) * 100 : 0}%`,
                   }}
                 />
                 <span
-                  className="progress-learned"
+                  className="progress-mastered"
                   style={{
-                    width: `${ids.length ? (learned / ids.length) * 100 : 0}%`,
+                    width: `${ids.length ? (mastered / ids.length) * 100 : 0}%`,
                   }}
                 />
               </div>
               <p>
                 {ids.length
-                  ? "starter concepts explored"
+                  ? "concepts introduced"
                   : "Audio practice is on the way"}
               </p>
             </div>
@@ -96,8 +133,8 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
         })}
       </div>
       <p className="progress-note">
-        Based on your reviews in the starter collection. This is not an estimate
-        of JLPT readiness.
+        Mastered requires three consecutive Good or Easy ratings and a review
+        interval of at least seven days. This is not an estimate of JLPT readiness.
       </p>
     </section>
   );

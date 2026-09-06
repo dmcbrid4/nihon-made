@@ -8,17 +8,19 @@ import type { Database } from "../src/db/client";
 import * as schema from "../src/db/schema";
 import { PostgresRepository } from "../src/db/repository";
 import { seedContent } from "../src/db/seed-content";
+import { concepts } from "../src/lib/study/content";
 
 test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals persist in PostgreSQL", async () => {
     const client = new PGlite();
   try {
     await client.exec(await readFile("drizzle/0000_tough_malice.sql", "utf8"));
     await client.exec(await readFile("drizzle/0001_add_listening_concepts.sql", "utf8"));
+    await client.exec(await readFile("drizzle/0002_vocabulary_progress_statuses.sql", "utf8"));
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
     await seedContent(db);
     await seedContent(db);
-    assert.equal((await db.select().from(schema.studyConcepts)).length, 303);
+    assert.equal((await db.select().from(schema.studyConcepts)).length, concepts.length);
     const userId = "00000000-0000-4000-8000-000000000001";
     const repository = new PostgresRepository(db, userId);
     const empty = await repository.load();

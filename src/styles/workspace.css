@@ -200,7 +200,10 @@ input[readonly] {
 .status-learning {
   color: #a48962;
 }
-.status-learned {
+.status-introduced {
+  color: var(--muted);
+}
+.status-mastered {
   color: var(--green);
 }
 .collection-item summary > svg {

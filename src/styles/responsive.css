@@ -137,6 +137,16 @@
   .progress-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .vocabulary-progress-grid {
+    grid-template-columns: 1fr;
+  }
+  .vocabulary-progress-card {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .vocabulary-progress-card:last-child {
+    border-bottom: 0;
+  }
   .skill-card:nth-child(3) {
     border-right: none;
   }

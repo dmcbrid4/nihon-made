@@ -10,7 +10,7 @@ test("dashboard, session resume, all four ratings, completion, and real progress
     page.getByRole("heading", { name: "A little closer to Japan." }),
   ).toBeVisible();
   await expect(
-    page.getByRole("progressbar", { name: "Vocabulary concepts explored" }),
+    page.getByRole("progressbar", { name: "N5 vocabulary mastered" }),
   ).toHaveAttribute("aria-valuenow", "0");
   await page.screenshot({
     path: `test-results/dashboard-${testInfo.project.name}.png`,
@@ -69,7 +69,7 @@ test("dashboard, session resume, all four ratings, completion, and real progress
   ).toBeVisible();
   await page.getByRole("link", { name: "Back to Today" }).click();
   await expect(
-    page.getByRole("progressbar", { name: "Vocabulary concepts explored" }),
+    page.getByRole("progressbar", { name: "N5 vocabulary mastered" }),
   ).toHaveAttribute("aria-valuenow", "4");
   const state = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("nihon-made:study:v1")!),

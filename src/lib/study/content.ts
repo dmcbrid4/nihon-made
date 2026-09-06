@@ -1,5 +1,6 @@
 import type { Concept } from "./types";
 import { expandedCurriculum } from "./curriculum-expansion";
+import { vocabularyCorpus, vocabularySource } from "./jlpt-vocabulary";
 
 type DraftConcept = Omit<
   Concept,
@@ -307,6 +308,7 @@ const curriculumAdditions = [
 
 const topicUnits = {
   N5: {
+    "Core vocabulary": "N5 · Units 1–6: Core vocabulary",
     "Introductions": "N5 · Unit 1: Introductions",
     "Everyday Japanese": "N5 · Unit 2: Everyday basics",
     "Daily routines": "N5 · Unit 3: Daily routines",
@@ -316,6 +318,7 @@ const topicUnits = {
     "Eating out": "N5 · Unit 6: Food and requests",
   },
   N4: {
+    "Core vocabulary": "N4 · Units 7–11: Core vocabulary",
     "Daily routines": "N4 · Unit 7: Daily routines and communication",
     "Everyday Japanese": "N4 · Unit 7: Daily routines and communication",
     "Plans": "N4 · Unit 8: Plans and reasons",
@@ -328,6 +331,7 @@ const topicUnits = {
   },
 } as const;
 const unitOrder = [
+  "N5 · Units 1–6: Core vocabulary",
   "N5 · Unit 1: Introductions",
   "N5 · Unit 2: Everyday basics",
   "N5 · Unit 3: Daily routines",
@@ -335,6 +339,7 @@ const unitOrder = [
   "N5 · Unit 4: Places and movement",
   "N5 · Unit 5: Buying things",
   "N5 · Unit 6: Food and requests",
+  "N4 · Units 7–11: Core vocabulary",
   "N4 · Unit 7: Daily routines and communication",
   "N4 · Unit 8: Plans and reasons",
   "N4 · Unit 9: Movement and directions",
@@ -344,10 +349,22 @@ const unitOrder = [
 const unitIndex = new Map(unitOrder.map((unit, index) => [unit, index]));
 const typeOrder = { vocabulary: 0, kanji: 1, grammar: 2, reading: 3, listening: 4 } as const;
 const sourceFor = (level: "N5" | "N4") => `Original teaching example; aligned to the JLPT ${level} level summary.`;
+const vocabularyKey = (expression: string, reading: string) =>
+  `${expression.replace(/[\s・;；〜～]/g, "")}/${reading.replace(/[\s・;；〜～]/g, "")}`;
+const legacyVocabulary = [...starterConcepts, ...curriculumAdditions, ...expandedCurriculum]
+  .filter((concept) => concept.type === "vocabulary")
+  .map((concept) => [vocabularyKey(concept.expression, concept.reading), concept.id] as const);
+const legacyVocabularyIds = new Map(legacyVocabulary);
+const vocabularyConcepts = vocabularyCorpus.map((concept) => ({
+  ...concept,
+  id: legacyVocabularyIds.get(vocabularyKey(concept.expression, concept.reading)) ?? concept.id,
+}));
+const nonVocabularyConcepts = [...starterConcepts, ...curriculumAdditions, ...expandedCurriculum].filter(
+  (concept) => concept.type !== "vocabulary",
+);
 export const concepts: Concept[] = [
-  ...starterConcepts,
-  ...curriculumAdditions,
-  ...expandedCurriculum,
+  ...nonVocabularyConcepts,
+  ...vocabularyConcepts,
 ]
   .sort((a, b) => {
     const unitA = topicUnits[a.level][a.topic as never] ?? `${a.level} · Core study`;
@@ -360,7 +377,7 @@ export const concepts: Concept[] = [
     sequence: index + 1,
     difficulty: (concept.level === "N5" ? (concept.type === "reading" || concept.type === "listening" ? 3 : 1) : concept.type === "reading" || concept.type === "listening" ? 4 : 3) as 1 | 2 | 3 | 4 | 5,
     prerequisites: concept.level === "N4" ? ["N5 foundations"] : [],
-    source: sourceFor(concept.level),
+    source: concept.type === "vocabulary" ? vocabularySource : sourceFor(concept.level),
   }));
 
 export const conceptById = new Map(
