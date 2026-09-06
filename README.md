@@ -36,7 +36,7 @@ src/app/                 Routes, global styles, metadata, API handler
 src/components/          Dashboard, study cards, settings, collection, progress
 src/lib/study/           Typed content, validation, planning, scheduling, state transitions
 src/lib/storage/         Browser and HTTP repository adapters
-src/lib/server/          Shared server access checks
+src/lib/server/          Supabase session, owner checks, and request validation
 src/db/                  Drizzle schema, PostgreSQL repository, idempotent seed
 drizzle/                 Committed SQL migration and migration metadata
 tests/                   Study logic, database, access, and browser tests
@@ -50,9 +50,9 @@ The PostgreSQL adapter writes each rating, concept schedule, and session complet
 
 For future AI, introduce a typed exercise-generation service between the planner/content layer and the UI. Its inputs should be known concept IDs, level, and travel context; its output should be a validated exercise. OpenAI, Anthropic, and Gemini adapters can implement that contract without owning review history or scheduling. No provider SDK is installed yet.
 
-## Optional PostgreSQL / Supabase database
+## Supabase cloud mode
 
-Use a dedicated PostgreSQL database, or a Supabase PostgreSQL connection string. Supabase Auth is deferred; this version has one personal profile.
+Cloud mode gives the private workspace a server-backed history and email-code sign-in. The configured owner email is the only account allowed to use it. Browser mode remains the default when these values are empty.
 
 1. Copy the example environment file:
 
@@ -60,8 +60,8 @@ Use a dedicated PostgreSQL database, or a Supabase PostgreSQL connection string.
    cp .env.example .env.local
    ```
 
-2. Set `DATABASE_URL` in `.env.local`. With Supabase, use its pooler connection string when needed. Prepared statements are disabled for transaction-pooler compatibility. Keep connection credentials on the server; no `NEXT_PUBLIC_` database secrets.
-3. Set `APP_PASSWORD` to a long, unique password for a hosted personal workspace. Your browser will ask for **username `nihon`** and that password. The app and API check access; database mode refuses to run in production without a password. Use HTTPS when hosted.
+2. In Supabase, enable Email provider and turn off email/password sign-ups if this is a single-owner workspace. Add the production and local callback URLs used by your deployment.
+3. Set all four values in `.env.local`: `DATABASE_URL` (the Supabase pooler connection string when needed), `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, and `OWNER_EMAIL`. Use `mcbride.danny@gmail.com` for the owner account. Keep `DATABASE_URL` server-only; do not prefix it with `NEXT_PUBLIC_`.
 4. Apply the migration and seed:
 
    ```bash
@@ -72,7 +72,7 @@ Use a dedicated PostgreSQL database, or a Supabase PostgreSQL connection string.
 
 The seed can be run again without erasing reviews. After schema changes, use `npm run db:generate` and review the generated migration before running `npm run db:migrate`.
 
-Browser history and database history are separate. Enabling PostgreSQL does not import existing browser history automatically; export it from Settings first. A data import/sync flow is future work.
+Browser history and database history are separate until the import flow is used. Enabling cloud mode does not overwrite local browser history.
 
 ## Verify
 
@@ -94,22 +94,22 @@ npm run build
 npm start
 ```
 
-Vercel can import the repository as a Next.js project. For database mode, set `DATABASE_URL` and `APP_PASSWORD`, and run migrations/seeding against the target database before using the deployment. Migration commands are explicit and are not run during builds. Without a database, each browser keeps its own history.
+Vercel can import the repository as a Next.js project. Set all four cloud environment variables in the Vercel project, configure the Supabase Auth callback URL for the deployment, and run migrations/seeding against the target database before using it. Migration commands are explicit and are not run during builds. Without cloud variables, each browser keeps its own history.
 
 ## Deliberate V1 limits
 
 - The starter collection is not a full N4 curriculum. JLPT labels are approximate; progress bars measure exploration of the included content.
 - Ratings are self-assessments. “Learned” requires three consecutive Good/Easy ratings and an interval of at least seven days. Again resets that run of successful recalls. This is a placeholder policy, not validated FSRS.
 - Again makes a concept due after ten minutes, but each item appears once in this daily session; it returns in the next generated session. Other initial intervals are one, three, and seven days.
-- Sessions are generated locally from deterministic rules; there is no LLM integration, listening audio, speaking, account system, or itinerary import yet.
+- Sessions are generated locally from deterministic rules; there is no LLM integration, listening audio, speaking, or itinerary import yet.
 - There is no service worker or offline PWA installation flow yet. Local persistence does not mean the app can load without a network connection. Mobile layout and Apple web-app metadata provide a starting point.
 - V1 loads the personal study history as one state snapshot. Pagination and archived sessions can be added when the history grows.
-- JSON export is available; restore/import is not implemented.
+- JSON export is available. Browser-history import into an empty cloud account is the next data-safety feature.
 
 ## Next three features
 
 1. **A sequenced N5 → N4 curriculum and proper SRS:** prerequisites, due queues, relearning, and scheduling informed by review history.
 2. **Graded reading and listening:** word lookup, objective comprehension checks, Japanese audio, and transcript reveal.
-3. **A private mobile study workspace:** Supabase Auth, browser-history import and cross-device sync, then a PWA with offline sessions.
+3. **A private mobile study workspace:** browser-history import and cross-device sync, then a PWA with offline sessions.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).
