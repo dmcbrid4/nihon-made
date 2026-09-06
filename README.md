@@ -105,10 +105,20 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 - V1 loads the personal study history as one state snapshot. Pagination and archived sessions can be added when the history grows.
 - JSON export and one-way browser-history import into an empty cloud account are available.
 
-## Next three features
+## N4 study roadmap
 
-1. **A sequenced N5 → N4 curriculum and proper SRS:** prerequisites, due queues, relearning, and scheduling informed by review history.
-2. **Graded reading and listening:** word lookup, objective comprehension checks, Japanese audio, and transcript reveal.
-3. **A private mobile study workspace:** cross-device sync, then a PWA with offline sessions.
+Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
+
+- [ ] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. Build a sequenced N5 → N4 curriculum covering vocabulary, kanji, grammar, reading, and listening. Give every item examples, explanations, difficulty, and a source.
+- [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
+- [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
+- [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
+- [ ] **Graded reading** — GPT-5.6 Luna, medium reasoning. Add practical N4 passages with comprehension questions and separate reading and vocabulary results.
+- [ ] **Monthly proficiency checks** — GPT-5.6 Terra, high reasoning. Measure vocabulary, kanji, grammar, reading, and listening with a repeatable diagnostic.
+- [ ] **Speaking and writing practice** — GPT-5.6 Terra, high reasoning. Add production prompts, model answers, and optional feedback.
+- [ ] **Study analytics and goals** — GPT-5.6 Luna, medium reasoning. Track time, consistency, weak areas, review health, and weekly targets.
+- [ ] **Progress backup and export** — GPT-5.6 Luna, medium reasoning. Improve export, restore, and recovery workflows for the private account.
+
+The first implementation target is the curriculum and content model. The current starter collection and review rules are intentionally labeled as placeholders until that work is complete.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).
