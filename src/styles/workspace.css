@@ -357,4 +357,20 @@ input[readonly] {
 .auth-message { font-size: 11px !important; margin-top: 15px !important; }
 .auth-back { margin-top: 15px; }
 .auth-password-note { margin-top: 14px !important; font-size: 11px !important; }
+.guest-entry { margin-top: 15px; color: var(--muted); font-size: 11px; }
+.guest-entry:hover { color: var(--text); text-decoration: underline; }
+.guest-page { min-height: 100vh; padding: 22px clamp(20px, 5vw, 72px); }
+.guest-header { display: flex; justify-content: space-between; align-items: center; max-width: 780px; margin: 0 auto; }
+.guest-brand { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 600; }
+.guest-brand .brand-mark { width: 27px; height: 27px; font-size: 13px; }
+.guest-content { display: grid; grid-template-columns: minmax(0, 480px) minmax(190px, 260px); gap: 28px; align-items: end; max-width: 780px; margin: min(15vh, 130px) auto 0; }
+.guest-card { padding: 32px; }
+.guest-progress { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; letter-spacing: .1em; }
+.guest-word { padding: 58px 0 42px; text-align: center; }
+.guest-word p { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 72px; line-height: 1; }
+.guest-word span { display: block; margin-top: 15px; color: var(--muted); font-size: 12px; }
+.guest-answer { min-height: 74px; padding: 14px 16px; margin-bottom: 22px; border-left: 2px solid var(--accent); background: var(--accent-soft); }
+.guest-answer strong { font-size: 16px; font-weight: 600; }
+.guest-answer p, .guest-note p { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.guest-note { padding-bottom: 4px; }
 .auth-footer { color: var(--muted); font-size: 9px; margin-top: 19px; }

@@ -24,6 +24,7 @@ const navigation = [
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { error, reload, mode } = useStudy();
+  if (pathname === "/guest") return <>{children}</>;
   const current =
     navigation.find((item) => item.href === pathname)?.label ?? "Daily study";
   return (
