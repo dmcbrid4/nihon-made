@@ -51,7 +51,6 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="brand-english">Nihon Made</span>
           </span>
         </Link>
-        <div className="sidebar-section-label">YOUR SPACE</div>
         {state && (
           <label className="study-mode-picker">
             <span>STUDY MODE</span>
