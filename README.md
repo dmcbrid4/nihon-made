@@ -109,7 +109,7 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 
 Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
 
-- [~] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. The vocabulary corpus now has 742 N5 terms plus 710 N4-only terms (1,452 total), alongside kanji, grammar, practical reading, and listening scripts. Every vocabulary term has a reading, meaning, part of speech, and example. Continue expanding active recall exercises and replace listening scripts with recorded audio.
+- [x] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. The curriculum contains 742 N5 terms plus 710 N4-only terms (1,452 total), alongside kanji, grammar, practical reading, and listening scripts. Separate N5 and N4 study modes keep queues, sessions, collections, and progress distinct. Vocabulary terms include readings, meanings, part of speech, and examples.
 - [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
 - [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
 - [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
@@ -121,6 +121,6 @@ Work through these in order. The model and reasoning level are recommendations f
 
 The curriculum uses the [official JLPT N5/N4 level summaries](https://www.jlpt.jp/e/about/levelsummary.html) as its level-alignment source. The JLPT describes N5 through basic written phrases and slow, familiar conversations, and N4 through familiar everyday texts and somewhat slowly spoken everyday conversations. It does not make this app’s vocabulary and kanji set an official JLPT list. See [ATTRIBUTION.md](ATTRIBUTION.md) for the openly licensed vocabulary sources and example-sentence attribution.
 
-The first implementation target is the curriculum and content model. The current corpus supports a sustained beginner-to-intermediate study plan, but it is not yet a complete N4 corpus. The review scheduler also remains a placeholder until the next roadmap item is complete.
+The curriculum and mode separation are implemented. The next major implementation target is the review scheduler; the current policy is intentionally small and deterministic while the FSRS-compatible design is prepared.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).
