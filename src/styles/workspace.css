@@ -380,7 +380,7 @@ input[readonly] {
 .guest-workspace { min-width: 0; }
 .guest-topbar { display: flex; justify-content: space-between; align-items: center; height: 57px; padding: 0 clamp(22px, 4vw, 56px); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; }
 .guest-main { width: min(100% - 44px, 950px); margin: 0 auto; padding: 46px 0 60px; }
-.guest-session { padding: 27px 29px 21px; border-top: 3px solid var(--accent); }
+.guest-session { padding: 27px 29px 21px; border-top: 3px solid var(--accent); background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--green-soft) 30%, var(--surface)) 100%); }
 .guest-session h2 { margin-top: 17px; font-size: 23px; font-weight: 600; letter-spacing: -.03em; }
 .guest-preview-list { margin: 20px 0; border-top: 1px solid var(--line); }
 .guest-preview-list > div { display: grid; grid-template-columns: 55px 1fr auto; align-items: center; min-height: 47px; border-bottom: 1px solid var(--line); font-size: 11px; }
@@ -388,12 +388,14 @@ input[readonly] {
 .guest-preview-list > div > span:last-child { color: var(--muted); font-size: 10px; }
 .guest-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
 .guest-summary { padding: 24px; }
+.guest-summary:first-child { border-top: 2px solid var(--green); }
+.guest-summary:last-child { border-top: 2px solid var(--accent); }
 .guest-summary h2 { margin-top: 11px; font-size: 17px; font-weight: 600; }
 .guest-summary p { margin: 6px 0 17px; color: var(--muted); font-size: 11px; line-height: 1.7; }
 .guest-study-view { width: min(100%, 530px); margin: 0 auto; }
-.guest-flashcard { margin-top: 28px; padding: 31px; }
+.guest-flashcard { margin-top: 28px; padding: 31px; border-top: 3px solid var(--green); }
 .guest-flashcard-word { padding: 62px 0 46px; text-align: center; }
-.guest-flashcard-word p { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 76px; line-height: 1; }
+.guest-flashcard-word p { color: var(--green); font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 76px; line-height: 1; }
 .guest-flashcard-word span { display: block; margin-top: 16px; color: var(--muted); font-size: 12px; }
 .guest-study-note { margin-top: 14px; text-align: center; color: var(--muted); font-size: 10px; }
 .guest-reset { margin: 10px auto 0; }
@@ -401,10 +403,16 @@ input[readonly] {
 .guest-collection article { display: grid; grid-template-columns: 118px 1fr; gap: 18px; padding: 20px; }
 .guest-collection-japanese { margin: 14px 0 4px; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 32px; }
 .guest-collection article > div:first-child > span:last-child { color: var(--muted); font-size: 10px; }
+.guest-collection article:nth-child(3n + 1) { border-top: 2px solid var(--green); }
+.guest-collection article:nth-child(3n + 2) { border-top: 2px solid var(--accent); }
+.guest-collection article:nth-child(3n) { border-top: 2px solid #a38863; }
 .guest-collection h2 { font-size: 16px; font-weight: 600; }
 .guest-collection article p { margin: 6px 0 16px; color: var(--muted); font-size: 10px; line-height: 1.7; }
 .guest-progress-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
 .guest-progress-stats > div { padding: 22px; }
+.guest-progress-stats > div:nth-child(1) { border-top: 2px solid var(--green); }
+.guest-progress-stats > div:nth-child(2) { border-top: 2px solid var(--accent); }
+.guest-progress-stats > div:nth-child(3) { border-top: 2px solid #a38863; }
 .guest-progress-stats strong { display: block; font-size: 30px; font-weight: 500; }
 .guest-progress-stats span { color: var(--muted); font-size: 10px; }
 .guest-progress-panel { margin-top: 18px; padding: 27px; }
