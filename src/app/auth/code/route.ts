@@ -13,8 +13,9 @@ export async function POST(request: NextRequest) {
   catch { return NextResponse.json({ error: "Enter a valid email address." }, { status: 400, headers: noStore }); }
   if (input.email !== config.ownerEmail) return NextResponse.json({ error: "Use the email address for this private workspace." }, { status: 403, headers: noStore });
   try {
-    const { error } = await (await createSupabaseServerClient()).auth.signInWithOtp({ email: input.email, options: { shouldCreateUser: false } });
-    if (error) return NextResponse.json({ error: error.status === 429 ? "Please wait a minute before requesting another code." : "Couldn’t send a sign-in code. Please try again." }, { status: error.status === 429 ? 429 : 503, headers: noStore });
+    const emailRedirectTo = new URL("/auth/callback", request.url).toString();
+    const { error } = await (await createSupabaseServerClient()).auth.signInWithOtp({ email: input.email, options: { shouldCreateUser: false, emailRedirectTo } });
+    if (error) return NextResponse.json({ error: error.status === 429 ? "Please wait a minute before requesting another link." : "Couldn’t send a sign-in link. Please try again." }, { status: error.status === 429 ? 429 : 503, headers: noStore });
     return NextResponse.json({ ok: true }, { headers: noStore });
   } catch { return NextResponse.json({ error: "Sign-in is temporarily unavailable." }, { status: 503, headers: noStore }); }
 }
