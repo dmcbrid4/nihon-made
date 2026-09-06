@@ -176,9 +176,9 @@ export function SettingsView() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">MAKE IT YOURS</div>
-          <h1>Your journey, your pace.</h1>
-          <p>A few details to shape your daily Japanese.</p>
+          <div className="eyebrow" lang="ja">学習の設定</div>
+          <h1 lang="ja">自分のペースで。</h1>
+          <p lang="ja">毎日の日本語を、あなたらしく。</p>
         </div>
       </div>
       <div className="settings-layout">

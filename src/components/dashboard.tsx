@@ -82,10 +82,10 @@ export function Dashboard() {
       <div className="page-heading">
         <div>
           <div className="eyebrow">
-            <span className="tiny-sun" /> YOUR JAPANESE, EVERY DAY
+            <span className="tiny-sun" /> 日本語を、毎日。
           </div>
-          <h1>A little closer to Japan.</h1>
-          <p>Build understanding. Find your words. Enjoy the journey.</p>
+          <h1>今日も、日本語をひとつ。</h1>
+          <p lang="ja">読む。聞く。話す。身につける。</p>
         </div>
         <div className="heading-date">
           <span>{date}</span>
