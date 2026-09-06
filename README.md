@@ -62,15 +62,14 @@ Cloud mode gives the private workspace a server-backed history and email-code si
 
 2. In Supabase, enable Email provider and turn off email/password sign-ups if this is a single-owner workspace. Add the production and local callback URLs used by your deployment.
 3. Set all four values in `.env.local`: `DATABASE_URL` (the Supabase pooler connection string when needed), `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, and `OWNER_EMAIL`. Use `mcbride.danny@gmail.com` for the owner account. Keep `DATABASE_URL` server-only; do not prefix it with `NEXT_PUBLIC_`.
-4. Apply the migration and seed:
+4. Verify the connection, apply the migration, and seed the starter content:
 
    ```bash
-   npm run db:migrate
-   npm run db:seed
+   npm run db:setup
    npm run dev
    ```
 
-The seed can be run again without erasing reviews. After schema changes, use `npm run db:generate` and review the generated migration before running `npm run db:migrate`.
+`npm run db:check` verifies the connection without exposing credentials. `npm run db:setup` runs that check, then migrations and the idempotent seed. The seed can be run again without erasing reviews. After schema changes, use `npm run db:generate`, review the generated migration, then run `npm run db:migrate` and `npm run db:seed` separately.
 
 Browser history and database history are separate until you choose **Import browser history** in Settings. Import is allowed only when the cloud account has no study activity, and the browser copy is kept.
 
@@ -94,7 +93,7 @@ npm run build
 npm start
 ```
 
-Vercel can import the repository as a Next.js project. Set all four cloud environment variables in the Vercel project, configure the Supabase Auth callback URL for the deployment, and run migrations/seeding against the target database before using it. Migration commands are explicit and are not run during builds. Without cloud variables, each browser keeps its own history.
+Vercel can import the repository as a Next.js project. Set all four cloud environment variables in the Vercel project, configure the Supabase Auth callback URL for the deployment, then run `npm run db:setup` locally with the target database URL before using the deployment. Migration commands are explicit and are not run during builds. Without cloud variables, each browser keeps its own history.
 
 ## Deliberate V1 limits
 

@@ -13,8 +13,10 @@
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
+    "db:check": "node --env-file=.env.local --import tsx src/db/preflight.ts",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "node --env-file=.env.local --import tsx src/db/seed.ts"
+    "db:seed": "node --env-file=.env.local --import tsx src/db/seed.ts",
+    "db:setup": "npm run db:check && npm run db:migrate && npm run db:seed"
   },
   "overrides": {
     "@esbuild-kit/core-utils": {
