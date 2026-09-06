@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getAppConfig, isOwner } from "@/lib/server/config";
+import { REAUTH_COOKIE, REAUTH_INTERVAL_SECONDS } from "@/lib/server/reauth";
 
 function signInRedirect(request: NextRequest, reason: string) {
   const url = new URL("/sign-in", request.url);
@@ -58,6 +59,13 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  response.cookies.set(REAUTH_COOKIE, String(Date.now()), {
+    httpOnly: true,
+    maxAge: REAUTH_INTERVAL_SECONDS,
+    path: "/",
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   response.headers.set("Cache-Control", "private, no-store");
   return response;
 }
