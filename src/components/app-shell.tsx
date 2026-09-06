@@ -23,7 +23,14 @@ const navigation = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { error, reload, mode } = useStudy();
+  const {
+    error,
+    reload,
+    mode: storageMode,
+    state,
+    dispatch,
+    busy,
+  } = useStudy();
   if (pathname.startsWith("/guest")) return <>{children}</>;
   const current =
     navigation.find((item) => item.href === pathname)?.label ?? "Daily study";
@@ -45,6 +52,28 @@ export function AppShell({ children }: { children: ReactNode }) {
           </span>
         </Link>
         <div className="sidebar-section-label">YOUR SPACE</div>
+        {state && (
+          <label className="study-mode-picker">
+            <span>STUDY MODE</span>
+            <select
+              aria-label="Active study mode"
+              disabled={busy}
+              value={state.goal.studyMode}
+              onChange={(event) =>
+                void dispatch({
+                  type: "goal",
+                  goal: {
+                    ...state.goal,
+                    studyMode: event.target.value as "N5" | "N4",
+                  },
+                })
+              }
+            >
+              <option value="N5">N5 mode</option>
+              <option value="N4">N4 mode</option>
+            </select>
+          </label>
+        )}
         <nav className="main-nav" aria-label="Main navigation">
           {navigation.map(({ href, label, icon: Icon }) => (
             <Link
@@ -87,7 +116,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="topbar-right">
             <span className="storage-label">
               <span className="status-dot" />
-              {mode === "browser"
+              {storageMode === "browser"
                 ? "Saved on this device"
                 : "Personal workspace"}
             </span>

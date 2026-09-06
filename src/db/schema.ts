@@ -48,6 +48,7 @@ export const studyGoals = pgTable("study_goals", {
     .references(() => users.id, { onDelete: "cascade" }),
   targetDate: date("target_date").notNull(),
   targetLevel: jlptLevel("target_level").notNull().default("N4"),
+  studyMode: jlptLevel("study_mode").notNull().default("N5"),
   dailyMinutes: integer("daily_minutes").notNull().default(25),
   timeZone: text("time_zone").notNull().default("America/New_York"),
 });
@@ -128,6 +129,7 @@ export const studySessions = pgTable(
   "study_sessions",
   {
     id: uuid("id").primaryKey(),
+    mode: jlptLevel("mode").notNull().default("N5"),
     userId: uuid("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),

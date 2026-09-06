@@ -11,6 +11,7 @@ export function initialState(timeZone = "America/New_York"): StudyState {
       targetDate: "2027-01-15",
       dailyMinutes: 25,
       targetLevel: "N4",
+      studyMode: "N5",
       timeZone,
     },
     progress: [],
@@ -40,6 +41,7 @@ export function applyAction(
         ...state.sessions,
         {
           id: action.id,
+          mode: state.goal.studyMode,
           date: dateInZone(now, state.goal.timeZone),
           conceptIds: items.map((item) => item.id),
           startedAt: now.toISOString(),

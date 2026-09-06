@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen, Check, Clock3 } from "lucide-react";
+import { concepts } from "@/lib/study/content";
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { ProgressOverview } from "./progress-overview";
@@ -9,17 +10,26 @@ import { ProgressOverview } from "./progress-overview";
 export function ProgressView() {
   const { state } = useStudy();
   if (!state) return <Loading />;
-  const completed = state.sessions.filter((session) => session.completedAt);
+  const activeMode = state.goal.studyMode;
+  const completed = state.sessions.filter(
+    (session) => session.completedAt && session.mode === activeMode,
+  );
   const mastered = state.progress.filter(
-    (item) => item.status === "mastered",
+    (item) =>
+      item.status === "mastered" &&
+      concepts.find((concept) => concept.id === item.conceptId)?.level === activeMode,
   ).length;
+  const reviews = state.reviews.filter(
+    (review) =>
+      concepts.find((concept) => concept.id === review.conceptId)?.level === activeMode,
+  );
   return (
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">UNDERSTANDING, OVER TIME</div>
-          <h1>Every connection counts.</h1>
-          <p>A clear view of the practice you’ve actually done.</p>
+          <div className="eyebrow">{activeMode} PROGRESS</div>
+          <h1>{activeMode} practice, clearly tracked.</h1>
+          <p>Only your active study mode is counted here.</p>
         </div>
       </div>
       <div className="stats-grid">
@@ -30,7 +40,7 @@ export function ProgressView() {
         </div>
         <div className="panel stat-panel">
           <BookOpen size={19} />
-          <strong>{state.reviews.length}</strong>
+          <strong>{reviews.length}</strong>
           <span>reviews recorded</span>
         </div>
         <div className="panel stat-panel">
@@ -43,9 +53,9 @@ export function ProgressView() {
       <div className="progress-detail-grid">
         <section className="panel history-panel">
           <h2>Recent practice</h2>
-          {state.sessions.length ? (
+          {completed.length ? (
             <div className="history-list">
-              {state.sessions
+              {completed
                 .slice(-7)
                 .reverse()
                 .map((session) => (
@@ -77,6 +87,7 @@ export function ProgressView() {
                         }{" "}
                         of {session.conceptIds.length} concepts reviewed
                       </p>
+                      <p>{session.mode} mode</p>
                     </div>
                     <span className="concept-status">
                       {session.completedAt ? "Complete" : "In progress"}

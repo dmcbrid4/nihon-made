@@ -11,6 +11,7 @@ function GoalForm({ state }: { state: StudyState }) {
   const { dispatch, busy } = useStudy();
   const [targetDate, setTargetDate] = useState(state.goal.targetDate);
   const [dailyMinutes, setDailyMinutes] = useState(state.goal.dailyMinutes);
+  const [studyMode, setStudyMode] = useState(state.goal.studyMode);
   const [timeZone, setTimeZone] = useState(state.goal.timeZone);
   const [message, setMessage] = useState("");
   const [saved, setSaved] = useState(false);
@@ -23,6 +24,7 @@ function GoalForm({ state }: { state: StudyState }) {
       dailyMinutes,
       timeZone,
       targetLevel: "N4",
+      studyMode,
     });
     if (!goal.success) {
       setMessage(goal.error.issues[0].message);
@@ -78,6 +80,21 @@ function GoalForm({ state }: { state: StudyState }) {
           </select>
         </div>
         <div>
+          <label className="field-label" htmlFor="study-mode">
+            Active study mode
+          </label>
+          <select
+            id="study-mode"
+            value={studyMode}
+            onChange={(event) =>
+              setStudyMode(event.target.value as "N5" | "N4")
+            }
+          >
+            <option value="N5">N5 foundations</option>
+            <option value="N4">N4-only curriculum</option>
+          </select>
+        </div>
+        <div>
           <label className="field-label" htmlFor="target-level">
             Learning goal
           </label>
@@ -85,8 +102,8 @@ function GoalForm({ state }: { state: StudyState }) {
         </div>
       </div>
       <p className="field-help">
-        Sessions fit within your budget. The starter collection may make for a
-        shorter day.
+        N5 mode uses foundation content only. N4 mode uses N4-only content, so
+        the two tracks stay separate.
       </p>
       <label className="field-label" htmlFor="time-zone">
         Your time zone

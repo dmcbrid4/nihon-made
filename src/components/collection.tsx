@@ -8,11 +8,13 @@ import { useStudy } from "./study-provider";
 
 export function CollectionView() {
   const { state } = useStudy();
+  const activeMode = state?.goal.studyMode ?? "N5";
   const [filter, setFilter] = useState<ConceptType | "all">("all");
   const [search, setSearch] = useState("");
   const visible = concepts.filter(
     (item) =>
       (filter === "all" || item.type === filter) &&
+      item.level === activeMode &&
       [item.expression, item.reading, item.meaning, item.topic]
         .join(" ")
         .toLowerCase()
@@ -22,11 +24,17 @@ export function CollectionView() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">WORDS THAT TAKE YOU PLACES</div>
-          <h1>Your growing collection.</h1>
-          <p>A sequenced N5 and N4 study corpus, rooted in everyday Japanese.</p>
+          <div className="eyebrow">{activeMode} STUDY MODE</div>
+          <h1>{activeMode} collection.</h1>
+          <p>
+            {activeMode === "N5"
+              ? "Foundation vocabulary, kanji, grammar, reading, and listening."
+              : "N4-only material, kept separate from your N5 foundation."}
+          </p>
         </div>
-        <span className="level-badge">{concepts.length} curriculum concepts</span>
+        <span className="level-badge">
+          {visible.length} {activeMode} concepts
+        </span>
       </div>
       <div className="collection-toolbar">
         <div className="filter-tabs" role="group" aria-label="Filter concepts">
@@ -137,8 +145,7 @@ export function CollectionView() {
         )}
       </div>
       <p className="progress-note">
-        A source-backed N5 → N4 vocabulary curriculum alongside grammar, kanji,
-        reading, and listening practice. JLPT labels are approximate learning levels.
+        Switch study modes from the sidebar or Settings to view the other level.
       </p>
     </>
   );

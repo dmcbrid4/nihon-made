@@ -103,6 +103,7 @@ export class PostgresRepository implements StudyRepository {
           imported.sessions.map((session) => ({
             id: session.id,
             userId,
+            mode: session.mode,
             date: session.date,
             startedAt: session.startedAt,
             completedAt: session.completedAt,
@@ -208,6 +209,7 @@ export class PostgresRepository implements StudyRepository {
         await tx.insert(s.studySessions).values({
           id: session.id,
           userId,
+          mode: session.mode,
           date: session.date,
           startedAt: session.startedAt,
         });

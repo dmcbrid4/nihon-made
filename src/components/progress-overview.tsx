@@ -22,12 +22,15 @@ const skills = [
 export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
   const { state } = useStudy();
   if (!state) return null;
-  const vocabulary = vocabularyProgress(state);
+  const activeMode = state.goal.studyMode;
+  const vocabulary = vocabularyProgress(state).filter(
+    (cohort) => cohort.id === activeMode.toLowerCase(),
+  );
   return (
     <section className="progress-section" aria-labelledby="progress-heading">
       <div className="section-heading">
         <div>
-          <h2 id="progress-heading">Your foundations</h2>
+          <h2 id="progress-heading">Your {activeMode} foundations</h2>
           <p lang="ja">学びは、少しずつ深まる。</p>
         </div>
         {showLink && (
@@ -76,7 +79,9 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
       <div className="progress-grid">
         {skills.map(({ type, label, icon: Icon }) => {
           const ids = concepts
-            .filter((item) => item.type === type)
+            .filter(
+              (item) => item.type === type && item.level === activeMode,
+            )
             .map((item) => item.id);
           const introduced = state.progress.filter((item) =>
             ids.includes(item.conceptId),

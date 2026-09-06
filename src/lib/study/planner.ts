@@ -12,9 +12,13 @@ export const minutesPerType = {
 
 export function currentSession(state: StudyState, now: Date) {
   return (
-    state.sessions.find((session) => !session.completedAt) ??
+    state.sessions.find(
+      (session) => !session.completedAt && session.mode === state.goal.studyMode,
+    ) ??
     state.sessions.findLast(
-      (session) => session.date === dateInZone(now, state.goal.timeZone),
+      (session) =>
+        session.mode === state.goal.studyMode &&
+        session.date === dateInZone(now, state.goal.timeZone),
     )
   );
 }
@@ -26,7 +30,11 @@ export function planSession(state: StudyState, now: Date): Concept[] {
   const due = concepts
     .filter((item) => {
       const entry = progress.get(item.id);
-      return entry && Date.parse(entry.dueAt) <= now.getTime();
+      return (
+        item.level === state.goal.studyMode &&
+        entry &&
+        Date.parse(entry.dueAt) <= now.getTime()
+      );
     })
     .sort(
       (a, b) =>
@@ -34,7 +42,9 @@ export function planSession(state: StudyState, now: Date): Concept[] {
         Date.parse(progress.get(b.id)!.dueAt),
     );
   const unseen = concepts
-    .filter((item) => !progress.has(item.id))
+    .filter(
+      (item) => item.level === state.goal.studyMode && !progress.has(item.id),
+    )
     .sort((a, b) => a.sequence - b.sequence);
   const selected: Concept[] = [];
   let minutes = 0;

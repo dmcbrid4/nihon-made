@@ -3,7 +3,11 @@ import { randomUUID } from "node:crypto";
 import test from "node:test";
 import { daysUntil, dateInZone } from "../src/lib/study/dates";
 import { concepts } from "../src/lib/study/content";
-import { planSession, sessionMinutes } from "../src/lib/study/planner";
+import {
+  currentSession,
+  planSession,
+  sessionMinutes,
+} from "../src/lib/study/planner";
 import { applyAction, initialState } from "../src/lib/study/state";
 import { scheduleReview } from "../src/lib/study/scheduler";
 import { actionSchema, dateSchema } from "../src/lib/study/types";
@@ -47,6 +51,7 @@ test("a new session balances five subjects and never exceeds the time budget", (
 
 test("overdue concepts precede unseen material and future reviews stay out", () => {
   const state = initialState();
+  state.goal.studyMode = "N4";
   state.progress = [
     scheduleReview("k-ryo", "again", new Date(now.getTime() - 3_600_000)),
     scheduleReview("v-maniau", "easy", now),
@@ -54,6 +59,32 @@ test("overdue concepts precede unseen material and future reviews stay out", () 
   const plan = planSession(state, now);
   assert.equal(plan[0].id, "k-ryo");
   assert.ok(!plan.some((item) => item.id === "v-maniau"));
+});
+
+test("N5 and N4 modes plan and resume distinct sessions", () => {
+  let state = initialState();
+  const n5Plan = planSession(state, now);
+  assert.ok(n5Plan.length);
+  assert.ok(n5Plan.every((concept) => concept.level === "N5"));
+  state = applyAction(state, { type: "start", id: randomUUID() }, now);
+  assert.equal(state.sessions[0].mode, "N5");
+
+  state = applyAction(state, {
+    type: "goal",
+    goal: { ...state.goal, studyMode: "N4" },
+  });
+  const n4Plan = planSession(state, now);
+  assert.ok(n4Plan.length);
+  assert.ok(n4Plan.every((concept) => concept.level === "N4"));
+  state = applyAction(state, { type: "start", id: randomUUID() }, now);
+  assert.equal(state.sessions.length, 2);
+  assert.equal(state.sessions[1].mode, "N4");
+
+  state = applyAction(state, {
+    type: "goal",
+    goal: { ...state.goal, studyMode: "N5" },
+  });
+  assert.equal(currentSession(state, now)?.id, state.sessions[0].id);
 });
 
 test("start and review retries are idempotent, and a session resumes after midnight", () => {

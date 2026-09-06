@@ -48,6 +48,7 @@ export const goalSchema = z.object({
   targetDate: dateSchema,
   dailyMinutes: z.number().int().min(10).max(60),
   targetLevel: z.literal("N4"),
+  studyMode: z.enum(["N5", "N4"]).default("N5"),
   timeZone: z
     .string()
     .max(100)
@@ -89,6 +90,7 @@ export type Review = z.infer<typeof reviewSchema>;
 
 export const sessionSchema = z.object({
   id: z.uuid(),
+  mode: z.enum(["N5", "N4"]).default("N5"),
   date: dateSchema,
   conceptIds: z.array(z.string()),
   startedAt: z.iso.datetime(),

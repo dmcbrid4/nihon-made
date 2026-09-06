@@ -16,6 +16,7 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     await client.exec(await readFile("drizzle/0000_tough_malice.sql", "utf8"));
     await client.exec(await readFile("drizzle/0001_add_listening_concepts.sql", "utf8"));
     await client.exec(await readFile("drizzle/0002_vocabulary_progress_statuses.sql", "utf8"));
+    await client.exec(await readFile("drizzle/0003_add_study_modes.sql", "utf8"));
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
     await seedContent(db);
@@ -51,6 +52,7 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
       id: randomUUID(),
     });
     const session = started.sessions[0];
+    assert.equal(session.mode, "N5");
     const action = {
       type: "review" as const,
       id: randomUUID(),
@@ -85,12 +87,14 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
         ...finished.goal,
         targetDate: "2027-01-22",
         dailyMinutes: 40,
+        studyMode: "N4",
         timeZone: "Asia/Tokyo",
       },
     });
     const final = await repository.load();
     assert.equal(final.goal.targetDate, "2027-01-22");
     assert.equal(final.goal.timeZone, "Asia/Tokyo");
+    assert.equal(final.goal.studyMode, "N4");
 
     const importedUserId = "00000000-0000-4000-8000-000000000002";
     const importedSessionId = randomUUID();

@@ -80,19 +80,23 @@ export function Dashboard() {
           <div className="eyebrow">
             TODAY
           </div>
-          <h1>Japanese study</h1>
-          <p>Review, practice, and keep track of your progress.</p>
+          <h1>{state.goal.studyMode} Japanese study</h1>
+          <p>
+            {state.goal.studyMode === "N5"
+              ? "Build the foundations before moving on."
+              : "Focus on N4-only material, separate from your N5 work."}
+          </p>
         </div>
         <div className="heading-date">
           <span>{date}</span>
-          <span className="level-badge">JLPT N4</span>
+          <span className="level-badge">{state.goal.studyMode} mode</span>
         </div>
       </div>
       <div className="dashboard-grid">
         <section className="today-card panel" aria-labelledby="today-heading">
           <div className="card-topline">
             <span className="eyebrow">
-              <span className="status-dot" /> TODAY’S SESSION
+              <span className="status-dot" /> {state.goal.studyMode} SESSION
             </span>
             <span className="time-pill">
               <Clock3 size={13} />

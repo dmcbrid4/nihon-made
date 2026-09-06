@@ -60,6 +60,22 @@
   letter-spacing: 0.15em;
   color: var(--muted);
 }
+.study-mode-picker {
+  display: grid;
+  gap: 7px;
+  margin: 0 6px 18px;
+}
+.study-mode-picker > span {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+}
+.study-mode-picker select {
+  min-height: 35px;
+  padding: 6px 8px;
+  font-size: 11px;
+}
 .main-nav {
   display: flex;
   flex-direction: column;

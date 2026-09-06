@@ -123,6 +123,23 @@ test("settings, countdown, dark mode, collection filtering, and history export",
   ).toBeTruthy();
 });
 
+test("study modes keep the N5 and N4 queues and collection separate", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByLabel("Active study mode").selectOption("N4");
+  await expect(page.getByRole("heading", { name: "N4 Japanese study" })).toBeVisible();
+  await page.getByRole("link", { name: "Collection", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "N4 collection." })).toBeVisible();
+  const n4State = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("nihon-made:study:v1")!),
+  );
+  expect(n4State.goal.studyMode).toBe("N4");
+
+  await page.getByLabel("Active study mode").selectOption("N5");
+  await expect(page.getByRole("heading", { name: "N5 collection." })).toBeVisible();
+});
+
 test("storage failures are visible and never advance the study card", async ({
   page,
 }) => {
