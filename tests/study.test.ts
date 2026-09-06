@@ -164,6 +164,17 @@ test("learning requires repeated comfortable recall, and a lapse resets it", () 
   assert.equal(Date.parse(lapse.dueAt) - now.getTime(), 600_000);
 });
 
+test("the current scheduler exposes explicit interval policy for each rating", () => {
+  assert.equal(scheduleReview("v-maniau", "again", now).intervalDays, 10 / (24 * 60));
+  assert.equal(scheduleReview("v-maniau", "hard", now).intervalDays, 1);
+  assert.equal(scheduleReview("v-maniau", "good", now).intervalDays, 3);
+  assert.equal(scheduleReview("v-maniau", "easy", now).intervalDays, 7);
+  const previous = scheduleReview("v-maniau", "good", now);
+  const lapse = scheduleReview("v-maniau", "again", now, previous);
+  assert.equal(lapse.successStreak, 0);
+  assert.equal(lapse.status, "learning");
+});
+
 test("vocabulary progress keeps N5, N4-only, combined, and learning stages distinct", () => {
   const state = initialState();
   const [n5] = concepts.filter(

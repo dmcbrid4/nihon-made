@@ -63,7 +63,7 @@
 .study-mode-picker {
   display: grid;
   gap: 7px;
-  margin: 0 6px 18px;
+  margin: 56px 6px 18px;
 }
 .study-mode-picker > span {
   color: var(--muted);
@@ -75,6 +75,8 @@
   min-height: 35px;
   padding: 6px 8px;
   font-size: 11px;
+  border-color: color-mix(in srgb, var(--text) 16%, transparent);
+  background: color-mix(in srgb, var(--sidebar) 78%, var(--surface));
 }
 .main-nav {
   display: flex;
