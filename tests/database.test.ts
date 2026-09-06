@@ -21,6 +21,27 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     await seedContent(db);
     await seedContent(db);
     assert.equal((await db.select().from(schema.studyConcepts)).length, concepts.length);
+    await db.insert(schema.studyConcepts).values({
+      id: "retired-concept",
+      type: "vocabulary",
+      expression: "古いカード",
+      reading: "ふるいかーど",
+      meaning: "retired card",
+      level: "N5",
+      content: {
+        example: "古いカードです。",
+        exampleMeaning: "It is an old card.",
+        note: "Test fixture.",
+        topic: "Test",
+        curriculumUnit: "Test",
+        sequence: 999999,
+        difficulty: 1,
+        prerequisites: [],
+        source: "Test",
+      },
+    });
+    await seedContent(db);
+    assert.equal((await db.select().from(schema.studyConcepts)).length, concepts.length);
     const userId = "00000000-0000-4000-8000-000000000001";
     const repository = new PostgresRepository(db, userId);
     const empty = await repository.load();
