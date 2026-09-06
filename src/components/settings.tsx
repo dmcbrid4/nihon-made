@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Check, Download, Save } from "lucide-react";
-import { goalSchema, type StudyState } from "@/lib/study/types";
+import { Check, Download, Save, Upload } from "lucide-react";
+import { goalSchema, stateSchema, type StudyState } from "@/lib/study/types";
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { STORAGE_KEY } from "@/lib/storage/browser";
@@ -123,7 +123,9 @@ function GoalForm({ state }: { state: StudyState }) {
 }
 
 export function SettingsView() {
-  const { state, mode, error } = useStudy();
+  const { state, mode, error, reload } = useStudy();
+  const [importing, setImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState("");
   function exportData() {
     const raw = state
       ? JSON.stringify(state, null, 2)
@@ -137,6 +139,38 @@ export function SettingsView() {
     anchor.download = "nihon-made-study-history.json";
     anchor.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  async function importBrowserHistory() {
+    if (!window.confirm("Import this browser history into your empty cloud workspace? The browser copy will be kept.")) return;
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      setImportMessage("No browser history was found on this device.");
+      return;
+    }
+    let history: StudyState;
+    try {
+      history = stateSchema.parse(JSON.parse(raw));
+    } catch {
+      setImportMessage("That browser history could not be read. Export it before resetting storage.");
+      return;
+    }
+    setImporting(true);
+    setImportMessage("");
+    try {
+      const response = await fetch("/api/study/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(history),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Your history could not be imported.");
+      await reload();
+      setImportMessage("Browser history imported. Your local copy was kept.");
+    } catch (error) {
+      setImportMessage(error instanceof Error ? error.message : "Your history could not be imported.");
+    } finally {
+      setImporting(false);
+    }
   }
   return (
     <>
@@ -166,6 +200,15 @@ export function SettingsView() {
             <Download size={16} />
             Export study history
           </button>
+          {mode === "database" ? (
+            <>
+              <button className="secondary-button" disabled={importing} onClick={() => void importBrowserHistory()}>
+                <Upload size={16} />
+                {importing ? "Importing…" : "Import browser history"}
+              </button>
+              <div className="data-note" role="status">{importMessage}</div>
+            </>
+          ) : null}
           <div className="data-note">
             {mode === "browser"
               ? "Clearing browser data also clears your study history. Export a copy first."

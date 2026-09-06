@@ -19,6 +19,113 @@ export class PostgresRepository implements StudyRepository {
     return this.transact(action);
   }
 
+  async importState(input: StudyState): Promise<StudyState> {
+    const imported = stateSchema.parse(input);
+    return this.db.transaction(async (tx) => {
+      const userId = this.userId;
+      const conceptIds = new Set([
+        ...imported.progress.map((item) => item.conceptId),
+        ...imported.sessions.flatMap((session) => session.conceptIds),
+        ...imported.reviews.map((review) => review.conceptId),
+      ]);
+      const knownConceptIds = new Set(
+        (await tx.select({ id: s.studyConcepts.id }).from(s.studyConcepts)).map(
+          (item) => item.id,
+        ),
+      );
+      if ([...conceptIds].some((id) => !knownConceptIds.has(id)))
+        throw new ImportValidationError("The imported history has unknown concepts.");
+      if (
+        new Set(imported.progress.map((item) => item.conceptId)).size !==
+        imported.progress.length
+      )
+        throw new ImportValidationError("The imported history has duplicate progress entries.");
+      if (
+        new Set(imported.sessions.map((session) => session.id)).size !==
+        imported.sessions.length
+      )
+        throw new ImportValidationError("The imported history has duplicate sessions.");
+      if (
+        new Set(imported.reviews.map((review) => review.id)).size !==
+        imported.reviews.length
+      )
+        throw new ImportValidationError("The imported history has duplicate reviews.");
+      const sessions = new Map(imported.sessions.map((session) => [session.id, session]));
+      const reviewPairs = new Set<string>();
+      for (const session of imported.sessions) {
+        if (new Set(session.conceptIds).size !== session.conceptIds.length)
+          throw new ImportValidationError("The imported session has duplicate concepts.");
+      }
+      for (const review of imported.reviews) {
+        const session = sessions.get(review.sessionId);
+        if (!session || !session.conceptIds.includes(review.conceptId))
+          throw new ImportValidationError("The imported review does not belong to its session.");
+        const pair = `${review.sessionId}:${review.conceptId}`;
+        if (reviewPairs.has(pair))
+          throw new ImportValidationError("The imported history reviews a card twice in one session.");
+        reviewPairs.add(pair);
+      }
+
+      await tx
+        .insert(s.users)
+        .values({ id: userId, name: "Personal learner" })
+        .onConflictDoNothing();
+      await tx
+        .select()
+        .from(s.users)
+        .where(eq(s.users.id, userId))
+        .for("update");
+      const existingProgress = await tx
+        .select({ conceptId: s.userConceptProgress.conceptId })
+        .from(s.userConceptProgress)
+        .where(eq(s.userConceptProgress.userId, userId));
+      const existingSessions = await tx
+        .select({ id: s.studySessions.id })
+        .from(s.studySessions)
+        .where(eq(s.studySessions.userId, userId));
+      const existingReviews = await tx
+        .select({ id: s.reviews.id })
+        .from(s.reviews)
+        .where(eq(s.reviews.userId, userId));
+      if (existingProgress.length || existingSessions.length || existingReviews.length)
+        throw new ImportConflictError("Cloud history already contains study activity.");
+
+      await tx
+        .insert(s.studyGoals)
+        .values({ userId, ...imported.goal })
+        .onConflictDoUpdate({ target: s.studyGoals.userId, set: imported.goal });
+      if (imported.progress.length)
+        await tx.insert(s.userConceptProgress).values(
+          imported.progress.map((item) => ({ ...item, userId })),
+        );
+      if (imported.sessions.length) {
+        await tx.insert(s.studySessions).values(
+          imported.sessions.map((session) => ({
+            id: session.id,
+            userId,
+            date: session.date,
+            startedAt: session.startedAt,
+            completedAt: session.completedAt,
+          })),
+        );
+        await tx.insert(s.studySessionItems).values(
+          imported.sessions.flatMap((session) =>
+            session.conceptIds.map((conceptId, position) => ({
+              sessionId: session.id,
+              conceptId,
+              position,
+            })),
+          ),
+        );
+      }
+      if (imported.reviews.length)
+        await tx.insert(s.reviews).values(
+          imported.reviews.map((review) => ({ ...review, userId })),
+        );
+      return imported;
+    });
+  }
+
   private async transact(action?: StudyAction): Promise<StudyState> {
     return this.db.transaction(async (tx) => {
       const userId = this.userId;
@@ -139,3 +246,6 @@ export class PostgresRepository implements StudyRepository {
     });
   }
 }
+
+export class ImportConflictError extends Error {}
+export class ImportValidationError extends Error {}

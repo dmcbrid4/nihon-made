@@ -72,7 +72,7 @@ Cloud mode gives the private workspace a server-backed history and email-code si
 
 The seed can be run again without erasing reviews. After schema changes, use `npm run db:generate` and review the generated migration before running `npm run db:migrate`.
 
-Browser history and database history are separate until the import flow is used. Enabling cloud mode does not overwrite local browser history.
+Browser history and database history are separate until you choose **Import browser history** in Settings. Import is allowed only when the cloud account has no study activity, and the browser copy is kept.
 
 ## Verify
 
@@ -104,12 +104,12 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 - Sessions are generated locally from deterministic rules; there is no LLM integration, listening audio, speaking, or itinerary import yet.
 - There is no service worker or offline PWA installation flow yet. Local persistence does not mean the app can load without a network connection. Mobile layout and Apple web-app metadata provide a starting point.
 - V1 loads the personal study history as one state snapshot. Pagination and archived sessions can be added when the history grows.
-- JSON export is available. Browser-history import into an empty cloud account is the next data-safety feature.
+- JSON export and one-way browser-history import into an empty cloud account are available.
 
 ## Next three features
 
 1. **A sequenced N5 → N4 curriculum and proper SRS:** prerequisites, due queues, relearning, and scheduling informed by review history.
 2. **Graded reading and listening:** word lookup, objective comprehension checks, Japanese audio, and transcript reveal.
-3. **A private mobile study workspace:** browser-history import and cross-device sync, then a PWA with offline sessions.
+3. **A private mobile study workspace:** cross-device sync, then a PWA with offline sessions.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).

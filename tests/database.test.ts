@@ -67,6 +67,25 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     const final = await repository.load();
     assert.equal(final.goal.targetDate, "2027-01-22");
     assert.equal(final.goal.timeZone, "Asia/Tokyo");
+
+    const importedUserId = "00000000-0000-4000-8000-000000000002";
+    const importedSessionId = randomUUID();
+    const importSource = {
+      ...final,
+      sessions: final.sessions.map((session) => ({ ...session, id: importedSessionId })),
+      reviews: final.reviews.map((review) => ({
+        ...review,
+        id: randomUUID(),
+        sessionId: importedSessionId,
+      })),
+    };
+    const imported = await new PostgresRepository(db, importedUserId).importState(importSource);
+    assert.deepEqual(imported, importSource);
+    assert.deepEqual(await new PostgresRepository(db, importedUserId).load(), importSource);
+    await assert.rejects(
+      new PostgresRepository(db, importedUserId).importState(importSource),
+      /Cloud history already contains study activity/,
+    );
   } finally {
     await client.close();
   }
