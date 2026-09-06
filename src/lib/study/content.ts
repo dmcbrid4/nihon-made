@@ -1,4 +1,5 @@
 import type { Concept } from "./types";
+import { expandedCurriculum } from "./curriculum-expansion";
 
 type DraftConcept = Omit<
   Concept,
@@ -343,7 +344,11 @@ const unitOrder = [
 const unitIndex = new Map(unitOrder.map((unit, index) => [unit, index]));
 const typeOrder = { vocabulary: 0, kanji: 1, grammar: 2, reading: 3, listening: 4 } as const;
 const sourceFor = (level: "N5" | "N4") => `Original teaching example; aligned to the JLPT ${level} level summary.`;
-export const concepts: Concept[] = [...starterConcepts, ...curriculumAdditions]
+export const concepts: Concept[] = [
+  ...starterConcepts,
+  ...curriculumAdditions,
+  ...expandedCurriculum,
+]
   .sort((a, b) => {
     const unitA = topicUnits[a.level][a.topic as never] ?? `${a.level} · Core study`;
     const unitB = topicUnits[b.level][b.topic as never] ?? `${b.level} · Core study`;

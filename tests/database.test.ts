@@ -18,7 +18,7 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     const db = drizzle(client, { schema }) as unknown as Database;
     await seedContent(db);
     await seedContent(db);
-    assert.equal((await db.select().from(schema.studyConcepts)).length, 74);
+    assert.equal((await db.select().from(schema.studyConcepts)).length, 303);
     const userId = "00000000-0000-4000-8000-000000000001";
     const repository = new PostgresRepository(db, userId);
     const empty = await repository.load();

@@ -24,9 +24,9 @@ export function CollectionView() {
         <div>
           <div className="eyebrow">WORDS THAT TAKE YOU PLACES</div>
           <h1>Your growing collection.</h1>
-          <p>A small set of N5 and N4 foundations, rooted in everyday Japan.</p>
+          <p>A sequenced N5 and N4 study corpus, rooted in everyday Japanese.</p>
         </div>
-        <span className="level-badge">{concepts.length} starter concepts</span>
+        <span className="level-badge">{concepts.length} curriculum concepts</span>
       </div>
       <div className="collection-toolbar">
         <div className="filter-tabs" role="group" aria-label="Filter concepts">

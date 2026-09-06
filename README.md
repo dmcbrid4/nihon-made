@@ -97,7 +97,7 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 
 ## Deliberate V1 limits
 
-- The starter collection is not a full N4 curriculum. JLPT labels are approximate; progress bars measure exploration of the included content.
+- The curriculum is a growing, curated N5 → N4 study corpus rather than an official JLPT word or kanji list. JLPT labels are approximate; progress bars measure exploration of the included content.
 - Ratings are self-assessments. “Learned” requires three consecutive Good/Easy ratings and an interval of at least seven days. Again resets that run of successful recalls. This is a placeholder policy, not validated FSRS.
 - Again makes a concept due after ten minutes, but each item appears once in this daily session; it returns in the next generated session. Other initial intervals are one, three, and seven days.
 - Sessions are generated locally from deterministic rules; there is no LLM integration, listening audio, speaking, or itinerary import yet.
@@ -109,7 +109,7 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 
 Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
 
-- [~] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. A 74-item N5 → N4 foundation now covers vocabulary, kanji, grammar, reading, and listening scripts, with ordered units, examples, explanations, difficulty, and source alignment. Continue expanding it toward full N4 coverage and replace listening scripts with recorded audio.
+- [~] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. A 303-item N5 → N4 corpus now covers vocabulary, kanji, grammar, practical reading, and listening scripts, with ordered units, examples, explanations, difficulty, and source alignment. Continue expanding toward full N4 coverage, add active recall exercises, and replace listening scripts with recorded audio.
 - [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
 - [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
 - [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
@@ -121,6 +121,6 @@ Work through these in order. The model and reasoning level are recommendations f
 
 The curriculum uses the [official JLPT N5/N4 level summaries](https://www.jlpt.jp/e/about/levelsummary.html) as its level-alignment source. The JLPT describes N5 through basic written phrases and slow, familiar conversations, and N4 through familiar everyday texts and somewhat slowly spoken everyday conversations. It does not make this app’s vocabulary and kanji set an official JLPT list; each example is original teaching material.
 
-The first implementation target is the curriculum and content model. The current foundation is substantial enough to study, but it is not yet a complete N4 corpus. The review scheduler also remains a placeholder until the next roadmap item is complete.
+The first implementation target is the curriculum and content model. The current corpus supports a sustained beginner-to-intermediate study plan, but it is not yet a complete N4 corpus. The review scheduler also remains a placeholder until the next roadmap item is complete.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).
