@@ -28,7 +28,7 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
       <div className="section-heading">
         <div>
           <h2 id="progress-heading">Your foundations</h2>
-          <p>Understanding that grows with you.</p>
+          <p lang="ja">学びは、少しずつ深まる。</p>
         </div>
         {showLink && (
           <Link href="/progress" className="text-link">
