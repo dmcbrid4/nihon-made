@@ -23,7 +23,6 @@ import {
   sessionMinutes,
 } from "@/lib/study/planner";
 import { useStudy } from "./study-provider";
-import { Landscape } from "./landscape";
 import { Loading } from "./loading";
 import { ProgressOverview } from "./progress-overview";
 
@@ -31,25 +30,25 @@ const sections = [
   {
     type: "vocabulary",
     label: "Vocabulary",
-    description: "Useful words, familiar contexts",
+    description: "New and due words",
     icon: Languages,
   },
   {
     type: "kanji",
     label: "Kanji",
-    description: "Find meaning in the characters",
+    description: "Character recognition and reading",
     icon: PenLine,
   },
   {
     type: "grammar",
     label: "Grammar",
-    description: "Put the pieces together",
+    description: "Core sentence patterns",
     icon: Layers3,
   },
   {
     type: "reading",
     label: "Reading",
-    description: "A small window into everyday Japan",
+    description: "Short reading practice",
     icon: BookOpen,
   },
 ] as const;
@@ -82,21 +81,21 @@ export function Dashboard() {
       <div className="page-heading">
         <div>
           <div className="eyebrow">
-            <span className="tiny-sun" /> 日本語を、毎日。
+            TODAY
           </div>
-          <h1>今日も、日本語をひとつ。</h1>
-          <p lang="ja">読む。聞く。話す。身につける。</p>
+          <h1>Japanese study</h1>
+          <p>Review, practice, and keep track of your progress.</p>
         </div>
         <div className="heading-date">
           <span>{date}</span>
-          <span className="level-badge">Working toward JLPT N4</span>
+          <span className="level-badge">JLPT N4</span>
         </div>
       </div>
       <div className="dashboard-grid">
         <section className="today-card panel" aria-labelledby="today-heading">
           <div className="card-topline">
             <span className="eyebrow">
-              <span className="status-dot" /> TODAY’S PRACTICE
+              <span className="status-dot" /> TODAY’S SESSION
             </span>
             <span className="time-pill">
               <Clock3 size={13} />
@@ -105,17 +104,17 @@ export function Dashboard() {
           </div>
           <h2 id="today-heading">
             {completed
-              ? "A good place to pause."
+              ? "Session complete"
               : reviewed
-                ? "Pick up where you left off."
-                : "Make room for Japanese."}
+                ? "Continue session"
+                : "Today’s study"}
           </h2>
           <p className="card-description">
             {completed
-              ? "Today’s session is complete. Let it settle in."
+              ? "Your next session will be ready tomorrow."
               : reviewed
                 ? `${reviewed} of ${items.length} steps complete. Your place is saved.`
-                : "A focused session. A few new connections."}
+                : `${items.length} activities selected for today.`}
           </p>
           <div className="session-list">
             {sections.map(({ type, label, description, icon: Icon }) => {
@@ -165,22 +164,22 @@ export function Dashboard() {
               {busy
                 ? "Preparing your session…"
                 : reviewed
-                  ? "Continue Today’s Japanese"
+                  ? "Continue session"
                   : items.length
-                    ? "Start Today’s Japanese"
-                    : "You’re all caught up"}
+                    ? "Start session"
+                    : "No study due today"}
               <ArrowRight size={17} />
             </button>
           )}
           <p className="session-footnote">
             {completed
-              ? "Your next session will be ready tomorrow."
-              : "Go at your own pace. You can pause anytime."}
+              ? "Progress saved."
+              : "Progress saves automatically."}
           </p>
         </section>
         <aside className="trip-card" aria-label="Countdown to Japan">
           <div className="trip-topline">
-            <span className="eyebrow">THE DESTINATION</span>
+            <span className="eyebrow">TRIP COUNTDOWN</span>
             <Link
               href="/settings"
               className="icon-button"
@@ -190,18 +189,12 @@ export function Dashboard() {
             </Link>
           </div>
           <div className="trip-title">
-            <h2>Japan</h2>
-            <span lang="ja">日本</span>
+            <h2>Japan trip</h2>
           </div>
           <p className="trip-date">{formatTripDate(state.goal.targetDate)}</p>
           <div className="countdown">
             <strong>{days}</strong>
             <span>{days === 1 ? "DAY TO GO" : "DAYS TO GO"}</span>
-          </div>
-          <Landscape />
-          <div className="trip-caption">
-            <span lang="ja">少しずつ、前へ。</span>
-            <span>Little by little, forward.</span>
           </div>
         </aside>
       </div>
@@ -211,18 +204,14 @@ export function Dashboard() {
           <Compass size={23} strokeWidth={1.5} />
         </span>
         <div>
-          <div className="eyebrow">JAPANESE FOR THE REAL WORLD</div>
-          <h2>Next stop: everyday Japan.</h2>
-          <p>From finding your platform to ordering something delicious.</p>
+          <div className="eyebrow">STUDY MATERIAL</div>
+          <h2>N5–N4 foundations</h2>
+          <p>Vocabulary, kanji, grammar, and reading practice.</p>
         </div>
         <Link href="/collection" className="text-link">
           Explore {concepts.length} concepts <ArrowUpRight size={16} />
         </Link>
       </section>
-      <div className="closing-note">
-        <span lang="ja">学ぶ、つながる、旅をする。</span>
-        <span>Learn. Connect. Go places.</span>
-      </div>
     </>
   );
 }
