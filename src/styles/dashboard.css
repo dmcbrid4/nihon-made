@@ -56,7 +56,7 @@
 }
 .dashboard-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.53fr) minmax(265px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
 }
 .panel {

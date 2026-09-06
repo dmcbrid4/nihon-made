@@ -12,10 +12,8 @@ import {
   Languages,
   Layers3,
   PenLine,
-  Settings2,
 } from "lucide-react";
 import { concepts, conceptById } from "@/lib/study/content";
-import { daysUntil, formatTripDate } from "@/lib/study/dates";
 import {
   currentSession,
   minutesPerType,
@@ -71,7 +69,6 @@ export function Dashboard() {
     day: "numeric",
     timeZone: state.goal.timeZone,
   }).format(now);
-  const days = daysUntil(state.goal.targetDate, now, state.goal.timeZone);
   async function start() {
     const next = await dispatch({ type: "start", id: crypto.randomUUID() });
     if (next) router.push("/study");
@@ -177,26 +174,6 @@ export function Dashboard() {
               : "Progress saves automatically."}
           </p>
         </section>
-        <aside className="trip-card" aria-label="Countdown to Japan">
-          <div className="trip-topline">
-            <span className="eyebrow">TRIP COUNTDOWN</span>
-            <Link
-              href="/settings"
-              className="icon-button"
-              aria-label="Edit Japan trip date"
-            >
-              <Settings2 size={17} />
-            </Link>
-          </div>
-          <div className="trip-title">
-            <h2>Japan trip</h2>
-          </div>
-          <p className="trip-date">{formatTripDate(state.goal.targetDate)}</p>
-          <div className="countdown">
-            <strong>{days}</strong>
-            <span>{days === 1 ? "DAY TO GO" : "DAYS TO GO"}</span>
-          </div>
-        </aside>
       </div>
       <ProgressOverview />
       <section className="travel-focus">
