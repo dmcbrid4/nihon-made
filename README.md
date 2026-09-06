@@ -109,7 +109,7 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 
 Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
 
-- [ ] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. Build a sequenced N5 → N4 curriculum covering vocabulary, kanji, grammar, reading, and listening. Give every item examples, explanations, difficulty, and a source.
+- [~] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. A 74-item N5 → N4 foundation now covers vocabulary, kanji, grammar, reading, and listening scripts, with ordered units, examples, explanations, difficulty, and source alignment. Continue expanding it toward full N4 coverage and replace listening scripts with recorded audio.
 - [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
 - [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
 - [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
@@ -119,6 +119,8 @@ Work through these in order. The model and reasoning level are recommendations f
 - [ ] **Study analytics and goals** — GPT-5.6 Luna, medium reasoning. Track time, consistency, weak areas, review health, and weekly targets.
 - [ ] **Progress backup and export** — GPT-5.6 Luna, medium reasoning. Improve export, restore, and recovery workflows for the private account.
 
-The first implementation target is the curriculum and content model. The current starter collection and review rules are intentionally labeled as placeholders until that work is complete.
+The curriculum uses the [official JLPT N5/N4 level summaries](https://www.jlpt.jp/e/about/levelsummary.html) as its level-alignment source. The JLPT describes N5 through basic written phrases and slow, familiar conversations, and N4 through familiar everyday texts and somewhat slowly spoken everyday conversations. It does not make this app’s vocabulary and kanji set an official JLPT list; each example is original teaching material.
+
+The first implementation target is the curriculum and content model. The current foundation is substantial enough to study, but it is not yet a complete N4 corpus. The review scheduler also remains a placeholder until the next roadmap item is complete.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).
