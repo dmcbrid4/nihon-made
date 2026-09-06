@@ -60,19 +60,18 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
         <div className="sidebar-bottom">
           <div className="journey-label">
-            <span className="status-dot" /> A journey to N4
+            <span className="status-dot" /> JLPT N4 を目指して
           </div>
           <p>
-            A little practice.
-            <br />A whole new place.
+            毎日の復習が、
+            <br />
+            力になる。
           </p>
           <Link href="/settings">
-            Make it yours <ArrowUpRight size={14} />
+            学習設定 <ArrowUpRight size={14} />
           </Link>
           <div className="sidebar-footer">
-            <span>
-              一歩ずつ <span className="muted">· One step at a time</span>
-            </span>
+            <span lang="ja">少しずつ、着実に。</span>
             <ThemeToggle />
           </div>
         </div>
@@ -113,7 +112,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
         <footer className="page-footer">
           <span lang="ja">日本まで</span>
-          <span>Built around your journey.</span>
+          <span lang="ja">学びは積み重なる。</span>
         </footer>
       </div>
     </div>
