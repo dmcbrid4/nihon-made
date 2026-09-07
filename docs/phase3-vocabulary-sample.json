@@ -131,10 +131,18 @@
       "chunk": 2,
       "recordIds": [
         "v-jlpt-n5-0415",
-        "v-jlpt-n4-0062"
+        "v-jlpt-n5-0095",
+        "v-jlpt-n5-0114",
+        "v-jlpt-n5-0388",
+        "v-jlpt-n5-0633",
+        "v-jlpt-n4-0062",
+        "v-jlpt-n4-0707",
+        "v-jlpt-n4-0097",
+        "v-jlpt-n4-0057",
+        "v-jlpt-n4-0461"
       ],
       "report": "phase3-vocabulary-audit.md",
-      "status": "partial chunk: position 6 in each level inspected at ba4d863; corrections proposed, not applied; resume positions 7–10 in each level"
+      "status": "reviewed: positions 6–10 in each level; first two at ba4d863, remaining eight at 8c0e655; corrections proposed, not applied; resume position 11 in each level"
     }
   ]
 }

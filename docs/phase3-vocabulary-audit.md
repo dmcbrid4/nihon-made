@@ -1,7 +1,7 @@
 # Phase 3 vocabulary audit
 
-Status: **12 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunk 2 partial findings below await Phase 4. Resume position 7 in each level.
+Status: **20 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunk 2 findings below await Phase 4. Resume position 11 in each level.
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -254,3 +254,178 @@ sample records remain). Keep baseline IDs and sample order unchanged.
 Verification: checked reviewed IDs are unique, belong to the fixed sample and
 exist in the current catalog; 12 total (6 N5, 6 N4). `git diff --check` passed.
 No app tests/build rerun for this documentation-only audit.
+
+## Chunk 2 — completed: positions 7–10 per level (2026-09-07)
+
+Reviewed eight additional complete records at `8c0e655`; cumulative sample
+progress is **20/100 (10 N5, 10 N4)**. Together with the preceding two-record
+pass, this completes chunk 2. No dataset corrections or production changes.
+Current catalog SHA-256:
+`05bae31493ca3ebc0c8f08e54c5370ca43ebe8309dcc9e270b3c258d074db7ae`.
+The original sampling hash and IDs remain unchanged.
+
+### Individual decisions
+
+**N5 `v-jlpt-n5-0095` — たくさん: required teaching correction; active.**
+The kana spelling, reading and “many” sense are valid. However,
+もうたくさんだ。 / “I have had it.” is natural Japanese/English expressing
+“enough,” not a useful first example of quantity. Stored JMdict sense
+`1415870:0` supports the gloss, while the example fits sense 1. Token presence
+and gloss overlap do not establish example-sense alignment. “Na-adjective”
+alone is a poor teaching label here: JMdict also lists adverb/noun/の-adjective.
+Teach “many; a lot” with adverbial quantity use and explain たくさんの + noun;
+do not mechanically encourage たくさんな + noun as the beginner pattern.
+Original proposed example: 公園に人がたくさんいます。 / “There are a lot of
+people in the park.” Ruby: 公園(こうえん)に人(ひと)がたくさんいます。
+Reading: こうえんにひとがたくさんいます。 Existing word and sentence need no
+ruby and are correctly stored without it. The generic uncertain-ruby flag is
+unnecessary for this inspected kana-only material. Imported attribution is missing.
+
+**N5 `v-jlpt-n5-0114` — テレビ: accept linguistic content; active.**
+“Television,” noun, and kana spelling agree with JMdict `1080510:0`.
+テレビを消して。 / “Turn off the TV.” is a natural casual request, uses the
+primary television sense, and is useful beginner material. 消→け with して
+left as kana correctly renders 消して (けして); separate し/て segments
+are harmless. Explain casual request register if retained; do not reject the
+sentence for brevity or force a rewrite. Headword has no kanji, correctly.
+Imported sentence attribution remains unresolved; “accept” is linguistic
+acceptance, not release or licensing clearance.
+
+**N5 `v-jlpt-n5-0388` — 七つ: required example and reading correction; active.**
+七→なな + つ and the number POS agree with JMdict `1319220:0`. Prefer the
+teaching gloss “seven (things)” and a note distinguishing general counting
+from age and other counters. The current example is a counting list shared
+with 六つ, not a contextual sentence. Its English list is accurate, but its
+ruby teaches 四つ as よんつ, 六つ as むいつ, and 八つ as ようつ. Correct
+beginner readings are よっつ, むっつ, やっつ. In this native counting series,
+十 should be とお; じゅう is valid for 十 elsewhere, not the intended sequence.
+Other segments in the list are correct. Verified against JMdict entries
+`1307040`, `1585315`, `1583095`, `1579840` and
+[Kyoto University's counter lesson](https://www.samidori.k.kyoto-u.ac.jp/study/exam?id=158).
+The lesson was consulted for reading facts; no lesson sentences/media copied.
+Original replacement: みかんを七つ買いました。 / “I bought seven mandarin
+oranges.” Ruby: みかんを七(なな)つ買(か)いました。
+Reading: みかんをななつかいました。 Replacement still requires post-generation
+reading review; fixing the text alone cannot repair the sentence annotator.
+
+**N5 `v-jlpt-n5-0633` — 友達: recommended translation/context polish; active.**
+Headword, ともだち, “friend,” noun and JMdict `1540170:0` agree. Word ruby
+友→とも / 達→だち and sentence compound ruby 友達→ともだち are both correct.
+友達でしょ？ is natural. “Are you friends?” omits the confirmation-seeking
+force of でしょ and chooses participants without context. “You're friends,
+right?” is closer if asking about the listener and another person; “We're
+friends, right?” fits another context. Preserve that ambiguity in a usage note
+or replace with an explicit scene. Optional original beginner example:
+明日、友達とテニスをします。 / “I'm playing tennis with a friend tomorrow.”
+Ruby: 明日(あした)、友達(ともだち)とテニスをします。
+Reading: あした、ともだちとてにすをします。 Existing attribution is missing.
+
+**N4 `v-jlpt-n4-0707` — スーパー: accept linguistic content; active.**
+JMdict `1066710:0` confirms the supermarket sense and noun POS. This is the
+right common sense, without obscure subtitle/radio senses. Kana spelling and
+long vowels are correct. スーパーで買い物をします。 / “I shop at the
+supermarket.” is natural, concrete and beginner appropriate. Sentence ruby
+買→か + い + 物→もの correctly gives かいもの. The original editorial source
+is documented in the generator's Phase 2 override, so no imported attribution
+is claimed. Word ruby is correctly absent despite the generic uncertain flag.
+Keep N4 provisionally with its explicit low-confidence note. This is useful
+early shopping vocabulary; promote its curriculum priority within the chosen
+mode without claiming an official N5 classification or duplicating the term.
+
+**N4 `v-jlpt-n4-0097` — たいてい: required example/POS correction; quarantined.**
+Kana spelling, reading and “usually” agree with JMdict `1414580:0` (usually
+kana). Preserve kana. JMdict lists several POS categories, but “adverb” best
+teaches this selected usage; “na-adjective” alone misleads. Current example is
+an inherited metalinguistic placeholder. Its 言葉→ことば and 練習→れんしゅう
+are correct, but it does not demonstrate habitual frequency. Original proposed
+replacement: 日曜日はたいてい家にいます。 / “I usually stay home on Sundays.”
+Ruby: 日曜日(にちようび)はたいてい家(いえ)にいます。
+Reading: にちようびはたいていいえにいます。 Headword needs no ruby.
+
+**N4 `v-jlpt-n4-0057` — このごろ: accept linguistic content; active.**
+“these days; nowadays,” adverb, and reading agree with JMdict `1004710:0`.
+Kana spelling is natural; この頃 is also a common dictionary form and need
+not be forced onto this card. このごろ暖かい日が多い。 / “Recently we have had
+many mild days.” demonstrates a recent recurring tendency naturally. English
+is acceptable; “We've had a lot of warm days lately” would be optional polish.
+暖→あたた + かい, 日→ひ, 多→おお + い are correct for this sentence. Grammar
+is accessible at N4. Word ruby correctly absent. Imported attribution remains
+missing; do not equate linguistic acceptance with resolved provenance.
+
+**N4 `v-jlpt-n4-0461` — 台風: accept linguistic content; active.**
+“Typhoon,” noun, spelling and たいふう agree with JMdict `1596780:0`.
+台風は去った。 / “The typhoon is gone.” is grammatical, sense-aligned and
+natural. “The typhoon has passed” is an optional closer English rendering.
+去る may need a brief “pass/go away” vocabulary aid for this level, but the
+short sentence is understandable and does not require advanced grammar.
+台→たい / 風→ふう and compound 台風→たいふう both work; 去→さ + った is
+correct. Imported attribution remains missing.
+
+### Systematic findings and Phase 4 acceptance criteria
+
+1. **Active sentence-reading defects survive structural validation.** A
+   read-only call to `validateVocabularyDataset()` returns `issues: []` on
+   this catalog. `sentence_segments()` derives both ruby and exampleReading
+   from the same tokenizer output. Agreement between them is insufficient.
+   Add reviewed contextual counter fixtures/overrides and test the generated
+   output against independently specified correct readings. Include examples
+   where the target's in-sentence reading must match its canonical word reading.
+   Do not replace generic kanji readings globally: 四 in 四つ differs from
+   四人, and 十 in this series differs from 十個.
+2. **Targeted follow-up, outside the random-sample count:** the same counting
+   list occurs in active `v-jlpt-n5-0662` 六つ. A search for the three bad
+   readings also finds active `v-jlpt-n5-0366` 四つ with 見て！四つ葉！ /
+   みて！よんつよう！, and active `v-jlpt-n5-0571` 八つ with 彼女は八つだ。 /
+   かのじょはようつだ。 Four active records are implicated including 七つ.
+   四つ葉 is よつば and is a lexicalized clover reference, not a clear general
+   counting example. The 八つ age sentence is grammatical; 八つ needs やっつ
+   and an age-use note. Review these three additional cards in Phase 4;
+   targeted reading checks here are not complete sampled-record audits.
+3. **Select example sense and pedagogical POS together.** たくさん passes
+   token matching while teaching a different dictionary sense from its gloss.
+   たくさん/たいてい POS lists are not best reduced to a single first-match
+   adjective tag. Add teaching-use checks/overrides, retaining dictionary tags
+   as evidence rather than pretending other grammatical uses do not exist.
+4. **Recover source observations using verified spelling aliases.** Raw
+   `waller-n4.csv` contains たいてい/大抵; `open-anki-n4.csv` contains
+   大抵/たいてい and この頃/このごろ; `open-anki-n5.csv` contains 沢山/たくさん.
+   Their matching kana-card evidence currently says `agrees: null`. The Anki
+   スーパー (マーケット) row also explains the normalized スーパー identity.
+   Use dictionary-backed aliases plus explicit original-row identity; never
+   merge unrelated homophones based solely on kana. These recover within-source
+   observations, not independent list consensus. Seven of this pass's eight
+   records have “high” confidence based on a shared lineage; qualify that label.
+   All eight placements are plausible; independent agreement remains unverified.
+5. **Metadata/ordering follow-up.** Five kana-only headwords in this pass have
+   correct absence of ruby despite being flagged uncertain. Separate word and
+   sentence review status so accepting kana does not certify unreviewed sentence
+   kanji. `linkedKanji` contains runs (e.g. `["友達"]`, `["台風"]`), not individual
+   kanji IDs; only type/schema references were found outside JSON. Clarify this
+   contract before any kanji-link UI consumes it. All eight are in the common
+   priority band, but imported rank is not a pedagogical sequence; prioritize
+   quantity, numbers, everyday activities and shopping based on prerequisites.
+
+### Evidence and verification
+
+Read all eight full records and their full-JMdict entry senses from the local
+snapshot used in the preceding pass. JMdict IDs are given above; contextual
+checks also used 消す `1350110`, 去る `1231650`, and 買い物 `1589730`; 四つ葉 `2139910` confirms よつば.
+Raw source row comparisons were read-only. Proposed replacements are original
+editorial candidates, not copied corpus sentences; no new material imported.
+
+This pass: **3 required teaching/example fixes, 1 recommended polish, 4
+linguistically acceptable records**. All eight word readings/ruby representations
+appear correct; seven existing sentence ruby sequences appear correct and one
+has multiple errors. Seven records are active, one quarantined. Six examples
+lack imported attribution, one is a fallback, and one is documented editorial
+content. Only 七つ shares its sentence with another catalog record in this pass.
+
+Whole chunk 2 (including the prior two): five required, one polish, four
+linguistically acceptable. No estimate of full-corpus error rate is implied.
+All findings are agent review, not native-speaker certification or release approval.
+
+Verified 20 unique reviewed IDs, 10 per level, exactly sample positions 1–10;
+current records exist and the baseline sample remains unchanged. The read-only
+validator probe passes despite the documented counter defects. `git diff --check`
+passed; app tests/build were not rerun for this documentation-only increment.
+Next: **chunk 3, positions 11–15 in each level; 80 sample records remain**.
