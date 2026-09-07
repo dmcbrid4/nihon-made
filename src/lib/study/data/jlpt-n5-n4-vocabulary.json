@@ -30850,23 +30850,15 @@
             "reading": null
           },
           {
-            "text": "火曜",
-            "reading": "かよう"
+            "text": "火曜日",
+            "reading": "かようび"
           },
           {
-            "text": "日",
-            "reading": "ひ"
-          },
-          {
-            "text": "です",
-            "reading": null
-          },
-          {
-            "text": "。",
+            "text": "です。",
             "reading": null
           }
         ],
-        "exampleReading": "きょうはかようひです。",
+        "exampleReading": "きょうはかようびです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -30933,11 +30925,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
+            "Reviewed contextual compound reading: 火曜日 is かようび.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -37524,8 +37517,8 @@
       "meaning": "Friday",
       "level": "N5",
       "partOfSpeech": "adverb",
-      "example": "花の金曜日だ！",
-      "exampleMeaning": "Thank God it's Friday!",
+      "example": "金曜日に友達と会います。",
+      "exampleMeaning": "I will meet a friend on Friday.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -37551,31 +37544,31 @@
         ],
         "exampleFurigana": [
           {
-            "text": "花",
-            "reading": "はな"
+            "text": "金曜日",
+            "reading": "きんようび"
           },
           {
-            "text": "の",
+            "text": "に",
             "reading": null
           },
           {
-            "text": "金曜",
-            "reading": "きんよう"
+            "text": "友達",
+            "reading": "ともだち"
           },
           {
-            "text": "日",
-            "reading": "ひ"
-          },
-          {
-            "text": "だ",
+            "text": "と",
             "reading": null
           },
           {
-            "text": "！",
+            "text": "会",
+            "reading": "あ"
+          },
+          {
+            "text": "います。",
             "reading": null
           }
         ],
-        "exampleReading": "はなのきんようひだ！",
+        "exampleReading": "きんようびにともだちとあいます。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -37628,26 +37621,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 2,
-            "end": 5,
+            "start": 0,
+            "end": 3,
             "surface": "金曜日",
             "lemma": "金曜日",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Reviewed contextual compound reading: 金曜日 is きんようび."
           ]
         },
         "approval": {
@@ -49025,8 +49018,8 @@
       "meaning": "four",
       "level": "N5",
       "partOfSpeech": "number",
-      "example": "見て！四つ葉！",
-      "exampleMeaning": "Look! A four-leafed clover!",
+      "example": "りんごを四つください。",
+      "exampleMeaning": "Please give me four apples.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -49048,35 +49041,19 @@
         ],
         "exampleFurigana": [
           {
-            "text": "見",
-            "reading": "み"
-          },
-          {
-            "text": "て",
-            "reading": null
-          },
-          {
-            "text": "！",
+            "text": "りんごを",
             "reading": null
           },
           {
             "text": "四",
-            "reading": "よん"
+            "reading": "よっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "葉",
-            "reading": "よう"
-          },
-          {
-            "text": "！",
+            "text": "つください。",
             "reading": null
           }
         ],
-        "exampleReading": "みて！よんつよう！",
+        "exampleReading": "りんごをよっつください。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -49129,26 +49106,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 3,
-            "end": 5,
+            "start": 4,
+            "end": 6,
             "surface": "四つ",
             "lemma": "四つ",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the native counter reading 四つ/よっつ rather than a compound reading."
           ]
         },
         "approval": {
@@ -52008,11 +51985,7 @@
             "reading": "ひと"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -52020,11 +51993,7 @@
             "reading": "ふた"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -52032,23 +52001,15 @@
             "reading": "みっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "四",
-            "reading": "よん"
+            "reading": "よっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -52056,23 +52017,15 @@
             "reading": "いつ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "六",
-            "reading": "むい"
+            "reading": "むっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -52080,23 +52033,15 @@
             "reading": "なな"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "八",
-            "reading": "よう"
+            "reading": "やっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -52104,23 +52049,19 @@
             "reading": "ここの"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "十",
-            "reading": "じゅう"
+            "reading": "とお"
           },
           {
             "text": "。",
             "reading": null
           }
         ],
-        "exampleReading": "ひとつ、ふたつ、みっつ、よんつ、いつつ、むいつ、ななつ、ようつ、ここのつ、じゅう。",
+        "exampleReading": "ひとつ、ふたつ、みっつ、よっつ、いつつ、むっつ、ななつ、やっつ、ここのつ、とお。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -52187,11 +52128,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
+            "Reviewed native-counter sequence, including 四つ/よっつ, 六つ/むっつ, 八つ/やっつ, and 十/とお.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -76928,8 +76870,8 @@
       "meaning": "eight",
       "level": "N5",
       "partOfSpeech": "number",
-      "example": "彼女は八つだ。",
-      "exampleMeaning": "She is eight.",
+      "example": "彼女は八つです。",
+      "exampleMeaning": "She is eight years old.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -76960,22 +76902,14 @@
           },
           {
             "text": "八",
-            "reading": "よう"
+            "reading": "やっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "だ",
-            "reading": null
-          },
-          {
-            "text": "。",
+            "text": "つです。",
             "reading": null
           }
         ],
-        "exampleReading": "かのじょはようつだ。",
+        "exampleReading": "かのじょはやっつです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -77028,7 +76962,7 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
@@ -77042,12 +76976,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Reviewed native-counter reading 八つ/やっつ."
           ]
         },
         "approval": {
@@ -89315,11 +89249,7 @@
             "reading": "ひと"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -89327,11 +89257,7 @@
             "reading": "ふた"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -89339,23 +89265,15 @@
             "reading": "みっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "四",
-            "reading": "よん"
+            "reading": "よっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -89363,23 +89281,15 @@
             "reading": "いつ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "六",
-            "reading": "むい"
+            "reading": "むっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -89387,23 +89297,15 @@
             "reading": "なな"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "八",
-            "reading": "よう"
+            "reading": "やっ"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
@@ -89411,23 +89313,19 @@
             "reading": "ここの"
           },
           {
-            "text": "つ",
-            "reading": null
-          },
-          {
-            "text": "、",
+            "text": "つ、",
             "reading": null
           },
           {
             "text": "十",
-            "reading": "じゅう"
+            "reading": "とお"
           },
           {
             "text": "。",
             "reading": null
           }
         ],
-        "exampleReading": "ひとつ、ふたつ、みっつ、よんつ、いつつ、むいつ、ななつ、ようつ、ここのつ、じゅう。",
+        "exampleReading": "ひとつ、ふたつ、みっつ、よっつ、いつつ、むっつ、ななつ、やっつ、ここのつ、とお。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -89494,11 +89392,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
+            "Reviewed native-counter sequence, including 四つ/よっつ, 六つ/むっつ, 八つ/やっつ, and 十/とお.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -91427,8 +91326,8 @@
       "meaning": "Ten",
       "level": "N5",
       "partOfSpeech": "number",
-      "example": "その会は十時に終わった。",
-      "exampleMeaning": "The party ended at ten o'clock.",
+      "example": "りんごを一つから十まで数えます。",
+      "exampleMeaning": "I count apples from one to ten.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -91444,47 +91343,35 @@
         ],
         "exampleFurigana": [
           {
-            "text": "その",
+            "text": "りんごを",
             "reading": null
           },
           {
-            "text": "会",
-            "reading": "かい"
+            "text": "一",
+            "reading": "ひと"
           },
           {
-            "text": "は",
+            "text": "つから",
             "reading": null
           },
           {
             "text": "十",
-            "reading": "じゅう"
+            "reading": "とお"
           },
           {
-            "text": "時",
-            "reading": "じ"
-          },
-          {
-            "text": "に",
+            "text": "まで",
             "reading": null
           },
           {
-            "text": "終",
-            "reading": "お"
+            "text": "数",
+            "reading": "かぞ"
           },
           {
-            "text": "わっ",
-            "reading": null
-          },
-          {
-            "text": "た",
-            "reading": null
-          },
-          {
-            "text": "。",
+            "text": "えます。",
             "reading": null
           }
         ],
-        "exampleReading": "そのかいはじゅうじにおわった。",
+        "exampleReading": "りんごをひとつからとおまでかぞえます。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -91523,28 +91410,27 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
-            "attribution": {
-              "sourceId": "tatoeba",
-              "sentenceId": "211902"
-            }
+            "kind": "editorial",
+            "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 4,
-            "end": 5,
+            "start": 8,
+            "end": 9,
             "surface": "十",
             "lemma": "十",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
-          "notes": []
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
+          "notes": [
+            "Uses the native-count reading 十/とお, rather than the clock-time reading じゅう."
+          ]
         },
         "approval": {
           "approved": true,

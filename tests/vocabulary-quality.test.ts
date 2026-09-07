@@ -216,6 +216,24 @@ test("phase 4 editorial replacements teach the reviewed lexeme and contextual re
   ]);
 });
 
+test("contextual ruby fixtures preserve weekday and native-counter readings", () => {
+  const reading = (id: string) => {
+    const item = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(item, `${id} should remain in the corpus`);
+    assert.equal(item.vocabulary.review.furigana, "reviewed");
+    return item.vocabulary.exampleReading;
+  };
+  assert.equal(reading("v-jlpt-n5-0232"), "きょうはかようびです。");
+  assert.equal(reading("v-jlpt-n5-0281"), "きんようびにともだちとあいます。");
+  assert.equal(reading("v-jlpt-n5-0366"), "りんごをよっつください。");
+  assert.equal(
+    reading("v-jlpt-n5-0388"),
+    "ひとつ、ふたつ、みっつ、よっつ、いつつ、むっつ、ななつ、やっつ、ここのつ、とお。",
+  );
+  assert.equal(reading("v-jlpt-n5-0571"), "かのじょはやっつです。");
+  assert.equal(reading("v-jlpt-n5-0678"), "りんごをひとつからとおまでかぞえます。");
+});
+
 test("retired cards are skipped in an in-progress session without creating a review", () => {
   const retiredId = "v-jlpt-n4-0690";
   const activeId = concepts.find((item) => item.type === "vocabulary")!.id;

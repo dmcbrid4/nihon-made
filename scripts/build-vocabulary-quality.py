@@ -416,6 +416,85 @@ OVERRIDES = {
         "dictionaryEntryId": "1180470", "dictionarySenseIndex": 1,
         "notes": ["Pins the button example to the press/push-a-button sense rather than interpersonal pressure."],
     },
+    # Context-specific ruby fixtures. The same written character sequence has
+    # different readings in these everyday contexts, so retain reviewed ruby
+    # rather than asking the tokenizer or the frontend to infer it.
+    "v-jlpt-n5-0232": {
+        "exampleFurigana": [
+            {"text": "今日", "reading": "きょう"}, {"text": "は", "reading": None},
+            {"text": "火曜日", "reading": "かようび"}, {"text": "です。", "reading": None},
+        ],
+        "notes": ["Reviewed contextual compound reading: 火曜日 is かようび."],
+    },
+    "v-jlpt-n5-0281": {
+        "example": "金曜日に友達と会います。", "exampleMeaning": "I will meet a friend on Friday.",
+        "exampleFurigana": [
+            {"text": "金曜日", "reading": "きんようび"}, {"text": "に", "reading": None},
+            {"text": "友達", "reading": "ともだち"}, {"text": "と", "reading": None},
+            {"text": "会", "reading": "あ"}, {"text": "います。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Reviewed contextual compound reading: 金曜日 is きんようび."],
+    },
+    "v-jlpt-n5-0366": {
+        "example": "りんごを四つください。", "exampleMeaning": "Please give me four apples.",
+        "exampleFurigana": [
+            {"text": "りんごを", "reading": None}, {"text": "四", "reading": "よっ"},
+            {"text": "つください。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Uses the native counter reading 四つ/よっつ rather than a compound reading."],
+    },
+    "v-jlpt-n5-0388": {
+        "exampleFurigana": [
+            {"text": "一", "reading": "ひと"}, {"text": "つ、", "reading": None},
+            {"text": "二", "reading": "ふた"}, {"text": "つ、", "reading": None},
+            {"text": "三", "reading": "みっ"}, {"text": "つ、", "reading": None},
+            {"text": "四", "reading": "よっ"}, {"text": "つ、", "reading": None},
+            {"text": "五", "reading": "いつ"}, {"text": "つ、", "reading": None},
+            {"text": "六", "reading": "むっ"}, {"text": "つ、", "reading": None},
+            {"text": "七", "reading": "なな"}, {"text": "つ、", "reading": None},
+            {"text": "八", "reading": "やっ"}, {"text": "つ、", "reading": None},
+            {"text": "九", "reading": "ここの"}, {"text": "つ、", "reading": None},
+            {"text": "十", "reading": "とお"}, {"text": "。", "reading": None},
+        ],
+        "notes": ["Reviewed native-counter sequence, including 四つ/よっつ, 六つ/むっつ, 八つ/やっつ, and 十/とお."],
+    },
+    "v-jlpt-n5-0571": {
+        "example": "彼女は八つです。", "exampleMeaning": "She is eight years old.",
+        "exampleFurigana": [
+            {"text": "彼女", "reading": "かのじょ"}, {"text": "は", "reading": None},
+            {"text": "八", "reading": "やっ"}, {"text": "つです。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Reviewed native-counter reading 八つ/やっつ."],
+    },
+    "v-jlpt-n5-0662": {
+        "exampleFurigana": [
+            {"text": "一", "reading": "ひと"}, {"text": "つ、", "reading": None},
+            {"text": "二", "reading": "ふた"}, {"text": "つ、", "reading": None},
+            {"text": "三", "reading": "みっ"}, {"text": "つ、", "reading": None},
+            {"text": "四", "reading": "よっ"}, {"text": "つ、", "reading": None},
+            {"text": "五", "reading": "いつ"}, {"text": "つ、", "reading": None},
+            {"text": "六", "reading": "むっ"}, {"text": "つ、", "reading": None},
+            {"text": "七", "reading": "なな"}, {"text": "つ、", "reading": None},
+            {"text": "八", "reading": "やっ"}, {"text": "つ、", "reading": None},
+            {"text": "九", "reading": "ここの"}, {"text": "つ、", "reading": None},
+            {"text": "十", "reading": "とお"}, {"text": "。", "reading": None},
+        ],
+        "notes": ["Reviewed native-counter sequence, including 四つ/よっつ, 六つ/むっつ, 八つ/やっつ, and 十/とお."],
+    },
+    "v-jlpt-n5-0678": {
+        "example": "りんごを一つから十まで数えます。", "exampleMeaning": "I count apples from one to ten.",
+        "exampleFurigana": [
+            {"text": "りんごを", "reading": None}, {"text": "一", "reading": "ひと"},
+            {"text": "つから", "reading": None}, {"text": "十", "reading": "とお"},
+            {"text": "まで", "reading": None}, {"text": "数", "reading": "かぞ"},
+            {"text": "えます。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Uses the native-count reading 十/とお, rather than the clock-time reading じゅう."],
+    },
 }
 
 # These are source-format defects, not automatic transformations. Each stable

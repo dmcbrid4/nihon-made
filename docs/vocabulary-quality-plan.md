@@ -278,8 +278,10 @@ answer behavior; furigana availability is intentional reading assistance.
      defects the new validator surfaced along the way (annotated readings,
      a missing お, a combined 見る/観る field, three more duplicate pairs)
      were also fixed or retired.
-   - Net result: catalog 734 N5 + 705 N4-only = 1439 candidates (13 retired
-     total). **Approved/active 580 N5 + 584 N4-only = 1164** reach the app;
+   - Historical Phase 2 result: catalog 734 N5 + 705 N4-only = 1439 candidates
+     (13 retired total). Phase 4 later retired 30 additional duplicates while
+     canonicalizing noun-plus-する heads: **730 N5 + 679 N4-only = 1409**
+     candidates. **Approved/active 581 N5 + 566 N4-only = 1147** reach the app;
      the remaining candidates are quarantined pending correction, mostly for
      a placeholder example (130) or a target span the stricter matcher
      could not confirm (142) — see the "Why records are not approved" table
@@ -299,9 +301,11 @@ answer behavior; furigana availability is intentional reading assistance.
    probes recorded separately. This establishes diagnosis, not release approval.
    See `docs/phase4-vocabulary-corrections.md` for consolidated implementation
    requirements. Source-confidence, attribution and full-corpus quality gaps remain.
-4. **Phase 4 — Terra, high: pending.** Apply corrections across affected groups,
-   rerun checks, revisit failed samples and a fresh holdout. Report residual
-   uncertainties; prepare a reviewable release before any production rollout.
+4. **Phase 4 — Terra, high: audited-correction implementation complete.** The
+   fixed sample's 33 required repairs were applied in reproducible generator
+   overrides and regression-tested. An Astra-high independent holdout, rendered
+   UI ruby review, and the full release check suite remain before any production
+   rollout.
 
 In Phase 2, keep unresolved candidates outside the approved active deck.
 Replace unsuitable examples rather than shipping placeholders. Report both
