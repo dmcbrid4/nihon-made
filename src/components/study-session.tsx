@@ -52,7 +52,10 @@ export function StudySessionView() {
     (review) => review.sessionId === session.id,
   );
   const reviewed = new Set(reviews.map((review) => review.conceptId));
-  const conceptId = session.conceptIds.find((id) => !reviewed.has(id));
+  const activeConceptIds = session.conceptIds.filter((id) =>
+    conceptById.has(id),
+  );
+  const conceptId = activeConceptIds.find((id) => !reviewed.has(id));
   const concept = conceptId ? conceptById.get(conceptId) : undefined;
   if (session.completedAt) {
     const recall = reviews.filter(
@@ -101,15 +104,30 @@ export function StudySessionView() {
       </div>
     );
   }
-  if (!concept)
+  if (!concept && activeConceptIds.length === 0)
     return (
-      <div className="empty-state">
-        <h1>This card isn’t available.</h1>
+      <div className="empty-state panel">
+        <span className="eyebrow">CURRICULUM UPDATE</span>
+        <h1>This earlier session has been updated.</h1>
+        <p>
+          Its remaining cards were retired during a curriculum-quality update.
+          Your existing reviews stay in your history.
+        </p>
+        <button
+          className="primary-button"
+          disabled={busy}
+          onClick={() =>
+            void dispatch({ type: "completeRetired", sessionId: session.id })
+          }
+        >
+          Finish updated session
+        </button>
         <Link href="/" className="text-link">
           Back to Today
         </Link>
       </div>
     );
+  if (!concept) return null;
   function rate(rating: Rating) {
     if (!session || !concept) return;
     void dispatch({
@@ -120,7 +138,7 @@ export function StudySessionView() {
       rating,
     });
   }
-  const remaining = session.conceptIds
+  const remaining = activeConceptIds
     .filter((id) => !reviewed.has(id))
     .map((id) => conceptById.get(id)!)
     .filter(Boolean);
@@ -140,7 +158,7 @@ export function StudySessionView() {
         <span>Today’s Japanese</span>
         <span>
           {reviews.length + 1}{" "}
-          <span className="muted">of {session.conceptIds.length}</span>
+          <span className="muted">of {activeConceptIds.length}</span>
         </span>
       </div>
       <div
@@ -149,11 +167,11 @@ export function StudySessionView() {
         aria-label="Session progress"
         aria-valuenow={reviews.length}
         aria-valuemin={0}
-        aria-valuemax={session.conceptIds.length}
+        aria-valuemax={activeConceptIds.length}
       >
         <span
           style={{
-            width: `${(reviews.length / session.conceptIds.length) * 100}%`,
+            width: `${(reviews.length / activeConceptIds.length) * 100}%`,
           }}
         />
       </div>

@@ -95,12 +95,26 @@ npm start
 
 Vercel can import the repository as a Next.js project. Set all four cloud environment variables in the Vercel project, configure the Supabase Auth callback URL for the deployment, then run `npm run db:setup` locally with the target database URL before using the deployment. Migration commands are explicit and are not run during builds. Without cloud variables, each browser keeps its own history.
 
+## Tae Kim course mode
+
+A third study mode, alongside N5/N4: real sentences and words mined from a
+personal Anki deck ("Japanese course based on Tae Kim's grammar guide
+(anime)"), each sentence card carrying its own audio clip and screenshot
+pulled from real anime/drama dialogue. It shares the same concept type,
+scheduler, session planner, and progress tracking as N5/N4 -- it's a third
+value of the study-mode enum, not a separate system. The audio/screenshots
+are copyrighted anime footage, so that media is personal-use-only,
+gitignored, and never committed or deployed; see
+[docs/tae-kim-mode.md](docs/tae-kim-mode.md) for what's mined, how to
+regenerate it, and exactly why it's exempt from the N5/N4 corpus's
+open-licensing requirements.
+
 ## Deliberate V1 limits
 
-- The curriculum is a growing, curated N5 → N4 study corpus rather than an official JLPT word or kanji list. JLPT labels are approximate; progress bars measure exploration of the included content.
+- The curriculum is an imported N5 → N4 study corpus undergoing a quality audit, rather than an official JLPT word or kanji list. JLPT labels are approximate; coverage counts do not establish linguistic quality. See the [vocabulary quality plan](docs/vocabulary-quality-plan.md).
 - Ratings are self-assessments. “Learned” requires three consecutive Good/Easy ratings and an interval of at least seven days. Again resets that run of successful recalls. This is a placeholder policy, not validated FSRS.
 - Again makes a concept due after ten minutes, but each item appears once in this daily session; it returns in the next generated session. Other initial intervals are one, three, and seven days.
-- Sessions are generated locally from deterministic rules; there is no LLM integration, listening audio, speaking, or itinerary import yet.
+- Sessions are generated locally from deterministic rules; there is no LLM integration, speaking, or itinerary import yet. Listening audio exists only in the personal-use Tae Kim mode (below), not in the N5/N4 JLPT track.
 - There is no service worker or offline PWA installation flow yet. Local persistence does not mean the app can load without a network connection. Mobile layout and Apple web-app metadata provide a starting point.
 - V1 loads the personal study history as one state snapshot. Pagination and archived sessions can be added when the history grows.
 - JSON export and one-way browser-history import into an empty cloud account are available.
@@ -109,8 +123,12 @@ Vercel can import the repository as a Next.js project. Set all four cloud enviro
 
 Work through these in order. The model and reasoning level are recommendations for the implementation work, not requirements for using the app.
 
-- [x] **N4 curriculum and content model** — GPT-5.6 Terra, high reasoning. The curriculum contains 742 N5 terms plus 710 N4-only terms (1,452 total), alongside kanji, grammar, practical reading, and listening scripts. Separate N5 and N4 study modes keep queues, sessions, collections, and progress distinct. Vocabulary terms include readings, meanings, part of speech, and examples.
-- [ ] **Collection organization and commonality groups** — GPT-5.6 Luna, medium reasoning. Organize the N5 and N4 collection by useful frequency/commonality groups (for example, essential, common, and less common) without changing the sequenced order in which new terms are introduced. Define the grouping source and show it as a browse/filter dimension.
+- [x] **Curriculum infrastructure and N5/N4 modes** — GPT-5.6 Terra, high reasoning. The candidate catalog currently contains 734 N5 and 705 N4-only vocabulary records (1,164 of them approved and active), alongside other study content. Modes keep queues, sessions, collections, and progress distinct. The content quality work below remains incomplete.
+- [x] **Vocabulary quality Phase 1: research and architecture** — Astra, high reasoning. Audit of the existing importer, defects, sources, licensing, furigana strategy, and compatibility requirements is documented in the [implementation plan](docs/vocabulary-quality-plan.md). No bulk records changed.
+- [x] **Vocabulary quality Phase 2: finish candidate implementation** — mechanically complete, not linguistically complete. Canonical word-reading validation, token/lemma target matching (replacing substring search), real dictionary/attribution provenance, and an explicit approval gate are implemented and regression-tested; see [the plan's Phase 2 entry](docs/vocabulary-quality-plan.md#implementation-and-review-gates) for what this does and does not establish. 1,164 of 1,439 catalog records are approved and active; the rest are quarantined with itemized reasons in [the data-quality report](docs/data-quality-report.md).
+- [ ] **Vocabulary quality Phase 3: quality audit** — Astra, high reasoning. **10 / 100 inspected** (five per level); those ten records' corrections were applied in the Phase 2 completion pass. [Findings and next chunk](docs/phase3-vocabulary-audit.md); [fixed sample](docs/phase3-vocabulary-sample.json). Continue in ten-record chunks, pausing between chunks for the user's credit budget.
+- [ ] **Vocabulary quality Phase 4: corrections and verification** — Terra, high reasoning. Apply corrections, rerun checks, and report exact counts, remaining uncertainties, and rendered examples.
+- [ ] **Collection grouping quality** — Terra, high reasoning, alongside Phase 2. Grouping/filter UI exists, but source-count grouping is not frequency evidence. Replace that basis with documented editorial priority and keep classification confidence separate.
 - [ ] **Spaced repetition scheduling** — GPT-5.6 Terra, high reasoning. Replace the starter review policy with due queues, review intervals, relearning, lapse handling, and scheduling based on recall quality.
 - [ ] **Listening practice** — GPT-5.6 Luna, medium reasoning. Add short N4 audio, replay controls, transcripts, comprehension checks, and transcript reveal.
 - [ ] **Grammar drills** — GPT-5.6 Terra, medium reasoning. Add sentence completion, ordering, transformation, and recognition exercises.
@@ -122,6 +140,6 @@ Work through these in order. The model and reasoning level are recommendations f
 
 The curriculum uses the [official JLPT N5/N4 level summaries](https://www.jlpt.jp/e/about/levelsummary.html) as its level-alignment source. The JLPT describes N5 through basic written phrases and slow, familiar conversations, and N4 through familiar everyday texts and somewhat slowly spoken everyday conversations. It does not make this app’s vocabulary and kanji set an official JLPT list. See [ATTRIBUTION.md](ATTRIBUTION.md) for the openly licensed vocabulary sources and example-sentence attribution.
 
-The curriculum and mode separation are implemented. The next major implementation target is the review scheduler; the current policy is intentionally small and deterministic while the FSRS-compatible design is prepared.
+Curriculum infrastructure and mode separation are implemented. Vocabulary quality and furigana are the immediate priority; the review scheduler follows. Its current policy remains intentionally small and deterministic while the FSRS-compatible design is prepared.
 
 Framework references: [Next.js App Router](https://nextjs.org/docs/app) and [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql).

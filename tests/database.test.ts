@@ -17,6 +17,7 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     await client.exec(await readFile("drizzle/0001_add_listening_concepts.sql", "utf8"));
     await client.exec(await readFile("drizzle/0002_vocabulary_progress_statuses.sql", "utf8"));
     await client.exec(await readFile("drizzle/0003_add_study_modes.sql", "utf8"));
+    await client.exec(await readFile("drizzle/0004_add_tae_kim_mode.sql", "utf8"));
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
     await seedContent(db);

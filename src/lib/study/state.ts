@@ -1,4 +1,4 @@
-import { conceptById } from "./content";
+import { conceptById, retiredConceptIds } from "./content";
 import { dateInZone } from "./dates";
 import { currentSession, planSession } from "./planner";
 import { scheduleReview } from "./scheduler";
@@ -51,6 +51,33 @@ export function applyAction(
     };
   }
 
+  if (action.type === "completeRetired") {
+    const session = state.sessions.find((item) => item.id === action.sessionId);
+    if (!session || session.completedAt)
+      throw new Error(
+        "This session has already ended. Return to Today to continue.",
+      );
+    const reviewed = new Set(
+      state.reviews
+        .filter((review) => review.sessionId === session.id)
+        .map((review) => review.conceptId),
+    );
+    const unresolved = session.conceptIds.filter((id) => !reviewed.has(id));
+    if (
+      !unresolved.length ||
+      unresolved.some((id) => !retiredConceptIds.has(id))
+    )
+      throw new Error("This session still has an available card.");
+    return {
+      ...state,
+      sessions: state.sessions.map((item) =>
+        item.id === session.id
+          ? { ...item, completedAt: now.toISOString() }
+          : item,
+      ),
+    };
+  }
+
   // Retrying an interrupted request must never record a rating twice.
   if (state.reviews.some((review) => review.id === action.id)) return state;
   const session = state.sessions.find((item) => item.id === action.sessionId);
@@ -63,7 +90,10 @@ export function applyAction(
       .filter((review) => review.sessionId === session.id)
       .map((review) => review.conceptId),
   );
-  const nextConceptId = session.conceptIds.find((id) => !reviewed.has(id));
+  const activeConceptIds = session.conceptIds.filter((id) =>
+    conceptById.has(id),
+  );
+  const nextConceptId = activeConceptIds.find((id) => !reviewed.has(id));
   if (
     action.conceptId !== nextConceptId ||
     !conceptById.has(action.conceptId)
@@ -96,7 +126,7 @@ export function applyAction(
       },
     ],
     sessions: state.sessions.map((item) =>
-      item.id === session.id && reviewed.size + 1 === session.conceptIds.length
+      item.id === session.id && reviewed.size + 1 === activeConceptIds.length
         ? { ...item, completedAt: now.toISOString() }
         : item,
     ),

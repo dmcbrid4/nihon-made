@@ -11,7 +11,12 @@ import type { Database } from "./client";
 import * as s from "./schema";
 
 export class PostgresRepository implements StudyRepository {
-  constructor(private db: Database, private userId: string) { z.uuid().parse(userId); }
+  constructor(
+    private db: Database,
+    private userId: string,
+  ) {
+    z.uuid().parse(userId);
+  }
   load() {
     return this.transact();
   }
@@ -34,35 +39,51 @@ export class PostgresRepository implements StudyRepository {
         ),
       );
       if ([...conceptIds].some((id) => !knownConceptIds.has(id)))
-        throw new ImportValidationError("The imported history has unknown concepts.");
+        throw new ImportValidationError(
+          "The imported history has unknown concepts.",
+        );
       if (
         new Set(imported.progress.map((item) => item.conceptId)).size !==
         imported.progress.length
       )
-        throw new ImportValidationError("The imported history has duplicate progress entries.");
+        throw new ImportValidationError(
+          "The imported history has duplicate progress entries.",
+        );
       if (
         new Set(imported.sessions.map((session) => session.id)).size !==
         imported.sessions.length
       )
-        throw new ImportValidationError("The imported history has duplicate sessions.");
+        throw new ImportValidationError(
+          "The imported history has duplicate sessions.",
+        );
       if (
         new Set(imported.reviews.map((review) => review.id)).size !==
         imported.reviews.length
       )
-        throw new ImportValidationError("The imported history has duplicate reviews.");
-      const sessions = new Map(imported.sessions.map((session) => [session.id, session]));
+        throw new ImportValidationError(
+          "The imported history has duplicate reviews.",
+        );
+      const sessions = new Map(
+        imported.sessions.map((session) => [session.id, session]),
+      );
       const reviewPairs = new Set<string>();
       for (const session of imported.sessions) {
         if (new Set(session.conceptIds).size !== session.conceptIds.length)
-          throw new ImportValidationError("The imported session has duplicate concepts.");
+          throw new ImportValidationError(
+            "The imported session has duplicate concepts.",
+          );
       }
       for (const review of imported.reviews) {
         const session = sessions.get(review.sessionId);
         if (!session || !session.conceptIds.includes(review.conceptId))
-          throw new ImportValidationError("The imported review does not belong to its session.");
+          throw new ImportValidationError(
+            "The imported review does not belong to its session.",
+          );
         const pair = `${review.sessionId}:${review.conceptId}`;
         if (reviewPairs.has(pair))
-          throw new ImportValidationError("The imported history reviews a card twice in one session.");
+          throw new ImportValidationError(
+            "The imported history reviews a card twice in one session.",
+          );
         reviewPairs.add(pair);
       }
 
@@ -87,17 +108,26 @@ export class PostgresRepository implements StudyRepository {
         .select({ id: s.reviews.id })
         .from(s.reviews)
         .where(eq(s.reviews.userId, userId));
-      if (existingProgress.length || existingSessions.length || existingReviews.length)
-        throw new ImportConflictError("Cloud history already contains study activity.");
+      if (
+        existingProgress.length ||
+        existingSessions.length ||
+        existingReviews.length
+      )
+        throw new ImportConflictError(
+          "Cloud history already contains study activity.",
+        );
 
       await tx
         .insert(s.studyGoals)
         .values({ userId, ...imported.goal })
-        .onConflictDoUpdate({ target: s.studyGoals.userId, set: imported.goal });
+        .onConflictDoUpdate({
+          target: s.studyGoals.userId,
+          set: imported.goal,
+        });
       if (imported.progress.length)
-        await tx.insert(s.userConceptProgress).values(
-          imported.progress.map((item) => ({ ...item, userId })),
-        );
+        await tx
+          .insert(s.userConceptProgress)
+          .values(imported.progress.map((item) => ({ ...item, userId })));
       if (imported.sessions.length) {
         await tx.insert(s.studySessions).values(
           imported.sessions.map((session) => ({
@@ -120,9 +150,9 @@ export class PostgresRepository implements StudyRepository {
         );
       }
       if (imported.reviews.length)
-        await tx.insert(s.reviews).values(
-          imported.reviews.map((review) => ({ ...review, userId })),
-        );
+        await tx
+          .insert(s.reviews)
+          .values(imported.reviews.map((review) => ({ ...review, userId })));
       return imported;
     });
   }
@@ -220,6 +250,14 @@ export class PostgresRepository implements StudyRepository {
             position,
           })),
         );
+      } else if (action.type === "completeRetired") {
+        const session = next.sessions.find(
+          (item) => item.id === action.sessionId,
+        )!;
+        await tx
+          .update(s.studySessions)
+          .set({ completedAt: session.completedAt })
+          .where(eq(s.studySessions.id, session.id));
       } else {
         const review = next.reviews.at(-1)!;
         const entry = next.progress.find(

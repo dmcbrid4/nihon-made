@@ -21,7 +21,11 @@ export const conceptType = pgEnum("concept_type", [
   "reading",
   "listening",
 ]);
-export const jlptLevel = pgEnum("jlpt_level", ["N5", "N4"]);
+// Shared by concept level, study mode, and session mode. Historically only
+// JLPT levels; "tae-kim" added for the personal-use Tae Kim/anime course
+// track (see src/lib/study/tae-kim.ts). targetLevel stays fixed at "N4"
+// regardless of this enum's extra values.
+export const jlptLevel = pgEnum("jlpt_level", ["N5", "N4", "tae-kim"]);
 export const rating = pgEnum("review_rating", [
   "again",
   "hard",
@@ -79,6 +83,9 @@ export const studyConcepts = pgTable("study_concepts", {
         | "kanjiForm"
         | "partOfSpeech"
         | "classificationNote"
+        | "commonality"
+        | "vocabulary"
+        | "media"
       >
     >()
     .notNull(),
