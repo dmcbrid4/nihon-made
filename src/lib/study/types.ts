@@ -28,29 +28,49 @@ export type VocabularyDetails = {
   secondaryMeanings: string[];
   itemKind: "word" | "expression" | "phrase";
   linkedKanji: string[];
-  priority: { rank: number; reason: string };
+  /** `band` decides curriculum grouping directly; `rank` only orders within it. */
+  priority: { rank: number; band: Commonality; reason: string };
   classification: {
     confidence: "high" | "medium" | "low";
-    evidence: { sourceId: string; lineage: string; level: "N5" | "N4" }[];
+    evidence: {
+      sourceId: string;
+      lineage: string;
+      level: "N5" | "N4";
+      /** Whether this source's own raw list agrees with the assigned level.
+       * Null means the term could not be relocated in that source's raw list. */
+      agrees: boolean | null;
+    }[];
     reason: string;
   };
   provenance: {
     lexicalSourceIds: string[];
-    dictionarySourceId: "jmdict" | null;
-    exampleKind: "imported" | "editorial" | "fallback";
+    /** A real JMdict entry/sense match, independent of ruby sourcing below. */
+    dictionary: { entryId: string; senseIds: string[]; glossOverlap: number } | null;
+    /** Whether JmdictFurigana supplied the word ruby, vs. a generated fallback. */
+    ruby: { source: "jmdict-furigana" | "generated"; wordExact: boolean };
+    example: {
+      kind: "imported" | "editorial" | "fallback";
+      attribution: { sourceId: "tatoeba"; sentenceId: string } | null;
+    };
   };
   targetSpans: {
     start: number;
     end: number;
     surface: string;
-    match: "exact" | "inflected";
+    lemma: string;
+    match: "exact" | "inflected" | "counter";
   }[];
   review: {
     lexical: "pending" | "reviewed";
     example: "pending" | "reviewed";
     furigana: "automated" | "reviewed" | "uncertain";
+    /** Distinguishes automated, agent, and human review; null until reviewed. */
+    reviewer: string | null;
     notes: string[];
   };
+  /** The Phase 2 mechanical approval gate. Only approved records reach the
+   * active app; see activeVocabularyItems in vocabulary-data.ts. */
+  approval: { approved: boolean; reasons: string[] };
 };
 
 export interface Concept {
