@@ -1018,6 +1018,95 @@ input[readonly] {
   border-top: 1px solid var(--line);
 }
 
+/* Kana selector -- the chart-based selection UI shared by Study and Quiz */
+.kana-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kana-selector-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.kana-selector-count {
+  font-size: 12px;
+  color: var(--muted);
+}
+.kana-selector-count strong {
+  color: var(--text);
+  font-size: 16px;
+  margin-right: 4px;
+}
+.kana-selector-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.kana-selector-actions .text-link {
+  font-size: 11px;
+}
+.kana-selector-buckets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.kana-selector-buckets .secondary-button {
+  padding: 7px 13px;
+  font-size: 11px;
+}
+.kana-cell {
+  position: relative;
+}
+.kana-cell-checked {
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+}
+.kana-cell-check {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--green);
+  color: var(--surface);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* Kana Quiz/Study configure + results screens */
+.kana-quiz-configure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 20px;
+  align-items: start;
+}
+.kana-quiz-settings {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: sticky;
+  top: 20px;
+}
+.kana-quiz-settings .field-label {
+  margin-bottom: 8px;
+}
+.kana-quiz-settings .filter-tabs {
+  flex-wrap: wrap;
+}
+.kana-results-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
 /* Kana progress-page section */
 .kana-progress-section {
   padding: 24px 26px;

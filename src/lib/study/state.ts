@@ -1,7 +1,7 @@
 import { conceptById, retiredConceptIds } from "./content";
 import { dateInZone } from "./dates";
 import { currentSession, planSession } from "./planner";
-import { buildKanaQueue, currentKanaSession } from "./kana-session";
+import { recordKanaQuizAnswer } from "./kana-progress";
 import { scheduleReview } from "./scheduler";
 import {
   actionSchema,
@@ -57,26 +57,19 @@ export function applyAction(
     };
   }
 
-  if (action.type === "startKana") {
-    if (
-      currentKanaSession(state, now, action.script) ||
-      state.sessions.some((session) => session.id === action.id)
-    )
-      return state;
-    const items = buildKanaQueue(state, now, action.script);
-    if (!items.length) return state;
+  if (action.type === "kanaQuizAnswer") {
+    if (conceptById.get(action.conceptId)?.type !== "kana") return state;
+    const nextProgress = recordKanaQuizAnswer(
+      action.conceptId,
+      action.correct,
+      now,
+      state.progress.find((item) => item.conceptId === action.conceptId),
+    );
     return {
       ...state,
-      sessions: [
-        ...state.sessions,
-        {
-          id: action.id,
-          mode: "kana",
-          date: dateInZone(now, state.goal.timeZone),
-          conceptIds: items.map((item) => item.id),
-          startedAt: now.toISOString(),
-          completedAt: null,
-        },
+      progress: [
+        ...state.progress.filter((item) => item.conceptId !== action.conceptId),
+        nextProgress,
       ],
     };
   }

@@ -21,65 +21,83 @@ test("kana home shows separate hiragana/katakana progress and links into study",
   expect(errors).toEqual([]);
 });
 
-test("hiragana study: new-character intro, recognition quiz, recall quiz, and real progress", async ({
+test("hiragana Study: select from the chart, browse without any scoring", async ({
   page,
 }, testInfo) => {
   await page.goto("/kana/hiragana");
   await expect(page.getByRole("heading", { name: "Hiragana", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Start practicing" }).click();
-
-  // First card is the intro panel for a brand-new character.
-  await expect(page.getByText("A NEW CHARACTER")).toBeVisible();
+  // Study tab is the default; select a few characters from the chart.
+  await page.getByRole("button", { name: "Select Basic" }).click();
+  await expect(page.locator(".kana-selector-count")).toHaveText("46 selected");
   await page.screenshot({
-    path: `test-results/kana-intro-${testInfo.project.name}.png`,
+    path: `test-results/kana-study-select-${testInfo.project.name}.png`,
     fullPage: true,
   });
-  await page.getByRole("button", { name: /Got it/ }).click();
-
-  // Recognition quiz: symbol shown, choose the romaji.
+  await page.getByRole("button", { name: /Study 46 selected/ }).click();
   await expect(page.getByText("WHAT SOUND IS THIS?")).toBeVisible();
-  const kanaHeading = page.locator(".kana-character");
-  const character = await kanaHeading.textContent();
-  expect(character?.trim().length).toBeGreaterThan(0);
   await page.screenshot({
-    path: `test-results/kana-recognition-quiz-${testInfo.project.name}.png`,
+    path: `test-results/kana-study-browse-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "Reveal" }).click();
+  await expect(page.locator(".answer-main h2")).toBeVisible();
+  await page.getByRole("button", { name: "Next" }).click();
+  await expect(page.getByText("WHAT SOUND IS THIS?")).toBeVisible();
+  // Browsing writes nothing to progress -- no scoring, no persistence.
+  // Nothing has dispatched at all yet, so the storage key may not even exist.
+  const raw = await page.evaluate(() => localStorage.getItem("nihon-made:study:v1"));
+  if (raw) expect(JSON.parse(raw).progress).toHaveLength(0);
+});
+
+test("hiragana Quiz: select one character, answer correctly 5 times, it masters", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/kana/hiragana");
+  await page.getByRole("button", { name: "Quiz", exact: true }).click();
+  await page.locator(".kana-cell", { hasText: "あ" }).first().click();
+  await expect(page.locator(".kana-selector-count")).toHaveText("1 selected");
+  await page.getByRole("button", { name: "Recognition only", exact: true }).click();
+  await page.getByRole("button", { name: "Short (~10)", exact: true }).click();
+  await page.screenshot({
+    path: `test-results/kana-quiz-configure-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: /Start quiz/ }).click();
+  await expect(page.getByText("WHAT SOUND IS THIS?")).toBeVisible();
+  await page.screenshot({
+    path: `test-results/kana-quiz-question-${testInfo.project.name}.png`,
     fullPage: true,
   });
 
-  // Answer every remaining card in the session: click through any "new
-  // character" intro panel, then pick options until correct, so the
-  // session reaches completion deterministically.
-  for (let i = 0; i < 40; i++) {
-    if (await page.getByRole("heading", { name: "A little more legible." }).isVisible()) break;
-    const gotIt = page.getByRole("button", { name: /Got it/ });
-    if (await gotIt.isVisible().catch(() => false)) {
-      await gotIt.click();
-      continue;
-    }
-    const options = page.locator(".kana-option");
-    const count = await options.count();
-    let settled = false;
-    for (let j = 0; j < count; j++) {
-      const option = options.nth(j);
-      if (!(await option.isEnabled())) break; // this attempt cycle already resolved
-      await option.click();
-      if (
-        (await page.locator(".kana-option-correct").count()) ||
-        (await page.locator(".kana-feedback-incorrect").count())
-      ) {
-        settled = true;
-        break;
-      }
-    }
-    if (!settled) break;
-    await page.waitForTimeout(1300);
+  // Every question is the same character (recognition only, one selected) --
+  // answer correctly enough times in a row to cross the 5-streak mastery bar.
+  for (let i = 0; i < 5; i++) {
+    await expect(page.getByText("WHAT SOUND IS THIS?")).toBeVisible();
+    await page.getByRole("button", { name: "a", exact: true }).click();
+    await expect(page.locator(".kana-option-correct")).toBeVisible();
+    await page.waitForTimeout(750);
   }
-  await expect(page.getByRole("heading", { name: "A little more legible." })).toBeVisible();
   const state = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("nihon-made:study:v1")!),
   );
-  expect(state.reviews.length).toBeGreaterThan(0);
-  expect(state.sessions[0].mode).toBe("kana");
+  const progress = state.progress.find((p: { conceptId: string }) =>
+    p.conceptId.startsWith("kana-h-a-a-recognition"),
+  );
+  expect(progress.successStreak).toBeGreaterThanOrEqual(5);
+  expect(progress.status).toBe("mastered");
+  expect(state.sessions).toHaveLength(0); // quiz answers aren't session-bound
+
+  // Finish the remaining questions to reach the results screen.
+  for (let i = 0; i < 5; i++) {
+    if (await page.getByRole("heading", { name: /^\d+ \/ \d+$/ }).isVisible().catch(() => false)) break;
+    await page.getByRole("button", { name: "a", exact: true }).click();
+    await page.waitForTimeout(750);
+  }
+  await expect(page.getByText("QUIZ COMPLETE")).toBeVisible();
+  await page.screenshot({
+    path: `test-results/kana-quiz-results-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
 });
 
 test("kana chart renders a gojūon grid and shows character detail on click", async ({

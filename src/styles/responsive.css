@@ -639,11 +639,17 @@
   .kana-script-card {
     padding: 20px;
   }
-  .kana-chart-layout {
+  .kana-chart-layout,
+  .kana-quiz-configure {
     grid-template-columns: 1fr;
   }
-  .kana-detail-panel {
+  .kana-detail-panel,
+  .kana-quiz-settings {
     position: static;
+  }
+  .kana-selector-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
   .kana-bucket-row {
     grid-template-columns: 84px 1fr 34px;

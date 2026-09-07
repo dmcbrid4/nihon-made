@@ -21,8 +21,9 @@ export type Rating = (typeof ratings)[number];
 // "kana" is the hiragana/katakana foundation track (see
 // src/lib/study/kana.ts) -- unlike the others it is never selected through
 // the goal.studyMode picker; it has its own always-available /kana section
-// and its own session/queue logic (src/lib/study/kana-session.ts) so it
-// doesn't compete with "which JLPT track am I studying".
+// (chart / free-practice study / quiz, see kana-quiz.ts and
+// kana-progress.ts) so it doesn't compete with "which JLPT track am I
+// studying", and it has no daily SRS session of its own.
 export const studyModes = ["N5", "N4", "tae-kim", "kana"] as const;
 export type StudyMode = (typeof studyModes)[number];
 
@@ -40,8 +41,10 @@ export type KanaCategory = (typeof kanaCategories)[number];
 /** Recognition drills the symbol -> sound direction (show か, ask "ka").
  * Recall drills sound -> symbol (show "ka", ask for か). Each direction is
  * tracked as its own Concept (its own id, its own ConceptProgress row) so
- * both contribute independently to mastery using the existing one-row-per-
- * concept scheduler, without any change to ConceptProgress's shape. */
+ * both contribute independently toward mastery -- see kana-progress.ts's
+ * recordKanaQuizAnswer (a 5-correct-streak rule specific to kana, unrelated
+ * to the vocabulary/kanji/grammar scheduler) and characterStatus (which
+ * combines both directions into one status for the chart/Progress page). */
 export const kanaDirections = ["recognition", "recall"] as const;
 export type KanaDirection = (typeof kanaDirections)[number];
 
@@ -59,11 +62,13 @@ export type KanaDetails = {
   column: string;
   category: KanaCategory;
   /** 1-based curriculum stage within this script (see kana.ts's `stages`),
-   * e.g. 1 = あ-row, 11 = dakuten/handakuten, 12 = yōon. Drives sequencing
-   * and the "unlock the next row" gate in kana-session.ts. */
+   * e.g. 1 = あ-row, 11 = dakuten/handakuten, 12 = yōon. Pure grouping/
+   * labeling for the chart and the quiz/study selector's "select this row"
+   * shortcut -- kana mode has no gating, so this never blocks anything. */
   stage: number;
   /** Global order within this script's full curriculum -- finer-grained
-   * than `stage`, used to sequence new introductions within a stage. */
+   * than `stage`. Used only for stable/predictable ordering in the chart
+   * and selector, not for any unlock sequencing. */
   curriculumOrder: number;
   direction: KanaDirection;
   /** The base character this one derives from, e.g. か for が, き for きゃ.
@@ -245,17 +250,23 @@ export type StudyState = z.infer<typeof stateSchema>;
 export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("start"), id: z.uuid() }),
   z.object({
-    type: z.literal("startKana"),
-    id: z.uuid(),
-    script: z.enum(kanaScripts),
-  }),
-  z.object({
     /** The "already know this" shortcut (kana-home.tsx): declares a set of
      * kana concepts mastered outright, without going through real reviews.
      * Used for marking a single row, a whole script, or skipping Kana
      * entirely (pass every kana concept id). */
     type: z.literal("markKanaKnown"),
     conceptIds: z.array(z.string().max(100)).min(1).max(500),
+  }),
+  z.object({
+    /** One Kana Quiz mode answer (kana-quiz.tsx). Kana has no daily SRS
+     * session -- this is a direct, immediate progress write, not tied to a
+     * StudySession, since a quiz is a freely customized selection the
+     * learner can requiz at will. See recordKanaQuizAnswer in
+     * kana-progress.ts: mastery is a streak of 5 correct answers in a row,
+     * unrelated to the vocabulary/kanji/grammar scheduler. */
+    type: z.literal("kanaQuizAnswer"),
+    conceptId: z.string().max(100),
+    correct: z.boolean(),
   }),
   z.object({
     type: z.literal("completeRetired"),

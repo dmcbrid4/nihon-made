@@ -234,7 +234,7 @@ export class PostgresRepository implements StudyRepository {
           .update(s.studyGoals)
           .set(next.goal)
           .where(eq(s.studyGoals.userId, userId));
-      } else if (action.type === "start" || action.type === "startKana") {
+      } else if (action.type === "start") {
         const session = next.sessions.at(-1)!;
         await tx.insert(s.studySessions).values({
           id: session.id,
@@ -272,6 +272,27 @@ export class PostgresRepository implements StudyRepository {
                 lastReviewedAt: sql`excluded.last_reviewed_at`,
               },
             });
+      } else if (action.type === "kanaQuizAnswer") {
+        const entry = next.progress.find(
+          (item) => item.conceptId === action.conceptId,
+        )!;
+        await tx
+          .insert(s.userConceptProgress)
+          .values({ ...entry, userId })
+          .onConflictDoUpdate({
+            target: [
+              s.userConceptProgress.userId,
+              s.userConceptProgress.conceptId,
+            ],
+            set: {
+              status: sql`excluded.status`,
+              reviewCount: sql`excluded.review_count`,
+              successStreak: sql`excluded.success_streak`,
+              intervalDays: sql`excluded.interval_days`,
+              dueAt: sql`excluded.due_at`,
+              lastReviewedAt: sql`excluded.last_reviewed_at`,
+            },
+          });
       } else if (action.type === "completeRetired") {
         const session = next.sessions.find(
           (item) => item.id === action.sessionId,

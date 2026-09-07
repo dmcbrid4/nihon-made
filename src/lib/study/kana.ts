@@ -63,7 +63,7 @@ export function kanaConceptId(entryId: string, direction: KanaDirection) {
 }
 
 /** Recovers the base kana entry id and direction from a kana concept id.
- * Inverse of kanaConceptId; used by kana-session.ts/kana-progress.ts to
+ * Inverse of kanaConceptId; used by kana-quiz.ts/kana-progress.ts to
  * go from a ConceptProgress row back to "which character, which direction". */
 export function parseKanaConceptId(
   conceptId: string,

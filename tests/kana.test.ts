@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { randomUUID } from "node:crypto";
 import test from "node:test";
 import { concepts } from "../src/lib/study/content";
 import {
@@ -17,14 +16,28 @@ import {
   kanaMilestones,
   kanaOverview,
   kanaScriptProgress,
-  maxUnlockedStage,
+  recordKanaQuizAnswer,
 } from "../src/lib/study/kana-progress";
-import { buildKanaQueue, distractorsFor } from "../src/lib/study/kana-session";
+import { buildQuizQuestions, distractorsFor } from "../src/lib/study/kana-quiz";
 import { applyAction, initialState } from "../src/lib/study/state";
-import { scheduleReview } from "../src/lib/study/scheduler";
 import type { ConceptProgress } from "../src/lib/study/types";
 
 const now = new Date("2026-09-04T15:00:00Z");
+
+/** A ConceptProgress that's already mastered, for tests that only care
+ * about downstream aggregation (kanaScriptProgress/kanaOverview/
+ * kanaMilestones), not how mastery was reached. */
+function masteredProgress(conceptId: string): ConceptProgress {
+  return {
+    conceptId,
+    status: "mastered",
+    reviewCount: 5,
+    successStreak: 5,
+    intervalDays: 0,
+    dueAt: now.toISOString(),
+    lastReviewedAt: now.toISOString(),
+  };
+}
 
 test("curriculum counts: 46 basic kana per script, full modern syllabary, no obsolete kana", () => {
   assert.equal(kanaCounts.hiraganaBasic, 46);
@@ -130,8 +143,8 @@ test("group completion: bucket and script cohorts sum to the right totals, miles
   const masteredState = {
     ...state,
     progress: basicHiragana.flatMap((entry) => [
-      { ...scheduleReview(kanaConceptId(entry.id, "recognition"), "easy", now), status: "mastered" as const },
-      { ...scheduleReview(kanaConceptId(entry.id, "recall"), "easy", now), status: "mastered" as const },
+      masteredProgress(kanaConceptId(entry.id, "recognition")),
+      masteredProgress(kanaConceptId(entry.id, "recall")),
     ]),
   };
   const afterBasic = kanaMilestones(masteredState);
@@ -149,8 +162,8 @@ test("progress percentages: 0% when untouched, 100% once every character is mast
   const fullState = {
     ...state,
     progress: everyEntry.flatMap((entry) => [
-      { ...scheduleReview(kanaConceptId(entry.id, "recognition"), "easy", now), status: "mastered" as const },
-      { ...scheduleReview(kanaConceptId(entry.id, "recall"), "easy", now), status: "mastered" as const },
+      masteredProgress(kanaConceptId(entry.id, "recognition")),
+      masteredProgress(kanaConceptId(entry.id, "recall")),
     ]),
   };
   const overview = kanaOverview(fullState);
@@ -252,55 +265,70 @@ test("distractors prioritize real confusion-set members over random options", ()
   assert.deepEqual(unknownEntry, []);
 });
 
-test("kana rows unlock sequentially: stage 1 is always available, later stages need prior familiarity", () => {
-  const state = initialState();
-  assert.equal(maxUnlockedStage(state, "hiragana"), 1);
-  const aRow = kanaEntries.hiragana.filter((e) => e.stage === 1);
-  const introduced = {
-    ...state,
-    progress: aRow.map((entry) => scheduleReview(kanaConceptId(entry.id, "recognition"), "good", now)),
-  };
-  assert.equal(maxUnlockedStage(introduced, "hiragana"), 2);
+test("recordKanaQuizAnswer: mastery is a streak of 5 correct answers, any correct answer extends it, a miss resets it", () => {
+  let progress = recordKanaQuizAnswer("kana-h-a-a-recognition", true, now);
+  assert.equal(progress.status, "introduced");
+  assert.equal(progress.successStreak, 1);
+  for (let i = 0; i < 3; i++)
+    progress = recordKanaQuizAnswer("kana-h-a-a-recognition", true, now, progress);
+  assert.equal(progress.successStreak, 4);
+  assert.equal(progress.status, "learning");
+  progress = recordKanaQuizAnswer("kana-h-a-a-recognition", true, now, progress);
+  assert.equal(progress.successStreak, 5);
+  assert.equal(progress.status, "mastered");
+
+  // A miss resets the streak to 0 and demotes mastery.
+  const missed = recordKanaQuizAnswer("kana-h-a-a-recognition", false, now, progress);
+  assert.equal(missed.successStreak, 0);
+  assert.equal(missed.status, "learning");
+
+  // Retry-then-correct still counts as a success building the streak (a
+  // caller only reports `false` once a question is fully missed -- see
+  // KanaQuizQuestion's 2-attempt handling in kana-study.tsx).
+  const first = recordKanaQuizAnswer("kana-h-a-a-recall", true, now);
+  const second = recordKanaQuizAnswer("kana-h-a-a-recall", true, now, first);
+  assert.equal(second.successStreak, 2);
 });
 
-test("buildKanaQueue introduces a small batch of new characters, due reviews first, recognition before recall", () => {
-  const state = initialState();
-  const queue = buildKanaQueue(state, now, "hiragana");
-  assert.ok(queue.length > 0);
-  assert.ok(queue.length <= 12); // at most 6 new characters x 2 directions
-  const firstCharacter = queue[0].kanaDetails!.character;
-  const pairForFirst = queue.filter((c) => c.kanaDetails!.character === firstCharacter);
-  if (pairForFirst.length === 2)
-    assert.equal(pairForFirst[0].kanaDetails!.direction, "recognition");
-
-  const dueId = kanaConceptId(kanaEntries.hiragana[0].id, "recognition");
-  const overdue = {
-    ...state,
-    progress: [
-      { ...scheduleReview(dueId, "again", new Date(now.getTime() - 3_600_000)), dueAt: new Date(now.getTime() - 1000).toISOString() },
-    ],
-  };
-  const queueWithDue = buildKanaQueue(overdue, now, "hiragana");
-  assert.equal(queueWithDue[0].id, dueId);
-});
-
-test("startKana and review actions flow through the same session/progress model as other modes", () => {
-  let state = applyAction(initialState(), { type: "startKana", id: randomUUID(), script: "hiragana" }, now);
-  assert.equal(state.sessions.length, 1);
-  assert.equal(state.sessions[0].mode, "kana");
-  const session = state.sessions[0];
-  assert.ok(!applyAction(state, { type: "startKana", id: randomUUID(), script: "hiragana" }, now).sessions[1]);
-  state = applyAction(
-    state,
-    {
-      type: "review",
-      id: randomUUID(),
-      sessionId: session.id,
-      conceptId: session.conceptIds[0],
-      rating: "good",
-    },
+test("kanaQuizAnswer action: only kana concepts accepted, streak builds to mastery over repeated answers", () => {
+  const conceptId = kanaConceptId(kanaEntries.hiragana[0].id, "recognition");
+  let state = applyAction(
+    initialState(),
+    { type: "kanaQuizAnswer", conceptId: "v-maniau", correct: true },
     now,
   );
-  assert.equal(state.reviews.length, 1);
-  assert.equal(state.progress[0].status, "introduced");
+  assert.equal(state.progress.length, 0); // not a kana concept, ignored
+
+  for (let i = 0; i < 5; i++)
+    state = applyAction(state, { type: "kanaQuizAnswer", conceptId, correct: true }, now);
+  assert.equal(state.progress.length, 1);
+  assert.equal(state.progress[0].status, "mastered");
+  assert.equal(state.progress[0].successStreak, 5);
+  // Kana quiz answers are direct progress writes, not session/review-bound.
+  assert.equal(state.sessions.length, 0);
+  assert.equal(state.reviews.length, 0);
+});
+
+test("buildQuizQuestions: mixed asks both directions, single-direction modes stay pure, length is respected", () => {
+  const ids = kanaEntries.hiragana.slice(0, 5).map((e) => e.id);
+  const mixed = buildQuizQuestions(ids, "mixed", "all");
+  assert.equal(mixed.length, ids.length * 2);
+  assert.ok(ids.every((id) => mixed.some((q) => q.entryId === id && q.direction === "recognition")));
+  assert.ok(ids.every((id) => mixed.some((q) => q.entryId === id && q.direction === "recall")));
+
+  const recognitionOnly = buildQuizQuestions(ids, "recognition", "all");
+  assert.equal(recognitionOnly.length, ids.length);
+  assert.ok(recognitionOnly.every((q) => q.direction === "recognition"));
+
+  const short = buildQuizQuestions(ids, "mixed", "short");
+  assert.equal(short.length, 10);
+
+  // A tiny selection with a longer requested length cycles rather than
+  // running out of questions.
+  const tinyButLong = buildQuizQuestions([ids[0]], "recognition", "short");
+  assert.equal(tinyButLong.length, 10);
+  assert.ok(tinyButLong.every((q) => q.entryId === ids[0]));
+
+  assert.deepEqual(buildQuizQuestions([], "mixed", "all"), []);
+  assert.deepEqual(buildQuizQuestions(["not-real"], "mixed", "all"), []);
 });

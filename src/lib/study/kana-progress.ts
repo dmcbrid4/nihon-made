@@ -207,32 +207,37 @@ export function kanaMilestones(state: StudyState): KanaMilestone[] {
   return milestones;
 }
 
-/** Which stages of this script's curriculum are unlocked for new
- * introductions. Stage 1 is always unlocked; stage N unlocks once at least
- * UNLOCK_THRESHOLD of stage N-1's characters have been introduced (their
- * recognition direction has at least one review) -- "a reasonable
- * familiarity threshold", not full mastery, so a tiny 3-5 character row
- * doesn't gate progress for long. */
-const UNLOCK_THRESHOLD = 0.7;
-
-export function maxUnlockedStage(state: StudyState, script: KanaScript): number {
-  const progressById = progressMap(state);
-  const entries = kanaEntries[script];
-  const stageNumbers = Array.from(new Set(entries.map((e) => e.stage))).sort(
-    (a, b) => a - b,
-  );
-  if (!stageNumbers.length) return 0;
-  let unlocked = stageNumbers[0];
-  for (let i = 1; i < stageNumbers.length; i++) {
-    const previous = entries.filter((e) => e.stage === stageNumbers[i - 1]);
-    const introduced = previous.filter((e) =>
-      progressById.has(kanaConceptId(e.id, "recognition")),
-    ).length;
-    const ratio = previous.length ? introduced / previous.length : 1;
-    if (ratio < UNLOCK_THRESHOLD) break;
-    unlocked = stageNumbers[i];
-  }
-  return unlocked;
+/** Kana's entire mastery model. Kana mode is not a daily SRS system -- there
+ * is no due date, no row-unlocking gate, no "study session". The *only* way
+ * a kana concept's progress moves is a Quiz mode answer (kana-quiz.tsx),
+ * scored here directly, independent of the vocabulary/kanji/grammar
+ * scheduler (scheduler.ts's scheduleReview). A streak of 5 correct answers
+ * in a row masters it; any correct answer extends the streak (even one
+ * that came after an earlier wrong guess on the same question -- see
+ * kana-quiz.tsx's per-question attempt handling), and only a fully missed
+ * question resets it to 0. dueAt/lastReviewedAt carry no scheduling meaning
+ * for kana (nothing reads them for gating); they're kept only because
+ * ConceptProgress's shape -- and therefore the existing repository/DB
+ * plumbing -- is otherwise unchanged. */
+export function recordKanaQuizAnswer(
+  conceptId: string,
+  correct: boolean,
+  now: Date,
+  previous?: ConceptProgress,
+): ConceptProgress {
+  const successStreak = correct ? (previous?.successStreak ?? 0) + 1 : 0;
+  // First-ever attempt (right or wrong) is "introduced"; from the second
+  // attempt onward it's "learning" until the streak reaches 5.
+  const status = successStreak >= 5 ? "mastered" : previous ? "learning" : "introduced";
+  return {
+    conceptId,
+    status,
+    reviewCount: (previous?.reviewCount ?? 0) + 1,
+    successStreak,
+    intervalDays: previous?.intervalDays ?? 0,
+    dueAt: now.toISOString(),
+    lastReviewedAt: now.toISOString(),
+  };
 }
 
 export function kanaStagesFor(script: KanaScript) {
