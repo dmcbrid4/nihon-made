@@ -452,6 +452,15 @@
   .review-question h1.kanji-expression {
     font-size: 85px;
   }
+  .guest-flashcard {
+    padding: 22px;
+  }
+  .guest-flashcard-word {
+    padding: 40px 0 30px;
+  }
+  .guest-flashcard-word p {
+    font-size: 39px;
+  }
   .level-tag {
     font-size: 9px;
     gap: 5px;
@@ -644,6 +653,9 @@
   }
   .review-question h1 {
     font-size: 34px;
+  }
+  .guest-flashcard-word p {
+    font-size: 32px;
   }
   .level-tag {
     font-size: 8px;
