@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BrandMark } from "@/components/brand";
+import { PasswordInput } from "@/components/password-input";
 
 type Method = "link" | "password";
 
@@ -152,12 +153,11 @@ export default function SignInPage() {
               {method === "link" && newHere && (
                 <>
                   <label htmlFor="invite-password">Invite password</label>
-                  <input
+                  <PasswordInput
                     id="invite-password"
-                    type="password"
                     autoComplete="off"
                     value={invitePassword}
-                    onChange={(event) => setInvitePassword(event.target.value)}
+                    onChange={setInvitePassword}
                     required
                   />
                 </>

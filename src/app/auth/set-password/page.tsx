@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { ArrowRight, KeyRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { BrandMark } from "@/components/brand";
+import { PasswordInput } from "@/components/password-input";
 
 export default function SetPasswordPage() {
   const router = useRouter();
@@ -73,22 +74,20 @@ export default function SetPasswordPage() {
         </p>
         <form onSubmit={(event) => void submit(event)}>
           <label htmlFor="password">Password</label>
-          <input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="new-password"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={setPassword}
             minLength={8}
             required
           />
           <label htmlFor="confirm-password">Confirm password</label>
-          <input
+          <PasswordInput
             id="confirm-password"
-            type="password"
             autoComplete="new-password"
             value={confirm}
-            onChange={(event) => setConfirm(event.target.value)}
+            onChange={setConfirm}
             minLength={8}
             required
           />
