@@ -385,9 +385,11 @@
   font-size: 20px;
   text-align: center;
 }
-.kana-option:hover:not(:disabled) {
-  border-color: var(--green);
-  background: var(--green-soft);
+@media (hover: hover) and (pointer: fine) {
+  .kana-option:hover:not(:disabled) {
+    border-color: var(--green);
+    background: var(--green-soft);
+  }
 }
 .kana-option:disabled {
   opacity: 0.6;
