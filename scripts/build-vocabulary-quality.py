@@ -212,7 +212,46 @@ OVERRIDES = {
         "exampleKind": "editorial",
         "notes": ["Replaced the placeholder example for the 御～ honorific prefix."],
     },
+    # Phase 4: resolve known homograph/homophone collisions with the intended
+    # JMdict entries. These control fields are metadata, not app record fields.
+    "v-jlpt-n5-0062": {
+        "partOfSpeech": "demonstrative determiner",
+        "dictionaryEntryId": "1582920", "dictionarySenseIndex": 0,
+        "notes": ["Pins the demonstrative この to JMdict 1582920 rather than the homophonous 九 entry."],
+    },
+    "v-jlpt-n4-0017": {
+        "expression": "伺う", "kanjiForm": "伺う", "reading": "うかがう",
+        "meaning": "to visit (humble)", "partOfSpeech": "Godan verb",
+        "example": "明日の午後、そちらに伺います。",
+        "exampleMeaning": "I will come to your place tomorrow afternoon.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1305700", "dictionarySenseIndex": 0,
+        "notes": ["Uses the humble visit verb 伺う, not the unrelated 窺う (to peek)."],
+    },
+    "v-jlpt-n4-0704": {
+        "meaning": "at intervals of ~", "partOfSpeech": "suffix expression",
+        "example": "このバスは五分おきに来ます。",
+        "exampleMeaning": "This bus comes every five minutes.",
+        "exampleKind": "editorial", "dictionaryEntryId": "2854117", "dictionarySenseIndex": 0,
+        "notes": ["Pins the interval suffix to JMdict 置き, not 沖 (open sea)."],
+    },
 }
+
+# These are source-format defects, not automatic transformations. Each stable
+# ID was inspected in Phase 3: it has a visible noun headword and a source
+# reading that appends する. Keeping the list explicit protects legitimate
+# verb headwords ending in する from a silent alteration.
+NOUN_SURU_HEADWORDS = {
+    "v-jlpt-n5-0362", "v-jlpt-n5-0471", "v-jlpt-n5-0601", "v-jlpt-n5-0659",
+    "v-jlpt-n4-0154", "v-jlpt-n4-0170", "v-jlpt-n4-0172", "v-jlpt-n4-0176",
+    "v-jlpt-n4-0257", "v-jlpt-n4-0259", "v-jlpt-n4-0279", "v-jlpt-n4-0327",
+    "v-jlpt-n4-0370", "v-jlpt-n4-0371", "v-jlpt-n4-0372", "v-jlpt-n4-0380",
+    "v-jlpt-n4-0381", "v-jlpt-n4-0396", "v-jlpt-n4-0400", "v-jlpt-n4-0419",
+    "v-jlpt-n4-0425", "v-jlpt-n4-0426", "v-jlpt-n4-0445", "v-jlpt-n4-0459",
+    "v-jlpt-n4-0525", "v-jlpt-n4-0526", "v-jlpt-n4-0528", "v-jlpt-n4-0579",
+    "v-jlpt-n4-0603", "v-jlpt-n4-0604",
+}
+
+OVERRIDE_CONTROL_KEYS = {"exampleKind", "notes", "dictionaryEntryId", "dictionarySenseIndex"}
 
 RETIRED = {
     "v-jlpt-n4-0070": "Ambiguous しかる entry; its sense and POS conflict and require a separately sourced decision.",
@@ -228,6 +267,40 @@ RETIRED = {
     "v-jlpt-n5-0676": "Duplicate 十/じゅう entry; v-jlpt-n5-0403 retains the canonical Sino-Japanese counting reading.",
     "v-jlpt-n4-0030": "Duplicate お金持ち/おかねもち entry with a reading missing its leading お; v-jlpt-n4-0640 already has the correct reading.",
     "v-jlpt-n4-0121": "Duplicate パート/パート entry whose example used アパート (apartment), a different word that only contains パート as a substring; v-jlpt-n4-0681 has a corrected, sense-aligned example.",
+    # These source rows duplicate the reviewed noun heads above. They were
+    # previously concealed because their earlier counterparts incorrectly
+    # stored a reading ending in する. Keep the earlier, stable IDs so any
+    # saved progress remains attached to the card that was already shown.
+    "v-jlpt-n5-0672": "Duplicate 散歩 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n5-0679": "Duplicate 掃除 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n5-0684": "Duplicate 勉強 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n5-0690": "Duplicate 練習 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0636": "Duplicate 案内 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0637": "Duplicate 運転 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0638": "Duplicate 運動 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0639": "Duplicate 遠慮 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0642": "Duplicate 計画 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0643": "Duplicate 経験 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0647": "Duplicate 故障 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0649": "Duplicate 支度 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0650": "Duplicate 出席 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0651": "Duplicate 出発 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0652": "Duplicate 準備 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0653": "Duplicate 招待 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0654": "Duplicate 承知 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0655": "Duplicate 食事 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0656": "Duplicate 心配 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0657": "Duplicate 生活 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0658": "Duplicate 生産 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0659": "Duplicate 世話 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0660": "Duplicate 相談 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0661": "Duplicate 退院 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0663": "Duplicate 入院 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0664": "Duplicate 入学 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0665": "Duplicate 拝見 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0667": "Duplicate 放送 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0670": "Duplicate 輸出 after canonicalizing the earlier noun + suru headword.",
+    "v-jlpt-n4-0671": "Duplicate 輸入 after canonicalizing the earlier noun + suru headword.",
 }
 
 
@@ -289,7 +362,7 @@ def furigana_index(path: Path) -> dict[tuple[str, str], list[dict]]:
     return result
 
 
-def jmdict_index(path: Path) -> tuple[dict[str, dict], dict[tuple[str, str], dict], set[tuple[str, str]], dict[str, str], str]:
+def jmdict_index(path: Path) -> tuple[dict[str, dict], dict[tuple[str, str], list[dict]], set[tuple[str, str]], dict[str, str], str]:
     """Single pass over the full JMdict snapshot (not the common-only subset).
 
     Returns (entries by id, entries by exact expression+reading form, the
@@ -298,7 +371,7 @@ def jmdict_index(path: Path) -> tuple[dict[str, dict], dict[tuple[str, str], dic
     with path.open(encoding="utf-8") as source:
         dictionary = json.load(source)
     by_id: dict[str, dict] = {}
-    by_form: dict[tuple[str, str], dict] = {}
+    by_form: dict[tuple[str, str], list[dict]] = {}
     common: set[tuple[str, str]] = set()
     tatoeba: dict[str, str] = {}
     for entry in dictionary["words"]:
@@ -313,7 +386,7 @@ def jmdict_index(path: Path) -> tuple[dict[str, dict], dict[tuple[str, str], dic
             ] or kana_texts or [item["text"]]
             for reading in readings:
                 key = (normalized(item["text"]), normalized(hira(reading)))
-                by_form.setdefault(key, entry)
+                by_form.setdefault(key, []).append(entry)
                 if item.get("common"):
                     common.add(key)
         for sense in entry.get("sense", []):
@@ -341,6 +414,22 @@ def select_sense(entry: dict, meaning: str) -> tuple[int | None, int]:
         if score > best_score:
             best_index, best_score = index, score
     return best_index, max(best_score, 0)
+
+
+def select_dictionary_entry(candidates: list[dict], meaning: str) -> tuple[dict, int | None, int]:
+    """Choose a form/reading candidate by its best English gloss overlap.
+
+    This is a fallback only. Homographs whose intended sense cannot be
+    established from learner-facing meaning use an explicit reviewed override,
+    rather than inheriting the former first-entry accident.
+    """
+    ranked = []
+    for entry in candidates:
+        sense_index, overlap = select_sense(entry, meaning)
+        common = any(value.get("common") for value in entry.get("kanji", []) + entry.get("kana", []))
+        ranked.append((overlap, common, entry, sense_index))
+    overlap, _common, entry, sense_index = max(ranked, key=lambda value: (value[0], value[1]))
+    return entry, sense_index, overlap
 
 
 def source_level_index(root: Path) -> dict[str, dict[tuple[str, str], set[str]]]:
@@ -602,7 +691,13 @@ def main() -> None:
             continue
         item = dict(raw)
         override = OVERRIDES.get(item["id"], {})
-        item.update({key: value for key, value in override.items() if key not in {"exampleKind", "notes"}})
+        if item["id"] in NOUN_SURU_HEADWORDS:
+            # The Phase 3 review established that this `する` is a source
+            # annotation for a noun + suru verb, not part of the headword.
+            assert item["reading"].endswith("する"), item["id"]
+            item["reading"] = item["reading"][:-2]
+            item["partOfSpeech"] = "noun; suru verb"
+        item.update({key: value for key, value in override.items() if key not in OVERRIDE_CONTROL_KEYS})
         # Computed from the current (possibly overridden) text, not the raw
         # exampleFallback flag: an override that replaces the example must
         # clear fallback status, not inherit the pre-correction value.
@@ -655,9 +750,24 @@ def main() -> None:
         item["vocabulary_item_kind"] = item_kind(tagger, item["expression"])
         tokens = tokenize(tagger, item["example"])
         spans = target_spans(tagger, item, item["example"], tokens)
-        dictionary_entry = by_form.get(key)
+        forced_entry_id = override.get("dictionaryEntryId")
+        if forced_entry_id:
+            dictionary_entry = by_id[forced_entry_id]
+            sense_index = override.get("dictionarySenseIndex")
+            if sense_index is None:
+                sense_index, gloss_overlap = select_sense(dictionary_entry, item["meaning"])
+            else:
+                glosses = "; ".join(
+                    gloss["text"] for gloss in dictionary_entry["sense"][sense_index].get("gloss", [])
+                    if gloss.get("lang", "eng") == "eng"
+                )
+                gloss_overlap = len(gloss_tokens(glosses) & gloss_tokens(item["meaning"]))
+        else:
+            candidates = by_form.get(key, [])
+            dictionary_entry, sense_index, gloss_overlap = (
+                select_dictionary_entry(candidates, item["meaning"]) if candidates else (None, None, 0)
+            )
         if dictionary_entry is not None:
-            sense_index, gloss_overlap = select_sense(dictionary_entry, item["meaning"])
             dictionary = {
                 "entryId": dictionary_entry["id"],
                 "senseIds": [f"{dictionary_entry['id']}:{sense_index}"] if sense_index is not None else [],

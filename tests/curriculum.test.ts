@@ -15,9 +15,9 @@ test("the N5–N4 curriculum is balanced, complete, and uniquely identifiable", 
   // The full candidate catalog (approved and unapproved together) is a
   // stable regression snapshot; it only moves when source data changes.
   assert.deepEqual(vocabularyCatalogCounts, {
-    n5: 734,
-    n4Only: 705,
-    total: 1439,
+    n5: 730,
+    n4Only: 679,
+    total: 1409,
   });
   // What actually reaches learners is the approved subset. This grows as
   // Phase 3/4 review and correct more candidates, so assert a floor rather
