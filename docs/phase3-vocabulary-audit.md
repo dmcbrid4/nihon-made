@@ -1,7 +1,7 @@
 # Phase 3 vocabulary audit
 
-Status: **70 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunks 2–7 findings below await Phase 4. Resume position 36 in each level.
+Status: **80 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunks 2–8 findings below await Phase 4. Resume position 41 in each level.
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -805,3 +805,34 @@ reading error. The sample total is 70, not a full-corpus approval. Verified IDs
 are exactly positions 1–35 per level and the corpus/sample remain unchanged;
 `git diff --check` passed. No app tests/build for this documentation-only audit.
 **Next: positions 36–40 per level; 30 sampled records remain.**
+
+## Chunk 8 — positions 36–40 per level (2026-09-07)
+
+Reviewed at `d3f5cf4`; 80/100 inspected. Same unchanged corpus hash as chunk 2.
+Full lexical senses checked in cached JMdict; compact packets covered meaning,
+POS, example/English, every ruby segment, source, target, level and priority.
+
+| Record | Decision and Phase 4 action |
+| --- | --- |
+| N5 `0345` 砂糖 | **Accept linguistically; active.** Noun/sugar `1291600:0`; 砂糖がない。 / “We have no sugar” is natural (subject inferred). 砂→さ / 糖→とう and compound さとう correct. Retain. |
+| N5 `0548` 二十日 | **Required sentence reading/sense repair; active.** `1600850`, noun: date sense 0, duration sense 1. Canonical はつか and both whole-word ruby and 二十→はつ / 日→か are valid. 今日は金曜日、十月二十日だ。 is a plausible hypothetical date, but 金曜日 must be **きんようび**, not stored きんようひ. 今日→きょう, 十月→じゅうがつ are correct. Select date sense 0 for this example; label gloss “twenty days; twentieth day of the month.” |
+| N5 `0376` 字引 | **Teaching polish; active.** Noun/dictionary `1315140:0`, じびき correct. 彼女はいわゆる生き字引だ。 / “She is, so to speak, a walking dictionary” is natural figurative language but poorly suited to a first N5 card. 彼女→かのじょ, 生→い + き, 字引→じびき correct. Prioritize ordinary 辞書 in the curriculum; retain 字引 as a lower-priority synonym pending coverage review. Optional original **字引で漢字の読み方を調べます。 / “I look up kanji readings in a dictionary.”** Ruby: 字引(じびき)で漢字(かんじ)の読(よ)み方(かた)を調(しら)べます。 Do not claim measured rarity from this review alone. |
+| N5 `0025` おなか | **Required contextual reading repair; active.** Noun/stomach `1002610:0`, kana spelling appropriate. おなか空いた！ / “I'm starving!” is natural colloquial hunger (English adds reasonable emphasis). Read **おなかすいた**, with 空→す + いた, not stored あいた. Hungry 空く is `1586265:1`, distinct from 空く/あく `1586270`. Preserve the example with correct ruby or add が for a neutral teaching form. |
+| N5 `0190` 医者 | **Accept linguistically; active.** Noun/doctor `1159980:0`; 彼は医者だ。 / “He is a doctor” is natural plain style. 医→い / 者→しゃ and sentence 医者→いしゃ, 彼→かれ correct. No rewrite necessary. |
+| N4 `0154` 案内 | **Required canonical reading repair; active.** Another member of chunk 3's 30-record group: 案内 has reading/ruby あんないする. Keep ID, headword 案内, reading **あんない**, noun + suru verb; recover dictionary `1154860:0`. ご案内します。 / “I'll guide you” is natural polite service language, with correct ご + 案内→あんない + します. Headword ruby must not absorb する. |
+| N4 `0017` うかがう | **Required dictionary/example repair; quarantined.** Visit means humble **伺う**, `1305700:0`, not stored 窺う “peek” `1172230`. Godan is correct; qualify gloss “to visit (humble).” Prefer canonical 伺う with 伺→うかが + う, preserving ID/alias; kana is also acceptable. Replace placeholder with original **明日の午後、そちらに伺います。 / “I'll come to your place tomorrow afternoon.”** Ruby: 明日(あした)の午後(ごご)、そちらに伺(うかが)います。 Teach humble visiting after ordinary 行く; placeholder ruby itself is valid but pedagogically empty. |
+| N4 `0229` 汽車 | **Pedagogical polish; active.** Noun/steam train `1222700:0`; dictionary also has broader train senses. 汽車が脱線した。 / “The train was derailed” is grammatical; “The train derailed” is a closer intransitive English rendering. 汽→き / 車→しゃ, 脱線→だっせん correct. Prefer simpler original **汽車の窓から海が見えます。 / “You can see the sea from the train window.”** Ruby: 汽車(きしゃ)の窓(まど)から海(うみ)が見(み)えます。 Explain scope versus 電車/列車; do not silently classify all non-electric trains as steam. |
+| N4 `0261` 迎える | **Required selected-sense/example repair; active.** Ichidan/transitive, むかえる `1253190`; gloss is meeting/welcoming (sense 0), but トムは来年100歳を迎える。 / “Tom will be a hundred years old next year” uses reaching an age (sense 3). 来年→らいねん, 迎→むか + える correct. Stored `100` + 歳→さい leaves numeral pronunciation implicit; no claim that 100さい is a complete kana reading. Original first example: **駅で友達を迎えます。 / “I'll meet my friend at the station.”** Ruby: 駅(えき)で友達(ともだち)を迎(むか)えます。 Keep age use secondary with explicit sense context. |
+| N4 `0139` まず | **English polish; active.** Adverb/first `1387240:0`, kana appropriate. まず京都にいく。 / “First we'll hit Kyoto” is natural Japanese but colloquial English needlessly obscures it. Prefer “First, we'll go to Kyoto”; subject is contextual. 京都→きょうと correct; kana いく is natural, with optional 行く orthography for consistency. |
+
+Result: five required corrections, three polish decisions, two accepts; nine
+active, one quarantined. Nine correct word ruby representations (案内 wrong);
+eight sentence readings appear correct, two wrong (Friday/hungry), with the
+additional numeral-reading limitation on 迎える recorded separately.
+Nine imported examples have no recovered attribution; one is a placeholder.
+Original proposals above await independent review. Reading of hunger corroborated
+by [Kanjipedia's すく entry](https://www.kanjipedia.jp/sakuin/doukunigi/items/0003792400).
+A targeted scan also finds 金曜日/きんようひ on active `v-jlpt-n5-0281`; extend
+existing weekday fixtures. No extra sample count for that targeted check.
+Verified positions 1–40 per level, unchanged sample/corpus, and `git diff --check`.
+No app tests/build for this documentation-only checkpoint.

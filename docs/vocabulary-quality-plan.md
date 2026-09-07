@@ -301,10 +301,10 @@ answer behavior; furigana availability is intentional reading assistance.
      that a human or agent has read the sentence for naturalness, register,
      or JLPT-appropriateness. That is Phase 3's job.
    Do not push or seed production automatically.
-3. **Phase 3 — Astra, high: in progress (70/100; resume sample position 36 per level).** Inspect a reproducible
+3. **Phase 3 — Astra, high: in progress (80/100; resume sample position 41 per level).** Inspect a reproducible
    random 100 records (50 per level, fixed recorded seed), plus targeted
-   high-risk cases. The first seventy are documented in
-   `docs/phase3-vocabulary-audit.md`; three subsequent chunks remain.
+   high-risk cases. The first eighty are documented in
+   `docs/phase3-vocabulary-audit.md`; two subsequent chunks remain.
    Chunks 2–3 identify active contextual counter-reading errors, example-sense
    mismatch, wrong dictionary entry selection, and extra する in word ruby
    despite mechanical approval; prioritize these in Phase 4. Log
