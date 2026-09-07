@@ -26,11 +26,10 @@ const YOON_ROWS = [
 ] as const;
 const YOON_COLS = ["ya", "yu", "yo"] as const;
 
-// Collapsible so the selector doesn't force a long scroll past every table
-// just to reach the settings/start button below it -- Basic kana (the one
-// most people actually browse) starts open, the rest start collapsed and
-// are reachable via the "Select ..." bucket shortcuts above without opening
-// them at all.
+// Collapsible so the page doesn't stay dominated by every table at once --
+// Dakuten/Yōon/Small always start collapsed (see openFirst below for Basic
+// kana), and are still reachable via the "Select ..." bucket shortcuts
+// above without ever opening them.
 function CollapsibleSection({
   title,
   defaultOpen,
@@ -54,9 +53,15 @@ function CollapsibleSection({
 export function KanaGridSections({
   script,
   renderCell,
+  openFirst = true,
 }: {
   script: KanaScript;
   renderCell: (entry: KanaEntry | undefined, key: string) => ReactNode;
+  /** Whether "Basic kana" starts open. The read-only Chart tab wants it open
+   * (browsing the chart is the whole point); the Study/Quiz selector starts
+   * it collapsed like the rest -- picking characters mostly happens via the
+   * "Select ..." bucket shortcuts above the grid, not by scrolling it. */
+  openFirst?: boolean;
 }) {
   const entries = kanaEntries[script];
   const byKey = new Map(
@@ -73,7 +78,7 @@ export function KanaGridSections({
 
   return (
     <>
-      <CollapsibleSection title="Basic kana" defaultOpen>
+      <CollapsibleSection title="Basic kana" defaultOpen={openFirst}>
         <div
           className="kana-grid-table"
           style={{ gridTemplateColumns: `auto repeat(${VOWELS.length}, 1fr)` }}

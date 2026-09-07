@@ -76,6 +76,8 @@ test("hiragana Quiz: select one character, answer correctly 5 times, it masters"
 }, testInfo) => {
   await page.goto("/kana/hiragana");
   await page.getByRole("button", { name: "Quiz", exact: true }).click();
+  // Basic kana starts collapsed on the selector -- open it before clicking in.
+  await page.getByText("Basic kana", { exact: true }).click();
   await page.locator(".kana-cell", { hasText: "あ" }).first().click();
   await expect(page.locator(".kana-selector-count")).toHaveText("1 selected");
   await page

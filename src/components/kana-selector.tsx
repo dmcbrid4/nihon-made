@@ -47,7 +47,9 @@ export function KanaSelector({
     (state?.progress ?? []).map((item) => [item.conceptId, item]),
   );
   const entries = kanaEntries[script];
-  const buckets = Array.from(new Set(entries.map((e) => bucketFor[e.category])));
+  const buckets = Array.from(
+    new Set(entries.map((e) => bucketFor[e.category])),
+  );
 
   function toggle(id: string) {
     const next = new Set(selected);
@@ -62,14 +64,23 @@ export function KanaSelector({
     const ids = entries
       .filter((entry) => {
         const status = characterStatusFor(entry, progressById);
-        return want === "mastered" ? status === "mastered" : status !== "mastered";
+        return want === "mastered"
+          ? status === "mastered"
+          : status !== "mastered";
       })
       .map((entry) => entry.id);
     selectIds(ids);
   }
 
   function cell(entry: KanaEntry | undefined, key: string) {
-    if (!entry) return <span key={key} className="kana-cell kana-cell-empty" aria-hidden="true" />;
+    if (!entry)
+      return (
+        <span
+          key={key}
+          className="kana-cell kana-cell-empty"
+          aria-hidden="true"
+        />
+      );
     const status = characterStatusFor(entry, progressById);
     const checked = selected.has(entry.id);
     return (
@@ -82,7 +93,9 @@ export function KanaSelector({
         title={`${entry.character} — ${entry.romaji}`}
         lang="ja"
       >
-        {checked && <Check className="kana-cell-check" size={13} strokeWidth={3} />}
+        {checked && (
+          <Check className="kana-cell-check" size={13} strokeWidth={3} />
+        )}
         {entry.character}
       </button>
     );
@@ -95,16 +108,32 @@ export function KanaSelector({
           <strong>{selected.size}</strong> selected
         </div>
         <div className="kana-selector-actions">
-          <button type="button" className="text-link" onClick={() => selectIds(entries.map((e) => e.id))}>
+          <button
+            type="button"
+            className="text-link"
+            onClick={() => selectIds(entries.map((e) => e.id))}
+          >
             Select all
           </button>
-          <button type="button" className="text-link" onClick={() => selectIds([])}>
+          <button
+            type="button"
+            className="text-link"
+            onClick={() => selectIds([])}
+          >
             Clear
           </button>
-          <button type="button" className="text-link" onClick={() => selectByStatus("unmastered")}>
+          <button
+            type="button"
+            className="text-link"
+            onClick={() => selectByStatus("unmastered")}
+          >
             Select unmastered
           </button>
-          <button type="button" className="text-link" onClick={() => selectByStatus("mastered")}>
+          <button
+            type="button"
+            className="text-link"
+            onClick={() => selectByStatus("mastered")}
+          >
             Select mastered
           </button>
         </div>
@@ -116,7 +145,11 @@ export function KanaSelector({
             type="button"
             className="secondary-button"
             onClick={() =>
-              selectIds(entries.filter((e) => bucketFor[e.category] === bucket).map((e) => e.id))
+              selectIds(
+                entries
+                  .filter((e) => bucketFor[e.category] === bucket)
+                  .map((e) => e.id),
+              )
             }
           >
             Select {bucketLabel[bucket]}
@@ -124,7 +157,7 @@ export function KanaSelector({
         ))}
       </div>
       <div className="kana-chart-scroll">
-        <KanaGridSections script={script} renderCell={cell} />
+        <KanaGridSections script={script} renderCell={cell} openFirst={false} />
       </div>
     </div>
   );
