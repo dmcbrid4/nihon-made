@@ -12,6 +12,12 @@ import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { STORAGE_KEY } from "@/lib/storage/browser";
 
+const cardPaceModes = [
+  { id: "N5", label: "N5 foundations" },
+  { id: "N4", label: "N4-only curriculum" },
+  { id: "tae-kim", label: "Tae Kim course" },
+] as const;
+
 function GoalForm({ state }: { state: StudyState }) {
   const { dispatch, busy } = useStudy();
   const [targetDate, setTargetDate] = useState(state.goal.targetDate);
@@ -109,19 +115,31 @@ function GoalForm({ state }: { state: StudyState }) {
           </label>
           <input id="target-level" value="JLPT N4" readOnly />
         </div>
-        <div>
-          <label className="field-label" htmlFor="new-cards-per-day">
-            New cards per day: {newCardsPerDay}
-          </label>
-          <input
-            id="new-cards-per-day"
-            type="range"
-            min={5}
-            max={25}
-            step={1}
-            value={newCardsPerDay}
-            onChange={(event) => setNewCardsPerDay(Number(event.target.value))}
-          />
+      </div>
+      <div className="new-card-pacing">
+        <span className="field-label">New cards per day</span>
+        <div className="form-grid">
+          {cardPaceModes.map(({ id, label }) => (
+            <div key={id}>
+              <label className="field-label" htmlFor={`new-cards-${id}`}>
+                {label}: {newCardsPerDay[id]}
+              </label>
+              <input
+                id={`new-cards-${id}`}
+                type="range"
+                min={5}
+                max={25}
+                step={1}
+                value={newCardsPerDay[id]}
+                onChange={(event) =>
+                  setNewCardsPerDay((current) => ({
+                    ...current,
+                    [id]: Number(event.target.value),
+                  }))
+                }
+              />
+            </div>
+          ))}
         </div>
       </div>
       <p className="field-help">
@@ -130,8 +148,9 @@ function GoalForm({ state }: { state: StudyState }) {
         anime/drama dialogue, with its own audio and screenshots. Kana mode
         replaces Today with the hiragana/katakana chart, study, and quiz
         tools -- it has no daily queue of its own. All four tracks keep
-        separate progress. New cards per day scales how many never-seen
-        concepts a session pulls in, split proportionally across
+        separate progress. Each non-Kana mode has its own new-card pace. The
+        selected mode setting scales how many never-seen concepts a session
+        pulls in, split proportionally across
         vocabulary/kanji/grammar/reading/listening -- it does not apply to
         Kana mode.
       </p>

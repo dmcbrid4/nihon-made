@@ -59,7 +59,14 @@ export const studyGoals = pgTable("study_goals", {
   targetLevel: jlptLevel("target_level").notNull().default("N4"),
   studyMode: jlptLevel("study_mode").notNull().default("N5"),
   dailyMinutes: integer("daily_minutes").notNull().default(25),
-  newCardsPerDay: integer("new_cards_per_day").notNull().default(9),
+  // Retained for safe rollback to builds that still use one shared setting.
+  // New application code reads the three mode-specific columns below.
+  legacyNewCardsPerDay: integer("new_cards_per_day").notNull().default(9),
+  newCardsPerDayN5: integer("new_cards_per_day_n5").notNull().default(9),
+  newCardsPerDayN4: integer("new_cards_per_day_n4").notNull().default(9),
+  newCardsPerDayTaeKim: integer("new_cards_per_day_tae_kim")
+    .notNull()
+    .default(9),
   timeZone: text("time_zone").notNull().default("America/New_York"),
 });
 

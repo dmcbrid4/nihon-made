@@ -20,8 +20,25 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     await client.exec(await readFile("drizzle/0004_add_tae_kim_mode.sql", "utf8"));
     await client.exec(await readFile("drizzle/0005_add_kana_mode.sql", "utf8"));
     await client.exec(await readFile("drizzle/0006_add_new_cards_per_day.sql", "utf8"));
+    // A real existing learner can have a non-default shared pace when the
+    // per-mode migration runs. It must be copied to all three new columns.
+    const migratedUserId = "00000000-0000-4000-8000-000000000003";
+    await client.exec(`
+      INSERT INTO users (id, name) VALUES ('${migratedUserId}', 'Migration test');
+      INSERT INTO study_goals (
+        user_id, target_date, target_level, study_mode, daily_minutes,
+        new_cards_per_day, time_zone
+      ) VALUES ('${migratedUserId}', '2027-01-15', 'N4', 'N5', 25, 13, 'America/New_York');
+    `);
+    await client.exec(await readFile("drizzle/0007_add_per_mode_new_cards.sql", "utf8"));
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
+    const migratedGoal = await new PostgresRepository(db, migratedUserId).load();
+    assert.deepEqual(migratedGoal.goal.newCardsPerDay, {
+      N5: 13,
+      N4: 13,
+      "tae-kim": 13,
+    });
     await seedContent(db);
     await seedContent(db);
     assert.equal((await db.select().from(schema.studyConcepts)).length, concepts.length);
@@ -90,6 +107,7 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
         ...finished.goal,
         targetDate: "2027-01-22",
         dailyMinutes: 40,
+        newCardsPerDay: { N5: 7, N4: 14, "tae-kim": 21 },
         studyMode: "N4",
         timeZone: "Asia/Tokyo",
       },
@@ -98,6 +116,11 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     assert.equal(final.goal.targetDate, "2027-01-22");
     assert.equal(final.goal.timeZone, "Asia/Tokyo");
     assert.equal(final.goal.studyMode, "N4");
+    assert.deepEqual(final.goal.newCardsPerDay, {
+      N5: 7,
+      N4: 14,
+      "tae-kim": 21,
+    });
 
     const importedUserId = "00000000-0000-4000-8000-000000000002";
     const importedSessionId = randomUUID();

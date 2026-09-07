@@ -2,13 +2,56 @@ import { and, asc, eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { initialState, applyAction } from "../lib/study/state";
 import {
+  goalSchema,
   stateSchema,
   type StudyAction,
+  type StudyGoal,
   type StudyRepository,
   type StudyState,
 } from "../lib/study/types";
 import type { Database } from "./client";
 import * as s from "./schema";
+
+// Browser state stores a convenient per-mode object; Postgres uses independent
+// columns so each setting can be migrated and queried normally. Keep this
+// boundary explicit rather than relying on object spreading to match schema
+// field names.
+function goalToRow(goal: StudyGoal) {
+  return {
+    targetDate: goal.targetDate,
+    targetLevel: goal.targetLevel,
+    studyMode: goal.studyMode,
+    dailyMinutes: goal.dailyMinutes,
+    newCardsPerDayN5: goal.newCardsPerDay.N5,
+    newCardsPerDayN4: goal.newCardsPerDay.N4,
+    newCardsPerDayTaeKim: goal.newCardsPerDay["tae-kim"],
+    timeZone: goal.timeZone,
+  };
+}
+
+function goalFromRow(row: {
+  targetDate: string;
+  targetLevel: "N4" | "N5" | "tae-kim" | "kana";
+  studyMode: "N4" | "N5" | "tae-kim" | "kana";
+  dailyMinutes: number;
+  newCardsPerDayN5: number;
+  newCardsPerDayN4: number;
+  newCardsPerDayTaeKim: number;
+  timeZone: string;
+}): StudyGoal {
+  return goalSchema.parse({
+    targetDate: row.targetDate,
+    targetLevel: row.targetLevel,
+    studyMode: row.studyMode,
+    dailyMinutes: row.dailyMinutes,
+    newCardsPerDay: {
+      N5: row.newCardsPerDayN5,
+      N4: row.newCardsPerDayN4,
+      "tae-kim": row.newCardsPerDayTaeKim,
+    },
+    timeZone: row.timeZone,
+  });
+}
 
 export class PostgresRepository implements StudyRepository {
   constructor(
@@ -119,10 +162,10 @@ export class PostgresRepository implements StudyRepository {
 
       await tx
         .insert(s.studyGoals)
-        .values({ userId, ...imported.goal })
+        .values({ userId, ...goalToRow(imported.goal) })
         .onConflictDoUpdate({
           target: s.studyGoals.userId,
-          set: imported.goal,
+          set: goalToRow(imported.goal),
         });
       if (imported.progress.length)
         await tx
@@ -172,7 +215,7 @@ export class PostgresRepository implements StudyRepository {
         .for("update");
       await tx
         .insert(s.studyGoals)
-        .values({ userId, ...initialState().goal })
+        .values({ userId, ...goalToRow(initialState().goal) })
         .onConflictDoNothing();
       const [goal] = await tx
         .select()
@@ -207,7 +250,7 @@ export class PostgresRepository implements StudyRepository {
       const iso = (value: string) => new Date(value).toISOString();
       const state = stateSchema.parse({
         version: 1,
-        goal,
+        goal: goalFromRow(goal),
         progress: progress.map((item) => ({
           ...item,
           dueAt: iso(item.dueAt),
@@ -232,7 +275,7 @@ export class PostgresRepository implements StudyRepository {
       if (action.type === "goal") {
         await tx
           .update(s.studyGoals)
-          .set(next.goal)
+          .set(goalToRow(next.goal))
           .where(eq(s.studyGoals.userId, userId));
       } else if (action.type === "start") {
         const session = next.sessions.at(-1)!;

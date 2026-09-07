@@ -26,6 +26,10 @@ export type Rating = (typeof ratings)[number];
 // studying", and it has no daily SRS session of its own.
 export const studyModes = ["N5", "N4", "tae-kim", "kana"] as const;
 export type StudyMode = (typeof studyModes)[number];
+// Kana has free-select Study/Quiz tools rather than a daily session queue, so
+// it intentionally has no new-card setting.
+export const queuedStudyModes = ["N5", "N4", "tae-kim"] as const;
+export type QueuedStudyMode = (typeof queuedStudyModes)[number];
 
 export const kanaScripts = ["hiragana", "katakana"] as const;
 export type KanaScript = (typeof kanaScripts)[number];
@@ -184,14 +188,26 @@ export const dateSchema = z
     );
   }, "Choose a valid date.");
 
+const newCardsPerDayValueSchema = z.number().int().min(5).max(25);
+const newCardsPerDayByModeSchema = z.object({
+  N5: newCardsPerDayValueSchema,
+  N4: newCardsPerDayValueSchema,
+  "tae-kim": newCardsPerDayValueSchema,
+});
+
 export const goalSchema = z.object({
   targetDate: dateSchema,
   dailyMinutes: z.number().int().min(10).max(60),
-  // How many never-seen concepts a day's session pulls in, before the
-  // per-type split in planner.ts scales it proportionally across
-  // vocabulary/kanji/grammar/reading/listening. Kana mode ignores this --
-  // its Study/Quiz tools work by free selection, not a capped daily queue.
-  newCardsPerDay: z.number().int().min(5).max(25).default(9),
+  // Each queued mode has its own intake pace. Older browser exports stored a
+  // single number, so accept and expand it while reading saved state.
+  newCardsPerDay: z
+    .union([newCardsPerDayByModeSchema, newCardsPerDayValueSchema])
+    .default(9)
+    .transform((value) =>
+      typeof value === "number"
+        ? { N5: value, N4: value, "tae-kim": value }
+        : value,
+    ),
   targetLevel: z.literal("N4"),
   studyMode: z.enum(studyModes).default("N5"),
   timeZone: z

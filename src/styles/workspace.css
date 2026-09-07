@@ -63,6 +63,15 @@ input[type="range"] {
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
+.new-card-pacing {
+  margin-top: 18px;
+}
+.new-card-pacing > .field-label {
+  margin-bottom: 12px;
+}
+.new-card-pacing .field-label {
+  color: var(--muted);
+}
 .form-footer {
   display: flex;
   align-items: center;

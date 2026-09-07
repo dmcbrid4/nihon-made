@@ -10,7 +10,12 @@ import {
 } from "../src/lib/study/planner";
 import { applyAction, initialState } from "../src/lib/study/state";
 import { scheduleReview } from "../src/lib/study/scheduler";
-import { actionSchema, dateSchema, type StudyState } from "../src/lib/study/types";
+import {
+  actionSchema,
+  dateSchema,
+  goalSchema,
+  type StudyState,
+} from "../src/lib/study/types";
 import { vocabularyProgress } from "../src/lib/study/vocabulary-progress";
 
 const now = new Date("2026-09-04T15:00:00Z");
@@ -49,7 +54,7 @@ test("a new session balances five subjects and never exceeds the time budget", (
   assert.ok(sessionMinutes(planSession(state, now)) <= 10);
 });
 
-test("newCardsPerDay scales the per-type new-card split proportionally", () => {
+test("new-card intake scales per type and stays independent for each study mode", () => {
   const state = initialState();
   state.goal.dailyMinutes = 60; // headroom so the minutes budget never caps this
   const countByType = (plan: ReturnType<typeof planSession>) =>
@@ -60,7 +65,7 @@ test("newCardsPerDay scales the per-type new-card split proportionally", () => {
       ]),
     );
 
-  state.goal.newCardsPerDay = 9; // default matches the old hardcoded split exactly
+  state.goal.newCardsPerDay.N5 = 9; // default matches the old hardcoded split exactly
   assert.deepEqual(countByType(planSession(state, now)), {
     vocabulary: 4,
     kanji: 2,
@@ -69,7 +74,7 @@ test("newCardsPerDay scales the per-type new-card split proportionally", () => {
     listening: 1,
   });
 
-  state.goal.newCardsPerDay = 5;
+  state.goal.newCardsPerDay.N5 = 5;
   assert.deepEqual(countByType(planSession(state, now)), {
     vocabulary: 2,
     kanji: 1,
@@ -78,13 +83,36 @@ test("newCardsPerDay scales the per-type new-card split proportionally", () => {
     listening: 1,
   });
 
-  state.goal.newCardsPerDay = 25;
+  // Changing another mode's pace must not silently change the active N5 plan.
+  state.goal.newCardsPerDay.N4 = 25;
+  state.goal.newCardsPerDay["tae-kim"] = 25;
+  assert.deepEqual(countByType(planSession(state, now)), {
+    vocabulary: 2,
+    kanji: 1,
+    grammar: 1,
+    reading: 1,
+    listening: 1,
+  });
+
+  state.goal.newCardsPerDay.N5 = 25;
   assert.deepEqual(countByType(planSession(state, now)), {
     vocabulary: 11,
     kanji: 6,
     grammar: 3,
     reading: 3,
     listening: 3,
+  });
+});
+
+test("legacy shared new-card settings expand safely into all queued modes", () => {
+  const legacy = goalSchema.parse({
+    ...initialState().goal,
+    newCardsPerDay: 13,
+  });
+  assert.deepEqual(legacy.newCardsPerDay, {
+    N5: 13,
+    N4: 13,
+    "tae-kim": 13,
   });
 });
 

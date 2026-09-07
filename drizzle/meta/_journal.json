@@ -50,6 +50,13 @@
       "when": 1788806880474,
       "tag": "0006_add_new_cards_per_day",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1788810242533,
+      "tag": "0007_add_per_mode_new_cards",
+      "breakpoints": true
     }
   ]
 }

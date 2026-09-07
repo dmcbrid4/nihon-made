@@ -72,7 +72,9 @@ export function planSession(state: StudyState, now: Date): Concept[] {
   // Due reviews get priority. New material is deliberately capped for a short,
   // balanced starter session rather than filling the time budget with new cards.
   due.forEach(add);
-  const limits = scaledNewCardLimits(state.goal.newCardsPerDay);
+  const limits = scaledNewCardLimits(
+    state.goal.newCardsPerDay[state.goal.studyMode],
+  );
   for (const type of ["vocabulary", "kanji", "grammar", "reading", "listening"] as const) {
     unseen
       .filter((item) => item.type === type)
