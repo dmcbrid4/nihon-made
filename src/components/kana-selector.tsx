@@ -157,7 +157,11 @@ export function KanaSelector({
         ))}
       </div>
       <div className="kana-chart-scroll">
-        <KanaGridSections script={script} renderCell={cell} openFirst={false} />
+        <KanaGridSections
+          script={script}
+          renderCell={cell}
+          defaultOpen={false}
+        />
       </div>
     </div>
   );

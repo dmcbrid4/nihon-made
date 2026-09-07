@@ -26,10 +26,9 @@ const YOON_ROWS = [
 ] as const;
 const YOON_COLS = ["ya", "yu", "yo"] as const;
 
-// Collapsible so the page doesn't stay dominated by every table at once --
-// Dakuten/Yōon/Small always start collapsed (see openFirst below for Basic
-// kana), and are still reachable via the "Select ..." bucket shortcuts
-// above without ever opening them.
+// Collapsible so the page doesn't stay dominated by every table at once.
+// See defaultOpen below for how the Chart tab and the Study/Quiz selector
+// differ.
 function CollapsibleSection({
   title,
   defaultOpen,
@@ -53,15 +52,15 @@ function CollapsibleSection({
 export function KanaGridSections({
   script,
   renderCell,
-  openFirst = true,
+  defaultOpen = true,
 }: {
   script: KanaScript;
   renderCell: (entry: KanaEntry | undefined, key: string) => ReactNode;
-  /** Whether "Basic kana" starts open. The read-only Chart tab wants it open
-   * (browsing the chart is the whole point); the Study/Quiz selector starts
-   * it collapsed like the rest -- picking characters mostly happens via the
+  /** Whether every table starts open. The read-only Chart tab wants them all
+   * open (browsing the chart is the whole point); the Study/Quiz selector
+   * starts them all collapsed -- picking characters mostly happens via the
    * "Select ..." bucket shortcuts above the grid, not by scrolling it. */
-  openFirst?: boolean;
+  defaultOpen?: boolean;
 }) {
   const entries = kanaEntries[script];
   const byKey = new Map(
@@ -78,7 +77,7 @@ export function KanaGridSections({
 
   return (
     <>
-      <CollapsibleSection title="Basic kana" defaultOpen={openFirst}>
+      <CollapsibleSection title="Basic kana" defaultOpen={defaultOpen}>
         <div
           className="kana-grid-table"
           style={{ gridTemplateColumns: `auto repeat(${VOWELS.length}, 1fr)` }}
@@ -107,7 +106,7 @@ export function KanaGridSections({
       </CollapsibleSection>
       <CollapsibleSection
         title="Dakuten & handakuten (voiced sounds)"
-        defaultOpen={false}
+        defaultOpen={defaultOpen}
       >
         <div
           className="kana-grid-table"
@@ -129,7 +128,10 @@ export function KanaGridSections({
           ))}
         </div>
       </CollapsibleSection>
-      <CollapsibleSection title="Yōon (contracted sounds)" defaultOpen={false}>
+      <CollapsibleSection
+        title="Yōon (contracted sounds)"
+        defaultOpen={defaultOpen}
+      >
         <div
           className="kana-grid-table"
           style={{
@@ -159,7 +161,7 @@ export function KanaGridSections({
               ? "Small っ"
               : "Small ッ, long vowel, and extended sounds"
           }
-          defaultOpen={false}
+          defaultOpen={defaultOpen}
         >
           <div className="kana-flex-grid">
             {small.map((entry) => renderCell(entry, entry.id))}
