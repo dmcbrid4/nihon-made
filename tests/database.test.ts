@@ -11,15 +11,25 @@ import { seedContent } from "../src/db/seed-content";
 import { concepts } from "../src/lib/study/content";
 
 test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals persist in PostgreSQL", async () => {
-    const client = new PGlite();
+  const client = new PGlite();
   try {
     await client.exec(await readFile("drizzle/0000_tough_malice.sql", "utf8"));
-    await client.exec(await readFile("drizzle/0001_add_listening_concepts.sql", "utf8"));
-    await client.exec(await readFile("drizzle/0002_vocabulary_progress_statuses.sql", "utf8"));
-    await client.exec(await readFile("drizzle/0003_add_study_modes.sql", "utf8"));
-    await client.exec(await readFile("drizzle/0004_add_tae_kim_mode.sql", "utf8"));
+    await client.exec(
+      await readFile("drizzle/0001_add_listening_concepts.sql", "utf8"),
+    );
+    await client.exec(
+      await readFile("drizzle/0002_vocabulary_progress_statuses.sql", "utf8"),
+    );
+    await client.exec(
+      await readFile("drizzle/0003_add_study_modes.sql", "utf8"),
+    );
+    await client.exec(
+      await readFile("drizzle/0004_add_tae_kim_mode.sql", "utf8"),
+    );
     await client.exec(await readFile("drizzle/0005_add_kana_mode.sql", "utf8"));
-    await client.exec(await readFile("drizzle/0006_add_new_cards_per_day.sql", "utf8"));
+    await client.exec(
+      await readFile("drizzle/0006_add_new_cards_per_day.sql", "utf8"),
+    );
     // A real existing learner can have a non-default shared pace when the
     // per-mode migration runs. It must be copied to all three new columns.
     const migratedUserId = "00000000-0000-4000-8000-000000000003";
@@ -30,10 +40,15 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
         new_cards_per_day, time_zone
       ) VALUES ('${migratedUserId}', '2027-01-15', 'N4', 'N5', 25, 13, 'America/New_York');
     `);
-    await client.exec(await readFile("drizzle/0007_add_per_mode_new_cards.sql", "utf8"));
+    await client.exec(
+      await readFile("drizzle/0007_add_per_mode_new_cards.sql", "utf8"),
+    );
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
-    const migratedGoal = await new PostgresRepository(db, migratedUserId).load();
+    const migratedGoal = await new PostgresRepository(
+      db,
+      migratedUserId,
+    ).load();
     assert.deepEqual(migratedGoal.goal.newCardsPerDay, {
       N5: 13,
       N4: 13,
@@ -41,7 +56,10 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     });
     await seedContent(db);
     await seedContent(db);
-    assert.equal((await db.select().from(schema.studyConcepts)).length, concepts.length);
+    assert.equal(
+      (await db.select().from(schema.studyConcepts)).length,
+      concepts.length,
+    );
     await db.insert(schema.studyConcepts).values({
       id: "retired-concept",
       type: "vocabulary",
@@ -62,7 +80,10 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
       },
     });
     await seedContent(db);
-    assert.equal((await db.select().from(schema.studyConcepts)).length, concepts.length);
+    assert.equal(
+      (await db.select().from(schema.studyConcepts)).length,
+      concepts.length,
+    );
     const userId = "00000000-0000-4000-8000-000000000001";
     const repository = new PostgresRepository(db, userId);
     const empty = await repository.load();
@@ -126,16 +147,25 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     const importedSessionId = randomUUID();
     const importSource = {
       ...final,
-      sessions: final.sessions.map((session) => ({ ...session, id: importedSessionId })),
+      sessions: final.sessions.map((session) => ({
+        ...session,
+        id: importedSessionId,
+      })),
       reviews: final.reviews.map((review) => ({
         ...review,
         id: randomUUID(),
         sessionId: importedSessionId,
       })),
     };
-    const imported = await new PostgresRepository(db, importedUserId).importState(importSource);
+    const imported = await new PostgresRepository(
+      db,
+      importedUserId,
+    ).importState(importSource);
     assert.deepEqual(imported, importSource);
-    assert.deepEqual(await new PostgresRepository(db, importedUserId).load(), importSource);
+    assert.deepEqual(
+      await new PostgresRepository(db, importedUserId).load(),
+      importSource,
+    );
     await assert.rejects(
       new PostgresRepository(db, importedUserId).importState(importSource),
       /Cloud history already contains study activity/,
@@ -157,7 +187,9 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
         rating: "good",
       });
     const beforeRepeat = await repository.load();
-    assert.ok(beforeRepeat.sessions.find((s) => s.id === secondSession.id)?.completedAt);
+    assert.ok(
+      beforeRepeat.sessions.find((s) => s.id === secondSession.id)?.completedAt,
+    );
     const repeated = await repository.dispatch({
       type: "repeatSession",
       sessionId: secondSession.id,
@@ -166,9 +198,64 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     assert.ok(!repeated.reviews.some((r) => r.sessionId === secondSession.id));
     assert.deepEqual(await new PostgresRepository(db, userId).load(), repeated);
     await assert.rejects(
-      repository.dispatch({ type: "repeatSession", sessionId: secondSession.id }),
+      repository.dispatch({
+        type: "repeatSession",
+        sessionId: secondSession.id,
+      }),
       /finished session/,
     );
+
+    // Changing the pace (newCardsPerDay) reflows an untouched same-day
+    // session immediately, and once a card is reviewed, only the
+    // not-yet-reviewed tail reflows -- verified against real Postgres so
+    // study_session_items round-trips correctly, not just the in-memory
+    // state.ts logic.
+    const thirdSession = (
+      await repository.dispatch({ type: "start", id: randomUUID() })
+    ).sessions.at(-1)!;
+    const beforePace = await repository.load();
+    const originalCount = thirdSession.conceptIds.length;
+    const paceUp = await repository.dispatch({
+      type: "goal",
+      goal: {
+        ...beforePace.goal,
+        dailyMinutes: 60,
+        newCardsPerDay: { ...beforePace.goal.newCardsPerDay, N4: 25 },
+      },
+    });
+    const resizedSession = paceUp.sessions.find(
+      (s) => s.id === thirdSession.id,
+    )!;
+    assert.ok(resizedSession.conceptIds.length > originalCount);
+    assert.deepEqual(await new PostgresRepository(db, userId).load(), paceUp);
+
+    const reviewedId = resizedSession.conceptIds[0];
+    const afterReview = await repository.dispatch({
+      type: "review",
+      id: randomUUID(),
+      sessionId: thirdSession.id,
+      conceptId: reviewedId,
+      rating: "good",
+    });
+    const paceDown = await repository.dispatch({
+      type: "goal",
+      goal: {
+        ...afterReview.goal,
+        newCardsPerDay: { ...afterReview.goal.newCardsPerDay, N4: 9 },
+      },
+    });
+    const reflowedSession = paceDown.sessions.find(
+      (s) => s.id === thirdSession.id,
+    )!;
+    assert.equal(reflowedSession.conceptIds[0], reviewedId);
+    assert.ok(
+      reflowedSession.conceptIds.length < resizedSession.conceptIds.length,
+    );
+    assert.equal(
+      paceDown.reviews.filter((r) => r.sessionId === thirdSession.id).length,
+      1,
+    );
+    assert.deepEqual(await new PostgresRepository(db, userId).load(), paceDown);
   } finally {
     await client.close();
   }

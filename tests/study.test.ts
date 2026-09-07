@@ -154,7 +154,13 @@ test("repeatSession undoes a finished session as if it never happened", () => {
   for (const conceptId of session.conceptIds)
     state = applyAction(
       state,
-      { type: "review", id: randomUUID(), sessionId: session.id, conceptId, rating: "good" },
+      {
+        type: "review",
+        id: randomUUID(),
+        sessionId: session.id,
+        conceptId,
+        rating: "good",
+      },
       now,
     );
   assert.ok(state.sessions[0].completedAt);
@@ -187,7 +193,12 @@ test("repeatSession undoes a finished session as if it never happened", () => {
   );
 
   assert.throws(
-    () => applyAction(undone, { type: "repeatSession", sessionId: session.id }, now),
+    () =>
+      applyAction(
+        undone,
+        { type: "repeatSession", sessionId: session.id },
+        now,
+      ),
     /finished session/,
   );
   assert.throws(
@@ -225,6 +236,109 @@ test("N5 and N4 modes plan and resume distinct sessions", () => {
     goal: { ...state.goal, studyMode: "N5" },
   });
   assert.equal(currentSession(state, now)?.id, state.sessions[0].id);
+});
+
+test("changing the pace/new-cards-per-day reflows today's untouched session immediately, without disturbing what's already reviewed or a finished session", () => {
+  let state = initialState();
+  state = applyAction(
+    state,
+    { type: "goal", goal: { ...state.goal, dailyMinutes: 60 } }, // headroom
+    now,
+  );
+  state = applyAction(state, { type: "start", id: randomUUID() }, now);
+  const original = state.sessions[0];
+  assert.equal(original.conceptIds.length, 9); // default pace, nothing due yet
+
+  // Bump N5's pace before touching anything -- an untouched same-day
+  // session reflows immediately rather than waiting for tomorrow.
+  state = applyAction(
+    state,
+    {
+      type: "goal",
+      goal: {
+        ...state.goal,
+        newCardsPerDay: { ...state.goal.newCardsPerDay, N5: 25 },
+      },
+    },
+    now,
+  );
+  const resized = currentSession(state, now)!;
+  assert.equal(resized.id, original.id);
+  assert.ok(
+    resized.conceptIds.length > 9,
+    "picked up more new cards immediately",
+  );
+  assert.equal(state.reviews.length, 0);
+
+  // Review the first card, then lower the pace back down -- the reviewed
+  // card stays exactly where it is; only the untouched tail reflows.
+  const reviewedId = resized.conceptIds[0];
+  state = applyAction(
+    state,
+    {
+      type: "review",
+      id: randomUUID(),
+      sessionId: original.id,
+      conceptId: reviewedId,
+      rating: "good",
+    },
+    now,
+  );
+  state = applyAction(
+    state,
+    {
+      type: "goal",
+      goal: {
+        ...state.goal,
+        newCardsPerDay: { ...state.goal.newCardsPerDay, N5: 9 },
+      },
+    },
+    now,
+  );
+  const afterSecondResize = currentSession(state, now)!;
+  assert.equal(afterSecondResize.conceptIds[0], reviewedId);
+  assert.equal(
+    state.reviews.filter((review) => review.sessionId === original.id).length,
+    1,
+    "the recorded review survives the resize",
+  );
+  assert.ok(
+    afterSecondResize.conceptIds.length < resized.conceptIds.length,
+    "the untouched tail shrank back down with the lower pace",
+  );
+
+  // Finish the session, then change the pace again -- a completed session
+  // is left alone; "Repeat today's lesson" is the way to redo it.
+  for (const conceptId of afterSecondResize.conceptIds.slice(1))
+    state = applyAction(
+      state,
+      {
+        type: "review",
+        id: randomUUID(),
+        sessionId: original.id,
+        conceptId,
+        rating: "good",
+      },
+      now,
+    );
+  const completed = state.sessions.find((item) => item.id === original.id)!;
+  assert.ok(completed.completedAt);
+  const completedIds = [...completed.conceptIds];
+  state = applyAction(
+    state,
+    {
+      type: "goal",
+      goal: {
+        ...state.goal,
+        newCardsPerDay: { ...state.goal.newCardsPerDay, N5: 25 },
+      },
+    },
+    now,
+  );
+  assert.deepEqual(
+    state.sessions.find((item) => item.id === original.id)!.conceptIds,
+    completedIds,
+  );
 });
 
 test("start and review retries are idempotent, and a session resumes after midnight", () => {
@@ -305,7 +419,10 @@ test("learning requires repeated comfortable recall, and a lapse resets it", () 
 });
 
 test("the current scheduler exposes explicit interval policy for each rating", () => {
-  assert.equal(scheduleReview("v-maniau", "again", now).intervalDays, 10 / (24 * 60));
+  assert.equal(
+    scheduleReview("v-maniau", "again", now).intervalDays,
+    10 / (24 * 60),
+  );
   assert.equal(scheduleReview("v-maniau", "hard", now).intervalDays, 1);
   assert.equal(scheduleReview("v-maniau", "good", now).intervalDays, 3);
   assert.equal(scheduleReview("v-maniau", "easy", now).intervalDays, 7);

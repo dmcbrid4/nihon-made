@@ -277,6 +277,30 @@ export class PostgresRepository implements StudyRepository {
           .update(s.studyGoals)
           .set(goalToRow(next.goal))
           .where(eq(s.studyGoals.userId, userId));
+        // applyAction's "goal" branch may have replanned an untouched
+        // portion of today's session to reflect the new pace immediately
+        // (see state.ts) -- mirror that into study_session_items.
+        const resized = next.sessions.find((session) => {
+          const before = state.sessions.find((item) => item.id === session.id);
+          return (
+            before &&
+            JSON.stringify(before.conceptIds) !==
+              JSON.stringify(session.conceptIds)
+          );
+        });
+        if (resized) {
+          await tx
+            .delete(s.studySessionItems)
+            .where(eq(s.studySessionItems.sessionId, resized.id));
+          if (resized.conceptIds.length)
+            await tx.insert(s.studySessionItems).values(
+              resized.conceptIds.map((conceptId, position) => ({
+                sessionId: resized.id,
+                conceptId,
+                position,
+              })),
+            );
+        }
       } else if (action.type === "start") {
         const session = next.sessions.at(-1)!;
         await tx.insert(s.studySessions).values({

@@ -33,7 +33,44 @@ export function applyAction(
   now = new Date(),
 ): StudyState {
   const action = actionSchema.parse(input);
-  if (action.type === "goal") return { ...state, goal: action.goal };
+  if (action.type === "goal") {
+    // Settings (daily minutes / new-cards-per-day / mode) take effect
+    // immediately, including for a same-day session that's already been
+    // created but not finished -- otherwise a pace change silently waits
+    // until tomorrow, which is surprising. Already-reviewed cards in that
+    // session are left exactly as they are; only the not-yet-reviewed tail
+    // is replaced with a fresh plan under the new goal (which naturally
+    // excludes anything reviewed today, since reviewing it just wrote a
+    // fresh progress row for it). A completed session is left untouched --
+    // "Repeat today's lesson" is the way to redo it under new settings.
+    const goal = action.goal;
+    const next = { ...state, goal };
+    const today = dateInZone(now, goal.timeZone);
+    const session = next.sessions.find(
+      (item) =>
+        item.mode === goal.studyMode &&
+        item.date === today &&
+        !item.completedAt,
+    );
+    if (!session) return next;
+    const reviewedIds = new Set(
+      next.reviews
+        .filter((review) => review.sessionId === session.id)
+        .map((review) => review.conceptId),
+    );
+    const kept = session.conceptIds.filter((id) => reviewedIds.has(id));
+    const fresh = planSession(next, now)
+      .map((item) => item.id)
+      .filter((id) => !reviewedIds.has(id));
+    return {
+      ...next,
+      sessions: next.sessions.map((item) =>
+        item.id === session.id
+          ? { ...item, conceptIds: [...kept, ...fresh] }
+          : item,
+      ),
+    };
+  }
   if (action.type === "start") {
     if (
       currentSession(state, now) ||
@@ -120,7 +157,9 @@ export function applyAction(
       sessions: state.sessions.filter((item) => item.id !== session.id),
       reviews: remainingReviews,
       progress: [
-        ...state.progress.filter((item) => !undoneConceptIds.has(item.conceptId)),
+        ...state.progress.filter(
+          (item) => !undoneConceptIds.has(item.conceptId),
+        ),
         ...revertedProgress,
       ],
     };
