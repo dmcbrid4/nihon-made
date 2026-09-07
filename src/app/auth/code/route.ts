@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
-import { getAppConfig } from "@/lib/server/config";
+import { canRequestAccess, getAppConfig } from "@/lib/server/config";
 import { isSameOrigin, noStore, readJson } from "@/lib/server/requests";
 
 export async function POST(request: NextRequest) {
@@ -19,7 +19,10 @@ export async function POST(request: NextRequest) {
   let input;
   try {
     input = z
-      .object({ email: z.email().transform((email) => email.toLowerCase()) })
+      .object({
+        email: z.email().transform((email) => email.toLowerCase()),
+        invitePassword: z.string().optional(),
+      })
       .parse(await readJson(request));
   } catch {
     return NextResponse.json(
@@ -27,9 +30,9 @@ export async function POST(request: NextRequest) {
       { status: 400, headers: noStore },
     );
   }
-  if (!config.ownerEmails.includes(input.email))
+  if (!canRequestAccess(config, input.email, input.invitePassword))
     return NextResponse.json(
-      { error: "Use the email address for this private workspace." },
+      { error: "That invite password isn’t right, or use an approved email address." },
       { status: 403, headers: noStore },
     );
   const response = NextResponse.json({ ok: true }, { headers: noStore });
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
     const emailRedirectTo = new URL("/auth/callback", request.url).toString();
     const { error } = await supabase.auth.signInWithOtp({
       email: input.email,
-      options: { shouldCreateUser: false, emailRedirectTo },
+      options: { shouldCreateUser: true, emailRedirectTo },
     });
     if (error)
       return NextResponse.json(

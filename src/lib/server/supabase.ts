@@ -45,7 +45,7 @@ export async function authenticate(): Promise<
       error,
     } = await supabase.auth.getUser();
     if (error || !user) return { status: 401 };
-    if (!isOwner(user, config.ownerEmails)) return { status: 403 };
+    if (!isOwner(user)) return { status: 403 };
     return { status: 200, userId: user.id, email: user.email! };
   } catch {
     return { status: 503 };
