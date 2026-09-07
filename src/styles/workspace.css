@@ -1335,7 +1335,30 @@ input[type="range"] {
 .kana-chart-section h2 {
   font-size: 14px;
   font-weight: 550;
+  margin-bottom: 0;
+}
+.kana-chart-section summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  list-style: none;
+  cursor: pointer;
   margin-bottom: 14px;
+}
+.kana-chart-section summary::-webkit-details-marker {
+  display: none;
+}
+.kana-chart-section summary > svg {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.kana-chart-section:not([open]) summary {
+  margin-bottom: 0;
+}
+.kana-chart-section[open] summary > svg {
+  transform: rotate(180deg);
 }
 .kana-grid-table {
   display: grid;
