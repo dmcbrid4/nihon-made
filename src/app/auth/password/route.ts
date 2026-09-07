@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (input.email !== config.ownerEmail)
+  if (!config.ownerEmails.includes(input.email))
     return NextResponse.json(
       { error: "Use the email address for this private workspace." },
       { status: 403, headers: noStore },
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     data: { user },
     error,
   } = await supabase.auth.signInWithPassword(input);
-  if (error || !isOwner(user, config.ownerEmail)) {
+  if (error || !isOwner(user, config.ownerEmails)) {
     if (user) await supabase.auth.signOut({ scope: "local" });
     return NextResponse.json(
       { error: "That email address or password is not correct." },

@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       { status: 400, headers: noStore },
     );
   }
-  if (input.email !== config.ownerEmail)
+  if (!config.ownerEmails.includes(input.email))
     return NextResponse.json(
       { error: "Use the email address for this private workspace." },
       { status: 403, headers: noStore },

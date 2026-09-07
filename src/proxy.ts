@@ -41,7 +41,7 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
   if (
     path !== "/sign-in" &&
-    (!isOwner(user, config.ownerEmail) ||
+    (!isOwner(user, config.ownerEmails) ||
       !hasFreshReauthentication(request.cookies.get(REAUTH_COOKIE)?.value))
   )
     return NextResponse.redirect(new URL("/sign-in", request.url));
