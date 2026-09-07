@@ -1,9 +1,13 @@
 # Phase 3 vocabulary audit — chunk 1
 
-Status: **10 / 100 sampled records inspected; corrections pending.**
-Five N5 and five N4 records inspected from candidate commit `03bce1f`.
-This chunk changes audit documentation only. Pause before chunk 2 to respect
-the user's credit budget. No production seed, deployment, or push.
+Status: **10 / 100 sampled records inspected; corrections applied.**
+Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
+required and polish corrections below were applied in the Phase 2 completion
+pass on 2026-09-06 (see `docs/vocabulary-quality-plan.md`), which also closed
+the five systematic gaps this chunk identified (see the addendum at the end
+of this document). Chunk 2 (N5/N4 sample positions 6–10) has **not** been
+run; this pass is data correction and validation infrastructure, not
+additional linguistic sampling. No production seed, deployment, or push.
 
 ## Sampling and resumption
 
@@ -129,3 +133,56 @@ audit; their earlier passing results do not establish linguistic correctness.
 Next chunk: inspect N5 sample positions 6–10 and N4 positions 6–10, add ten
 individual decisions here, and update the manifest's reviewed-chunk list.
 Keep the current corpus unchanged during the audit. Phase 3 remains open.
+
+## Addendum: Phase 2 completion pass (2026-09-06)
+
+The "Systematic correction requirements" above are addressed as follows.
+This addendum reports what changed; it is not a Phase 3 finding and does not
+advance the 10/100 sample count.
+
+1. **Canonical word-reading validation.** Added: the ruby's phonetic
+   reconstruction is now compared against the stored reading, both at
+   generation time and in `validateVocabularyDataset()`. Running the same
+   kind of probe described above (mutating a ruby reading while leaving its
+   display text correct) is now a permanent regression test in
+   `tests/vocabulary-quality.test.ts`. Applying this check to the real
+   corpus, independent of the probe, also surfaced and fixed six further
+   defects it was designed to catch (a combined 見る/観る expression, a
+   dropped お in お金持ち's reading, and duplicate/annotated readings) —
+   these are optimization by-products of adding the check, not part of the
+   ten sampled records.
+2. **Substring target matching replaced.** `target_spans()` now aligns
+   against fugashi/UniDic-lite token boundaries and lemmas instead of
+   `example.find(expression)`. The 服/一服 case above is now a permanent
+   regression fixture. Run against the full corpus, this rejected roughly
+   140 more records with the same bug (the target word only occurs inside
+   an unrelated longer compound) — those are quarantined by the new
+   approval gate (#4), not silently corrected, since each needs its own
+   replacement example.
+3. **Content and provenance work.** `dictionarySourceId` (which could be
+   set from successful ruby alignment, unrelated to any real dictionary
+   lookup) is replaced by a `provenance.dictionary` field populated only by
+   an actual full-JMdict entry/sense match, scored by gloss overlap with the
+   stored meaning; `provenance.ruby` separately records whether
+   JmdictFurigana or a generated fallback supplied the word ruby. Lookups
+   now use the full JMdict snapshot (218k entries), not the common-only
+   subset. Example attribution is recovered where the Japanese sentence
+   text exactly matches a Tatoeba-sourced example in that snapshot; see
+   `docs/data-quality-report.md` for how many examples that recovered
+   versus how many imported examples still lack it (most still do — this is
+   real, targeted work for Phase 3/4, not a completed pass).
+4. **Approval gate.** `vocabulary.approval.approved` now gates what
+   `vocabularyCorpus` exposes to the app; unapproved candidates stay in the
+   full catalog. `docs/data-quality-report.md` reports catalog size and
+   approved/active size separately, plus a breakdown of why each unapproved
+   record was held back.
+5. **Curriculum ordering evidence.** The commonality band (essential/common/
+   additional) is now decided directly from foundation/dictionary-commonness
+   membership and stored as `priority.band`; the importer's index only
+   orders items within a band, so it can no longer push nearly every N4
+   record past a shared numeric threshold regardless of actual commonness.
+
+None of this is a substitute for inspecting sample positions 6–100; it closes
+the mechanical gaps that let bad records pass unnoticed, so the remaining
+audit chunks are working against a corpus that fails closed instead of
+silently accepting substring mismatches and unvalidated readings.

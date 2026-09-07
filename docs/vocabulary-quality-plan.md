@@ -1,17 +1,25 @@
 # Vocabulary quality: audit and implementation plan
 
-> Phase 3 correction: the earlier Phase 2 completion assessment below was too
-> broad. The first audit chunk found unmet validation, provenance, content,
-> and approval-gating requirements. Phase 2 is reopened; see the
-> [current audit and correction requirements](phase3-vocabulary-audit.md).
+> Phase 2 completion pass (2026-09-06): the four systematic gaps the first
+> Phase 3 audit chunk found — no canonical word-reading validation, substring
+> target matching, cosmetic provenance, and no approval gate — are now
+> implemented and covered by regression tests. See "Implementation and review
+> gates" below for exactly what this pass does and does not establish. The
+> [Phase 3 audit](phase3-vocabulary-audit.md) and its 10 already-reviewed
+> records remain the authoritative line-by-line findings for the IDs it
+> covers; this pass applies their required/polish corrections and continues
+> the same kind of structural cleanup, but does not substitute for the
+> remaining 90-record sample.
 
 Phase 1 completed research and architecture on 2026-09-06. Phase 2 produced a
 candidate implementation on `dev`: structured source/review metadata, stored
 word and sentence ruby, validation, a review queue, and retirement safeguards.
 The first Phase 3 chunk found that sense reconciliation, provenance, reading
-validation, and approval gating still need work, so Phase 2 is reopened. It
-changed no production database or deployment. Phases 3–4 remain open; this is
-not a certification of the corpus.
+validation, and approval gating still needed work. This pass closes those
+four gaps mechanically (see below) and applies the specific corrections the
+Phase 3 chunk 1 report already decided. It changed no production database or
+deployment. Phase 3's remaining 90-record sample and Phase 4 still need to
+run; this is not a claim that the corpus is linguistically certified.
 
 ## Baseline and reproducibility
 
@@ -75,8 +83,13 @@ Confirmed generator problems:
 
 ## Confirmed quality defects
 
-IDs below have prefix `v-jlpt-`. Proposed replacements are editorial candidates,
-not changes already applied or externally certified translations.
+IDs below have prefix `v-jlpt-`. All nine rows in this table were applied in
+the Phase 2 completion pass (2026-09-06): each was replaced, retired, or
+merged as described, and is covered by a regression test in
+`tests/vocabulary-quality.test.ts` (the target-matching cases) or by direct
+inspection of the active record. This is still one agent's editorial pass,
+not externally certified translation; Phase 3 review of these IDs continues
+to apply independently.
 
 | ID        | Current problem                                                                               | Required correction                                                                                       |
 | --------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -242,14 +255,51 @@ answer behavior; furigana availability is intentional reading assistance.
 ## Implementation and review gates
 
 1. **Phase 1 — Astra, high: complete.** This audit and architecture handoff.
-2. **Phase 2 — Terra, high: candidate implementation, incomplete.** Source
-   manifests and stable IDs are recorded; strict validation, stored ruby,
-   rendering, priority, retirement compatibility, and reports exist. The
-   first audit found gaps in sense reconciliation, source attribution, word
-   reading validation, target matching, and approval gating. Nine malformed or
-   duplicate records were retired, eight confirmed cards were corrected, and
-   the candidate contains 736 N5 plus 707 N4-only records. The report records
-   139 inherited fallback examples and 20 uncertain ruby alignments for review.
+2. **Phase 2 — candidate implementation and gap closure: mechanically
+   complete, not linguistically complete.** The first audit chunk found four
+   systematic gaps; this pass closes each one in code, with a regression test
+   or a report field per gap:
+   - Canonical word-reading validation now compares the ruby's phonetic
+     reconstruction to the stored reading (not just its display text), both
+     at generation time and in `validateVocabularyDataset()`.
+   - Target matching is token/lemma-aligned (fugashi + UniDic-lite) instead
+     of a bare substring search, with multi-token and phrase/conjugation
+     handling. Applied against the real corpus, this rejected roughly 140
+     additional records beyond the ones already known, almost all the same
+     bug class as 服/一服: a short word matching only inside an unrelated
+     longer compound (猛犬/犬, 彼女/女, 似合う/合う, and similar).
+   - Provenance now separates dictionary sense lookup (a real full-JMdict
+     entry/sense match, scored by gloss overlap with the stored meaning),
+     ruby sourcing (JmdictFurigana vs. generated), and example attribution
+     (recovered Tatoeba sentence IDs from the full JMdict examples snapshot,
+     not the common-only subset) into distinct fields. Each source's *own*
+     raw list is now cross-checked for its actually observed level, instead
+     of copying the record's assigned level into every source's evidence.
+   - An explicit mechanical approval gate (`vocabulary.approval`) now decides
+     what reaches `vocabularyCorpus`: not a placeholder example, a validated
+     word reading, complete sentence tokenization, a clean reading format,
+     and a resolved target span. Unapproved records stay in the full catalog
+     for reporting and Phase 3/4 review; see `docs/data-quality-report.md`.
+   - Nine records from the "Confirmed quality defects" table were corrected
+     or retired, and the ten records from Phase 3 chunk 1 had their
+     required/polish corrections applied. A handful of further structural
+     defects the new validator surfaced along the way (annotated readings,
+     a missing お, a combined 見る/観る field, three more duplicate pairs)
+     were also fixed or retired.
+   - Net result: catalog 734 N5 + 705 N4-only = 1439 candidates (13 retired
+     total). **Approved/active 580 N5 + 584 N4-only = 1164** reach the app;
+     the remaining candidates are quarantined pending correction, mostly for
+     a placeholder example (130) or a target span the stricter matcher
+     could not confirm (142) — see the "Why records are not approved" table
+     in `docs/data-quality-report.md`. This is below the 700–800/level goal;
+     that goal is explicitly conditional on quality ("only where quality and
+     coverage justify inclusion"), and the shortfall is concrete, itemized
+     work for Phase 3/4, not a hidden gap.
+   - What this pass does **not** establish: line-by-line linguistic review of
+     the ~1164 approved records. Mechanical approval means the example is
+     real and the target word is validated to actually appear in it, not
+     that a human or agent has read the sentence for naturalness, register,
+     or JLPT-appropriateness. That is Phase 3's job.
    Do not push or seed production automatically.
 3. **Phase 3 — Astra, high: in progress (10/100).** Inspect a reproducible
    random 100 records (50 per level, fixed recorded seed), plus targeted
