@@ -6,6 +6,7 @@ import {
   vocabularySource,
 } from "./jlpt-vocabulary";
 import { taeKimConcepts, taeKimSource } from "./tae-kim";
+import { kanaConcepts, kanaSource } from "./kana";
 
 type DraftConcept = Omit<
   Concept,
@@ -970,8 +971,12 @@ const topicUnits = {
   "tae-kim": {
     "Tae Kim course": "Tae Kim · Sentence mining course",
   },
+  kana: {
+    "Kana foundations": "Kana · Hiragana & katakana foundations",
+  },
 } as const;
 const unitOrder = [
+  "Kana · Hiragana & katakana foundations",
   "N5 · Units 1–6: Core vocabulary",
   "N5 · Unit 1: Introductions",
   "N5 · Unit 2: Everyday basics",
@@ -995,6 +1000,7 @@ const typeOrder = {
   grammar: 2,
   reading: 3,
   listening: 4,
+  kana: 5,
 } as const;
 const sourceFor = (level: "N5" | "N4") =>
   `Original teaching example; aligned to the JLPT ${level} level summary.`;
@@ -1027,6 +1033,7 @@ export const concepts: Concept[] = [
   ...nonVocabularyConcepts,
   ...vocabularyConcepts,
   ...taeKimConcepts,
+  ...kanaConcepts,
 ]
   .sort((a, b) => {
     const unitA =
@@ -1050,24 +1057,28 @@ export const concepts: Concept[] = [
       topicUnits[concept.level][concept.topic as never] ??
       `${concept.level} · Core study`,
     sequence: index + 1,
-    difficulty: (concept.level === "tae-kim"
-      ? concept.type === "listening"
-        ? 3
-        : 2
-      : concept.level === "N5"
-        ? concept.type === "reading" || concept.type === "listening"
+    difficulty: (concept.level === "kana"
+      ? 1
+      : concept.level === "tae-kim"
+        ? concept.type === "listening"
           ? 3
-          : 1
-        : concept.type === "reading" || concept.type === "listening"
-          ? 4
-          : 3) as 1 | 2 | 3 | 4 | 5,
+          : 2
+        : concept.level === "N5"
+          ? concept.type === "reading" || concept.type === "listening"
+            ? 3
+            : 1
+          : concept.type === "reading" || concept.type === "listening"
+            ? 4
+            : 3) as 1 | 2 | 3 | 4 | 5,
     prerequisites: concept.level === "N4" ? ["N5 foundations"] : [],
     source:
-      concept.level === "tae-kim"
-        ? taeKimSource
-        : concept.type === "vocabulary"
-          ? vocabularySource
-          : sourceFor(concept.level),
+      concept.level === "kana"
+        ? kanaSource
+        : concept.level === "tae-kim"
+          ? taeKimSource
+          : concept.type === "vocabulary"
+            ? vocabularySource
+            : sourceFor(concept.level),
   }));
 
 export const conceptById = new Map(
@@ -1080,4 +1091,5 @@ export const typeLabels = {
   grammar: "Grammar",
   reading: "Reading",
   listening: "Listening",
+  kana: "Kana",
 };

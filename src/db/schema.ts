@@ -20,12 +20,17 @@ export const conceptType = pgEnum("concept_type", [
   "grammar",
   "reading",
   "listening",
+  "kana",
 ]);
 // Shared by concept level, study mode, and session mode. Historically only
 // JLPT levels; "tae-kim" added for the personal-use Tae Kim/anime course
-// track (see src/lib/study/tae-kim.ts). targetLevel stays fixed at "N4"
-// regardless of this enum's extra values.
-export const jlptLevel = pgEnum("jlpt_level", ["N5", "N4", "tae-kim"]);
+// track (see src/lib/study/tae-kim.ts); "kana" added for the hiragana/
+// katakana foundation track (see src/lib/study/kana.ts) -- it is never a
+// goal.studyMode value a learner picks, but kana concepts still need a
+// level, and kana study sessions still get a normal studySessions row with
+// mode = "kana". targetLevel stays fixed at "N4" regardless of this enum's
+// extra values.
+export const jlptLevel = pgEnum("jlpt_level", ["N5", "N4", "tae-kim", "kana"]);
 export const rating = pgEnum("review_rating", [
   "again",
   "hard",
@@ -85,6 +90,7 @@ export const studyConcepts = pgTable("study_concepts", {
         | "classificationNote"
         | "commonality"
         | "vocabulary"
+        | "kanaDetails"
         | "media"
       >
     >()

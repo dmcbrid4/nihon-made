@@ -342,3 +342,97 @@
 .completion > .text-link {
   margin-top: 16px;
 }
+
+/* Kana study cards -- deliberately plainer than review-card: no meaning,
+   no example, no level tag beyond script/direction. Large character is the
+   whole point. */
+.kana-card {
+  padding: 30px 34px 26px;
+}
+.kana-badge-row {
+  display: flex;
+  justify-content: flex-end;
+}
+.kana-prompt {
+  text-align: center;
+  padding: 20px 0 26px;
+}
+.kana-prompt .eyebrow {
+  justify-content: center;
+}
+.kana-character {
+  margin-top: 18px;
+  font-size: clamp(64px, 16vw, 128px);
+  font-weight: 400;
+  line-height: 1.2;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", serif;
+}
+.kana-romaji-large {
+  margin-top: 10px;
+  font-size: 22px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.kana-hear-link {
+  margin: 14px auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+.kana-intro-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.kana-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.kana-option {
+  padding: 18px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 20px;
+  text-align: center;
+}
+.kana-option:hover:not(:disabled) {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+.kana-option:disabled {
+  opacity: 0.6;
+}
+.kana-option-wrong {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  opacity: 1;
+}
+.kana-option-correct {
+  border-color: var(--green);
+  background: var(--green-soft);
+  color: var(--green);
+  opacity: 1;
+}
+.kana-feedback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 12px;
+  margin-top: 18px;
+  text-align: center;
+}
+.kana-feedback-correct {
+  color: var(--green);
+}
+.kana-feedback-incorrect {
+  color: var(--accent);
+}

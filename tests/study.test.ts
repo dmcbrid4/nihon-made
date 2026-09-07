@@ -198,20 +198,38 @@ test("vocabulary progress keeps N5, N4-only, combined, and learning stages disti
 
 test("all curriculum concepts have unique identities, teaching content, and traceable metadata", () => {
   assert.equal(new Set(concepts.map((item) => item.id)).size, concepts.length);
+  // Kana cards deliberately have no meaning/example (see docs/kana-mode.md);
+  // every other concept keeps the full shared invariant.
   assert.ok(
-    concepts.every(
-      (item) =>
-        item.expression &&
-        item.reading &&
-        item.meaning &&
-        item.example &&
-        item.note &&
-        item.curriculumUnit &&
-        item.source &&
-        item.sequence > 0 &&
-        item.difficulty >= 1 &&
-        item.difficulty <= 5,
-    ),
+    concepts
+      .filter((item) => item.level !== "kana")
+      .every(
+        (item) =>
+          item.expression &&
+          item.reading &&
+          item.meaning &&
+          item.example &&
+          item.note &&
+          item.curriculumUnit &&
+          item.source &&
+          item.sequence > 0 &&
+          item.difficulty >= 1 &&
+          item.difficulty <= 5,
+      ),
+  );
+  assert.ok(
+    concepts
+      .filter((item) => item.level === "kana")
+      .every(
+        (item) =>
+          item.expression &&
+          item.reading &&
+          item.curriculumUnit &&
+          item.source &&
+          item.sequence > 0 &&
+          item.difficulty >= 1 &&
+          item.difficulty <= 5,
+      ),
   );
   assert.equal(
     actionSchema.safeParse({

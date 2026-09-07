@@ -6,6 +6,7 @@ export const conceptTypes = [
   "grammar",
   "reading",
   "listening",
+  "kana",
 ] as const;
 export type ConceptType = (typeof conceptTypes)[number];
 export const commonalityLevels = ["essential", "common", "additional"] as const;
@@ -17,8 +18,66 @@ export type Rating = (typeof ratings)[number];
 // are the JLPT corpus; "tae-kim" is the personal-use Tae Kim/anime course
 // (see src/lib/study/tae-kim.ts) -- mined for this user's own study, not
 // redistributed, so it is exempt from the JLPT corpus's licensing rigor.
-export const studyModes = ["N5", "N4", "tae-kim"] as const;
+// "kana" is the hiragana/katakana foundation track (see
+// src/lib/study/kana.ts) -- unlike the others it is never selected through
+// the goal.studyMode picker; it has its own always-available /kana section
+// and its own session/queue logic (src/lib/study/kana-session.ts) so it
+// doesn't compete with "which JLPT track am I studying".
+export const studyModes = ["N5", "N4", "tae-kim", "kana"] as const;
 export type StudyMode = (typeof studyModes)[number];
+
+export const kanaScripts = ["hiragana", "katakana"] as const;
+export type KanaScript = (typeof kanaScripts)[number];
+export const kanaCategories = [
+  "basic",
+  "dakuten",
+  "handakuten",
+  "yoon",
+  "small",
+  "extended",
+] as const;
+export type KanaCategory = (typeof kanaCategories)[number];
+/** Recognition drills the symbol -> sound direction (show か, ask "ka").
+ * Recall drills sound -> symbol (show "ka", ask for か). Each direction is
+ * tracked as its own Concept (its own id, its own ConceptProgress row) so
+ * both contribute independently to mastery using the existing one-row-per-
+ * concept scheduler, without any change to ConceptProgress's shape. */
+export const kanaDirections = ["recognition", "recall"] as const;
+export type KanaDirection = (typeof kanaDirections)[number];
+
+export type KanaDetails = {
+  /** The kana symbol itself, shared by both directions' concepts for the
+   * same character -- lets the UI/chart group a recognition+recall pair
+   * back into one visual character. */
+  character: string;
+  script: KanaScript;
+  /** Gojūon row grouping used by the chart, e.g. "k" for か/き/く/け/こ, or
+   * "ext" for the foreign-sound katakana combinations. */
+  row: string;
+  /** Vowel column (a/i/u/e/o), "ya"/"yu"/"yo" for yōon, or a free-form key
+   * for special entries (sokuon, chōon, extended combinations). */
+  column: string;
+  category: KanaCategory;
+  /** 1-based curriculum stage within this script (see kana.ts's `stages`),
+   * e.g. 1 = あ-row, 11 = dakuten/handakuten, 12 = yōon. Drives sequencing
+   * and the "unlock the next row" gate in kana-session.ts. */
+  stage: number;
+  /** Global order within this script's full curriculum -- finer-grained
+   * than `stage`, used to sequence new introductions within a stage. */
+  curriculumOrder: number;
+  direction: KanaDirection;
+  /** The base character this one derives from, e.g. か for が, き for きゃ.
+   * Null for basic kana and for sokuon/chōon, which don't derive from a
+   * single base. */
+  relatedKana: string | null;
+  /** Other characters (same script) commonly confused with this one, e.g.
+   * さ <-> き. Symmetric by construction. Used to bias multiple-choice
+   * distractors toward real confusion risks instead of random options. */
+  confusionSet: string[];
+  /** Short functional explanation, only populated for entries that aren't
+   * a simple symbol->sound pair (sokuon, chōon) -- never a full sentence. */
+  note: string | null;
+};
 
 export type RubySegment = {
   text: string;
@@ -97,6 +156,7 @@ export interface Concept {
   classificationNote?: string;
   commonality?: Commonality;
   vocabulary?: VocabularyDetails;
+  kanaDetails?: KanaDetails;
   example: string;
   exampleMeaning: string;
   note: string;
@@ -184,6 +244,19 @@ export type StudyState = z.infer<typeof stateSchema>;
 
 export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("start"), id: z.uuid() }),
+  z.object({
+    type: z.literal("startKana"),
+    id: z.uuid(),
+    script: z.enum(kanaScripts),
+  }),
+  z.object({
+    /** The "already know this" shortcut (kana-home.tsx): declares a set of
+     * kana concepts mastered outright, without going through real reviews.
+     * Used for marking a single row, a whole script, or skipping Kana
+     * entirely (pass every kana concept id). */
+    type: z.literal("markKanaKnown"),
+    conceptIds: z.array(z.string().max(100)).min(1).max(500),
+  }),
   z.object({
     type: z.literal("completeRetired"),
     sessionId: z.uuid(),
