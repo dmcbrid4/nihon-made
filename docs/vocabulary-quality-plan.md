@@ -1,5 +1,10 @@
 # Vocabulary quality: audit and implementation plan
 
+> Phase 3 correction: the earlier Phase 2 completion assessment below was too
+> broad. The first audit chunk found unmet validation, provenance, content,
+> and approval-gating requirements. Phase 2 is reopened; see the
+> [current audit and correction requirements](phase3-vocabulary-audit.md).
+
 Phase 1 completed research and architecture on 2026-09-06. Phase 2 completed a
 candidate implementation on `dev`: structured source/review metadata, stored
 word and sentence ruby, validation, a review queue, and retirement safeguards.
