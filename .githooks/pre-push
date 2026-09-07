@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Production is deployed from main. Keep everyday work and pushes on dev.
+branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)
+if [ "$branch" = "main" ]; then
+  echo "Blocked push from main. Switch to dev (or an intentional feature branch) first." >&2
+  exit 1
+fi
+
+exit 0

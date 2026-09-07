@@ -4,6 +4,18 @@ A calm, personal Japanese study app for a journey toward JLPT N4 and a trip to J
 
 ## Run locally
 
+Work on `dev` (or a short-lived feature branch based on `dev`) and review before
+merging to `main`. `main` is the production branch. A local pre-push hook in
+`.githooks/pre-push` blocks accidental pushes from `main`; enable it once per
+checkout with:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The hook is a local guard, not a substitute for GitHub branch protection. Keep
+production migrations and seeds as explicit, reviewed steps after a merge.
+
 Node.js 24 LTS and npm are installed on this machine through Homebrew. From the repository:
 
 ```bash
