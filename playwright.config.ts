@@ -30,6 +30,15 @@ export default defineConfig({
     url: "http://127.0.0.1:3100",
     reuseExistingServer: false,
     timeout: 120_000,
-    env: { DATABASE_URL: "", APP_PASSWORD: "" },
+    // getAppConfig() falls back to "browser" mode only when *none* of these
+    // are set; a real .env.local with cloud credentials (from deploying this
+    // app) would otherwise put the dev server in "unavailable" mode here.
+    env: {
+      DATABASE_URL: "",
+      SUPABASE_URL: "",
+      SUPABASE_PUBLISHABLE_KEY: "",
+      OWNER_EMAIL: "",
+      APP_PASSWORD: "",
+    },
   },
 });

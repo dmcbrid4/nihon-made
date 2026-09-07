@@ -24,7 +24,7 @@ export function daysUntil(
   );
 }
 
-export function formatTripDate(date: string): string {
+export function formatTargetDate(date: string): string {
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",

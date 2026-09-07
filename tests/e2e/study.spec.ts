@@ -83,21 +83,21 @@ test("settings, countdown, dark mode, collection filtering, and history export",
   page,
 }) => {
   await page.goto("/settings");
-  await page.getByLabel("Japan trip date").fill("2027-01-22");
+  await page.getByLabel("N4 target date").fill("2027-01-22");
   await page.getByLabel("Daily study budget").selectOption("10");
   await page.getByRole("button", { name: "Save settings" }).click();
   await expect(page.getByRole("status")).toHaveText("Your settings are saved.");
   await page.reload();
-  await expect(page.getByLabel("Japan trip date")).toHaveValue("2027-01-22");
+  await expect(page.getByLabel("N4 target date")).toHaveValue("2027-01-22");
   await expect(page.getByLabel("Daily study budget")).toHaveValue("10");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export study history" }).click();
   expect((await download).suggestedFilename()).toBe(
     "nihon-made-study-history.json",
   );
-  await page.getByRole("link", { name: "Today", exact: true }).click();
+  await page.getByRole("link", { name: "Progress", exact: true }).click();
   await expect(
-    page.getByText("January 22, 2027", { exact: true }),
+    page.getByText("Target: January 22, 2027", { exact: true }),
   ).toBeVisible();
   await page
     .getByRole("button", { name: "Toggle light and dark mode" })

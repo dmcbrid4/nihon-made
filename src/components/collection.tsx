@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { ChevronDown, Search } from "lucide-react";
 import { concepts, typeLabels } from "@/lib/study/content";
 import {
@@ -12,14 +13,22 @@ import {
 import { useStudy } from "./study-provider";
 import { FuriganaText } from "./furigana";
 
+function isConceptType(value: string | null): value is ConceptType {
+  return conceptTypes.includes(value as ConceptType);
+}
+
 export function CollectionView() {
   const { state } = useStudy();
+  const searchParams = useSearchParams();
   const activeMode = state?.goal.studyMode ?? "N5";
-  const [filter, setFilter] = useState<ConceptType | "all">("all");
+  const initialType = searchParams.get("type");
+  const [filter, setFilter] = useState<ConceptType | "all">(
+    isConceptType(initialType) ? initialType : "all",
+  );
   const [commonalityFilter, setCommonalityFilter] = useState<
     Commonality | "all"
   >("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("q") ?? "");
   const visible = concepts
     .filter(
       (item) =>

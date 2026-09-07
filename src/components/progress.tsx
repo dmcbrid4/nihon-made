@@ -6,6 +6,12 @@ import { conceptById, concepts } from "@/lib/study/content";
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { ProgressOverview } from "./progress-overview";
+import { ProgressCountdown } from "./progress-countdown";
+import { ProgressCurriculum } from "./progress-curriculum";
+import { ProgressKnowledgeState } from "./progress-knowledge";
+import { ProgressHistoryChart } from "./progress-history-chart";
+import { ProgressKanjiGrid } from "./progress-kanji-grid";
+import { ProgressPacing } from "./progress-pacing";
 
 export function ProgressView() {
   const { state } = useStudy();
@@ -27,9 +33,21 @@ export function ProgressView() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">{activeMode} PROGRESS</div>
-          <h1>{activeMode} practice, clearly tracked.</h1>
-          <p>Only your active study mode is counted here.</p>
+          <div className="eyebrow">N4 JOURNEY</div>
+          <h1>How close am I to N4?</h1>
+          <p>Your curriculum progress, pace, and what to focus on next.</p>
+        </div>
+      </div>
+      <ProgressCountdown />
+      <ProgressCurriculum />
+      <ProgressKnowledgeState />
+      <ProgressHistoryChart />
+      <ProgressKanjiGrid />
+      <ProgressPacing />
+      <div className="section-heading progress-section-divider">
+        <div>
+          <h2>Your {activeMode} practice</h2>
+          <p>Session activity for your currently active study mode.</p>
         </div>
       </div>
       <div className="stats-grid">

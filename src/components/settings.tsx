@@ -45,12 +45,12 @@ function GoalForm({ state }: { state: StudyState }) {
       }}
     >
       <div className="settings-section-heading">
-        <span className="eyebrow">YOUR DESTINATION</span>
-        <h2>A trip to look forward to.</h2>
-        <p>Give your practice a place and a date.</p>
+        <span className="eyebrow">YOUR TARGET DATE</span>
+        <h2>Give your practice a deadline.</h2>
+        <p>The Progress page tracks your countdown and pace against this date.</p>
       </div>
       <label className="field-label" htmlFor="target-date">
-        Japan trip date
+        N4 target date
       </label>
       <input
         id="target-date"
@@ -60,7 +60,7 @@ function GoalForm({ state }: { state: StudyState }) {
         required
       />
       <p className="field-help">
-        January 15, 2027 is a starting point. Set your actual departure date.
+        January 15, 2027 is a starting point. Set your own goal date.
       </p>
       <div className="form-grid">
         <div>

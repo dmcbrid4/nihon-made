@@ -591,6 +591,39 @@
   .understanding-panel {
     padding: 23px;
   }
+  .countdown-card,
+  .curriculum-overview,
+  .knowledge-state,
+  .history-chart,
+  .kanji-grid-section,
+  .pacing-section {
+    padding: 19px;
+  }
+  .countdown-body {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .countdown-meta {
+    align-items: flex-start;
+  }
+  .countdown-number strong {
+    font-size: 38px;
+  }
+  .curriculum-overview-row {
+    grid-template-columns: 68px 1fr 38px;
+    gap: 10px;
+  }
+  .pacing-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .kanji-grid {
+    grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+  }
+  .kanji-cell {
+    font-size: 15px;
+  }
 }
 @media (max-width: 370px) {
   .main-content {
