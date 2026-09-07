@@ -85,7 +85,8 @@ function buildCohort(
     learning: 0,
     mastered: 0,
   };
-  for (const entry of entries) stages[characterStatusFor(entry, progressById)] += 1;
+  for (const entry of entries)
+    stages[characterStatusFor(entry, progressById)] += 1;
   return { id, label, total: entries.length, ...stages };
 }
 
@@ -102,7 +103,9 @@ export function kanaScriptProgress(
 ): KanaCohort[] {
   const progressById = progressMap(state);
   const entries = kanaEntries[script];
-  const buckets = Array.from(new Set(entries.map((e) => bucketFor[e.category])));
+  const buckets = Array.from(
+    new Set(entries.map((e) => bucketFor[e.category])),
+  );
   const cohorts = buckets.map((bucket) =>
     buildCohort(
       bucket,
@@ -111,10 +114,7 @@ export function kanaScriptProgress(
       progressById,
     ),
   );
-  return [
-    ...cohorts,
-    buildCohort("total", "All kana", entries, progressById),
-  ];
+  return [...cohorts, buildCohort("total", "All kana", entries, progressById)];
 }
 
 export type KanaOverview = {
@@ -130,8 +130,18 @@ function percent(mastered: number, total: number): number {
 
 export function kanaOverview(state: StudyState): KanaOverview {
   const progressById = progressMap(state);
-  const hiragana = buildCohort("hiragana", "Hiragana", kanaEntries.hiragana, progressById);
-  const katakana = buildCohort("katakana", "Katakana", kanaEntries.katakana, progressById);
+  const hiragana = buildCohort(
+    "hiragana",
+    "Hiragana",
+    kanaEntries.hiragana,
+    progressById,
+  );
+  const katakana = buildCohort(
+    "katakana",
+    "Katakana",
+    kanaEntries.katakana,
+    progressById,
+  );
   return {
     hiragana: percent(hiragana.mastered, hiragana.total),
     katakana: percent(katakana.mastered, katakana.total),
@@ -164,7 +174,9 @@ export function kanaMilestones(state: StudyState): KanaMilestone[] {
   const milestones: KanaMilestone[] = [];
   for (const script of ["hiragana", "katakana"] as const) {
     const entries = kanaEntries[script];
-    const buckets = Array.from(new Set(entries.map((e) => bucketFor[e.category])));
+    const buckets = Array.from(
+      new Set(entries.map((e) => bucketFor[e.category])),
+    );
     for (const bucket of buckets) {
       const cohort = buildCohort(
         bucket,
@@ -213,10 +225,8 @@ export function kanaMilestones(state: StudyState): KanaMilestone[] {
  * a kana concept's progress moves is a Quiz mode answer (kana-quiz.tsx),
  * scored here directly, independent of the vocabulary/kanji/grammar
  * scheduler (scheduler.ts's scheduleReview). A streak of 5 correct answers
- * in a row masters it; any correct answer extends the streak (even one
- * that came after an earlier wrong guess on the same question -- see
- * kana-quiz.tsx's per-question attempt handling), and only a fully missed
- * question resets it to 0. dueAt/lastReviewedAt carry no scheduling meaning
+ * in a row masters it; each question is a single attempt, and a miss
+ * resets the streak to 0. dueAt/lastReviewedAt carry no scheduling meaning
  * for kana (nothing reads them for gating); they're kept only because
  * ConceptProgress's shape -- and therefore the existing repository/DB
  * plumbing -- is otherwise unchanged. */
@@ -229,7 +239,8 @@ export function recordKanaQuizAnswer(
   const successStreak = correct ? (previous?.successStreak ?? 0) + 1 : 0;
   // First-ever attempt (right or wrong) is "introduced"; from the second
   // attempt onward it's "learning" until the streak reaches 5.
-  const status = successStreak >= 5 ? "mastered" : previous ? "learning" : "introduced";
+  const status =
+    successStreak >= 5 ? "mastered" : previous ? "learning" : "introduced";
   return {
     conceptId,
     status,

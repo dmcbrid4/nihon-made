@@ -14,7 +14,7 @@ in one click and never see it again.
 **Kana mode is not a daily SRS system.** There is no due date, no scheduled
 queue, no row-unlocking gate. It's two customizable tools built on the same
 selection UI: **Study**, free browsing with no scoring, and **Quiz**,
-multiple-choice testing that's the *only* way a kana gets marked mastered.
+multiple-choice testing that's the _only_ way a kana gets marked mastered.
 
 ## Curriculum
 
@@ -73,12 +73,10 @@ Progress page once **either** direction reaches it (`characterStatus` in
 `kana-progress.ts` takes the better of the two ranks); "unseen" only if
 neither has started.
 
-A quiz question allows two attempts before revealing the answer
-(`KanaQuizQuestion` in `kana-study.tsx`). **Any eventually-correct answer
-extends the streak** -- a wrong guess followed by the right one on the same
-question still counts as a success. Only fully missing a question (both
-attempts wrong) resets the streak to 0. Study mode never calls
-`recordKanaQuizAnswer` at all -- browsing has no effect on progress.
+A quiz question is a single attempt (`KanaQuizQuestion` in
+`kana-study.tsx`) -- whichever option is chosen first settles it, right or
+wrong, and the answer is revealed immediately. A miss resets the streak to 0. Study mode never calls `recordKanaQuizAnswer` at all -- browsing has no
+effect on progress.
 
 Each answer dispatches a new `kanaQuizAnswer` action (`{ conceptId, correct
 }`) immediately, independent of any session -- unlike vocabulary's `review`
@@ -108,14 +106,16 @@ reshuffles rather than running out of questions.
 
 No adaptive placement-test quiz was built (there's no precedent for one
 anywhere in this codebase, and building one is a meaningfully separate
-feature). Instead, `/kana`'s "Already know kana?" section and each script's
-chart detail panel offer a direct **"mark known"** shortcut, at three
-granularities: one character, a whole script, or the entire kana track
-("Skip Kana mode entirely"). This dispatches the `markKanaKnown` action,
-which writes `ConceptProgress` rows straight to `status: "mastered"` --
-bypassing the streak, since this is a declared fact, not an earned outcome.
-It's fully reversible in the sense that those characters still show up in
-the chart and can be quizzed normally any time; nothing is hidden or deleted.
+feature). Instead, each script's chart detail panel offers a direct
+**"Mark known"** shortcut for one character at a time. This dispatches the
+`markKanaKnown` action, which writes `ConceptProgress` rows straight to
+`status: "mastered"` -- bypassing the streak, since this is a declared
+fact, not an earned outcome. It's fully reversible in the sense that those
+characters still show up in the chart and can be quizzed normally any
+time; nothing is hidden or deleted. (An earlier version also offered
+whole-script and whole-track bulk shortcuts on `/kana`; those were removed
+as pointless -- a learner who already knows a script doesn't need Kana
+mode's help skipping it.)
 
 ## Progress page
 
@@ -128,7 +128,7 @@ does **not** join `curriculumTypes`/`curriculumProgress`
 cohorts, and kana has no JLPT level. `src/lib/study/kana-progress.ts` is a
 parallel module with the same cohort-counting shape, keyed by script and
 curriculum bucket instead -- and it keeps working unchanged regardless of
-*how* the underlying `ConceptProgress` rows were written (Quiz answers or
+_how_ the underlying `ConceptProgress` rows were written (Quiz answers or
 `markKanaKnown`), since it only reads `state.progress` generically.
 
 ## Data model

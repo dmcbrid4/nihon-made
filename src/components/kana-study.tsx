@@ -17,7 +17,10 @@ import { useStudy } from "./study-provider";
 import { KanaChart } from "./kana-chart";
 import { KanaSelector } from "./kana-selector";
 
-const scriptTitle: Record<KanaScript, string> = { hiragana: "Hiragana", katakana: "Katakana" };
+const scriptTitle: Record<KanaScript, string> = {
+  hiragana: "Hiragana",
+  katakana: "Katakana",
+};
 
 function speak(character: string) {
   try {
@@ -40,11 +43,10 @@ function shuffled<T>(items: T[]): T[] {
   return copy;
 }
 
-/** One multiple-choice quiz question. Any eventually-correct answer (first
- * try or after a wrong guess) reports `true` -- only running out of
- * attempts without getting it reports `false`. See kana-progress.ts's
- * recordKanaQuizAnswer for why that distinction matters (it's exactly what
- * keeps or resets the 5-streak). */
+/** One multiple-choice quiz question, one attempt. Whatever the first
+ * answer is settles it -- correct reports `true`, wrong reports `false`.
+ * See kana-progress.ts's recordKanaQuizAnswer for why that matters (it's
+ * exactly what keeps or resets the 5-streak). */
 function KanaQuizQuestion({
   script,
   question,
@@ -57,7 +59,6 @@ function KanaQuizQuestion({
   onSettled: (correct: boolean) => void;
 }) {
   const entry = kanaEntryById.get(question.entryId);
-  const [attempt, setAttempt] = useState(0);
   const [wrong, setWrong] = useState<Set<string>>(new Set());
   const [result, setResult] = useState<"correct" | "incorrect" | null>(null);
   const timeout = useRef<number | null>(null);
@@ -76,20 +77,16 @@ function KanaQuizQuestion({
       setResult("correct");
       timeout.current = window.setTimeout(() => onSettled(true), 650);
     } else {
-      const next = new Set(wrong);
-      next.add(choiceId);
-      setWrong(next);
-      if (attempt + 1 >= 2) {
-        setResult("incorrect");
-        timeout.current = window.setTimeout(() => onSettled(false), 1100);
-      } else {
-        setAttempt(attempt + 1);
-      }
+      setWrong(new Set([choiceId]));
+      setResult("incorrect");
+      timeout.current = window.setTimeout(() => onSettled(false), 1100);
     }
   }
 
   return (
-    <article className={`review-card panel kana-card ${result ? `kana-result-${result}` : ""}`}>
+    <article
+      className={`review-card panel kana-card ${result ? `kana-result-${result}` : ""}`}
+    >
       <div className="review-card-top">
         <span className="concept-badge">{scriptTitle[script]}</span>
         <span className="level-tag">
@@ -99,15 +96,25 @@ function KanaQuizQuestion({
         </span>
       </div>
       <div className="kana-prompt">
-        <p className="eyebrow">{recognition ? "WHAT SOUND IS THIS?" : "WHICH KANA IS THIS?"}</p>
+        <p className="eyebrow">
+          {recognition ? "WHAT SOUND IS THIS?" : "WHICH KANA IS THIS?"}
+        </p>
         <h1 lang={recognition ? "ja" : undefined} className="kana-character">
           {recognition ? entry.character : entry.romaji}
         </h1>
-        <button type="button" className="text-link kana-hear-link" onClick={() => speak(entry.character)}>
+        <button
+          type="button"
+          className="text-link kana-hear-link"
+          onClick={() => speak(entry.character)}
+        >
           <Volume2 size={14} /> Hear it
         </button>
       </div>
-      <div className="kana-options" role="group" aria-label="Choose your answer">
+      <div
+        className="kana-options"
+        role="group"
+        aria-label="Choose your answer"
+      >
         {options.map((option) => {
           const isCorrect = option.id === entry.id;
           const isWrong = wrong.has(option.id);
@@ -128,7 +135,7 @@ function KanaQuizQuestion({
       </div>
       {result === "correct" && (
         <p className="kana-feedback kana-feedback-correct" role="status">
-          <Check size={14} /> {attempt === 0 ? "Right the first time." : "Got there."}
+          <Check size={14} /> Correct.
         </p>
       )}
       {result === "incorrect" && (
@@ -154,14 +161,23 @@ const DIRECTION_OPTIONS: { value: QuizDirectionMode; label: string }[] = [
 function KanaQuizPractice({ script }: { script: KanaScript }) {
   const { dispatch, busy } = useStudy();
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [directionMode, setDirectionMode] = useState<QuizDirectionMode>("mixed");
+  const [directionMode, setDirectionMode] =
+    useState<QuizDirectionMode>("mixed");
   const [length, setLength] = useState<QuizLength>("medium");
-  const [phase, setPhase] = useState<"configure" | "quiz" | "results">("configure");
+  const [phase, setPhase] = useState<"configure" | "quiz" | "results">(
+    "configure",
+  );
   const [questions, setQuestions] = useState<KanaQuestion[]>([]);
   const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState<(KanaQuestion & { correct: boolean })[]>([]);
+  const [answers, setAnswers] = useState<
+    (KanaQuestion & { correct: boolean })[]
+  >([]);
 
-  function start(pool: Iterable<string>, mode: QuizDirectionMode, len: QuizLength) {
+  function start(
+    pool: Iterable<string>,
+    mode: QuizDirectionMode,
+    len: QuizLength,
+  ) {
     const built = buildQuizQuestions(pool, mode, len);
     if (!built.length) return;
     setQuestions(built);
@@ -185,11 +201,19 @@ function KanaQuizPractice({ script }: { script: KanaScript }) {
   if (phase === "configure")
     return (
       <div className="kana-quiz-configure">
-        <KanaSelector script={script} selected={selected} onChange={setSelected} />
+        <KanaSelector
+          script={script}
+          selected={selected}
+          onChange={setSelected}
+        />
         <div className="panel kana-quiz-settings">
           <div>
             <span className="field-label">Direction</span>
-            <div className="filter-tabs" role="group" aria-label="Quiz direction">
+            <div
+              className="filter-tabs"
+              role="group"
+              aria-label="Quiz direction"
+            >
               {DIRECTION_OPTIONS.map((option) => (
                 <button
                   key={option.value}
@@ -222,7 +246,9 @@ function KanaQuizPractice({ script }: { script: KanaScript }) {
             disabled={!selected.size}
             onClick={() => start(selected, directionMode, length)}
           >
-            {selected.size ? `Start quiz (${selected.size} selected)` : "Select kana to quiz"}
+            {selected.size
+              ? `Start quiz (${selected.size} selected)`
+              : "Select kana to quiz"}
             <ArrowRight size={17} />
           </button>
         </div>
@@ -282,7 +308,9 @@ function KanaQuizPractice({ script }: { script: KanaScript }) {
               <span lang="ja">
                 {entry.character} ({answer.direction})
               </span>
-              <span className={`review-rating rating-text-${answer.correct ? "good" : "again"}`}>
+              <span
+                className={`review-rating rating-text-${answer.correct ? "good" : "again"}`}
+              >
                 {answer.correct ? "correct" : "missed"}
               </span>
             </div>
@@ -290,19 +318,25 @@ function KanaQuizPractice({ script }: { script: KanaScript }) {
         })}
       </div>
       <p className="completion-note">
-        Correct answers build a streak toward mastery -- 5 in a row masters a kana.
+        Correct answers build a streak toward mastery -- 5 in a row masters a
+        kana.
       </p>
       <div className="kana-results-actions">
         {!!missed.length && (
           <button
             className="primary-button"
-            onClick={() => start(new Set(missed.map((m) => m.entryId)), directionMode, "all")}
+            onClick={() =>
+              start(new Set(missed.map((m) => m.entryId)), directionMode, "all")
+            }
           >
             <RotateCcw size={16} />
             Retry {missed.length} missed
           </button>
         )}
-        <button className="secondary-button" onClick={() => setPhase("configure")}>
+        <button
+          className="secondary-button"
+          onClick={() => setPhase("configure")}
+        >
           New selection
         </button>
         <Link href="/kana" className="text-link">
@@ -316,7 +350,9 @@ function KanaQuizPractice({ script }: { script: KanaScript }) {
 function KanaStudyBrowse({ script }: { script: KanaScript }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [direction, setDirection] = useState<KanaDirection>("recognition");
-  const [phase, setPhase] = useState<"configure" | "browse" | "done">("configure");
+  const [phase, setPhase] = useState<"configure" | "browse" | "done">(
+    "configure",
+  );
   const [order, setOrder] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
@@ -332,11 +368,19 @@ function KanaStudyBrowse({ script }: { script: KanaScript }) {
   if (phase === "configure")
     return (
       <div className="kana-quiz-configure">
-        <KanaSelector script={script} selected={selected} onChange={setSelected} />
+        <KanaSelector
+          script={script}
+          selected={selected}
+          onChange={setSelected}
+        />
         <div className="panel kana-quiz-settings">
           <div>
             <span className="field-label">Show first</span>
-            <div className="filter-tabs" role="group" aria-label="Study direction">
+            <div
+              className="filter-tabs"
+              role="group"
+              aria-label="Study direction"
+            >
               <button
                 aria-pressed={direction === "recognition"}
                 className={direction === "recognition" ? "selected" : ""}
@@ -353,12 +397,19 @@ function KanaStudyBrowse({ script }: { script: KanaScript }) {
               </button>
             </div>
           </div>
-          <button className="primary-button" disabled={!selected.size} onClick={start}>
-            {selected.size ? `Study ${selected.size} selected` : "Select kana to study"}
+          <button
+            className="primary-button"
+            disabled={!selected.size}
+            onClick={start}
+          >
+            {selected.size
+              ? `Study ${selected.size} selected`
+              : "Select kana to study"}
             <ArrowRight size={17} />
           </button>
           <p className="field-help">
-            Free browsing -- nothing here is scored or saved. Use Quiz to work toward mastery.
+            Free browsing -- nothing here is scored or saved. Use Quiz to work
+            toward mastery.
           </p>
         </div>
       </div>
@@ -377,7 +428,10 @@ function KanaStudyBrowse({ script }: { script: KanaScript }) {
             <RotateCcw size={16} />
             Study again
           </button>
-          <button className="secondary-button" onClick={() => setPhase("configure")}>
+          <button
+            className="secondary-button"
+            onClick={() => setPhase("configure")}
+          >
             New selection
           </button>
           <Link href="/kana" className="text-link">
@@ -410,23 +464,39 @@ function KanaStudyBrowse({ script }: { script: KanaScript }) {
       </div>
       <article className="review-card panel kana-card">
         <div className="kana-prompt">
-          <p className="eyebrow">{direction === "recognition" ? "WHAT SOUND IS THIS?" : "WHICH KANA IS THIS?"}</p>
-          <h1 lang={direction === "recognition" ? "ja" : undefined} className="kana-character">
+          <p className="eyebrow">
+            {direction === "recognition"
+              ? "WHAT SOUND IS THIS?"
+              : "WHICH KANA IS THIS?"}
+          </p>
+          <h1
+            lang={direction === "recognition" ? "ja" : undefined}
+            className="kana-character"
+          >
             {front}
           </h1>
-          <button type="button" className="text-link kana-hear-link" onClick={() => speak(entry.character)}>
+          <button
+            type="button"
+            className="text-link kana-hear-link"
+            onClick={() => speak(entry.character)}
+          >
             <Volume2 size={14} /> Hear it
           </button>
         </div>
         {revealed ? (
           <div className="review-answer" aria-live="polite">
             <div className="answer-main">
-              <h2 lang={direction === "recognition" ? undefined : "ja"}>{back}</h2>
+              <h2 lang={direction === "recognition" ? undefined : "ja"}>
+                {back}
+              </h2>
             </div>
           </div>
         ) : (
           <div className="reveal-area">
-            <button className="primary-button reveal-button" onClick={() => setRevealed(true)}>
+            <button
+              className="primary-button reveal-button"
+              onClick={() => setRevealed(true)}
+            >
               Reveal
             </button>
           </div>

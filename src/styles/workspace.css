@@ -1317,26 +1317,6 @@ input[type="range"] {
   font-size: 13px;
   color: var(--green);
 }
-.kana-shortcuts {
-  padding: 22px 26px;
-  margin-bottom: 22px;
-}
-.kana-shortcut-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-}
-.kana-shortcuts .success-message {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.kana-shortcuts .field-help {
-  margin-top: 14px;
-}
-
 /* Kana chart */
 .kana-chart-layout {
   display: grid;

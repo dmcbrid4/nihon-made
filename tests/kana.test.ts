@@ -44,13 +44,19 @@ test("curriculum counts: 46 basic kana per script, full modern syllabary, no obs
   assert.equal(kanaCounts.katakanaBasic, 46);
   assert.equal(kanaCounts.hiragana, 105); // 46 basic + 20 dakuten + 5 handakuten + 33 yoon + 1 sokuon
   assert.equal(kanaCounts.katakana, 124); // + chōon + 18 extended combinations, no small-tsu-only difference
-  assert.equal(kanaConcepts.length, (kanaCounts.hiragana + kanaCounts.katakana) * 2);
+  assert.equal(
+    kanaConcepts.length,
+    (kanaCounts.hiragana + kanaCounts.katakana) * 2,
+  );
   assert.equal(
     concepts.filter((item) => item.type === "kana").length,
     kanaConcepts.length,
   );
   for (const entry of [...kanaEntries.hiragana, ...kanaEntries.katakana]) {
-    assert.ok(!["ゐ", "ゑ", "ヰ", "ヱ"].includes(entry.character), `${entry.character} is obsolete kana`);
+    assert.ok(
+      !["ゐ", "ゑ", "ヰ", "ヱ"].includes(entry.character),
+      `${entry.character} is obsolete kana`,
+    );
   }
 });
 
@@ -58,22 +64,36 @@ test("hiragana and katakana entries are classified into the correct Unicode bloc
   const hiraganaBlock = /^[぀-ゟ]+$/;
   const katakanaBlock = /^[゠-ヿ]+$/;
   for (const entry of kanaEntries.hiragana)
-    assert.match(entry.character, hiraganaBlock, `${entry.id} (${entry.character}) should be hiragana`);
+    assert.match(
+      entry.character,
+      hiraganaBlock,
+      `${entry.id} (${entry.character}) should be hiragana`,
+    );
   for (const entry of kanaEntries.katakana)
-    assert.match(entry.character, katakanaBlock, `${entry.id} (${entry.character}) should be katakana`);
+    assert.match(
+      entry.character,
+      katakanaBlock,
+      `${entry.id} (${entry.character}) should be katakana`,
+    );
 });
 
 test("curriculum ordering is monotonic per script and stages start at 1", () => {
   for (const script of ["hiragana", "katakana"] as const) {
     const entries = kanaEntries[script];
     const orders = entries.map((e) => e.order);
-    assert.deepEqual(orders, [...orders].sort((a, b) => a - b));
+    assert.deepEqual(
+      orders,
+      [...orders].sort((a, b) => a - b),
+    );
     assert.equal(new Set(orders).size, orders.length);
     const stageNumbers = kanaStages
       .filter((s) => s.script === script)
       .map((s) => s.id);
     assert.equal(Math.min(...stageNumbers), 1);
-    assert.deepEqual(stageNumbers, [...stageNumbers].sort((a, b) => a - b));
+    assert.deepEqual(
+      stageNumbers,
+      [...stageNumbers].sort((a, b) => a - b),
+    );
     // Every entry's stage is one of the declared stages for its script.
     for (const entry of entries) assert.ok(stageNumbers.includes(entry.stage));
   }
@@ -81,13 +101,27 @@ test("curriculum ordering is monotonic per script and stages start at 1", () => 
 
 test("basic vs extended forms: basic is exactly the 46-kana gojūon set, extended is katakana-only", () => {
   for (const script of ["hiragana", "katakana"] as const) {
-    assert.equal(kanaEntries[script].filter((e) => e.category === "basic").length, 46);
+    assert.equal(
+      kanaEntries[script].filter((e) => e.category === "basic").length,
+      46,
+    );
   }
-  assert.equal(kanaEntries.hiragana.filter((e) => e.category === "extended").length, 0);
-  assert.ok(kanaEntries.katakana.filter((e) => e.category === "extended").length > 0);
-  const categories = new Set([...kanaEntries.hiragana, ...kanaEntries.katakana].map((e) => e.category));
+  assert.equal(
+    kanaEntries.hiragana.filter((e) => e.category === "extended").length,
+    0,
+  );
+  assert.ok(
+    kanaEntries.katakana.filter((e) => e.category === "extended").length > 0,
+  );
+  const categories = new Set(
+    [...kanaEntries.hiragana, ...kanaEntries.katakana].map((e) => e.category),
+  );
   for (const category of categories)
-    assert.ok(["basic", "dakuten", "handakuten", "yoon", "small", "extended"].includes(category));
+    assert.ok(
+      ["basic", "dakuten", "handakuten", "yoon", "small", "extended"].includes(
+        category,
+      ),
+    );
 });
 
 test("kana concept id round-trips through kanaConceptId/parseKanaConceptId", () => {
@@ -112,7 +146,11 @@ test("mastery calculation: a character masters once either recognition or recall
     dueAt: now.toISOString(),
     lastReviewedAt: now.toISOString(),
   };
-  const learning: ConceptProgress = { ...mastered, status: "learning", successStreak: 1 };
+  const learning: ConceptProgress = {
+    ...mastered,
+    status: "learning",
+    successStreak: 1,
+  };
   assert.equal(characterStatus(undefined, undefined), "unseen");
   assert.equal(characterStatus(mastered, undefined), "mastered");
   assert.equal(characterStatus(undefined, mastered), "mastered");
@@ -136,12 +174,16 @@ test("group completion: bucket and script cohorts sum to the right totals, miles
   const total = cohorts.find((c) => c.id === "total")!;
   assert.equal(total.total, kanaCounts.hiragana);
   assert.equal(total.unseen, kanaCounts.hiragana);
-  const bucketSum = cohorts.filter((c) => c.id !== "total").reduce((sum, c) => sum + c.total, 0);
+  const bucketSum = cohorts
+    .filter((c) => c.id !== "total")
+    .reduce((sum, c) => sum + c.total, 0);
   assert.equal(bucketSum, kanaCounts.hiragana);
 
   const milestones = kanaMilestones(state);
   assert.ok(milestones.every((m) => !m.complete));
-  const basicHiragana = kanaEntries.hiragana.filter((e) => e.category === "basic");
+  const basicHiragana = kanaEntries.hiragana.filter(
+    (e) => e.category === "basic",
+  );
   const masteredState = {
     ...state,
     progress: basicHiragana.flatMap((entry) => [
@@ -150,16 +192,24 @@ test("group completion: bucket and script cohorts sum to the right totals, miles
     ]),
   };
   const afterBasic = kanaMilestones(masteredState);
-  const basicMilestone = afterBasic.find((m) => m.script === "hiragana" && m.bucket === "basic")!;
+  const basicMilestone = afterBasic.find(
+    (m) => m.script === "hiragana" && m.bucket === "basic",
+  )!;
   assert.equal(basicMilestone.mastered, 46);
   assert.equal(basicMilestone.complete, true);
-  const allHiragana = afterBasic.find((m) => m.script === "hiragana" && m.bucket === "all")!;
+  const allHiragana = afterBasic.find(
+    (m) => m.script === "hiragana" && m.bucket === "all",
+  )!;
   assert.equal(allHiragana.complete, false); // dakuten/yoon/etc still unseen
 });
 
 test("progress percentages: 0% when untouched, 100% once every character is mastered in both directions", () => {
   const state = initialState();
-  assert.deepEqual(kanaOverview(state), { hiragana: 0, katakana: 0, overall: 0 });
+  assert.deepEqual(kanaOverview(state), {
+    hiragana: 0,
+    katakana: 0,
+    overall: 0,
+  });
   const everyEntry = [...kanaEntries.hiragana, ...kanaEntries.katakana];
   const fullState = {
     ...state,
@@ -176,22 +226,38 @@ test("progress percentages: 0% when untouched, 100% once every character is mast
 
 test("markKanaKnown instantly masters a group and only accepts real kana concept ids", () => {
   const entry = kanaEntries.hiragana.find((e) => e.category === "basic")!;
-  const ids = [kanaConceptId(entry.id, "recognition"), kanaConceptId(entry.id, "recall")];
+  const ids = [
+    kanaConceptId(entry.id, "recognition"),
+    kanaConceptId(entry.id, "recall"),
+  ];
   const state = applyAction(
     initialState(),
-    { type: "markKanaKnown", conceptIds: [...ids, "v-maniau", "not-a-real-id"] },
+    {
+      type: "markKanaKnown",
+      conceptIds: [...ids, "v-maniau", "not-a-real-id"],
+    },
     now,
   );
   assert.equal(state.progress.length, 2);
   assert.ok(state.progress.every((item) => item.status === "mastered"));
   assert.ok(!state.progress.some((item) => item.conceptId === "v-maniau"));
-  const progressById = new Map(state.progress.map((item) => [item.conceptId, item]));
+  const progressById = new Map(
+    state.progress.map((item) => [item.conceptId, item]),
+  );
   assert.equal(characterStatusFor(entry, progressById), "mastered");
   // Re-marking known is idempotent, not additive.
-  const again = applyAction(state, { type: "markKanaKnown", conceptIds: ids }, now);
+  const again = applyAction(
+    state,
+    { type: "markKanaKnown", conceptIds: ids },
+    now,
+  );
   assert.equal(again.progress.length, 2);
   assert.deepEqual(
-    applyAction(initialState(), { type: "markKanaKnown", conceptIds: ["not-real"] }, now),
+    applyAction(
+      initialState(),
+      { type: "markKanaKnown", conceptIds: ["not-real"] },
+      now,
+    ),
     initialState(),
   );
 });
@@ -207,34 +273,61 @@ test("no duplicate kana data: unique ids, unique characters per script, and the 
     const byRomaji = new Map<string, string[]>();
     for (const entry of kanaEntries[script]) {
       if (!/^[a-z]+$/.test(entry.romaji)) continue; // skip the descriptive sokuon/chōon strings
-      byRomaji.set(entry.romaji, [...(byRomaji.get(entry.romaji) ?? []), entry.character]);
+      byRomaji.set(entry.romaji, [
+        ...(byRomaji.get(entry.romaji) ?? []),
+        entry.character,
+      ]);
     }
     for (const [romaji, characters] of byRomaji)
-      if (characters.length > 1) romajiCollisions.set(`${script}:${romaji}`, characters);
+      if (characters.length > 1)
+        romajiCollisions.set(`${script}:${romaji}`, characters);
   }
-  assert.deepEqual(
-    [...romajiCollisions.keys()].sort(),
-    ["hiragana:ji", "hiragana:zu", "katakana:ji", "katakana:zu"],
-  );
+  assert.deepEqual([...romajiCollisions.keys()].sort(), [
+    "hiragana:ji",
+    "hiragana:zu",
+    "katakana:ji",
+    "katakana:zu",
+  ]);
 });
 
 test("romaji is well-formed: lowercase letters for ordinary kana, non-empty for every entry", () => {
   for (const entry of [...kanaEntries.hiragana, ...kanaEntries.katakana]) {
     assert.ok(entry.romaji.trim().length > 0, `${entry.id} has empty romaji`);
-    if (entry.category !== "small" && entry.row !== "extended" && entry.column !== "chouon")
-      assert.match(entry.romaji, /^[a-z]+$/, `${entry.id} romaji "${entry.romaji}" is malformed`);
+    if (
+      entry.category !== "small" &&
+      entry.row !== "extended" &&
+      entry.column !== "chouon"
+    )
+      assert.match(
+        entry.romaji,
+        /^[a-z]+$/,
+        `${entry.id} romaji "${entry.romaji}" is malformed`,
+      );
   }
 });
 
 test("kana combination relationships: yōon and dakuten/handakuten point back to a real base character in the same script", () => {
   for (const script of ["hiragana", "katakana"] as const) {
     const characters = new Set(kanaEntries[script].map((e) => e.character));
-    for (const entry of kanaEntries[script].filter((e) => e.category === "yoon" || e.category === "dakuten" || e.category === "handakuten")) {
-      assert.ok(entry.relatedKana, `${entry.id} should declare a related base character`);
-      assert.ok(characters.has(entry.relatedKana!), `${entry.relatedKana} should exist in ${script}`);
+    for (const entry of kanaEntries[script].filter(
+      (e) =>
+        e.category === "yoon" ||
+        e.category === "dakuten" ||
+        e.category === "handakuten",
+    )) {
+      assert.ok(
+        entry.relatedKana,
+        `${entry.id} should declare a related base character`,
+      );
+      assert.ok(
+        characters.has(entry.relatedKana!),
+        `${entry.relatedKana} should exist in ${script}`,
+      );
     }
     // Basic kana never derive from something else.
-    for (const entry of kanaEntries[script].filter((e) => e.category === "basic"))
+    for (const entry of kanaEntries[script].filter(
+      (e) => e.category === "basic",
+    ))
       assert.equal(entry.relatedKana, null);
   }
   // が derives from か specifically (not some other k-row kana).
@@ -245,8 +338,18 @@ test("kana combination relationships: yōon and dakuten/handakuten point back to
 });
 
 test("confusion sets are symmetric and required pairs are present", () => {
-  const requiredHiragana: [string, string][] = [["さ", "き"], ["ぬ", "め"], ["れ", "わ"], ["あ", "お"]];
-  const requiredKatakana: [string, string][] = [["シ", "ツ"], ["ソ", "ン"], ["ク", "ケ"], ["ヌ", "ス"]];
+  const requiredHiragana: [string, string][] = [
+    ["さ", "き"],
+    ["ぬ", "め"],
+    ["れ", "わ"],
+    ["あ", "お"],
+  ];
+  const requiredKatakana: [string, string][] = [
+    ["シ", "ツ"],
+    ["ソ", "ン"],
+    ["ク", "ケ"],
+    ["ヌ", "ス"],
+  ];
   function findEntry(script: "hiragana" | "katakana", character: string) {
     return kanaEntries[script].find((e) => e.character === character)!;
   }
@@ -272,21 +375,34 @@ test("recordKanaQuizAnswer: mastery is a streak of 5 correct answers, any correc
   assert.equal(progress.status, "introduced");
   assert.equal(progress.successStreak, 1);
   for (let i = 0; i < 3; i++)
-    progress = recordKanaQuizAnswer("kana-h-a-a-recognition", true, now, progress);
+    progress = recordKanaQuizAnswer(
+      "kana-h-a-a-recognition",
+      true,
+      now,
+      progress,
+    );
   assert.equal(progress.successStreak, 4);
   assert.equal(progress.status, "learning");
-  progress = recordKanaQuizAnswer("kana-h-a-a-recognition", true, now, progress);
+  progress = recordKanaQuizAnswer(
+    "kana-h-a-a-recognition",
+    true,
+    now,
+    progress,
+  );
   assert.equal(progress.successStreak, 5);
   assert.equal(progress.status, "mastered");
 
   // A miss resets the streak to 0 and demotes mastery.
-  const missed = recordKanaQuizAnswer("kana-h-a-a-recognition", false, now, progress);
+  const missed = recordKanaQuizAnswer(
+    "kana-h-a-a-recognition",
+    false,
+    now,
+    progress,
+  );
   assert.equal(missed.successStreak, 0);
   assert.equal(missed.status, "learning");
 
-  // Retry-then-correct still counts as a success building the streak (a
-  // caller only reports `false` once a question is fully missed -- see
-  // KanaQuizQuestion's 2-attempt handling in kana-study.tsx).
+  // Consecutive correct answers keep extending the streak.
   const first = recordKanaQuizAnswer("kana-h-a-a-recall", true, now);
   const second = recordKanaQuizAnswer("kana-h-a-a-recall", true, now, first);
   assert.equal(second.successStreak, 2);
@@ -302,7 +418,11 @@ test("kanaQuizAnswer action: only kana concepts accepted, streak builds to maste
   assert.equal(state.progress.length, 0); // not a kana concept, ignored
 
   for (let i = 0; i < 5; i++)
-    state = applyAction(state, { type: "kanaQuizAnswer", conceptId, correct: true }, now);
+    state = applyAction(
+      state,
+      { type: "kanaQuizAnswer", conceptId, correct: true },
+      now,
+    );
   assert.equal(state.progress.length, 1);
   assert.equal(state.progress[0].status, "mastered");
   assert.equal(state.progress[0].successStreak, 5);
@@ -315,8 +435,16 @@ test("buildQuizQuestions: mixed asks both directions, single-direction modes sta
   const ids = kanaEntries.hiragana.slice(0, 5).map((e) => e.id);
   const mixed = buildQuizQuestions(ids, "mixed", "all");
   assert.equal(mixed.length, ids.length * 2);
-  assert.ok(ids.every((id) => mixed.some((q) => q.entryId === id && q.direction === "recognition")));
-  assert.ok(ids.every((id) => mixed.some((q) => q.entryId === id && q.direction === "recall")));
+  assert.ok(
+    ids.every((id) =>
+      mixed.some((q) => q.entryId === id && q.direction === "recognition"),
+    ),
+  );
+  assert.ok(
+    ids.every((id) =>
+      mixed.some((q) => q.entryId === id && q.direction === "recall"),
+    ),
+  );
 
   const recognitionOnly = buildQuizQuestions(ids, "recognition", "all");
   assert.equal(recognitionOnly.length, ids.length);
