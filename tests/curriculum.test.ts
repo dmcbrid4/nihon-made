@@ -30,7 +30,11 @@ test("the N5–N4 curriculum is balanced, complete, and uniquely identifiable", 
     vocabulary.filter((concept) => concept.level === "N4").length,
     vocabularyCorpusCounts.n4Only,
   );
-  assert.equal(vocabulary.length, vocabularyCorpusCounts.total);
+  const jlptVocabulary = vocabulary.filter((concept) => concept.level !== "tae-kim");
+  assert.equal(jlptVocabulary.length, vocabularyCorpusCounts.total);
+  const taeKimVocabulary = vocabulary.filter((concept) => concept.level === "tae-kim");
+  assert.ok(taeKimVocabulary.length > 0);
+  assert.equal(vocabulary.length, jlptVocabulary.length + taeKimVocabulary.length);
   assert.ok(
     vocabularyCorpusCounts.n5 >= 400,
     "approved N5 vocabulary should cover a substantial foundation",
@@ -80,9 +84,10 @@ test("the N5–N4 curriculum is balanced, complete, and uniquely identifiable", 
     assert.ok(concept.example.trim());
     assert.ok(concept.exampleMeaning.trim());
     assert.ok(concept.note.trim());
-    assert.ok(concept.source.includes("JLPT"));
+    if (concept.level !== "tae-kim") assert.ok(concept.source.includes("JLPT"));
+    else assert.ok(concept.source.includes("Tae Kim"));
   }
-  for (const concept of vocabulary) {
+  for (const concept of jlptVocabulary) {
     assert.ok(
       ["essential", "common", "additional"].includes(concept.commonality ?? ""),
     );
@@ -91,5 +96,18 @@ test("the N5–N4 curriculum is balanced, complete, and uniquely identifiable", 
     assert.ok(concept.exampleMeaning.trim());
     if (/[㐀-鿿]/.test(concept.expression))
       assert.equal(concept.kanjiForm, concept.expression);
+  }
+  for (const concept of taeKimVocabulary) {
+    assert.ok(concept.partOfSpeech);
+    assert.ok(concept.example.trim());
+    assert.ok(concept.exampleMeaning.trim());
+  }
+  const taeKimPhrases = concepts.filter(
+    (concept) => concept.level === "tae-kim" && concept.type === "listening",
+  );
+  assert.ok(taeKimPhrases.length > 0);
+  for (const concept of taeKimPhrases) {
+    assert.ok(concept.media?.audio);
+    assert.ok(concept.media?.image);
   }
 });

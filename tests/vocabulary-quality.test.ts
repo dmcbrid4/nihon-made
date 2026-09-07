@@ -110,8 +110,10 @@ test("only approval-gated, mechanically sound records reach the active app", () 
     assert.equal(item.vocabulary.approval.approved, true);
     assert.equal(item.vocabulary.approval.reasons.length, 0);
   }
-  const vocabulary = concepts.filter((concept) => concept.type === "vocabulary");
-  assert.equal(vocabulary.length, active.length);
+  const jlptVocabulary = concepts.filter(
+    (concept) => concept.type === "vocabulary" && concept.level !== "tae-kim",
+  );
+  assert.equal(jlptVocabulary.length, active.length);
 });
 
 test("corrected cards have sense-aligned replacements and usable ruby", () => {

@@ -63,13 +63,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                   type: "goal",
                   goal: {
                     ...state.goal,
-                    studyMode: event.target.value as "N5" | "N4",
+                    studyMode: event.target.value as "N5" | "N4" | "tae-kim",
                   },
                 })
               }
             >
               <option value="N5">N5 mode</option>
               <option value="N4">N4 mode</option>
+              <option value="tae-kim">Tae Kim mode</option>
             </select>
           </label>
         )}

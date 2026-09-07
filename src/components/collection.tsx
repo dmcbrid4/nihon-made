@@ -49,7 +49,9 @@ export function CollectionView() {
           <p>
             {activeMode === "N5"
               ? "Foundation vocabulary, kanji, grammar, reading, and listening."
-              : "N4-only material, kept separate from your N5 foundation."}
+              : activeMode === "N4"
+                ? "N4-only material, kept separate from your N5 foundation."
+                : "Words and sentences mined from the Tae Kim/anime course."}
           </p>
         </div>
         <span className="level-badge">
@@ -194,6 +196,26 @@ export function CollectionView() {
                   </p>
                   <p className="muted">{concept.exampleMeaning}</p>
                   <p className="concept-note">{concept.note}</p>
+                  {concept.media && (
+                    <div className="concept-media">
+                      {concept.media.image && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={concept.media.image}
+                          alt=""
+                          className="concept-media-image"
+                        />
+                      )}
+                      {concept.media.audio && (
+                        <audio controls src={concept.media.audio} />
+                      )}
+                      {concept.media.sourceShow && (
+                        <p className="field-help">
+                          From: {concept.media.sourceShow}
+                        </p>
+                      )}
+                    </div>
+                  )}
                   <p className="field-help">
                     {concept.curriculumUnit} · Source: {concept.source}
                   </p>

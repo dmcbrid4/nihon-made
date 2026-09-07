@@ -84,7 +84,9 @@ export function Dashboard() {
           <p>
             {state.goal.studyMode === "N5"
               ? "Build the foundations before moving on."
-              : "Focus on N4-only material, separate from your N5 work."}
+              : state.goal.studyMode === "N4"
+                ? "Focus on N4-only material, separate from your N5 work."
+                : "Real sentences and words mined from the Tae Kim/anime course, with audio and screenshots."}
           </p>
         </div>
         <div className="heading-date">

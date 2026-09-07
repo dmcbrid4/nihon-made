@@ -143,6 +143,23 @@
   font-size: 12px;
   line-height: 1.8;
 }
+.concept-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.concept-media-image {
+  max-width: 100%;
+  max-height: 220px;
+  border-radius: 7px;
+  object-fit: contain;
+}
+.concept-media audio {
+  width: 100%;
+  max-width: 360px;
+}
 .rating-area {
   margin-top: 22px;
 }

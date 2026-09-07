@@ -95,12 +95,26 @@ npm start
 
 Vercel can import the repository as a Next.js project. Set all four cloud environment variables in the Vercel project, configure the Supabase Auth callback URL for the deployment, then run `npm run db:setup` locally with the target database URL before using the deployment. Migration commands are explicit and are not run during builds. Without cloud variables, each browser keeps its own history.
 
+## Tae Kim course mode
+
+A third study mode, alongside N5/N4: real sentences and words mined from a
+personal Anki deck ("Japanese course based on Tae Kim's grammar guide
+(anime)"), each sentence card carrying its own audio clip and screenshot
+pulled from real anime/drama dialogue. It shares the same concept type,
+scheduler, session planner, and progress tracking as N5/N4 -- it's a third
+value of the study-mode enum, not a separate system. The audio/screenshots
+are copyrighted anime footage, so that media is personal-use-only,
+gitignored, and never committed or deployed; see
+[docs/tae-kim-mode.md](docs/tae-kim-mode.md) for what's mined, how to
+regenerate it, and exactly why it's exempt from the N5/N4 corpus's
+open-licensing requirements.
+
 ## Deliberate V1 limits
 
 - The curriculum is an imported N5 → N4 study corpus undergoing a quality audit, rather than an official JLPT word or kanji list. JLPT labels are approximate; coverage counts do not establish linguistic quality. See the [vocabulary quality plan](docs/vocabulary-quality-plan.md).
 - Ratings are self-assessments. “Learned” requires three consecutive Good/Easy ratings and an interval of at least seven days. Again resets that run of successful recalls. This is a placeholder policy, not validated FSRS.
 - Again makes a concept due after ten minutes, but each item appears once in this daily session; it returns in the next generated session. Other initial intervals are one, three, and seven days.
-- Sessions are generated locally from deterministic rules; there is no LLM integration, listening audio, speaking, or itinerary import yet.
+- Sessions are generated locally from deterministic rules; there is no LLM integration, speaking, or itinerary import yet. Listening audio exists only in the personal-use Tae Kim mode (below), not in the N5/N4 JLPT track.
 - There is no service worker or offline PWA installation flow yet. Local persistence does not mean the app can load without a network connection. Mobile layout and Apple web-app metadata provide a starting point.
 - V1 loads the personal study history as one state snapshot. Pagination and archived sessions can be added when the history grows.
 - JSON export and one-way browser-history import into an empty cloud account are available.

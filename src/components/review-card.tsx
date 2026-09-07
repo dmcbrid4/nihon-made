@@ -90,8 +90,25 @@ export function ReviewCard({
               <p className="reading-passage" lang="ja">
                 {concept.example}
               </p>
-              <p className="comprehension-question">{concept.question}</p>
+              {concept.question && (
+                <p className="comprehension-question">{concept.question}</p>
+              )}
             </>
+          )}
+          {concept.media && (
+            <div className="concept-media">
+              {concept.media.image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={concept.media.image}
+                  alt=""
+                  className="concept-media-image"
+                />
+              )}
+              {concept.media.audio && (
+                <audio controls src={concept.media.audio} />
+              )}
+            </div>
           )}
         </div>
         {revealed ? (
@@ -102,10 +119,10 @@ export function ReviewCard({
                   {concept.reading}
                 </p>
               )}
-              <h2>{passage ? concept.answer : concept.meaning}</h2>
+              <h2>{passage ? (concept.answer ?? concept.meaning) : concept.meaning}</h2>
             </div>
             {passage ? (
-              <details className="translation">
+              <details className="translation" open={!concept.answer}>
                 <summary>Show passage translation</summary>
                 <p>{concept.exampleMeaning}</p>
               </details>

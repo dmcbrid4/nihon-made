@@ -5,6 +5,7 @@ import {
   vocabularyCorpus,
   vocabularySource,
 } from "./jlpt-vocabulary";
+import { taeKimConcepts, taeKimSource } from "./tae-kim";
 
 type DraftConcept = Omit<
   Concept,
@@ -966,6 +967,9 @@ const topicUnits = {
     "Travel preparation": "N4 · Unit 11: Travel preparation",
     "Staying in Japan": "N4 · Unit 11: Travel preparation",
   },
+  "tae-kim": {
+    "Tae Kim course": "Tae Kim · Sentence mining course",
+  },
 } as const;
 const unitOrder = [
   "N5 · Units 1–6: Core vocabulary",
@@ -982,6 +986,7 @@ const unitOrder = [
   "N4 · Unit 9: Movement and directions",
   "N4 · Unit 10: Services and practical texts",
   "N4 · Unit 11: Travel preparation",
+  "Tae Kim · Sentence mining course",
 ];
 const unitIndex = new Map(unitOrder.map((unit, index) => [unit, index]));
 const typeOrder = {
@@ -1021,6 +1026,7 @@ const nonVocabularyConcepts = [
 export const concepts: Concept[] = [
   ...nonVocabularyConcepts,
   ...vocabularyConcepts,
+  ...taeKimConcepts,
 ]
   .sort((a, b) => {
     const unitA =
@@ -1044,18 +1050,24 @@ export const concepts: Concept[] = [
       topicUnits[concept.level][concept.topic as never] ??
       `${concept.level} · Core study`,
     sequence: index + 1,
-    difficulty: (concept.level === "N5"
-      ? concept.type === "reading" || concept.type === "listening"
+    difficulty: (concept.level === "tae-kim"
+      ? concept.type === "listening"
         ? 3
-        : 1
-      : concept.type === "reading" || concept.type === "listening"
-        ? 4
-        : 3) as 1 | 2 | 3 | 4 | 5,
+        : 2
+      : concept.level === "N5"
+        ? concept.type === "reading" || concept.type === "listening"
+          ? 3
+          : 1
+        : concept.type === "reading" || concept.type === "listening"
+          ? 4
+          : 3) as 1 | 2 | 3 | 4 | 5,
     prerequisites: concept.level === "N4" ? ["N5 foundations"] : [],
     source:
-      concept.type === "vocabulary"
-        ? vocabularySource
-        : sourceFor(concept.level),
+      concept.level === "tae-kim"
+        ? taeKimSource
+        : concept.type === "vocabulary"
+          ? vocabularySource
+          : sourceFor(concept.level),
   }));
 
 export const conceptById = new Map(

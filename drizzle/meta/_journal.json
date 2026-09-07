@@ -29,6 +29,13 @@
       "when": 1788580276696,
       "tag": "0003_add_study_modes",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788746812675,
+      "tag": "0004_add_tae_kim_mode",
+      "breakpoints": true
     }
   ]
 }
