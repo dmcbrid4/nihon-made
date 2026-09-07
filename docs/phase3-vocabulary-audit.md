@@ -1,7 +1,9 @@
 # Phase 3 vocabulary audit
 
-Status: **80 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunks 2–8 findings below await Phase 4. Resume position 41 in each level.
+Status: **100 / 100 sampled records inspected (50 per level).** Fixed-sample
+audit complete; this is not full-corpus release approval. Chunk 1 corrections
+were applied in Phase 2; chunks 2–10 await Phase 4.
+See [the consolidated correction handoff](phase4-vocabulary-corrections.md).
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -836,3 +838,57 @@ A targeted scan also finds 金曜日/きんようひ on active `v-jlpt-n5-0281`;
 existing weekday fixtures. No extra sample count for that targeted check.
 Verified positions 1–40 per level, unchanged sample/corpus, and `git diff --check`.
 No app tests/build for this documentation-only checkpoint.
+
+## Chunks 9–10 — positions 41–50 per level (2026-09-07)
+
+Reviewed at checkpoint `2669c5b`; **100/100 sampled records inspected**, 50 per
+level. Same unchanged corpus hash as chunk 2. Full dictionary senses and compact
+record packets inspected as in earlier chunks. Proposed examples remain original
+editorial candidates for Phase 4, not applied changes or certified translations.
+
+| Record | Decision and Phase 4 action |
+| --- | --- |
+| N5 `0141` 橋 | **Teaching polish; active.** Noun/bridge `1237410:0`; 橋は石造りだ。 / “The bridge is made of stone” is natural. 橋→はし and 石造→いしづく + り correct; compound ruby need not split each kanji. Gloss 石造り or simplify for N5: original **この橋を渡ってください。 / “Please cross this bridge.”** Ruby: この橋(はし)を渡(わた)ってください。 |
+| N5 `0480` 体 | **Required example; quarantined.** 体→からだ, noun/body `1409140:0`. 大体正しい。 / “That is almost correct” teaches 大体→だいたい, not body. 正→ただ + しい correct. Original **運動は体にいいです。 / “Exercise is good for your body.”** Ruby: 運動(うんどう)は体(からだ)にいいです。 Retain natural 体. |
+| N5 `0323` 口 | **Required example; quarantined.** 口→くち, noun/mouth `1275640:0`; 彼は早口だ。 is natural fast-speaking language but does not demonstrate the chosen anatomical sense. 彼→かれ, 早口→はやくち correct. Original **口を大きく開けてください。 / “Please open your mouth wide.”** Ruby: 口(くち)を大(おお)きく開(あ)けてください。 Keep opening as secondary; a compound's relationship does not establish first-example suitability. |
+| N5 `0121` どこ | **Accept linguistically; active.** Pronoun/where `1577140:0`; ジムはどこ？ / “Where is Jim?” is natural. ジム could also be “gym,” so the English chooses a plausible context rather than demonstrating an error. All kana correctly unannotated; optional context note or explicit ジムさん for a person. |
+| N5 `0169` もう一度 | **Register polish; active.** Adverb/expression/again `2005860:0`; もう + 一→いち / 度→ど correct. もう一度おやり。 is a valid directive, not polite merely because お appears. Prefer ordinary original **もう一度説明してください。 / “Please explain it again.”** Ruby: もう + 一度(いちど) + 説明(せつめい) + してください。 |
+| N5 `0606` 忙しい | **Required gloss correction; active.** `1519290` supports busy/hectic and restless/hurried, not ordinary “irritated.” Remove that misleading secondary gloss. 僕は忙しい。 / “I'm busy” is natural and can stay. 僕→ぼく, 忙→いそが + しい correct. |
+| N5 `0420` 小さな | **Accept linguistically; active.** `2136180:0`, prenoun adjective; “small; little” followed by a noun. 小さな部屋ね。 is natural casual observation; “It's a small room” conveys it, with “isn't it?” optional for ね. 小→ちい + さな, 部屋→へや correct. Do not teach standalone 小さなです or treat this as an ordinary na-adjective. |
+| N5 `0211` 塩 | **Accept linguistically; active.** Noun/salt `1576630:0`; お塩とって。 / “Pass me the salt” is natural, with omitted を. お remains kana, 塩→しお, とって unchanged. No need to force 取って spelling or reject casual ellipsis. |
+| N5 `0484` 大きい | **Sense/teaching polish; active.** i-adjective `1588880`; “big” sense 0 and loud sense 1 are valid. 彼は声が大きい。 / “He has a loud voice” naturally uses sense 1. Keep useful collocation, add “loud (voice/sound)” and correct example-sense evidence; if teaching physical size first, add a separate simple example later. 彼→かれ, 声→こえ, 大→おお + きい correct. |
+| N5 `0667` おじさん | **Required placeholder replacement; quarantined.** Kana, noun, uncle/older-man senses `2261490` valid. Prefer “uncle; middle-aged man” to implying “gentleman” guarantees politeness. Original **おじさんに写真を見せました。 / “I showed my uncle the photos.”** Ruby: おじさんに写真(しゃしん)を見(み)せました。 Explain the familiar family context; distinguish おじいさん by vowel length. Current placeholder's 言葉→ことば and 練習→れんしゅう are correct but unhelpful. |
+| N4 `0640` お金持ち | **Required gloss/teaching correction; active.** `2429350:0` means **wealthy person**, not specifically a man; the existing sentence itself refers to an aunt. Its からといって…わけではない argument and formal English are excessive for a first N4 noun card. Use the simpler original **彼女はお金持ちです。 / “She is wealthy.”** Ruby: 彼女(かのじょ)はお + 金持(かねも) + ちです。 Existing ruby is correct: 叔母→おば, 非常→ひじょう, お unannotated, 金持→かねも + ち, 幸→しあわ + せ. A short correct example is preferable to excessive complexity. |
+| N4 `0156` 以外 | **Accept linguistically; active.** `1155090:0` supports excluding/except; zero gloss overlap is not a semantic failure. 職員以外入室禁止。 / “Admittance to staff members only” is natural sign language. Explain “people other than staff” plus the prohibition; don't translate as staff being excluded. 職員→しょくいん, 以外→いがい, 入室→にゅうしつ, 禁止→きんし correct. Useful N4 reading context despite the specialized nouns. |
+| N4 `0704` ～おき | **Required dictionary/placeholder repair; quarantined.** Stored `1182500` means 沖/open sea, not an interval. Correct suffix entry is **置き `2854117`**; retain natural kana slot expression. Teach “at intervals of …,” not a universal mechanical equivalence to ごと. Original **このバスは五分おきに来ます。 / “This bus comes every five minutes.”** Ruby: このバスは五分(ごふん)おきに来(き)ます。 Add a note that 一日おき means every other day; don't generalize five-minute spacing to all counting units. Placeholder ruby is structurally correct but not a real usage example. |
+| N4 `0402` 森 | **Accept linguistically; active.** Noun/forest `1362490:0`; 彼は森で迷った。 / “He lost his way in the woods” is natural. 彼→かれ, 森→もり, 迷→まよ + った correct. Useful beginner/intermediate past-tense context. |
+| N4 `0066` サンダル | **Accept linguistically; active.** Noun/sandal `1058480:0`, kana correct. サンダルを買った。 / “I bought a pair of sandals” is natural; “pair” is contextual, not grammatically specified. 買→か + った correct. Keep. |
+| N4 `0700` ～おわる | **Required placeholder replacement; quarantined.** `1589600:2` correctly identifies the godan suffix “finish doing.” Teach verb ます-stem + 終わる; kana headword may remain or adopt ～終わる with explicit alias/ID preservation. Original **その本を読み終わりました。 / “I finished reading that book.”** Ruby: その本(ほん)を読(よ)み終(お)わりました。 Match the inflected suffix within the compound with a reviewed rule; do not add this merely as an unrelated standalone 終わる example. Placeholder ruby is valid but pedagogically empty. |
+| N4 `0224` 機会 | **Register/translation polish; active.** Noun/chance/opportunity `1220800:0`. 別の機会を待て。 is a blunt command; “another opportunity” is closer than necessarily “a second chance.” 別→べつ, 機→き / 会→かい, 待→ま + て correct. Optional neutral original **また話す機会があると思います。 / “I think we'll have another chance to talk.”** Ruby: また話(はな)す機会(きかい)があると思(おも)います。 |
+| N4 `0133` プレゼント | **POS polish; active.** `1116840:0`, noun + suru verb: gift/present. Display noun alongside suru verb, since プレゼントをどうぞ。 uses the noun. “This is a present for you” is a natural functional translation of an offering; no literal です is required. Kana-only ruby correctly absent. |
+| N4 `0507` 怒る | **Accept linguistically; active.** Godan/intransitive `1445690:0`, おこる; 彼はすぐ怒る。 / “He gets mad very easily” is natural, with すぐ supporting ready/quick anger. 彼→かれ, 怒→おこ + る correct. Don't substitute another possible reading without this item's lexical context. |
+| N4 `0130` ビル | **Required primary sense/example repair; active.** `1106010:0` is a multi-storey building. Remove unexplained English “bill” from the beginner gloss. ねえ、ビル。 addresses **Bill**, a name, not a building; “Come on, Bill” supplies contextual urging. Kana token equality cannot establish lexical identity. Original **あの高いビルで働いています。 / “I work in that tall building.”** Ruby: あの高(たか)いビルで働(はたら)いています。 Keep kana spelling, noun and stable ID. |
+
+Result: eight required corrections, five polish decisions, seven linguistic
+accepts; 15 active, five quarantined. All 20 word ruby and all 20 stored sentence
+ruby sequences appear correct for the text actually present; semantic mismatch
+and placeholder defects remain. Two imported pairs (お金持ち `227567`, 以外
+`145978`) verified in cached JMdict/Tatoeba. Fifteen other imports lack recovered
+attribution; three are placeholders. Suffix meaning corroborated by
+[the 置き dictionary entry](https://kotobank.jp/word/%E7%BD%AE%E3%81%8D-451427);
+no external examples copied. Replacement candidates require Phase 4 recheck.
+
+All final 30 level assignments are plausible choices, with prioritization caveats
+for 字引/汽車 and specialized constructions; no definitive reclassification
+claimed. Labels: 24 high, three medium (もう一度/おじさん/案内), three low
+(お金持ち/～おき/～おわる). Shared lineage is not independent corroboration.
+大きい is essential; おじさん/案内 additional; the other 27 are common. These
+bands are not verified frequency ranks; kinship/guidance priority needs review
+after source-normalization fixes. Over the final 30, duplicate examples occur
+for 砂糖 with N4 `0306`, 体 with N4 `0423`/`0464`, 忙しい with N4 `0585`.
+No additional sampled-record count from these searches.
+
+Verified all 100 fixed sample IDs once each (50 N5, 50 N4), unchanged original
+seed/order/hash and unchanged current corpus. `git diff --check` passed. No app
+tests/build rerun for documentation-only review. **Sampling is complete; see
+[Phase 4 handoff](phase4-vocabulary-corrections.md) for corrections and release gates.**
