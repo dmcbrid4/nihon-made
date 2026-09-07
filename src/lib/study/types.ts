@@ -8,6 +8,8 @@ export const conceptTypes = [
   "listening",
 ] as const;
 export type ConceptType = (typeof conceptTypes)[number];
+export const commonalityLevels = ["essential", "common", "additional"] as const;
+export type Commonality = (typeof commonalityLevels)[number];
 export const ratings = ["again", "hard", "good", "easy"] as const;
 export type Rating = (typeof ratings)[number];
 
@@ -26,6 +28,7 @@ export interface Concept {
   kanjiForm?: string;
   partOfSpeech?: string;
   classificationNote?: string;
+  commonality?: Commonality;
   example: string;
   exampleMeaning: string;
   note: string;

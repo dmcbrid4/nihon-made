@@ -79,6 +79,7 @@ export const studyConcepts = pgTable("study_concepts", {
         | "kanjiForm"
         | "partOfSpeech"
         | "classificationNote"
+        | "commonality"
       >
     >()
     .notNull(),

@@ -1,5 +1,6 @@
 import vocabularyData from "./data/jlpt-n5-n4-vocabulary.json";
 import type { CurriculumDraft } from "./curriculum-expansion";
+import type { Commonality } from "./types";
 
 type SourceVocabulary = {
   id: string;
@@ -14,14 +15,20 @@ type SourceVocabulary = {
   note: string;
   topic: string;
   classificationNote: string | null;
+  sources: string[];
 };
 
 const sourceItems = vocabularyData.items as SourceVocabulary[];
 
 export const vocabularyCorpus = sourceItems.map(
-  ({ kanjiForm, classificationNote, ...item }): CurriculumDraft => ({
+  ({ kanjiForm, classificationNote, sources, ...item }): CurriculumDraft => ({
     ...item,
     type: "vocabulary",
+    commonality: (sources.length >= 3
+      ? "essential"
+      : sources.length === 2
+        ? "common"
+        : "additional") as Commonality,
     ...(kanjiForm ? { kanjiForm } : {}),
     ...(classificationNote ? { classificationNote } : {}),
   }),

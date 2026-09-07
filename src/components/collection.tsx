@@ -1,25 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { concepts, typeLabels } from "@/lib/study/content";
-import { conceptTypes, type ConceptType } from "@/lib/study/types";
+import {
+  commonalityLevels,
+  conceptTypes,
+  type Commonality,
+  type ConceptType,
+} from "@/lib/study/types";
 import { useStudy } from "./study-provider";
 
 export function CollectionView() {
   const { state } = useStudy();
   const activeMode = state?.goal.studyMode ?? "N5";
   const [filter, setFilter] = useState<ConceptType | "all">("all");
+  const [commonalityFilter, setCommonalityFilter] = useState<
+    Commonality | "all"
+  >("all");
   const [search, setSearch] = useState("");
-  const visible = concepts.filter(
+  const visible = concepts
+    .filter(
     (item) =>
       (filter === "all" || item.type === filter) &&
       item.level === activeMode &&
+      (commonalityFilter === "all" ||
+        (item.type === "vocabulary" &&
+          item.commonality === commonalityFilter)) &&
       [item.expression, item.reading, item.meaning, item.topic]
         .join(" ")
         .toLowerCase()
         .includes(search.toLowerCase()),
-  );
+    )
+    .sort((a, b) => {
+      const rank = (item: (typeof concepts)[number]) =>
+        item.type !== "vocabulary"
+          ? 3
+          : commonalityLevels.indexOf(item.commonality ?? "additional");
+      return rank(a) - rank(b) || a.sequence - b.sequence;
+    });
   return (
     <>
       <div className="page-heading">
@@ -56,6 +75,33 @@ export function CollectionView() {
             </button>
           ))}
         </div>
+        <div
+          className="filter-tabs commonality-tabs"
+          role="group"
+          aria-label="Filter by commonality"
+        >
+          <button
+            aria-pressed={commonalityFilter === "all"}
+            className={commonalityFilter === "all" ? "selected" : ""}
+            onClick={() => setCommonalityFilter("all")}
+          >
+            All levels
+          </button>
+          {commonalityLevels.map((level) => (
+            <button
+              key={level}
+              aria-pressed={commonalityFilter === level}
+              className={commonalityFilter === level ? "selected" : ""}
+              onClick={() => setCommonalityFilter(level)}
+            >
+              {level === "essential"
+                ? "Essential"
+                : level === "common"
+                  ? "Common"
+                  : "Additional"}
+            </button>
+          ))}
+        </div>
         <label className="search-field">
           <Search size={16} />
           <input
@@ -68,11 +114,43 @@ export function CollectionView() {
         </label>
       </div>
       <div className="collection-list panel">
-        {visible.map((concept) => {
+        {visible.map((concept, index) => {
           const progress = state?.progress.find(
             (item) => item.conceptId === concept.id,
           );
+          const group =
+            concept.type === "vocabulary"
+              ? concept.commonality ?? "additional"
+              : "other";
+          const previous = visible[index - 1];
+          const previousGroup =
+            previous?.type === "vocabulary"
+              ? previous.commonality ?? "additional"
+              : "other";
           return (
+            <Fragment key={concept.id}>
+              {group !== previousGroup && (
+                <div className="collection-group-heading">
+                  <strong>
+                    {group === "essential"
+                      ? "Essential"
+                      : group === "common"
+                        ? "Common"
+                        : group === "additional"
+                          ? "Additional"
+                          : "Other study material"}
+                  </strong>
+                  <span>
+                    {group === "essential"
+                      ? "Foundational terms shared across the source lists."
+                      : group === "common"
+                        ? "Useful terms appearing across multiple source lists."
+                        : group === "additional"
+                          ? "Helpful terms for rounding out the curriculum."
+                          : "Kanji, grammar, reading, and listening practice."}
+                  </span>
+                </div>
+              )}
             <details className="collection-item" key={concept.id}>
               <summary>
                 <span className="collection-expression" lang="ja">
@@ -125,6 +203,7 @@ export function CollectionView() {
                 )}
               </div>
             </details>
+            </Fragment>
           );
         })}
         {!visible.length && (
@@ -135,7 +214,8 @@ export function CollectionView() {
             <button
               className="text-link"
               onClick={() => {
-                setFilter("all");
+              setFilter("all");
+              setCommonalityFilter("all");
                 setSearch("");
               }}
             >
