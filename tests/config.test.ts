@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getAppConfig, isOwner } from "../src/lib/server/config";
+import { canRequestAccess, getAppConfig, isOwner } from "../src/lib/server/config";
 
 const cloudEnv = {
   NODE_ENV: "development",
@@ -32,7 +32,7 @@ test("a single OWNER_EMAIL still works exactly as before (backward compatible)",
   assert.equal(config.mode, "database");
   if (config.mode !== "database") return;
   assert.deepEqual(config.ownerEmails, ["owner@example.com"]);
-  assert.equal(isOwner(owner, config.ownerEmails), true);
+  assert.equal(config.invitePassword, null);
 });
 
 test("OWNER_EMAILS adds a third and fourth approved email, case-insensitively and deduplicated", () => {
@@ -47,16 +47,35 @@ test("OWNER_EMAILS adds a third and fourth approved email, case-insensitively an
     "brother@example.com",
     "sister@example.com",
   ]);
-  assert.equal(isOwner({ ...owner, email: "brother@example.com" }, config.ownerEmails), true);
-  assert.equal(isOwner({ ...owner, email: "sister@example.com" }, config.ownerEmails), true);
-  assert.equal(isOwner({ ...owner, email: "stranger@example.com" }, config.ownerEmails), false);
 });
 
-test("isOwner rejects unconfirmed, anonymous, non-UUID, or missing users", () => {
-  const ownerEmails = ["owner@example.com"];
-  assert.equal(isOwner(null, ownerEmails), false);
-  assert.equal(isOwner({ ...owner, email_confirmed_at: undefined }, ownerEmails), false);
-  assert.equal(isOwner({ ...owner, is_anonymous: true }, ownerEmails), false);
-  assert.equal(isOwner({ ...owner, id: "not-a-uuid" }, ownerEmails), false);
-  assert.equal(isOwner({ ...owner, email: undefined }, ownerEmails), false);
+test("isOwner checks the session is a real, confirmed, non-anonymous account -- not a specific email", () => {
+  assert.equal(isOwner(owner), true);
+  assert.equal(isOwner({ ...owner, email: "literally.anyone@example.com" }), true);
+  assert.equal(isOwner(null), false);
+  assert.equal(isOwner({ ...owner, email_confirmed_at: undefined }), false);
+  assert.equal(isOwner({ ...owner, is_anonymous: true }), false);
+  assert.equal(isOwner({ ...owner, id: "not-a-uuid" }), false);
+  assert.equal(isOwner({ ...owner, email: undefined }), false);
+});
+
+test("canRequestAccess allows a pre-approved email with no invite password needed", () => {
+  const config = { ownerEmails: ["owner@example.com"], invitePassword: "Beefchili13!" };
+  assert.equal(canRequestAccess(config, "owner@example.com"), true);
+  assert.equal(canRequestAccess(config, "owner@example.com", "wrong"), true);
+});
+
+test("canRequestAccess allows any email with the correct invite password", () => {
+  const config = { ownerEmails: ["owner@example.com"], invitePassword: "Beefchili13!" };
+  assert.equal(canRequestAccess(config, "stranger@example.com", "Beefchili13!"), true);
+  assert.equal(canRequestAccess(config, "stranger@example.com", "wrong"), false);
+  assert.equal(canRequestAccess(config, "stranger@example.com"), false);
+  assert.equal(canRequestAccess(config, "stranger@example.com", ""), false);
+});
+
+test("canRequestAccess rejects everyone else when no invite password is configured", () => {
+  const config = { ownerEmails: ["owner@example.com"], invitePassword: null };
+  assert.equal(canRequestAccess(config, "owner@example.com"), true);
+  assert.equal(canRequestAccess(config, "stranger@example.com", "anything"), false);
+  assert.equal(canRequestAccess(config, "stranger@example.com", ""), false);
 });

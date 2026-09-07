@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     data: { user },
     error,
   } = await supabase.auth.signInWithPassword(input);
-  if (error || !isOwner(user, config.ownerEmails)) {
+  if (error || !isOwner(user)) {
     if (user) await supabase.auth.signOut({ scope: "local" });
     return NextResponse.json(
       { error: "That email address or password is not correct." },
