@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
 import { conceptById } from "@/lib/study/content";
 import {
@@ -15,7 +17,16 @@ import { ReviewCard } from "./review-card";
 
 export function StudySessionView() {
   const { state, now, dispatch, busy } = useStudy();
+  const router = useRouter();
+  const isKana = state?.goal.studyMode === "kana";
+  useEffect(() => {
+    // Kana has no daily SRS queue -- Today already sends Kana mode to
+    // /kana directly, but a stale bookmark/back-button could still land
+    // here, so redirect rather than show a broken vocabulary-shaped session.
+    if (isKana) router.replace("/kana");
+  }, [isKana, router]);
   if (!state) return <Loading />;
+  if (isKana) return <Loading />;
   const session = currentSession(state, now);
   if (!session) {
     const items = planSession(state, now);

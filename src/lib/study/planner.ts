@@ -8,9 +8,9 @@ export const minutesPerType = {
   grammar: 3,
   reading: 4,
   listening: 4,
-  // Kana never reaches planSession (its level is never state.goal.studyMode),
-  // but Concept.type is generically "kana"-able, so this key keeps the
-  // Record indexing in add() below type-safe.
+  // planSession returns [] outright for Kana mode (see below), so this key
+  // is never actually exercised -- it only keeps the Record indexing in
+  // add() below type-safe, since Concept.type is generically "kana"-able.
   kana: 1,
 };
 
@@ -28,6 +28,13 @@ export function currentSession(state: StudyState, now: Date) {
 }
 
 export function planSession(state: StudyState, now: Date): Concept[] {
+  // Kana has no daily SRS queue -- mastery only comes from Quiz mode
+  // (kana-quiz.ts), never from this generic scheduler. Guard explicitly:
+  // recordKanaQuizAnswer sets dueAt to "now" (no real scheduling meaning),
+  // which would otherwise make quizzed kana concepts look "due" here and
+  // leak into the generic ReviewCard UI, which doesn't know how to render
+  // a kanaDetails-only concept.
+  if (state.goal.studyMode === "kana") return [];
   const progress = new Map(
     state.progress.map((item) => [item.conceptId, item]),
   );

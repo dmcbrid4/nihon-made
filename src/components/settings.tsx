@@ -2,7 +2,12 @@
 
 import { useState, type FormEvent } from "react";
 import { Check, Download, Save, Upload } from "lucide-react";
-import { goalSchema, stateSchema, type StudyState } from "@/lib/study/types";
+import {
+  goalSchema,
+  stateSchema,
+  type StudyMode,
+  type StudyState,
+} from "@/lib/study/types";
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { STORAGE_KEY } from "@/lib/storage/browser";
@@ -86,13 +91,12 @@ function GoalForm({ state }: { state: StudyState }) {
           <select
             id="study-mode"
             value={studyMode}
-            onChange={(event) =>
-              setStudyMode(event.target.value as "N5" | "N4" | "tae-kim")
-            }
+            onChange={(event) => setStudyMode(event.target.value as StudyMode)}
           >
             <option value="N5">N5 foundations</option>
             <option value="N4">N4-only curriculum</option>
             <option value="tae-kim">Tae Kim course</option>
+            <option value="kana">Kana mode</option>
           </select>
         </div>
         <div>
@@ -105,8 +109,10 @@ function GoalForm({ state }: { state: StudyState }) {
       <p className="field-help">
         N5 mode uses foundation content only. N4 mode uses N4-only content.
         Tae Kim mode is a separate personal-use course mined from real
-        anime/drama dialogue, with its own audio and screenshots. All three
-        tracks keep separate queues and progress.
+        anime/drama dialogue, with its own audio and screenshots. Kana mode
+        replaces Today with the hiragana/katakana chart, study, and quiz
+        tools -- it has no daily queue of its own. All four tracks keep
+        separate progress.
       </p>
       <label className="field-label" htmlFor="time-zone">
         Your time zone

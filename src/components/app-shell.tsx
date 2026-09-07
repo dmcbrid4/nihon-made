@@ -9,15 +9,14 @@ import {
   ChevronRight,
   House,
   Settings2,
-  Type,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import type { StudyMode } from "@/lib/study/types";
 import { ThemeToggle } from "./theme-toggle";
 import { useStudy } from "./study-provider";
 
 const navigation = [
   { href: "/", label: "Today", icon: House },
-  { href: "/kana", label: "Kana", icon: Type },
   { href: "/collection", label: "Collection", icon: BookOpen },
   { href: "/progress", label: "Progress", icon: ChartNoAxesColumnIncreasing },
   { href: "/settings", label: "Settings", icon: Settings2 },
@@ -34,8 +33,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     busy,
   } = useStudy();
   if (pathname.startsWith("/guest")) return <>{children}</>;
-  const current =
-    navigation.find((item) => item.href === pathname)?.label ?? "Daily study";
+  const current = pathname.startsWith("/kana")
+    ? "Kana"
+    : (navigation.find((item) => item.href === pathname)?.label ?? "Daily study");
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -65,7 +65,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   type: "goal",
                   goal: {
                     ...state.goal,
-                    studyMode: event.target.value as "N5" | "N4" | "tae-kim",
+                    studyMode: event.target.value as StudyMode,
                   },
                 })
               }
@@ -73,6 +73,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <option value="N5">N5 mode</option>
               <option value="N4">N4 mode</option>
               <option value="tae-kim">Tae Kim mode</option>
+              <option value="kana">Kana mode</option>
             </select>
           </label>
         )}
@@ -80,8 +81,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           {navigation.map(({ href, label, icon: Icon }) => {
             const isActive =
               pathname === href ||
-              (href === "/" && pathname === "/study") ||
-              (href === "/kana" && pathname.startsWith("/kana"));
+              (href === "/" && (pathname === "/study" || pathname.startsWith("/kana")));
             return (
             <Link
               key={href}

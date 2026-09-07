@@ -23,6 +23,7 @@ import {
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { ProgressOverview } from "./progress-overview";
+import { KanaHome } from "./kana-home";
 
 const sections = [
   {
@@ -55,6 +56,9 @@ export function Dashboard() {
   const { state, now, busy, dispatch } = useStudy();
   const router = useRouter();
   if (!state) return <Loading />;
+  // Kana has no daily SRS queue -- it replaces Today entirely with its own
+  // chart/study/quiz home instead of the vocabulary session flow below.
+  if (state.goal.studyMode === "kana") return <KanaHome />;
   const session = currentSession(state, now);
   const items = session
     ? session.conceptIds.map((id) => conceptById.get(id)!).filter(Boolean)
