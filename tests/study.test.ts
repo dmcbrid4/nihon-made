@@ -49,6 +49,45 @@ test("a new session balances five subjects and never exceeds the time budget", (
   assert.ok(sessionMinutes(planSession(state, now)) <= 10);
 });
 
+test("newCardsPerDay scales the per-type new-card split proportionally", () => {
+  const state = initialState();
+  state.goal.dailyMinutes = 60; // headroom so the minutes budget never caps this
+  const countByType = (plan: ReturnType<typeof planSession>) =>
+    Object.fromEntries(
+      ["vocabulary", "kanji", "grammar", "reading", "listening"].map((type) => [
+        type,
+        plan.filter((item) => item.type === type).length,
+      ]),
+    );
+
+  state.goal.newCardsPerDay = 9; // default matches the old hardcoded split exactly
+  assert.deepEqual(countByType(planSession(state, now)), {
+    vocabulary: 4,
+    kanji: 2,
+    grammar: 1,
+    reading: 1,
+    listening: 1,
+  });
+
+  state.goal.newCardsPerDay = 5;
+  assert.deepEqual(countByType(planSession(state, now)), {
+    vocabulary: 2,
+    kanji: 1,
+    grammar: 1,
+    reading: 1,
+    listening: 1,
+  });
+
+  state.goal.newCardsPerDay = 25;
+  assert.deepEqual(countByType(planSession(state, now)), {
+    vocabulary: 11,
+    kanji: 6,
+    grammar: 3,
+    reading: 3,
+    listening: 3,
+  });
+});
+
 test("overdue concepts precede unseen material and future reviews stay out", () => {
   const state = initialState();
   state.goal.studyMode = "N4";

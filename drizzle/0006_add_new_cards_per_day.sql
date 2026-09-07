@@ -1,0 +1,1 @@
+ALTER TABLE "study_goals" ADD COLUMN "new_cards_per_day" integer DEFAULT 9 NOT NULL;

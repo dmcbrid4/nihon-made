@@ -16,6 +16,7 @@ export function initialState(timeZone = "America/New_York"): StudyState {
     goal: {
       targetDate: "2027-01-15",
       dailyMinutes: 25,
+      newCardsPerDay: 9,
       targetLevel: "N4",
       studyMode: "N5",
       timeZone,

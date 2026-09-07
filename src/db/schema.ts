@@ -59,6 +59,7 @@ export const studyGoals = pgTable("study_goals", {
   targetLevel: jlptLevel("target_level").notNull().default("N4"),
   studyMode: jlptLevel("study_mode").notNull().default("N5"),
   dailyMinutes: integer("daily_minutes").notNull().default(25),
+  newCardsPerDay: integer("new_cards_per_day").notNull().default(9),
   timeZone: text("time_zone").notNull().default("America/New_York"),
 });
 

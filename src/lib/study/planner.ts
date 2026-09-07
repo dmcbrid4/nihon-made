@@ -72,7 +72,7 @@ export function planSession(state: StudyState, now: Date): Concept[] {
   // Due reviews get priority. New material is deliberately capped for a short,
   // balanced starter session rather than filling the time budget with new cards.
   due.forEach(add);
-  const limits = { vocabulary: 4, kanji: 2, grammar: 1, reading: 1, listening: 1 };
+  const limits = scaledNewCardLimits(state.goal.newCardsPerDay);
   for (const type of ["vocabulary", "kanji", "grammar", "reading", "listening"] as const) {
     unseen
       .filter((item) => item.type === type)
@@ -80,6 +80,35 @@ export function planSession(state: StudyState, now: Date): Concept[] {
       .forEach(add);
   }
   return selected;
+}
+
+// The historical fixed daily new-card split (sums to 9) -- now used as the
+// ratio each type keeps as goal.newCardsPerDay scales the total up or down.
+const baseNewCardLimits = {
+  vocabulary: 4,
+  kanji: 2,
+  grammar: 1,
+  reading: 1,
+  listening: 1,
+} as const;
+const baseNewCardsTotal = Object.values(baseNewCardLimits).reduce(
+  (sum, value) => sum + value,
+  0,
+);
+
+function scaledNewCardLimits(
+  newCardsPerDay: number,
+): Record<keyof typeof baseNewCardLimits, number> {
+  const entries = Object.entries(baseNewCardLimits) as [
+    keyof typeof baseNewCardLimits,
+    number,
+  ][];
+  return Object.fromEntries(
+    entries.map(([type, base]) => [
+      type,
+      Math.max(1, Math.round((newCardsPerDay * base) / baseNewCardsTotal)),
+    ]),
+  ) as Record<keyof typeof baseNewCardLimits, number>;
 }
 
 export function sessionMinutes(items: Concept[]): number {

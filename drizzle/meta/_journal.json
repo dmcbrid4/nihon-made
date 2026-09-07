@@ -43,6 +43,13 @@
       "when": 1788797753820,
       "tag": "0005_add_kana_mode",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788806880474,
+      "tag": "0006_add_new_cards_per_day",
+      "breakpoints": true
     }
   ]
 }

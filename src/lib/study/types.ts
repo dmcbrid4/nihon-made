@@ -187,6 +187,11 @@ export const dateSchema = z
 export const goalSchema = z.object({
   targetDate: dateSchema,
   dailyMinutes: z.number().int().min(10).max(60),
+  // How many never-seen concepts a day's session pulls in, before the
+  // per-type split in planner.ts scales it proportionally across
+  // vocabulary/kanji/grammar/reading/listening. Kana mode ignores this --
+  // its Study/Quiz tools work by free selection, not a capped daily queue.
+  newCardsPerDay: z.number().int().min(5).max(25).default(9),
   targetLevel: z.literal("N4"),
   studyMode: z.enum(studyModes).default("N5"),
   timeZone: z

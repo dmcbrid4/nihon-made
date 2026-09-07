@@ -16,6 +16,9 @@ function GoalForm({ state }: { state: StudyState }) {
   const { dispatch, busy } = useStudy();
   const [targetDate, setTargetDate] = useState(state.goal.targetDate);
   const [dailyMinutes, setDailyMinutes] = useState(state.goal.dailyMinutes);
+  const [newCardsPerDay, setNewCardsPerDay] = useState(
+    state.goal.newCardsPerDay,
+  );
   const [studyMode, setStudyMode] = useState(state.goal.studyMode);
   const [timeZone, setTimeZone] = useState(state.goal.timeZone);
   const [message, setMessage] = useState("");
@@ -27,6 +30,7 @@ function GoalForm({ state }: { state: StudyState }) {
     const goal = goalSchema.safeParse({
       targetDate,
       dailyMinutes,
+      newCardsPerDay,
       timeZone,
       targetLevel: "N4",
       studyMode,
@@ -105,6 +109,20 @@ function GoalForm({ state }: { state: StudyState }) {
           </label>
           <input id="target-level" value="JLPT N4" readOnly />
         </div>
+        <div>
+          <label className="field-label" htmlFor="new-cards-per-day">
+            New cards per day: {newCardsPerDay}
+          </label>
+          <input
+            id="new-cards-per-day"
+            type="range"
+            min={5}
+            max={25}
+            step={1}
+            value={newCardsPerDay}
+            onChange={(event) => setNewCardsPerDay(Number(event.target.value))}
+          />
+        </div>
       </div>
       <p className="field-help">
         N5 mode uses foundation content only. N4 mode uses N4-only content.
@@ -112,7 +130,10 @@ function GoalForm({ state }: { state: StudyState }) {
         anime/drama dialogue, with its own audio and screenshots. Kana mode
         replaces Today with the hiragana/katakana chart, study, and quiz
         tools -- it has no daily queue of its own. All four tracks keep
-        separate progress.
+        separate progress. New cards per day scales how many never-seen
+        concepts a session pulls in, split proportionally across
+        vocabulary/kanji/grammar/reading/listening -- it does not apply to
+        Kana mode.
       </p>
       <label className="field-label" htmlFor="time-zone">
         Your time zone

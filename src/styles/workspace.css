@@ -45,6 +45,13 @@ select {
 input[readonly] {
   color: var(--muted);
 }
+input[type="range"] {
+  padding: 0;
+  border: none;
+  background: transparent;
+  accent-color: var(--green);
+  min-height: 24px;
+}
 .field-help {
   color: var(--muted);
   font-size: 10px;
