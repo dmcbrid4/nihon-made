@@ -126,6 +126,15 @@
       ],
       "report": "phase3-vocabulary-audit.md",
       "status": "reviewed; required and polish corrections applied in the Phase 2 completion pass (2026-09-06); see docs/vocabulary-quality-plan.md"
+    },
+    {
+      "chunk": 2,
+      "recordIds": [
+        "v-jlpt-n5-0415",
+        "v-jlpt-n4-0062"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "partial chunk: position 6 in each level inspected at ba4d863; corrections proposed, not applied; resume positions 7–10 in each level"
     }
   ]
 }

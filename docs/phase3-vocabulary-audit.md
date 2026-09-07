@@ -1,6 +1,9 @@
-# Phase 3 vocabulary audit — chunk 1
+# Phase 3 vocabulary audit
 
-Status: **10 / 100 sampled records inspected; corrections applied.**
+Status: **12 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunk 2 partial findings below await Phase 4. Resume position 7 in each level.
+
+## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
 required and polish corrections below were applied in the Phase 2 completion
 pass on 2026-09-06 (see `docs/vocabulary-quality-plan.md`), which also closed
@@ -186,3 +189,68 @@ None of this is a substitute for inspecting sample positions 6–100; it closes
 the mechanical gaps that let bad records pass unnoticed, so the remaining
 audit chunks are working against a corpus that fails closed instead of
 silently accepting substring mismatches and unvalidated readings.
+
+
+## Chunk 2 — partial: two records (2026-09-07)
+
+Inspected position 6 in each level from the fixed manifest against `ba4d863`.
+Read both complete records, including gloss/POS, example/translation, every
+ruby segment, target spans, priority, classification and provenance. This is
+an agent linguistic review, not native-speaker certification. Neither record
+is active: the mechanical gate correctly quarantines both. No corpus changes.
+
+### N5 `v-jlpt-n5-0415`: 所 / ところ — required correction
+
+- “Place” and 所→ところ are correct. The stored POS “adverb” alone is
+  misleading for a beginner location card: use “noun” as the primary teaching
+  label. JMdict entry `1343100`, sense 0, includes noun/adverb/suffix; do not
+  claim the dictionary excludes adverbial uses.
+- この場所に？ is a plausible conversational fragment, but demonstrates 場所
+  (ばしょ), not 所 (ところ). All existing sentence ruby is correct; target
+  mismatch is the defect. “Just right here?” supplies emphasis absent from
+  the Japanese. Imported attribution remains missing.
+- Original proposed replacement: ここは静かな所です。 / “This is a quiet place.”
+  Ruby: ここは + 静(しず) + かな + 所(ところ) + です。 Canonical sentence reading:
+  ここはしずかなところです。 This uses a beginner な-adjective and location noun.
+- Retain the common natural headword 所 and its stable ID; kana ところ is
+  also natural. No obscure alternate spelling is needed.
+
+### N4 `v-jlpt-n4-0062`: コンピュータ — required correction
+
+- Headword, reading, “computer,” and noun POS agree with JMdict `1053350`.
+  Both コンピュータ and コンピューター are common dictionary variants; do not
+  add the latter as a separate learning item solely for spelling variation.
+- 「コンピュータ」という言葉を練習しています。 is a metalinguistic placeholder,
+  not a useful demonstration of using a computer. Existing 言葉→ことば and
+  練習→れんしゅう are correct, but correct ruby does not rescue the example.
+- Original proposed replacement: 毎日コンピュータで仕事をします。 /
+  “I work on a computer every day.” Ruby: 毎日(まいにち) + コンピュータで +
+  仕事(しごと) + をします。 Reading: まいにちこんぴゅーたでしごとをします。
+- The kana-only headword correctly has no ruby; its generic “uncertain
+  segmentation” flag is unnecessary for this inspected word. This observation
+  does not certify any replacement sentence generated later.
+
+### Evidence, classification and follow-up
+
+Cross-checked the full local JMdict snapshot at
+`/private/tmp/nihon-made-corpus/jmdict/jmdict-examples-eng-3.6.2.json`, entries
+`1343100` and `1053350` (via [jmdict-simplified](https://github.com/scriptin/jmdict-simplified)).
+No external example text was copied. Proposed examples above are original
+editorial candidates and require verification after implementation.
+
+Both assigned levels are plausible curriculum placements. Each record claims
+high confidence from three sources explicitly sharing Waller lineage; this
+is not independent corroboration. Independent list agreement was not verified
+here. Phase 4 should qualify confidence as within-lineage agreement or lower
+it pending independent evidence. Dictionary commonness supports usefulness,
+not an exact frequency rank; the imported order remains editorially unverified.
+
+Result: two required example replacements; one primary POS adjustment; both
+stored word ruby representations and both existing sentence ruby sequences
+appear correct. These two quarantined records do not estimate the active
+corpus error rate. Next: positions 7–10 per level to finish chunk 2 (88 total
+sample records remain). Keep baseline IDs and sample order unchanged.
+
+Verification: checked reviewed IDs are unique, belong to the fixed sample and
+exist in the current catalog; 12 total (6 N5, 6 N4). `git diff --check` passed.
+No app tests/build rerun for this documentation-only audit.
