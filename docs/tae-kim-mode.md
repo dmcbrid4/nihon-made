@@ -15,16 +15,16 @@ personal, non-redistributed study -- this is exactly what the deck is for --
 but it is a different situation from the openly licensed N5/N4 vocabulary
 corpus (see [ATTRIBUTION.md](../ATTRIBUTION.md)), which is built to be
 shareable. Tae Kim mode is exempt from that licensing rigor specifically
-because it stays private to this user:
+because this is a single-user app:
 
-- Media files are **gitignored** (`public/tae-kim/media/`) and never
-  committed. Only the text-only mined dataset
-  (`src/lib/study/data/tae-kim-deck.json`, no media bytes) is in the repo.
-- Because the media is gitignored, it is **not present in any deployment**
-  built from the git repo (e.g. Vercel). Audio and screenshots only work
-  when running the app locally with the media regenerated on disk. If you
-  ever deploy this app somewhere reachable by others, keep it that way --
-  do not commit the media or upload it to a public bucket.
+- Media files (`public/tae-kim/media/`, ~113MB of clips and screenshots) are
+  committed alongside the text-only mined dataset
+  (`src/lib/study/data/tae-kim-deck.json`) so they're present in every
+  deployment, including Vercel.
+- This only stays acceptable while the GitHub repo is **private**. If the
+  repo is ever made public (or the app deployed somewhere reachable by
+  others), the media should go back to gitignored/local-only first -- do not
+  leave copyrighted clips in a public repo.
 - Guest mode (`/guest`) is unaffected: it uses its own small hardcoded
   sample list and never touches this data.
 

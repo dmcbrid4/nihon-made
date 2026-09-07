@@ -9,7 +9,3 @@ test-results/
 playwright-report/
 .DS_Store
 
-# Tae Kim/anime course media (audio + screenshots ripped from copyrighted
-# anime/drama episodes; personal use only, never redistributed). Regenerate
-# with: npm run mine:tae-kim -- /path/to/the.apkg
-public/tae-kim/media/
