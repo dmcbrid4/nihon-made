@@ -5,11 +5,13 @@
 > and approval-gating requirements. Phase 2 is reopened; see the
 > [current audit and correction requirements](phase3-vocabulary-audit.md).
 
-Phase 1 completed research and architecture on 2026-09-06. Phase 2 completed a
+Phase 1 completed research and architecture on 2026-09-06. Phase 2 produced a
 candidate implementation on `dev`: structured source/review metadata, stored
 word and sentence ruby, validation, a review queue, and retirement safeguards.
-It changed no production database or deployment. Phases 3–4 remain open; this
-is not a certification of the corpus.
+The first Phase 3 chunk found that sense reconciliation, provenance, reading
+validation, and approval gating still need work, so Phase 2 is reopened. It
+changed no production database or deployment. Phases 3–4 remain open; this is
+not a certification of the corpus.
 
 ## Baseline and reproducibility
 
@@ -240,15 +242,19 @@ answer behavior; furigana availability is intentional reading assistance.
 ## Implementation and review gates
 
 1. **Phase 1 — Astra, high: complete.** This audit and architecture handoff.
-2. **Phase 2 — Terra, high: complete candidate.** Source manifests and stable
-   IDs are recorded; strict validation, stored ruby, rendering, priority,
-   retirement compatibility, and reports are implemented. Nine malformed or
+2. **Phase 2 — Terra, high: candidate implementation, incomplete.** Source
+   manifests and stable IDs are recorded; strict validation, stored ruby,
+   rendering, priority, retirement compatibility, and reports exist. The
+   first audit found gaps in sense reconciliation, source attribution, word
+   reading validation, target matching, and approval gating. Nine malformed or
    duplicate records were retired, eight confirmed cards were corrected, and
    the candidate contains 736 N5 plus 707 N4-only records. The report records
    139 inherited fallback examples and 20 uncertain ruby alignments for review.
    Do not push or seed production automatically.
-3. **Phase 3 — Astra, high: pending.** Inspect a reproducible random 100 records
-   (50 per level, fixed recorded seed), plus targeted high-risk cases. Log
+3. **Phase 3 — Astra, high: in progress (10/100).** Inspect a reproducible
+   random 100 records (50 per level, fixed recorded seed), plus targeted
+   high-risk cases. The first ten are documented in
+   `docs/phase3-vocabulary-audit.md`; nine subsequent chunks remain. Log
    individual judgments for meanings, natural Japanese/English, target sense,
    reading/ruby, grammar level, and provenance. Identify systematic correction
    rules. This review is not interchangeable with structural validation.
