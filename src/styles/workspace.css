@@ -432,7 +432,7 @@ input[readonly] {
 .guest-study-view { width: min(100%, 530px); margin: 0 auto; }
 .guest-flashcard { margin-top: 28px; padding: 31px; border-top: 3px solid var(--green); }
 .guest-flashcard-word { padding: 62px 0 46px; text-align: center; }
-.guest-flashcard-word p { color: var(--green); font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 76px; line-height: 1; }
+.guest-flashcard-word p { color: var(--green); font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(28px, 9vw, 64px); line-height: 1.3; overflow-wrap: anywhere; }
 .guest-flashcard-word span { display: block; margin-top: 16px; color: var(--muted); font-size: 12px; }
 .guest-study-note { margin-top: 14px; text-align: center; color: var(--muted); font-size: 10px; }
 .guest-reset { margin: 10px auto 0; }
