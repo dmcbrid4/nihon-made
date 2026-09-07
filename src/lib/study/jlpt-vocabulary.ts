@@ -1,40 +1,44 @@
 import vocabularyData from "./data/jlpt-n5-n4-vocabulary.json";
 import type { CurriculumDraft } from "./curriculum-expansion";
 import type { Commonality } from "./types";
+import {
+  validateVocabularyDataset,
+  type VocabularyDataItem,
+} from "./vocabulary-data";
 
-type SourceVocabulary = {
-  id: string;
-  expression: string;
-  kanjiForm: string | null;
-  reading: string;
-  meaning: string;
-  level: "N5" | "N4";
-  partOfSpeech: string;
-  example: string;
-  exampleMeaning: string;
-  note: string;
-  topic: string;
-  classificationNote: string | null;
-  sources: string[];
-};
+const validation = validateVocabularyDataset(vocabularyData);
+if (validation.issues.length)
+  throw new Error(
+    `Invalid vocabulary corpus:\n${validation.issues.join("\n")}`,
+  );
+const sourceItems: VocabularyDataItem[] = validation.data.items;
 
-const sourceItems = vocabularyData.items as SourceVocabulary[];
+function curriculumBand(item: VocabularyDataItem): Commonality {
+  if (item.vocabulary.priority.rank <= 100) return "essential";
+  const commonThreshold = item.level === "N5" ? 800 : 1_800;
+  return item.vocabulary.priority.rank <= commonThreshold
+    ? "common"
+    : "additional";
+}
 
 export const vocabularyCorpus = sourceItems.map(
   ({ kanjiForm, classificationNote, sources, ...item }): CurriculumDraft => ({
     ...item,
-    type: "vocabulary",
-    commonality: (sources.length >= 3
-      ? "essential"
-      : sources.length === 2
-        ? "common"
-        : "additional") as Commonality,
+    commonality: curriculumBand({
+      ...item,
+      kanjiForm,
+      classificationNote,
+      sources,
+    }),
     ...(kanjiForm ? { kanjiForm } : {}),
     ...(classificationNote ? { classificationNote } : {}),
   }),
 );
 
-export const vocabularyCorpusCounts = vocabularyData.counts;
+export const vocabularyCorpusCounts = validation.data.counts;
+export const retiredVocabulary = new Map(
+  validation.data.retired.map((item) => [item.id, item.reason]),
+);
 
 export const vocabularySource =
-  "OpenJLPT, Jonathan Waller JLPT Resources, Open Anki JLPT Decks, and JMdict/Tatoeba (CC BY-SA 4.0; see ATTRIBUTION.md).";
+  "OpenJLPT, Jonathan Waller JLPT Resources, Open Anki JLPT Decks, and JMdict/Tatoeba; record-level provenance is stored with each item (see ATTRIBUTION.md).";

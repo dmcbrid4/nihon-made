@@ -10,6 +10,7 @@ import {
   type ConceptProgress,
   type Rating,
 } from "@/lib/study/types";
+import { FuriganaText } from "./furigana";
 
 export function ReviewCard({
   concept,
@@ -79,7 +80,10 @@ export function ReviewCard({
             lang="ja"
             className={concept.type === "kanji" ? "kanji-expression" : ""}
           >
-            {concept.expression}
+            <FuriganaText
+              fallback={concept.expression}
+              segments={concept.vocabulary?.expressionFurigana}
+            />
           </h1>
           {passage && (
             <>
@@ -108,7 +112,12 @@ export function ReviewCard({
             ) : (
               <div className="example">
                 <span className="eyebrow">IN CONTEXT</span>
-                <p lang="ja">{concept.example}</p>
+                <p lang="ja">
+                  <FuriganaText
+                    fallback={concept.example}
+                    segments={concept.vocabulary?.exampleFurigana}
+                  />
+                </p>
                 <p className="example-translation">{concept.exampleMeaning}</p>
               </div>
             )}

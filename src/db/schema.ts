@@ -80,6 +80,7 @@ export const studyConcepts = pgTable("study_concepts", {
         | "partOfSpeech"
         | "classificationNote"
         | "commonality"
+        | "vocabulary"
       >
     >()
     .notNull(),

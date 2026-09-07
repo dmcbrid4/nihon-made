@@ -13,6 +13,46 @@ export type Commonality = (typeof commonalityLevels)[number];
 export const ratings = ["again", "hard", "good", "easy"] as const;
 export type Rating = (typeof ratings)[number];
 
+export type RubySegment = {
+  text: string;
+  reading: string | null;
+};
+
+export type VocabularyDetails = {
+  /** Reading aids for the vocabulary expression in this lexical sense. */
+  expressionFurigana: RubySegment[];
+  /** Reading aids for the Japanese example, stored rather than guessed in the UI. */
+  exampleFurigana: RubySegment[];
+  /** Complete kana reading of the example, used to validate its ruby segments. */
+  exampleReading: string;
+  secondaryMeanings: string[];
+  itemKind: "word" | "expression" | "phrase";
+  linkedKanji: string[];
+  priority: { rank: number; reason: string };
+  classification: {
+    confidence: "high" | "medium" | "low";
+    evidence: { sourceId: string; lineage: string; level: "N5" | "N4" }[];
+    reason: string;
+  };
+  provenance: {
+    lexicalSourceIds: string[];
+    dictionarySourceId: "jmdict" | null;
+    exampleKind: "imported" | "editorial" | "fallback";
+  };
+  targetSpans: {
+    start: number;
+    end: number;
+    surface: string;
+    match: "exact" | "inflected";
+  }[];
+  review: {
+    lexical: "pending" | "reviewed";
+    example: "pending" | "reviewed";
+    furigana: "automated" | "reviewed" | "uncertain";
+    notes: string[];
+  };
+};
+
 export interface Concept {
   id: string;
   type: ConceptType;
@@ -29,6 +69,7 @@ export interface Concept {
   partOfSpeech?: string;
   classificationNote?: string;
   commonality?: Commonality;
+  vocabulary?: VocabularyDetails;
   example: string;
   exampleMeaning: string;
   note: string;
@@ -112,6 +153,10 @@ export type StudyState = z.infer<typeof stateSchema>;
 
 export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("start"), id: z.uuid() }),
+  z.object({
+    type: z.literal("completeRetired"),
+    sessionId: z.uuid(),
+  }),
   z.object({
     type: z.literal("review"),
     id: z.uuid(),

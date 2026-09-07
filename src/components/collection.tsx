@@ -10,6 +10,7 @@ import {
   type ConceptType,
 } from "@/lib/study/types";
 import { useStudy } from "./study-provider";
+import { FuriganaText } from "./furigana";
 
 export function CollectionView() {
   const { state } = useStudy();
@@ -21,16 +22,16 @@ export function CollectionView() {
   const [search, setSearch] = useState("");
   const visible = concepts
     .filter(
-    (item) =>
-      (filter === "all" || item.type === filter) &&
-      item.level === activeMode &&
-      (commonalityFilter === "all" ||
-        (item.type === "vocabulary" &&
-          item.commonality === commonalityFilter)) &&
-      [item.expression, item.reading, item.meaning, item.topic]
-        .join(" ")
-        .toLowerCase()
-        .includes(search.toLowerCase()),
+      (item) =>
+        (filter === "all" || item.type === filter) &&
+        item.level === activeMode &&
+        (commonalityFilter === "all" ||
+          (item.type === "vocabulary" &&
+            item.commonality === commonalityFilter)) &&
+        [item.expression, item.reading, item.meaning, item.topic]
+          .join(" ")
+          .toLowerCase()
+          .includes(search.toLowerCase()),
     )
     .sort((a, b) => {
       const rank = (item: (typeof concepts)[number]) =>
@@ -120,12 +121,12 @@ export function CollectionView() {
           );
           const group =
             concept.type === "vocabulary"
-              ? concept.commonality ?? "additional"
+              ? (concept.commonality ?? "additional")
               : "other";
           const previous = visible[index - 1];
           const previousGroup =
             previous?.type === "vocabulary"
-              ? previous.commonality ?? "additional"
+              ? (previous.commonality ?? "additional")
               : "other";
           return (
             <Fragment key={concept.id}>
@@ -133,76 +134,88 @@ export function CollectionView() {
                 <div className="collection-group-heading">
                   <strong>
                     {group === "essential"
-                      ? "Essential"
+                      ? "Foundation"
                       : group === "common"
-                        ? "Common"
+                        ? "Standard sequence"
                         : group === "additional"
-                          ? "Additional"
+                          ? "Later sequence"
                           : "Other study material"}
                   </strong>
                   <span>
                     {group === "essential"
-                      ? "Foundational terms shared across the source lists."
+                      ? "High-value beginner vocabulary selected for the first part of the curriculum."
                       : group === "common"
-                        ? "Useful terms appearing across multiple source lists."
+                        ? "Vocabulary ordered after the foundation using curriculum priority and dictionary commonness as a supporting signal."
                         : group === "additional"
-                          ? "Helpful terms for rounding out the curriculum."
+                          ? "Vocabulary retained for coverage and introduced after the higher-priority sequence."
                           : "Kanji, grammar, reading, and listening practice."}
                   </span>
                 </div>
               )}
-            <details className="collection-item" key={concept.id}>
-              <summary>
-                <span className="collection-expression" lang="ja">
-                  {concept.expression}
-                </span>
-                <span className="collection-meaning">
-                  {concept.meaning}
-                  <span>
-                    {typeLabels[concept.type]} · {concept.level} ·{" "}
-                    {concept.topic} · difficulty {concept.difficulty}/5
+              <details className="collection-item" key={concept.id}>
+                <summary>
+                  <span className="collection-expression" lang="ja">
+                    <FuriganaText
+                      fallback={concept.expression}
+                      segments={concept.vocabulary?.expressionFurigana}
+                    />
                   </span>
-                </span>
-                <span
-                  className={`concept-status status-${progress?.status ?? "unseen"}`}
-                >
-                  {progress?.status ?? "unseen"}
-                </span>
-                <ChevronDown size={16} />
-              </summary>
-              <div className="collection-detail">
-                <p className="answer-reading" lang="ja">
-                  {concept.reading}
-                </p>
-                {concept.type === "vocabulary" && concept.partOfSpeech && (
-                  <p className="field-help">
-                    {concept.kanjiForm ? `Kanji form: ${concept.kanjiForm} · ` : ""}
-                    Part of speech: {concept.partOfSpeech}
+                  <span className="collection-meaning">
+                    {concept.meaning}
+                    <span>
+                      {typeLabels[concept.type]} · {concept.level} ·{" "}
+                      {concept.topic} · difficulty {concept.difficulty}/5
+                    </span>
+                  </span>
+                  <span
+                    className={`concept-status status-${progress?.status ?? "unseen"}`}
+                  >
+                    {progress?.status ?? "unseen"}
+                  </span>
+                  <ChevronDown size={16} />
+                </summary>
+                <div className="collection-detail">
+                  <p className="answer-reading" lang="ja">
+                    {concept.reading}
                   </p>
-                )}
-                <p lang="ja">{concept.example}</p>
-                <p className="muted">{concept.exampleMeaning}</p>
-                <p className="concept-note">{concept.note}</p>
-                <p className="field-help">
-                  {concept.curriculumUnit} · Source: {concept.source}
-                </p>
-                {concept.classificationNote && (
-                  <p className="field-help">Level note: {concept.classificationNote}</p>
-                )}
-                {progress && (
-                  <p className="field-help">
-                    Reviewed {progress.reviewCount}{" "}
-                    {progress.reviewCount === 1 ? "time" : "times"}. Next due{" "}
-                    {new Date(progress.dueAt).toLocaleDateString("en-US", {
-                      timeZone: state?.goal.timeZone,
-                      month: "short",
-                      day: "numeric",
-                    })}
-                    .
+                  {concept.type === "vocabulary" && concept.partOfSpeech && (
+                    <p className="field-help">
+                      {concept.kanjiForm
+                        ? `Kanji form: ${concept.kanjiForm} · `
+                        : ""}
+                      Part of speech: {concept.partOfSpeech}
+                    </p>
+                  )}
+                  <p lang="ja">
+                    <FuriganaText
+                      fallback={concept.example}
+                      segments={concept.vocabulary?.exampleFurigana}
+                    />
                   </p>
-                )}
-              </div>
-            </details>
+                  <p className="muted">{concept.exampleMeaning}</p>
+                  <p className="concept-note">{concept.note}</p>
+                  <p className="field-help">
+                    {concept.curriculumUnit} · Source: {concept.source}
+                  </p>
+                  {concept.classificationNote && (
+                    <p className="field-help">
+                      Level note: {concept.classificationNote}
+                    </p>
+                  )}
+                  {progress && (
+                    <p className="field-help">
+                      Reviewed {progress.reviewCount}{" "}
+                      {progress.reviewCount === 1 ? "time" : "times"}. Next due{" "}
+                      {new Date(progress.dueAt).toLocaleDateString("en-US", {
+                        timeZone: state?.goal.timeZone,
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      .
+                    </p>
+                  )}
+                </div>
+              </details>
             </Fragment>
           );
         })}
@@ -214,8 +227,8 @@ export function CollectionView() {
             <button
               className="text-link"
               onClick={() => {
-              setFilter("all");
-              setCommonalityFilter("all");
+                setFilter("all");
+                setCommonalityFilter("all");
                 setSearch("");
               }}
             >

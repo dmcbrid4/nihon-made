@@ -86,3 +86,17 @@
   max-width: 320px;
   margin: 25px auto;
 }
+
+.furigana-text ruby {
+  ruby-position: over;
+}
+.furigana-text rt {
+  color: var(--muted);
+  font-size: 0.52em;
+  font-weight: 500;
+  letter-spacing: 0;
+  user-select: none;
+}
+.furigana-hidden rt {
+  visibility: hidden;
+}

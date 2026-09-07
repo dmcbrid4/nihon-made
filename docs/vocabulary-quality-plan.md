@@ -1,8 +1,10 @@
 # Vocabulary quality: audit and implementation plan
 
-Phase 1 completed: research and architecture only, 2026-09-06, on `dev`.
-No vocabulary records, application code, database schema, or production data
-were changed. Phases 2–4 remain open. This is not a certification of the corpus.
+Phase 1 completed research and architecture on 2026-09-06. Phase 2 completed a
+candidate implementation on `dev`: structured source/review metadata, stored
+word and sentence ruby, validation, a review queue, and retirement safeguards.
+It changed no production database or deployment. Phases 3–4 remain open; this
+is not a certification of the corpus.
 
 ## Baseline and reproducibility
 
@@ -10,20 +12,20 @@ Audited repository baseline: `9b303c3`. The active vocabulary source is
 `src/lib/study/data/jlpt-n5-n4-vocabulary.json`, SHA-256:
 `72c8ece09094bfc20829f6427ad94c322bdbbb0cf119262b769ef3bb987457ba`.
 
-| Baseline measurement | Count |
-| --- | ---: |
-| N5 records | 742 |
-| Additional N4 records | 710 |
+| Baseline measurement                                       | Count |
+| ---------------------------------------------------------- | ----: |
+| N5 records                                                 |   742 |
+| Additional N4 records                                      |   710 |
 | Total distinct expression + reading pairs, NFKC-normalized | 1,452 |
-| Exact duplicate pairs | 0 |
-| Placeholder examples (`exampleFallback`) | 149 |
-| Repeated Japanese example groups | 82 |
-| Repeated examples beyond the first occurrence | 92 |
-| Examples shorter than eight Unicode code points | 656 |
-| Readings containing kanji | 1 |
-| Readings containing whitespace/annotations | 12 |
-| Records listing only one inclusion source | 163 |
-| Records with structured word/sentence furigana | 0 |
+| Exact duplicate pairs                                      |     0 |
+| Placeholder examples (`exampleFallback`)                   |   149 |
+| Repeated Japanese example groups                           |    82 |
+| Repeated examples beyond the first occurrence              |    92 |
+| Examples shorter than eight Unicode code points            |   656 |
+| Readings containing kanji                                  |     1 |
+| Readings containing whitespace/annotations                 |    12 |
+| Records listing only one inclusion source                  |   163 |
+| Records with structured word/sentence furigana             |     0 |
 
 Short or shared examples are review flags, not proof of bad Japanese. Exact
 pair uniqueness does not establish semantic uniqueness: spelling variants,
@@ -32,17 +34,17 @@ semantically distinct, suitable teaching items is therefore not yet known.
 
 ## Existing architecture and origin
 
-| File or area | Role and finding |
-| --- | --- |
-| `scripts/build-jlpt-vocabulary.py` | Imports OpenJLPT, Waller, and Open Anki; enriches from JMdict/example JSON; generates the active JSON. |
-| `src/lib/study/jlpt-vocabulary.ts` | Converts JSON into curriculum drafts using a type assertion. Discards per-record source arrays and assigns commonality from source count. |
-| `src/lib/study/content.ts` | Combines active vocabulary with other content. Legacy starter/expanded vocabulary supplies IDs where expression and reading match. Assigns curriculum sequence. |
-| `src/lib/study/curriculum-expansion.ts` | Existing draft types/content; retain the integration rather than creating another vocabulary system. |
-| `src/lib/study/types.ts` | Shared Concept, progress, review, session, and goal types. No structured furigana. |
-| `src/db/schema.ts`, `src/db/seed-content.ts` | Concept content uses JSONB; vocabulary table supplies related POS. Seed upserts content and preserves retired rows referenced by history. |
-| `src/lib/study/planner.ts`, `state.ts` | Mode-specific due selection and new-card sequence; review actions require known active concept IDs. |
-| `src/components/` review, collection, session components | Vocabulary and examples render as plain text; a separate reading does not provide furigana. |
-| Existing tests | Cover content presence/counts and study behavior, but do not establish lexical sense, sentence quality, or ruby correctness. |
+| File or area                                             | Role and finding                                                                                                                                                |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scripts/build-jlpt-vocabulary.py`                       | Imports OpenJLPT, Waller, and Open Anki; enriches from JMdict/example JSON; generates the active JSON.                                                          |
+| `src/lib/study/jlpt-vocabulary.ts`                       | Converts JSON into curriculum drafts using a type assertion. Discards per-record source arrays and assigns commonality from source count.                       |
+| `src/lib/study/content.ts`                               | Combines active vocabulary with other content. Legacy starter/expanded vocabulary supplies IDs where expression and reading match. Assigns curriculum sequence. |
+| `src/lib/study/curriculum-expansion.ts`                  | Existing draft types/content; retain the integration rather than creating another vocabulary system.                                                            |
+| `src/lib/study/types.ts`                                 | Shared Concept, progress, review, session, and goal types. No structured furigana.                                                                              |
+| `src/db/schema.ts`, `src/db/seed-content.ts`             | Concept content uses JSONB; vocabulary table supplies related POS. Seed upserts content and preserves retired rows referenced by history.                       |
+| `src/lib/study/planner.ts`, `state.ts`                   | Mode-specific due selection and new-card sequence; review actions require known active concept IDs.                                                             |
+| `src/components/` review, collection, session components | Vocabulary and examples render as plain text; a separate reading does not provide furigana.                                                                     |
+| Existing tests                                           | Cover content presence/counts and study behavior, but do not establish lexical sense, sentence quality, or ruby correctness.                                    |
 
 Meanings, readings, and level assignments are principally imported, with
 heuristic merging and POS inference. Most examples are imported; 149 are
@@ -69,17 +71,17 @@ Confirmed generator problems:
 IDs below have prefix `v-jlpt-`. Proposed replacements are editorial candidates,
 not changes already applied or externally certified translations.
 
-| ID | Current problem | Required correction |
-| --- | --- | --- |
-| `n4-0003` | あかちゃん, “infant”; わたち、あかちゃん。 / “I'm baby.” | Prefer 赤ちゃん, あかちゃん, “baby; infant”; candidate 赤ちゃんが寝ています。 / “The baby is sleeping.” |
-| `n5-0082` | せっけん means “economy,” but its sentence concerns washing hands with soap. | Select the soap sense, e.g. natural 石けん; preserve the proper reading and review the existing sentence. |
-| `n5-0017` | いす / chair paired with 私は先払いする。 / “I pay the money in advance.” | Replace the example; a substring inside 払いする does not demonstrate 椅子. |
-| `n5-0043` | かける / call by phone paired with 出かけるの？ | Match the intended lexical sense, not a substring of 出かける. |
-| `n5-0090` | それ / that paired with 話がそれた。 | Replace example: inflected 逸れる is a different word. |
-| `n5-0055` | グラム / gram paired with a sentence about パングラム. | Use a quantity/weight example. |
-| `n4-0690` | いただく has kanji 頂く in its reading field, noun POS, and overlaps another いただく record. | Resolve against `n4-0014`, correct spelling/reading/POS, explicitly retire any duplicate. |
-| `n4-0070` | しかる has “a particular” but Godan verb POS; 叱る also exists separately. | Resolve the homograph/sense before teaching or merging it. |
-| `n4-0706` | 回る、回す combines different verbs and is labeled noun. | Resolve individual lexemes against existing records; do not keep a combined noun card. |
+| ID        | Current problem                                                                               | Required correction                                                                                       |
+| --------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `n4-0003` | あかちゃん, “infant”; わたち、あかちゃん。 / “I'm baby.”                                      | Prefer 赤ちゃん, あかちゃん, “baby; infant”; candidate 赤ちゃんが寝ています。 / “The baby is sleeping.”   |
+| `n5-0082` | せっけん means “economy,” but its sentence concerns washing hands with soap.                  | Select the soap sense, e.g. natural 石けん; preserve the proper reading and review the existing sentence. |
+| `n5-0017` | いす / chair paired with 私は先払いする。 / “I pay the money in advance.”                     | Replace the example; a substring inside 払いする does not demonstrate 椅子.                               |
+| `n5-0043` | かける / call by phone paired with 出かけるの？                                               | Match the intended lexical sense, not a substring of 出かける.                                            |
+| `n5-0090` | それ / that paired with 話がそれた。                                                          | Replace example: inflected 逸れる is a different word.                                                    |
+| `n5-0055` | グラム / gram paired with a sentence about パングラム.                                        | Use a quantity/weight example.                                                                            |
+| `n4-0690` | いただく has kanji 頂く in its reading field, noun POS, and overlaps another いただく record. | Resolve against `n4-0014`, correct spelling/reading/POS, explicitly retire any duplicate.                 |
+| `n4-0070` | しかる has “a particular” but Godan verb POS; 叱る also exists separately.                    | Resolve the homograph/sense before teaching or merging it.                                                |
+| `n4-0706` | 回る、回す combines different verbs and is labeled noun.                                      | Resolve individual lexemes against existing records; do not keep a combined noun card.                    |
 
 Other review targets: annotated readings such as けっこん (する), alternate
 number readings placed in one reading field, historical cassette-radio
@@ -93,17 +95,17 @@ post-2010 vocabulary specifications. All item levels remain informed community
 classifications; official proficiency descriptions provide alignment, not a
 vocabulary membership list.
 
-| Source researched | Decision and redistribution requirements |
-| --- | --- |
-| [JMdict / EDRDG](https://www.edrdg.org/edrdg/licence.html), via [jmdict-simplified](https://github.com/scriptin/jmdict-simplified) | Primary lexical authority for spellings, readings, POS, and selected senses. Derived data is CC BY-SA 4.0; retain attribution, licence, changes, and source revision. Use the full dictionary, not only common entries. |
-| [Waller/Tanos sharing terms](https://www.tanos.co.uk/jlpt/sharing/) | Community coverage baseline. Site grants CC BY for non-sale material but does not specify a version on that page. Existing attribution's claim of BY 4.0 is unsupported and must be corrected during implementation. Do not import paid material. |
-| [OpenJLPT notice](https://github.com/evanclan/OpenJLPT/blob/main/NOTICE.md) | CC BY-SA 4.0 derived material; useful crosswalk/candidate input. Its level lineage includes Waller, so agreement is not independent confirmation. Do not trust examples unreviewed. |
-| [Open Anki JLPT decks](https://github.com/jamsinclair/open-anki-jlpt-decks) | Repository MIT licence is insufficient to describe every upstream data right. Acknowledged deck ancestry also reaches Tanos. Preserve upstream attribution; do not count it as another independent classification vote. |
-| [Tatoeba terms](https://tatoeba.org/en/terms_of_use) | Optional example candidates. Default text licence is CC BY 2.0 FR; preserve sentence-specific licence, Japanese and English IDs, attribution and links, including adaptations. Audio is separate. Where metadata cannot be recovered, replace the example instead of assuming compliance. |
-| [Tanaka Corpus](https://www.edrdg.org/wiki/Tanaka_Corpus.html) | Candidate examples only. Its own guidance cautions about naturalness and representativeness. Corpus membership does not establish beginner suitability. |
-| [JmdictFurigana](https://github.com/Doublevil/JmdictFurigana) | Preferred exact expression + reading segmentation candidates. Output data follows JMdict's CC BY-SA licence; MIT applies to software. Lookup results still need validation and ambiguity review. |
-| [fugashi](https://github.com/polm/fugashi), [UniDic-lite](https://github.com/polm/unidic-lite) | Offline sentence-analysis candidates only. Preserve tool/dictionary licences separately; UniDic-lite documents BSD dictionary data and separate wrapper licensing. Tokenizer readings require review. |
-| [JLPT Sensei N5](https://jlptsensei.com/jlpt-n5-vocabulary-list/) and [N4](https://jlptsensei.com/jlpt-n4-vocabulary-list/) | Inspected as another coverage reference; no approved redistribution basis or proven independent list lineage established. Do not copy its definitions/examples into the repository. |
+| Source researched                                                                                                                  | Decision and redistribution requirements                                                                                                                                                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [JMdict / EDRDG](https://www.edrdg.org/edrdg/licence.html), via [jmdict-simplified](https://github.com/scriptin/jmdict-simplified) | Primary lexical authority for spellings, readings, POS, and selected senses. Derived data is CC BY-SA 4.0; retain attribution, licence, changes, and source revision. Use the full dictionary, not only common entries.                                                                   |
+| [Waller/Tanos sharing terms](https://www.tanos.co.uk/jlpt/sharing/)                                                                | Community coverage baseline. Site grants CC BY for non-sale material but does not specify a version on that page. Existing attribution's claim of BY 4.0 is unsupported and must be corrected during implementation. Do not import paid material.                                         |
+| [OpenJLPT notice](https://github.com/evanclan/OpenJLPT/blob/main/NOTICE.md)                                                        | CC BY-SA 4.0 derived material; useful crosswalk/candidate input. Its level lineage includes Waller, so agreement is not independent confirmation. Do not trust examples unreviewed.                                                                                                       |
+| [Open Anki JLPT decks](https://github.com/jamsinclair/open-anki-jlpt-decks)                                                        | Repository MIT licence is insufficient to describe every upstream data right. Acknowledged deck ancestry also reaches Tanos. Preserve upstream attribution; do not count it as another independent classification vote.                                                                   |
+| [Tatoeba terms](https://tatoeba.org/en/terms_of_use)                                                                               | Optional example candidates. Default text licence is CC BY 2.0 FR; preserve sentence-specific licence, Japanese and English IDs, attribution and links, including adaptations. Audio is separate. Where metadata cannot be recovered, replace the example instead of assuming compliance. |
+| [Tanaka Corpus](https://www.edrdg.org/wiki/Tanaka_Corpus.html)                                                                     | Candidate examples only. Its own guidance cautions about naturalness and representativeness. Corpus membership does not establish beginner suitability.                                                                                                                                   |
+| [JmdictFurigana](https://github.com/Doublevil/JmdictFurigana)                                                                      | Preferred exact expression + reading segmentation candidates. Output data follows JMdict's CC BY-SA licence; MIT applies to software. Lookup results still need validation and ambiguity review.                                                                                          |
+| [fugashi](https://github.com/polm/fugashi), [UniDic-lite](https://github.com/polm/unidic-lite)                                     | Offline sentence-analysis candidates only. Preserve tool/dictionary licences separately; UniDic-lite documents BSD dictionary data and separate wrapper licensing. Tokenizer readings require review.                                                                                     |
+| [JLPT Sensei N5](https://jlptsensei.com/jlpt-n5-vocabulary-list/) and [N4](https://jlptsensei.com/jlpt-n4-vocabulary-list/)        | Inspected as another coverage reference; no approved redistribution basis or proven independent list lineage established. Do not copy its definitions/examples into the repository.                                                                                                       |
 
 No new source data was incorporated in Phase 1. Existing aggregate attribution
 does not prove sentence-level attribution is sufficient. Phase 2 must repair
@@ -174,13 +176,13 @@ this work. If implementation finds a real schema need, document it explicitly.
 Build one reusable React component that renders semantic `ruby`/`rt` from
 stored segments, never injected HTML or browser-side reading guesses.
 
-| Case | Stored segments (text → ruby reading) |
-| --- | --- |
-| Simple kanji | 水 → みず |
-| Okurigana | 食 → た; べる → null |
-| Compound | 図書館 → としょかん |
-| Irregular compound | 今日 → きょう |
-| Sentence | 赤 → あか; ちゃんが → null; 寝 → ね; ています。 → null |
+| Case               | Stored segments (text → ruby reading)                  |
+| ------------------ | ------------------------------------------------------ |
+| Simple kanji       | 水 → みず                                              |
+| Okurigana          | 食 → た; べる → null                                   |
+| Compound           | 図書館 → としょかん                                    |
+| Irregular compound | 今日 → きょう                                          |
+| Sentence           | 赤 → あか; ちゃんが → null; 寝 → ね; ています。 → null |
 
 The sentence example reconstructs 赤ちゃんが寝ています。 The word's canonical
 reading remains separate from its ruby segments. Compound-level readings are
@@ -233,11 +235,12 @@ answer behavior; furigana availability is intentional reading assistance.
 ## Implementation and review gates
 
 1. **Phase 1 — Astra, high: complete.** This audit and architecture handoff.
-2. **Phase 2 — Terra, high: pending.** Work in focused local `dev` commits:
-   pin source manifests and baseline IDs; implement strict schemas and
-   sense-aware normalization; reconcile aliases/level conflicts; select or
-   author reviewed examples; generate stored furigana; implement rendering,
-   priority and history compatibility; produce reports and candidate data.
+2. **Phase 2 — Terra, high: complete candidate.** Source manifests and stable
+   IDs are recorded; strict validation, stored ruby, rendering, priority,
+   retirement compatibility, and reports are implemented. Nine malformed or
+   duplicate records were retired, eight confirmed cards were corrected, and
+   the candidate contains 736 N5 plus 707 N4-only records. The report records
+   139 inherited fallback examples and 20 uncertain ruby alignments for review.
    Do not push or seed production automatically.
 3. **Phase 3 — Astra, high: pending.** Inspect a reproducible random 100 records
    (50 per level, fixed recorded seed), plus targeted high-risk cases. Log
