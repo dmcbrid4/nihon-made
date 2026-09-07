@@ -419,6 +419,123 @@ OVERRIDES = {
         "dictionaryEntryId": "1180470", "dictionarySenseIndex": 1,
         "notes": ["Pins the button example to the press/push-a-button sense rather than interpersonal pressure."],
     },
+    # Phase 4 fresh-holdout repairs (docs/phase4-holdout-review.md). These
+    # original editorial examples and ruby annotations were checked record by
+    # record; do not generalize their compound or contextual-reading rules.
+    "v-jlpt-n5-0218": {
+        "expression": "ぬるい", "kanjiForm": "温い", "reading": "ぬるい",
+        "meaning": "lukewarm; tepid", "partOfSpeech": "i-adjective",
+        "example": "このお茶はぬるいです。", "exampleMeaning": "This tea is lukewarm.",
+        "exampleFurigana": [
+            {"text": "このお", "reading": None}, {"text": "茶", "reading": "ちゃ"},
+            {"text": "はぬるいです。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1183300", "dictionarySenseIndex": 0,
+        "notes": ["Uses the usual kana spelling and a liquid-temperature context, avoiding the unrelated warm-room reading ぬくい."],
+    },
+    "v-jlpt-n5-0126": {
+        "partOfSpeech": "pre-noun adjective",
+        "notes": ["Corrects the learner-facing POS: どの modifies a following noun; it is not the honorific suffix 殿/どの."],
+    },
+    "v-jlpt-n4-0179": {
+        "example": "この建物は一億円です。", "exampleMeaning": "This building costs 100 million yen.",
+        "exampleFurigana": [
+            {"text": "この", "reading": None}, {"text": "建物", "reading": "たてもの"},
+            {"text": "は", "reading": None}, {"text": "一億", "reading": "いちおく"},
+            {"text": "円", "reading": "えん"}, {"text": "です。", "reading": None},
+        ],
+        "reviewedTargetSpans": [
+            {"start": 5, "end": 7, "surface": "一億", "lemma": "億", "match": "counter"},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Teaches 億 as the numeric unit one hundred million, rather than relying on the compound 億万長者."],
+    },
+    "v-jlpt-n4-0128": {
+        "dictionaryEntryId": "1226360", "dictionarySenseIndex": 0,
+        "notes": ["Pins the visible suru verb to the dictionary base びっくり; do not force uncommon 吃驚 spelling or remove する from the card."],
+    },
+    "v-jlpt-n4-0439": {
+        "meaning": "shallow; light (sleep)",
+        "dictionaryEntryId": "1390800", "dictionarySenseIndex": 1,
+        "notes": ["Aligns the selected dictionary sense and learner-facing meaning with the natural light-sleep example."],
+    },
+    "v-jlpt-n4-0357": {
+        "example": "来週、日本語の試験を受けます。", "exampleMeaning": "I will take a Japanese test next week.",
+        "exampleFurigana": [
+            {"text": "来週", "reading": "らいしゅう"}, {"text": "、", "reading": None},
+            {"text": "日本語", "reading": "にほんご"}, {"text": "の", "reading": None},
+            {"text": "試験", "reading": "しけん"}, {"text": "を", "reading": None},
+            {"text": "受", "reading": "う"}, {"text": "けます。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1329590", "dictionarySenseIndex": 4,
+        "notes": ["Aligns the example with this card's introductory take-a-test meaning; receiving a vaccine is a valid but different context."],
+    },
+    "v-jlpt-n4-0239": {
+        "meaning": "express train", "partOfSpeech": "noun",
+        "exampleMeaning": "Is this an express train?",
+        "dictionaryEntryId": "1228690", "dictionarySenseIndex": 1,
+        "notes": ["Teaches the railway noun sense rather than conflating it with the separate idea of hurrying."],
+    },
+    # Required Phase 3 findings that were recorded in prose and missed by the
+    # earlier batch. Keep stable IDs; the source catalog remains unchanged.
+    "v-jlpt-n5-0095": {
+        "meaning": "many; a lot", "partOfSpeech": "adverb; noun",
+        "example": "公園に人がたくさんいます。", "exampleMeaning": "There are a lot of people in the park.",
+        "exampleFurigana": [
+            {"text": "公園", "reading": "こうえん"}, {"text": "に", "reading": None},
+            {"text": "人", "reading": "ひと"}, {"text": "がたくさんいます。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1415870", "dictionarySenseIndex": 0,
+        "notes": ["Teaches quantity rather than the distinct enough/I've-had-enough use; do not teach たくさんな + noun as the default pattern."],
+    },
+    "v-jlpt-n5-0415": {
+        "meaning": "place", "partOfSpeech": "noun",
+        "example": "ここは静かな所です。", "exampleMeaning": "This is a quiet place.",
+        "exampleFurigana": [
+            {"text": "ここは", "reading": None}, {"text": "静", "reading": "しず"},
+            {"text": "かな", "reading": None}, {"text": "所", "reading": "ところ"},
+            {"text": "です。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1343100", "dictionarySenseIndex": 0,
+        "notes": ["Uses 所 as the independent location noun; the prior sentence demonstrated 場所 instead."],
+    },
+    "v-jlpt-n4-0062": {
+        "example": "毎日コンピュータで仕事をします。", "exampleMeaning": "I work on a computer every day.",
+        "exampleFurigana": [
+            {"text": "毎日", "reading": "まいにち"}, {"text": "コンピュータで", "reading": None},
+            {"text": "仕事", "reading": "しごと"}, {"text": "をします。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1053350", "dictionarySenseIndex": 0,
+        "notes": ["Replaces a metalinguistic placeholder with ordinary use of a computer; コンピューター remains a spelling variant, not a second card."],
+    },
+    "v-jlpt-n4-0097": {
+        "partOfSpeech": "adverb",
+        "example": "日曜日はたいてい家にいます。", "exampleMeaning": "I usually stay home on Sundays.",
+        "exampleFurigana": [
+            {"text": "日曜日", "reading": "にちようび"}, {"text": "はたいてい", "reading": None},
+            {"text": "家", "reading": "いえ"}, {"text": "にいます。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1414580", "dictionarySenseIndex": 0,
+        "notes": ["Teaches the usual-frequency adverb use instead of retaining a placeholder or a misleading na-adjective-only label."],
+    },
+    "v-jlpt-n5-0654": {
+        "partOfSpeech": "noun; no-adjective",
+        "example": "緑のシャツを着ています。", "exampleMeaning": "I am wearing a green shirt.",
+        "exampleFurigana": [
+            {"text": "緑", "reading": "みどり"}, {"text": "のシャツを", "reading": None},
+            {"text": "着", "reading": "き"}, {"text": "ています。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1555300", "dictionarySenseIndex": 0,
+        "notes": ["Teaches 緑 as green through the ordinary 緑の + noun pattern, not the distinct compound 緑茶."],
+    },
+    "v-jlpt-n5-0296": {
+        "example": "嫌なにおいがします。", "exampleMeaning": "There is an unpleasant smell.",
+        "exampleFurigana": [
+            {"text": "嫌", "reading": "いや"}, {"text": "なにおいがします。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1587610", "dictionarySenseIndex": 1,
+        "notes": ["Teaches 嫌な as unpleasant; the prior example used the distinct word 嫌い (きらい)."],
+    },
     # Context-specific ruby fixtures. The same written character sequence has
     # different readings in these everyday contexts, so retain reviewed ruby
     # rather than asking the tokenizer or the frontend to infer it.

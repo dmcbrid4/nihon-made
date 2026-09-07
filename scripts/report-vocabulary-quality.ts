@@ -90,7 +90,7 @@ const markdown = [
     .sort((a, b) => b[1] - a[1])
     .map(([reason, count]) => `| ${reason} | ${count} |`),
   "",
-  "The complete machine-readable queue is `src/lib/study/data/vocabulary-review-queue.json`, listing every unapproved or flagged record with its reasons. Use the fixed Phase 3 sample in `docs/phase3-vocabulary-sample.json` and this queue to inspect Japanese, English, sense alignment, JLPT placement, provenance, and ruby output. Entries marked `reviewed` were corrected by an editorial pass; they still need the independent Phase 4 holdout review unless covered by `docs/phase3-vocabulary-audit.md`.",
+  "The complete machine-readable queue is `src/lib/study/data/vocabulary-review-queue.json`, listing every unapproved or flagged record with its reasons. Use the fixed Phase 3 sample, the fresh Phase 4 holdout, and this queue to inspect Japanese, English, sense alignment, JLPT placement, provenance, and ruby output. Entries marked `reviewed` were corrected by an editorial pass; that status does not certify the full corpus or resolve example attribution.",
   "",
   "## Retired records",
   "",

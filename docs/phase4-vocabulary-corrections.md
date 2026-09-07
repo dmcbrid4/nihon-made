@@ -27,7 +27,7 @@ versions, not a statistical error estimate, current outstanding-issue count, or
 license approval. Some polish/accept rows also specify metadata corrections.
 
 Current Phase 4 counts: **730 N5 + 679 N4-only = 1,409 candidates**;
-**581 N5 + 566 N4-only = 1,147 mechanically active**; 262 quarantined. Thirty
+**584 N5 + 568 N4-only = 1,152 mechanically active**; 257 quarantined. Thirty
 duplicate source rows were retired after canonicalizing noun-plus-する heads.
 The historical fixed-sample composition below belongs to the pre-repair audit and
 is not a current release count. Its required corrections are only partially
@@ -36,11 +36,12 @@ production database were not touched.
 
 ## Prioritized implementation checklist
 
-- [ ] **Contain known active defects.** Existing repairs do not cover every
-  required decision. Reconcile all original per-record decisions, including
-  prose headings, against current data. The holdout report lists at least six
-  missed records; たくさん remains active. Repair or hold newly identified active
-  defects as well. Passing mechanical approval is insufficient containment.
+- [x] **Apply the currently known required corrections.** Reconciled the six
+  missed prose findings and seven fresh-holdout findings through reproducible
+  overrides. The affected records now have explicit examples, ruby, POS/sense
+  pins, or dictionary linkage; たくさん no longer teaches the “had enough”
+  sense. Passing mechanical approval still does not certify unknown defects
+  outside reviewed samples.
 - [x] **Repair canonical noun/suru representation.** Thirty active candidates
   have visible noun heads but readings ending in する, placed inside word ruby.
   IDs are listed in chunk 3. Confirm each dictionary entry; retain IDs, remove

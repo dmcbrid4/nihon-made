@@ -216,6 +216,49 @@ test("phase 4 editorial replacements teach the reviewed lexeme and contextual re
   ]);
 });
 
+test("fresh-holdout and missed-audit repairs teach their intended word and sense", () => {
+  const item = (id: string, expectsEditorial = false) => {
+    const found = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(found, `${id} should remain in the corpus`);
+    assert.equal(found.vocabulary.approval.approved, true, `${id} should be active`);
+    if (expectsEditorial) {
+      assert.equal(found.vocabulary.provenance.example.kind, "editorial", `${id} should document its replacement example`);
+      assert.equal(found.vocabulary.review.furigana, "reviewed", `${id} should use reviewed sentence ruby`);
+    }
+    return found;
+  };
+  const lukewarm = item("v-jlpt-n5-0218", true);
+  assert.equal(lukewarm.expression, "ぬるい");
+  assert.equal(lukewarm.kanjiForm, "温い");
+  assert.equal(lukewarm.example, "このお茶はぬるいです。");
+  assert.equal(lukewarm.vocabulary.exampleReading, "このおちゃはぬるいです。");
+  assert.equal(item("v-jlpt-n5-0126").partOfSpeech, "pre-noun adjective");
+
+  const hundredMillion = item("v-jlpt-n4-0179", true);
+  assert.equal(hundredMillion.example, "この建物は一億円です。");
+  assert.deepEqual(hundredMillion.vocabulary.targetSpans, [
+    { start: 5, end: 7, surface: "一億", lemma: "億", match: "counter" },
+  ]);
+  assert.equal(item("v-jlpt-n4-0128").vocabulary.provenance.dictionary?.entryId, "1226360");
+  const shallow = item("v-jlpt-n4-0439");
+  assert.equal(shallow.meaning, "shallow; light (sleep)");
+  assert.deepEqual(shallow.vocabulary.provenance.dictionary?.senseIds, ["1390800:1"]);
+  assert.match(item("v-jlpt-n4-0357", true).example, /試験を受けます/);
+  assert.equal(item("v-jlpt-n4-0239").meaning, "express train");
+  assert.equal(item("v-jlpt-n4-0239").partOfSpeech, "noun");
+
+  const quantity = item("v-jlpt-n5-0095", true);
+  assert.equal(quantity.meaning, "many; a lot");
+  assert.equal(quantity.partOfSpeech, "adverb; noun");
+  assert.match(quantity.example, /人がたくさんいます/);
+  assert.match(item("v-jlpt-n5-0415", true).example, /静かな所/);
+  assert.match(item("v-jlpt-n4-0062", true).example, /コンピュータで仕事/);
+  assert.equal(item("v-jlpt-n4-0097").partOfSpeech, "adverb");
+  assert.match(item("v-jlpt-n4-0097", true).example, /たいてい家にいます/);
+  assert.match(item("v-jlpt-n5-0654", true).example, /緑のシャツ/);
+  assert.match(item("v-jlpt-n5-0296", true).example, /^嫌なにおい/);
+});
+
 test("contextual ruby fixtures preserve weekday and native-counter readings", () => {
   const reading = (id: string) => {
     const item = vocabularyData.items.find((candidate) => candidate.id === id);

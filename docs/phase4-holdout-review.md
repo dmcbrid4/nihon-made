@@ -132,7 +132,17 @@ The completed fixes are useful, but the blanket completion/containment claim
 must be withdrawn. No exhaustive reconciliation of every previous correction
 was performed in this holdout turn.
 
-## Next bounded correction batch
+## Correction follow-up — 2026-09-07
+
+The seven required holdout repairs and the six listed missed Phase 3 findings
+were implemented after this review through explicit generator overrides. The
+five previously quarantined cards with usable repairs are now active. The
+current generated counts are **730 N5 + 679 N4-only = 1,409 candidates**;
+**584 N5 + 568 N4-only = 1,152 active**; **257 quarantined**. Focused
+regressions cover each repair. This is a correction update, not a new audit or
+provenance clearance.
+
+## Remaining bounded work
 
 1. Reconcile all 100 original decisions, including prose findings, into the
    existing correction workflow with repaired/retired/held evidence for each.
@@ -162,9 +172,9 @@ record counts). Structural success does not detect the linguistic defects above.
 lint and webpack build were not rerun for this documentation-only audit; the
 earlier implementation's passing results are historical, not new release evidence.
 
-Counts remain **730 N5 + 679 N4-only = 1,409 candidates**, of which **581 N5 +
-566 N4-only = 1,147 are mechanically active** and **262 are quarantined**.
-This turn added/removed/retired **0 terms**, replaced **0 examples**, and changed
-**0 approval flags**. All 20 reviewed records still need provenance resolution;
-the seven required decisions and six carryovers above identify the next fixes.
-No push, merge, seed or deployment was performed.
+The review itself added/removed/retired **0 terms**, replaced **0 examples**, and
+changed **0 approval flags**. The documented correction follow-up then replaced
+9 examples, changed meaning/POS/dictionary metadata on 4 other records, and restored 5
+previously quarantined records without adding or retiring terms. All 20 reviewed
+records still need provenance resolution; no push, merge, seed or deployment was
+performed by the review or correction work.
