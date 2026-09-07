@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("kana home shows separate hiragana/katakana progress and links into study", async ({
   page,
-}) => {
+}, testInfo) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
@@ -11,6 +11,10 @@ test("kana home shows separate hiragana/katakana progress and links into study",
   await expect(page.getByRole("heading", { name: "Hiragana", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Katakana", exact: true })).toBeVisible();
   await expect(page.getByText("0 / 46 basic kana mastered")).toHaveCount(2);
+  await page.screenshot({
+    path: `test-results/kana-home-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBeTruthy();
@@ -19,13 +23,17 @@ test("kana home shows separate hiragana/katakana progress and links into study",
 
 test("hiragana study: new-character intro, recognition quiz, recall quiz, and real progress", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto("/kana/hiragana");
   await expect(page.getByRole("heading", { name: "Hiragana", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Start practicing" }).click();
 
   // First card is the intro panel for a brand-new character.
   await expect(page.getByText("A NEW CHARACTER")).toBeVisible();
+  await page.screenshot({
+    path: `test-results/kana-intro-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
   await page.getByRole("button", { name: /Got it/ }).click();
 
   // Recognition quiz: symbol shown, choose the romaji.
@@ -33,6 +41,10 @@ test("hiragana study: new-character intro, recognition quiz, recall quiz, and re
   const kanaHeading = page.locator(".kana-character");
   const character = await kanaHeading.textContent();
   expect(character?.trim().length).toBeGreaterThan(0);
+  await page.screenshot({
+    path: `test-results/kana-recognition-quiz-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
 
   // Answer every remaining card in the session: click through any "new
   // character" intro panel, then pick options until correct, so the
@@ -72,25 +84,34 @@ test("hiragana study: new-character intro, recognition quiz, recall quiz, and re
 
 test("kana chart renders a gojūon grid and shows character detail on click", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto("/kana/hiragana?tab=chart");
   await page.getByRole("button", { name: "Chart", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Basic kana" })).toBeVisible();
   await page.locator(".kana-cell", { hasText: "あ" }).first().click();
   await expect(page.locator(".kana-detail-character")).toHaveText("あ");
   await expect(page.getByText("Status: Unseen")).toBeVisible();
+  await page.screenshot({
+    path: `test-results/kana-chart-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
 });
 
 test("marking a script known reflects immediately in progress, and Kana shows on the Progress page", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto("/kana");
   page.once("dialog", (dialog) => void dialog.accept());
   await page.getByRole("button", { name: "Mark Hiragana known" }).click();
   await expect(page.getByText("all of Hiragana marked as known.")).toBeVisible();
   await expect(page.getByText("100%").first()).toBeVisible();
   await page.getByRole("link", { name: "Progress", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Kana foundations" })).toBeVisible();
+  await page.waitForURL("/progress");
+  await expect(page.getByRole("heading", { name: "Kana foundations", level: 2 })).toBeVisible();
+  await page.screenshot({
+    path: `test-results/kana-progress-section-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
   const state = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("nihon-made:study:v1")!),
   );
