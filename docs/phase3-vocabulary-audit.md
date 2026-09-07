@@ -1,7 +1,7 @@
 # Phase 3 vocabulary audit
 
-Status: **40 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunks 2–4 findings below await Phase 4. Resume position 21 in each level.
+Status: **50 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunks 2–5 findings below await Phase 4. Resume position 26 in each level.
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -684,3 +684,57 @@ incorrect sentence-reading finding, but one homograph/reading target mismatch.
 Verified 40 unique reviewed IDs, positions 1–20 per level; sample and corpus
 unchanged. `git diff --check` passed. No app tests/build needed for this
 documentation-only audit. **Next: positions 21–25 per level; 60 remain.**
+
+## Chunk 5 — compact audit, positions 21–25 per level (2026-09-07)
+
+Reviewed at `aee69a6`; **50/100 inspected, 25 per level**. Catalog unchanged
+(same hash as chunk 2). Inspected compact records including every stored ruby
+segment, readings, grammar/POS, meaning, translation, source/sense, target spans,
+classification, priority and metadata. Decisions are agent linguistic review;
+proposed corrections are not applied or independently certified.
+
+| Record | Decision and correction |
+| --- | --- |
+| N5 `0317` 御飯 | **Teaching improvement; quarantined.** `1270590` supports cooked rice (sense 0) and meal (sense 1), noun. 御→ご / 飯→はん and 夕御飯→ゆうごはん are correct. 夕御飯ができました。 / “Dinner is ready” is natural and meaningfully related to the meal sense, unlike unrelated substring matches such as 服/一服. It nevertheless demonstrates a compound and is held back by the gate. Prefer natural **ご飯** spelling with stable ID and an original standalone example: **ご飯をもう少しください。 / “A little more rice, please.”** Ruby: ご + 飯(はん) + をもう + 少(すこ) + しください。 Avoid relaxing all compound matching just for this case; retain meal as a secondary sense. |
+| N5 `0057` コーヒー | **Accept linguistically; active.** Noun/coffee `1049180:0`; modern kana spelling and long vowels correct. コーヒー作るわ。 / “I will make some coffee” is natural casual speech, with omitted を and sentence-final わ. Its nuance depends on intonation/dialect; do not label all uses simply feminine. 作→つく + る is correct. Optional neutral first example with を and 作ります; no mandatory replacement. |
+| N5 `0681` 誰か | **Required translation correction; active.** Pronoun/somebody `1416840:0`, 誰→だれ + か, 車→くるま, 中→なか all correct. 「誰か車の中にいるのですか」「トムがいます」 asks **whether anyone is in the car**, not “Who is in the car?” Correct translation: **“Is anyone in the car?” “Tom is.”** Japanese can remain; optionally simplify the explanatory のですか for early N5. The incorrect English is present in the cached Tatoeba-derived pair `236233`, so provenance does not establish translation accuracy. Distinguish indefinite 誰か from interrogative 誰. |
+| N5 `0581` 疲れる | **Translation polish; active.** `1483740:0`, ichidan/intransitive, “get tired” and 疲→つか + れる are correct. 冬は疲れる。 is possible natural speech: “Winter tires me out” or “I get tired in winter.” Current “more tired” introduces an unstated comparison. 冬→ふゆ is correct. For clearer beginner context, optional original **今日はたくさん歩いたので、疲れました。 / “I'm tired because I walked a lot today.”** Ruby: 今日(きょう)はたくさん歩(ある)いたので、疲(つか)れました。 Existing example also appears on `v-jlpt-n5-0531`; duplication alone is not grounds to delete it. |
+| N5 `0404` 十日 | **Required sentence ruby/sense repair; active.** 十→とお / 日→か correctly reads the target; `1335000` has date (sense 0) and duration (sense 1). 明日は十月十日火曜日です。 / “Tomorrow is Tuesday, the tenth of October” is a valid hypothetical date statement; do not compare it to the current calendar. Ruby incorrectly gives 火曜→かよう + 日→ひ: use **火曜日→かようび**, or 火曜→かよう + 日→び. 明日→あす, 十月→じゅうがつ, 十日→とおか are correct. Stored sense 1 describes duration; example uses sense 0. Retain both taught meanings with explicit example-sense attribution. |
+| N4 `0317` 残念 | **Gloss/context polish; active.** `1304680:0` is the right entry despite zero gloss overlap: “disappointment” vs. “disappointing/regrettable” is a morphology/POS mismatch, not a different lexeme. Prefer “disappointing; unfortunate” with na-adjective/noun usage. 残念ですが。 can trail off tactfully; “That's too bad” misses the concessive lead-in. Clarify “Unfortunately…” in context or use original **残念ですが、今日は行けません。 / “Unfortunately, I can't go today.”** Ruby: 残念(ざんねん)ですが、今日(きょう)は行(い)けません。 Existing 残→ざん / 念→ねん and compound ruby are correct. |
+| N4 `0198` 会話 | **POS/usage polish; active.** Noun + suru verb `1198880:0`, reading かいわ, “conversation” correct. Add noun to the displayed POS because 会話に加われば？ uses it nominally. This is a natural casual suggestion; English “Why don't you join in the conversation?” fits. 会→かい / 話→わ and sentence compound reading are correct; 加→くわ + われば correctly preserves the inflected 加わる. Explain the suggestion use of ～ば？ and gloss 加わる; do not reject the sentence solely because it omits a conclusion. |
+| N4 `0240` 泣く | **Pedagogical polish; active.** `1229840:0`, godan/intransitive; use common “to cry” before literary “to weep.” 泣くもんか。 / “I won't cry” is natural emphatic refusal; closer “I'm not going to cry!” conveys determination. Explain contracted ものか if retained; do not treat か as an ordinary question. This construction adds unnecessary burden for a first card. Original simpler alternative: **子どもが泣いています。 / “The child is crying.”** Ruby: 子(こ)どもが泣(な)いています。 Existing 泣→な + く and sentence kana are correct. |
+| N4 `0122` はず | **Required example replacement; quarantined.** `1476430:0` supports expectation “should; expected to,” not obligation. Kana natural; auxiliary label has dictionary support, though noun-like grammar needs explanation. 君はずぶぬれだ。 / “You're wet through” contains particle は followed by ずぶぬれ, not はず. 君→きみ is correct; gate properly rejects the cross-token substring. Original: **電車はもうすぐ来るはずです。 / “The train should arrive soon.”** Ruby: 電車(でんしゃ)はもうすぐ来(く)るはずです。 Explain an expectation based on information such as the timetable; retain kana spelling. |
+| N4 `0038` カーテン | **Accept linguistically; active.** Noun/curtain(s), `1036290:0`. カーテン閉めて。 / “Close the curtain” is a natural casual request with omitted を; Japanese does not force singular/plural. 閉→し + めて is correct, headword needs no ruby. Optional polite-register note; no compulsory rewrite. |
+
+**Follow-up within existing systemic work:**
+- Add weekday fixtures to the sentence-reading checks from chunk 2. A targeted
+  scan finds **two active records** with 火曜日 but かようひ in exampleReading:
+  this 十日 card and `v-jlpt-n5-0232` 火曜日. These are affected IDs, not two
+  additional full audits. Correct reading verified in JMdict `1194290` and
+  [Japan Foundation's scheduling vocabulary](https://www.kyozai.jpf.go.jp/kyozai/material/KTS00049/ja/render.do).
+  Only reading facts consulted; no teaching sentences copied.
+- Preserve the distinction between a related compound (御飯/夕御飯) and a
+  false substring (はず crossing は + ずぶぬれ). Prefer explicit standalone
+  examples before widening approval rules. No new matcher architecture needed.
+- 誰か is a concrete regression fixture for translation semantics even with
+  recovered provenance. 残念 is the counterexample to treating zero English
+  gloss overlap as proof of an incorrect dictionary entry.
+
+All ten entries/senses were checked against the same cached full JMdict snapshot.
+The 誰か Japanese/English pair and source ID were verified in that snapshot;
+current web contributor/license metadata was not checked. All ten examples are
+imported; nine lack recovered attribution. No source text added to the corpus;
+replacement candidates above are original editorial proposals. All placements
+are plausible curriculum choices; nine confidence labels are high, 誰か medium,
+all from shared Waller lineage, not independently established JLPT consensus.
+All are in the common band: prioritize food, indefinite pronouns and dates
+before conversational register and expectation constructions. Exact frequency
+and prerequisite ranks remain unverified.
+
+**Result:** three required translation/example/reading corrections, five teaching
+improvements, two linguistic accepts; eight active and two quarantined. All ten
+word ruby representations appear correct; nine sentence ruby sequences appear
+correct, one contains a wrong weekday reading. No claim of native-speaker or
+release approval. Verified 50 unique IDs (positions 1–25 per level), original
+sample and catalog unchanged; `git diff --check` passed. No app tests/build for
+this documentation-only pass. **Next: positions 26–30 per level; 50 remain.**
