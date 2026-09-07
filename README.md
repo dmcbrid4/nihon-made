@@ -52,7 +52,7 @@ For future AI, introduce a typed exercise-generation service between the planner
 
 ## Supabase cloud mode
 
-Cloud mode gives the private workspace a server-backed history and email-link sign-in. The configured owner email is the only account allowed to use it. Browser mode remains the default when these values are empty.
+Cloud mode gives the private workspace a server-backed history and email-link sign-in. Only the configured owner email(s) can use it. Browser mode remains the default when these values are empty.
 
 1. Copy the example environment file:
 
@@ -61,7 +61,7 @@ Cloud mode gives the private workspace a server-backed history and email-link si
    ```
 
 2. In Supabase, enable Email provider and turn off email/password sign-ups if this is a single-owner workspace. In **Authentication → URL Configuration**, set the Site URL to the production app and add its `/auth/callback` URL plus the local development callback URL. Magic links return through this callback to establish the secure session.
-3. Set all four values in `.env.local`: `DATABASE_URL` (the Supabase pooler connection string when needed), `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, and `OWNER_EMAIL`. Use `mcbride.danny@gmail.com` for the owner account. Keep `DATABASE_URL` server-only; do not prefix it with `NEXT_PUBLIC_`.
+3. Set all four values in `.env.local`: `DATABASE_URL` (the Supabase pooler connection string when needed), `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, and `OWNER_EMAIL`. Use `mcbride.danny@gmail.com` for the owner account. Keep `DATABASE_URL` server-only; do not prefix it with `NEXT_PUBLIC_`. To share this deployment with other real people (e.g. family), add their emails to `OWNER_EMAILS` (comma-separated) and create a Supabase Auth user for each of them (**Authentication → Users → Add user/Invite**) -- there is no self-serve sign-up. Every account gets its own separate goal, progress, and history; nothing is shared between them.
 4. Verify the connection, apply the migration, and seed the starter content:
 
    ```bash

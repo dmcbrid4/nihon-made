@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!isOwner(user, config.ownerEmail)) {
+  if (!isOwner(user, config.ownerEmails)) {
     await supabase.auth.signOut();
     return signInRedirect(
       request,
