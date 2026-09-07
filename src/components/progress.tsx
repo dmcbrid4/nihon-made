@@ -2,10 +2,16 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen, Check, Clock3 } from "lucide-react";
-import { concepts } from "@/lib/study/content";
+import { conceptById, concepts } from "@/lib/study/content";
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { ProgressOverview } from "./progress-overview";
+import { ProgressCountdown } from "./progress-countdown";
+import { ProgressCurriculum } from "./progress-curriculum";
+import { ProgressKnowledgeState } from "./progress-knowledge";
+import { ProgressHistoryChart } from "./progress-history-chart";
+import { ProgressKanjiGrid } from "./progress-kanji-grid";
+import { ProgressPacing } from "./progress-pacing";
 
 export function ProgressView() {
   const { state } = useStudy();
@@ -27,9 +33,21 @@ export function ProgressView() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">{activeMode} PROGRESS</div>
-          <h1>{activeMode} practice, clearly tracked.</h1>
-          <p>Only your active study mode is counted here.</p>
+          <div className="eyebrow">N4 JOURNEY</div>
+          <h1>How close am I to N4?</h1>
+          <p>Your curriculum progress, pace, and what to focus on next.</p>
+        </div>
+      </div>
+      <ProgressCountdown />
+      <ProgressCurriculum />
+      <ProgressKnowledgeState />
+      <ProgressHistoryChart />
+      <ProgressKanjiGrid />
+      <ProgressPacing />
+      <div className="section-heading progress-section-divider">
+        <div>
+          <h2>Your {activeMode} practice</h2>
+          <p>Session activity for your currently active study mode.</p>
         </div>
       </div>
       <div className="stats-grid">
@@ -58,42 +76,59 @@ export function ProgressView() {
               {completed
                 .slice(-7)
                 .reverse()
-                .map((session) => (
-                  <div key={session.id}>
-                    <span className="history-icon">
-                      {session.completedAt ? (
-                        <Check size={17} />
-                      ) : (
-                        <Clock3 size={17} />
-                      )}
-                    </span>
-                    <div>
-                      <h3>
-                        {new Date(session.startedAt).toLocaleDateString(
-                          "en-US",
-                          {
-                            weekday: "short",
-                            month: "short",
-                            day: "numeric",
-                            timeZone: state.goal.timeZone,
-                          },
-                        )}
-                      </h3>
-                      <p>
-                        {
-                          state.reviews.filter(
-                            (review) => review.sessionId === session.id,
-                          ).length
-                        }{" "}
-                        of {session.conceptIds.length} concepts reviewed
-                      </p>
-                      <p>{session.mode} mode</p>
-                    </div>
-                    <span className="concept-status">
-                      {session.completedAt ? "Complete" : "In progress"}
-                    </span>
-                  </div>
-                ))}
+                .map((session) => {
+                  const sessionReviews = state.reviews.filter(
+                    (review) => review.sessionId === session.id,
+                  );
+                  return (
+                    <details key={session.id}>
+                      <summary>
+                        <span className="history-icon">
+                          {session.completedAt ? (
+                            <Check size={17} />
+                          ) : (
+                            <Clock3 size={17} />
+                          )}
+                        </span>
+                        <div>
+                          <h3>
+                            {new Date(session.startedAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                weekday: "short",
+                                month: "short",
+                                day: "numeric",
+                                timeZone: state.goal.timeZone,
+                              },
+                            )}
+                          </h3>
+                          <p>
+                            {sessionReviews.length} of{" "}
+                            {session.conceptIds.length} concepts reviewed
+                          </p>
+                          <p>{session.mode} mode</p>
+                        </div>
+                        <span className="concept-status">
+                          {session.completedAt ? "Complete" : "In progress"}
+                        </span>
+                      </summary>
+                      <div className="completion-reviews">
+                        {sessionReviews.map((review) => (
+                          <div key={review.id}>
+                            <span lang="ja">
+                              {conceptById.get(review.conceptId)?.expression}
+                            </span>
+                            <span
+                              className={`review-rating rating-text-${review.rating}`}
+                            >
+                              {review.rating}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  );
+                })}
             </div>
           ) : (
             <div className="history-empty">
