@@ -1,7 +1,7 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { Fragment, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronDown, Search } from "lucide-react";
 import { concepts, typeLabels } from "@/lib/study/content";
 import {
@@ -12,6 +12,7 @@ import {
 } from "@/lib/study/types";
 import { useStudy } from "./study-provider";
 import { FuriganaText } from "./furigana";
+import { Loading } from "./loading";
 
 function isConceptType(value: string | null): value is ConceptType {
   return conceptTypes.includes(value as ConceptType);
@@ -19,8 +20,15 @@ function isConceptType(value: string | null): value is ConceptType {
 
 export function CollectionView() {
   const { state } = useStudy();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeMode = state?.goal.studyMode ?? "N5";
+  const isKana = activeMode === "kana";
+  useEffect(() => {
+    // Kana's chart, not the vocabulary-shaped collection list, is its
+    // reference view -- redirect rather than show a list of blank cards.
+    if (isKana) router.replace("/kana?tab=chart");
+  }, [isKana, router]);
   const initialType = searchParams.get("type");
   const [filter, setFilter] = useState<ConceptType | "all">(
     isConceptType(initialType) ? initialType : "all",
@@ -29,6 +37,7 @@ export function CollectionView() {
     Commonality | "all"
   >("all");
   const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  if (isKana) return <Loading />;
   const visible = concepts
     .filter(
       (item) =>

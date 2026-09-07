@@ -1,12 +1,15 @@
 # Kana mode
 
 A fourth study track for complete beginners: the hiragana and katakana
-syllabaries, taught from zero. Unlike N5/N4/Tae Kim, it is **not** something
-you switch into via the sidebar's "Study mode" picker -- it's always
-available at `/kana`, alongside whichever JLPT track is active, since kana
-is foundational writing-system knowledge rather than a competing curriculum
-track. An experienced learner can ignore it entirely, or mark it known in
-one click and never see it again.
+syllabaries, taught from zero. It's a normal fourth option in the sidebar's
+"Study mode" picker, alongside N5/N4/Tae Kim (`goal.studyMode` can be
+`"kana"`, same as those three) -- selecting it replaces Today (`/`) with the
+Kana home (chart/study/quiz overview) instead of the vocabulary session
+flow, and `/study`/`/collection` redirect to `/kana` if you land on them
+while Kana mode is active, since neither's vocabulary-shaped UI applies.
+`/kana` itself and its `/kana/[script]` pages stay directly reachable by URL
+too. An experienced learner can ignore Kana mode entirely, or mark it known
+in one click and never see it again.
 
 **Kana mode is not a daily SRS system.** There is no due date, no scheduled
 queue, no row-unlocking gate. It's two customizable tools built on the same

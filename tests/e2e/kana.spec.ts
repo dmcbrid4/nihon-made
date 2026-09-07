@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
 
-test("kana home shows separate hiragana/katakana progress and links into study", async ({
+test("selecting Kana mode from the study-mode picker swaps Today for the Kana home", async ({
   page,
 }, testInfo) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  await page.getByRole("link", { name: "Kana", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "N5 Japanese study" })).toBeVisible();
+  await page.getByLabel("Active study mode").selectOption("kana");
   await expect(page.getByRole("heading", { name: "Kana foundations." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Hiragana", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Katakana", exact: true })).toBeVisible();
@@ -19,6 +20,13 @@ test("kana home shows separate hiragana/katakana progress and links into study",
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBeTruthy();
   expect(errors).toEqual([]);
+
+  // /study and /collection don't have a Kana-shaped UI -- both redirect to
+  // /kana rather than showing a broken vocabulary session/list.
+  await page.goto("/study");
+  await page.waitForURL("/kana");
+  await page.goto("/collection");
+  await page.waitForURL("/kana?tab=chart");
 });
 
 test("hiragana Study: select from the chart, browse without any scoring", async ({

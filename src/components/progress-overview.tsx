@@ -23,6 +23,10 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
   const { state } = useStudy();
   if (!state) return null;
   const activeMode = state.goal.studyMode;
+  // Kana has its own dedicated Progress-page section (progress-kana.tsx) --
+  // this vocabulary-shaped overview (JLPT cohorts, kanji/grammar/reading/
+  // listening counts) doesn't apply to it.
+  if (activeMode === "kana") return null;
   const vocabulary = vocabularyProgress(state).filter(
     (cohort) => cohort.id === activeMode.toLowerCase(),
   );
