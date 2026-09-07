@@ -1113,6 +1113,14 @@ input[type="range"] {
   gap: 12px;
   margin-top: 10px;
 }
+.completion-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.completion > .completion-actions {
+  margin-top: 16px;
+}
 
 /* Kana progress-page section */
 .kana-progress-section {

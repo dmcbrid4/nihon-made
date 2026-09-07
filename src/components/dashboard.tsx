@@ -12,6 +12,7 @@ import {
   Languages,
   Layers3,
   PenLine,
+  RotateCcw,
 } from "lucide-react";
 import { concepts, conceptById } from "@/lib/study/content";
 import {
@@ -76,6 +77,15 @@ export function Dashboard() {
   async function start() {
     const next = await dispatch({ type: "start", id: crypto.randomUUID() });
     if (next) router.push("/study");
+  }
+  function repeat() {
+    if (!session) return;
+    if (
+      window.confirm(
+        "Repeat today's lesson? This undoes today's reviews so you can go through it again.",
+      )
+    )
+      void dispatch({ type: "repeatSession", sessionId: session.id });
   }
   return (
     <>
@@ -157,11 +167,21 @@ export function Dashboard() {
             })}
           </div>
           {completed ? (
-            <Link href="/study" className="primary-button">
-              <Check size={17} />
-              View today’s session
-              <ArrowRight size={17} />
-            </Link>
+            <div className="completion-actions">
+              <button
+                className="secondary-button"
+                disabled={busy}
+                onClick={repeat}
+              >
+                <RotateCcw size={16} />
+                Repeat today’s lesson
+              </button>
+              <Link href="/study" className="primary-button">
+                <Check size={17} />
+                View today’s session
+                <ArrowRight size={17} />
+              </Link>
+            </div>
           ) : (
             <button
               className="primary-button"

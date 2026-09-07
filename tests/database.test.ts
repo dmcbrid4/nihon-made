@@ -117,6 +117,35 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
       new PostgresRepository(db, importedUserId).importState(importSource),
       /Cloud history already contains study activity/,
     );
+
+    // repeatSession, exercised against real Postgres: deletes reviews before
+    // the session (no ON DELETE CASCADE on reviews.sessionId), cascades
+    // study_session_items via the session delete, and forgets progress for
+    // concepts that were unseen before this session entirely.
+    const secondSession = (
+      await repository.dispatch({ type: "start", id: randomUUID() })
+    ).sessions.at(-1)!;
+    for (const conceptId of secondSession.conceptIds)
+      await repository.dispatch({
+        type: "review",
+        id: randomUUID(),
+        sessionId: secondSession.id,
+        conceptId,
+        rating: "good",
+      });
+    const beforeRepeat = await repository.load();
+    assert.ok(beforeRepeat.sessions.find((s) => s.id === secondSession.id)?.completedAt);
+    const repeated = await repository.dispatch({
+      type: "repeatSession",
+      sessionId: secondSession.id,
+    });
+    assert.ok(!repeated.sessions.some((s) => s.id === secondSession.id));
+    assert.ok(!repeated.reviews.some((r) => r.sessionId === secondSession.id));
+    assert.deepEqual(await new PostgresRepository(db, userId).load(), repeated);
+    await assert.rejects(
+      repository.dispatch({ type: "repeatSession", sessionId: secondSession.id }),
+      /finished session/,
+    );
   } finally {
     await client.close();
   }

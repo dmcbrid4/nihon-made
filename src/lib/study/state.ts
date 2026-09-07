@@ -2,7 +2,7 @@ import { conceptById, retiredConceptIds } from "./content";
 import { dateInZone } from "./dates";
 import { currentSession, planSession } from "./planner";
 import { recordKanaQuizAnswer } from "./kana-progress";
-import { scheduleReview } from "./scheduler";
+import { progressAsOf, scheduleReview } from "./scheduler";
 import {
   actionSchema,
   type ConceptProgress,
@@ -96,6 +96,32 @@ export function applyAction(
       progress: [
         ...state.progress.filter((item) => !targetIds.has(item.conceptId)),
         ...marked,
+      ],
+    };
+  }
+
+  if (action.type === "repeatSession") {
+    const session = state.sessions.find((item) => item.id === action.sessionId);
+    if (!session || !session.completedAt)
+      throw new Error("Only a finished session can be repeated.");
+    const undoneConceptIds = new Set(
+      state.reviews
+        .filter((review) => review.sessionId === session.id)
+        .map((review) => review.conceptId),
+    );
+    const remainingReviews = state.reviews.filter(
+      (review) => review.sessionId !== session.id,
+    );
+    const revertedProgress = [...undoneConceptIds]
+      .map((conceptId) => progressAsOf(conceptId, remainingReviews))
+      .filter((item): item is ConceptProgress => !!item);
+    return {
+      ...state,
+      sessions: state.sessions.filter((item) => item.id !== session.id),
+      reviews: remainingReviews,
+      progress: [
+        ...state.progress.filter((item) => !undoneConceptIds.has(item.conceptId)),
+        ...revertedProgress,
       ],
     };
   }

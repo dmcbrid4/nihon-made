@@ -278,6 +278,17 @@ export const actionSchema = z.discriminatedUnion("type", [
     sessionId: z.uuid(),
   }),
   z.object({
+    /** "Repeat today's lesson" (dashboard.tsx / study-session.tsx): undoes a
+     * finished session entirely, as if it had never been started -- deletes
+     * its reviews and the session itself, and rewinds each reviewed
+     * concept's progress to exactly what it was beforehand (see
+     * scheduler.ts's progressAsOf, which replays the concept's remaining
+     * review history). A concept with no earlier reviews goes back to fully
+     * unseen. Only a completed session can be repeated. */
+    type: z.literal("repeatSession"),
+    sessionId: z.uuid(),
+  }),
+  z.object({
     type: z.literal("review"),
     id: z.uuid(),
     sessionId: z.uuid(),

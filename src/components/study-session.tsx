@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock3, RotateCcw } from "lucide-react";
 import { conceptById } from "@/lib/study/content";
 import {
   currentSession,
@@ -105,10 +105,27 @@ export function StudySessionView() {
         <p className="completion-note">
           Your progress is saved. Tomorrow’s session will build on your reviews.
         </p>
-        <Link href="/" className="primary-button">
-          Back to Today
-          <ArrowRight size={17} />
-        </Link>
+        <div className="completion-actions">
+          <button
+            className="secondary-button"
+            disabled={busy}
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Repeat today's lesson? This undoes today's reviews so you can go through it again.",
+                )
+              )
+                void dispatch({ type: "repeatSession", sessionId: session.id });
+            }}
+          >
+            <RotateCcw size={16} />
+            Repeat today’s lesson
+          </button>
+          <Link href="/" className="primary-button">
+            Back to Today
+            <ArrowRight size={17} />
+          </Link>
+        </div>
         <Link href="/progress" className="text-link">
           See your progress
         </Link>

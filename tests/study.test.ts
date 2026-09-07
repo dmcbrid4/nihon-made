@@ -10,7 +10,7 @@ import {
 } from "../src/lib/study/planner";
 import { applyAction, initialState } from "../src/lib/study/state";
 import { scheduleReview } from "../src/lib/study/scheduler";
-import { actionSchema, dateSchema } from "../src/lib/study/types";
+import { actionSchema, dateSchema, type StudyState } from "../src/lib/study/types";
 import { vocabularyProgress } from "../src/lib/study/vocabulary-progress";
 
 const now = new Date("2026-09-04T15:00:00Z");
@@ -98,6 +98,79 @@ test("overdue concepts precede unseen material and future reviews stay out", () 
   const plan = planSession(state, now);
   assert.equal(plan[0].id, "k-ryo");
   assert.ok(!plan.some((item) => item.id === "v-maniau"));
+});
+
+test("repeatSession undoes a finished session as if it never happened", () => {
+  const earlier = new Date(now.getTime() - 5 * 86_400_000);
+  const priorProgress = scheduleReview("k-ryo", "good", earlier);
+  // A real prior review, not just a progress row -- repeatSession rebuilds
+  // progress by replaying reviews, so the history has to actually exist.
+  const priorReview = {
+    id: randomUUID(),
+    sessionId: randomUUID(),
+    conceptId: "k-ryo",
+    rating: "good" as const,
+    reviewedAt: earlier.toISOString(),
+    intervalDays: priorProgress.intervalDays,
+  };
+  let state: StudyState = {
+    ...initialState(),
+    progress: [priorProgress],
+    reviews: [priorReview],
+  };
+  state.goal.studyMode = "N4";
+  state = applyAction(state, { type: "start", id: randomUUID() }, now);
+  const session = state.sessions[0];
+  assert.ok(session.conceptIds.includes("k-ryo")); // due from its 3-day interval
+
+  for (const conceptId of session.conceptIds)
+    state = applyAction(
+      state,
+      { type: "review", id: randomUUID(), sessionId: session.id, conceptId, rating: "good" },
+      now,
+    );
+  assert.ok(state.sessions[0].completedAt);
+  assert.equal(state.reviews.length, session.conceptIds.length + 1); // +1 for priorReview
+  assert.equal(
+    state.progress.find((item) => item.conceptId === "k-ryo")!.reviewCount,
+    2,
+  );
+
+  const undone = applyAction(
+    state,
+    { type: "repeatSession", sessionId: session.id },
+    now,
+  );
+  assert.equal(undone.sessions.length, 0);
+  // Today's reviews are gone, but the prior (unrelated-session) review stays.
+  assert.deepEqual(undone.reviews, [priorReview]);
+  // k-ryo had a review before this session -- it rewinds to exactly that,
+  // not just "removed".
+  assert.deepEqual(
+    undone.progress.find((item) => item.conceptId === "k-ryo"),
+    priorProgress,
+  );
+  // Every other concept in the session was unseen before it -- they go
+  // back to having no progress record at all, not some default.
+  assert.equal(undone.progress.length, 1);
+  assert.ok(
+    planSession(undone, now).some((item) => item.id === "k-ryo"),
+    "k-ryo is due again after the undo",
+  );
+
+  assert.throws(
+    () => applyAction(undone, { type: "repeatSession", sessionId: session.id }, now),
+    /finished session/,
+  );
+  assert.throws(
+    () =>
+      applyAction(
+        state,
+        { type: "repeatSession", sessionId: randomUUID() },
+        now,
+      ),
+    /finished session/,
+  );
 });
 
 test("N5 and N4 modes plan and resume distinct sessions", () => {

@@ -1,4 +1,4 @@
-import { asc, eq, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { initialState, applyAction } from "../lib/study/state";
 import {
@@ -293,6 +293,56 @@ export class PostgresRepository implements StudyRepository {
               lastReviewedAt: sql`excluded.last_reviewed_at`,
             },
           });
+      } else if (action.type === "repeatSession") {
+        const undoneConceptIds = new Set(
+          state.reviews
+            .filter((review) => review.sessionId === action.sessionId)
+            .map((review) => review.conceptId),
+        );
+        // Reviews must go first -- reviews.sessionId has no ON DELETE
+        // CASCADE, unlike study_session_items, which does.
+        await tx
+          .delete(s.reviews)
+          .where(eq(s.reviews.sessionId, action.sessionId));
+        await tx
+          .delete(s.studySessions)
+          .where(eq(s.studySessions.id, action.sessionId));
+        const stillTracked = new Set(
+          next.progress.map((item) => item.conceptId),
+        );
+        const toForget = [...undoneConceptIds].filter(
+          (id) => !stillTracked.has(id),
+        );
+        if (toForget.length)
+          await tx
+            .delete(s.userConceptProgress)
+            .where(
+              and(
+                eq(s.userConceptProgress.userId, userId),
+                inArray(s.userConceptProgress.conceptId, toForget),
+              ),
+            );
+        const toRevert = next.progress.filter((item) =>
+          undoneConceptIds.has(item.conceptId),
+        );
+        if (toRevert.length)
+          await tx
+            .insert(s.userConceptProgress)
+            .values(toRevert.map((entry) => ({ ...entry, userId })))
+            .onConflictDoUpdate({
+              target: [
+                s.userConceptProgress.userId,
+                s.userConceptProgress.conceptId,
+              ],
+              set: {
+                status: sql`excluded.status`,
+                reviewCount: sql`excluded.review_count`,
+                successStreak: sql`excluded.success_streak`,
+                intervalDays: sql`excluded.interval_days`,
+                dueAt: sql`excluded.due_at`,
+                lastReviewedAt: sql`excluded.last_reviewed_at`,
+              },
+            });
       } else if (action.type === "completeRetired") {
         const session = next.sessions.find(
           (item) => item.id === action.sessionId,
