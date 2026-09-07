@@ -301,6 +301,15 @@ OVERRIDES = {
         "exampleKind": "editorial", "dictionaryEntryId": "1165970", "dictionarySenseIndex": 1,
         "notes": ["Uses the adverbial most/best sense and avoids the separate compound いちばん星 (いちばんぼし)."],
     },
+    "v-jlpt-n5-0310": {
+        "meaning": "-language", "partOfSpeech": "suffix expression",
+        "example": "学校で英語を勉強しています。", "exampleMeaning": "I study English at school.",
+        "reviewedTargetSpans": [
+            {"start": 3, "end": 5, "surface": "英語", "lemma": "～語", "match": "counter"},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1270910", "dictionarySenseIndex": 1,
+        "notes": ["Uses a reviewed suffix occurrence in 英語; raw substring matching is not accepted for other compounds."],
+    },
     "v-jlpt-n4-0290": {
         "meaning": "harbor; port", "partOfSpeech": "noun",
         "example": "港に大きな船が止まっています。", "exampleMeaning": "A large ship is stopped in the harbor.",
@@ -426,6 +435,7 @@ NOUN_SURU_HEADWORDS = {
 
 OVERRIDE_CONTROL_KEYS = {
     "exampleKind", "notes", "dictionaryEntryId", "dictionarySenseIndex", "exampleFurigana",
+    "reviewedTargetSpans",
 }
 
 RETIRED = {
@@ -934,6 +944,11 @@ def main() -> None:
         item["vocabulary_item_kind"] = item_kind(tagger, item["expression"])
         tokens = tokenize(tagger, item["example"])
         spans = target_spans(tagger, item, item["example"], tokens)
+        if "reviewedTargetSpans" in override:
+            spans = override["reviewedTargetSpans"]
+            for span in spans:
+                if item["example"][span["start"] : span["end"]] != span["surface"]:
+                    raise ValueError(f"{item['id']}: reviewed target span does not match the example")
         forced_entry_id = override.get("dictionaryEntryId")
         if forced_entry_id:
             dictionary_entry = by_id[forced_entry_id]

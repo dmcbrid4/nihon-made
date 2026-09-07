@@ -27,9 +27,9 @@
     "total": 1409
   },
   "approvedCounts": {
-    "n5": 580,
+    "n5": 581,
     "n4Only": 566,
-    "total": 1146
+    "total": 1147
   },
   "retired": [
     {
@@ -41436,11 +41436,11 @@
       "expression": "～語",
       "kanjiForm": "～語",
       "reading": "～ご",
-      "meaning": "word, language",
+      "meaning": "-language",
       "level": "N5",
-      "partOfSpeech": "counter",
-      "example": "「～語」という言葉を練習しています。",
-      "exampleMeaning": "I am practising the word “～語”.",
+      "partOfSpeech": "suffix expression",
+      "example": "学校で英語を勉強しています。",
+      "exampleMeaning": "I study English at school.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -41460,40 +41460,24 @@
         ],
         "exampleFurigana": [
           {
-            "text": "「",
+            "text": "学校",
+            "reading": "がっこう"
+          },
+          {
+            "text": "で",
             "reading": null
           },
           {
-            "text": "～",
-            "reading": null
-          },
-          {
-            "text": "語",
-            "reading": "ご"
-          },
-          {
-            "text": "」",
-            "reading": null
-          },
-          {
-            "text": "と",
-            "reading": null
-          },
-          {
-            "text": "いう",
-            "reading": null
-          },
-          {
-            "text": "言葉",
-            "reading": "ことば"
+            "text": "英語",
+            "reading": "えいご"
           },
           {
             "text": "を",
             "reading": null
           },
           {
-            "text": "練習",
-            "reading": "れんしゅう"
+            "text": "勉強",
+            "reading": "べんきょう"
           },
           {
             "text": "し",
@@ -41516,7 +41500,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "「～ご」ということばをれんしゅうしています。",
+        "exampleReading": "がっこうでえいごをべんきょうしています。",
         "secondaryMeanings": [],
         "itemKind": "expression",
         "linkedKanji": [
@@ -41546,7 +41530,7 @@
           "dictionary": {
             "entryId": "1270910",
             "senseIds": [
-              "1270910:0"
+              "1270910:1"
             ],
             "glossOverlap": 1
           },
@@ -41555,34 +41539,32 @@
             "wordExact": false
           },
           "example": {
-            "kind": "fallback",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 1,
-            "end": 3,
-            "surface": "～語",
+            "start": 3,
+            "end": 5,
+            "surface": "英語",
             "lemma": "～語",
-            "match": "exact"
+            "match": "counter"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Inherited fallback example requires Phase 3 editorial review.",
+            "Uses a reviewed suffix occurrence in 英語; raw substring matching is not accepted for other compounds.",
             "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "placeholder example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },

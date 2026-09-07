@@ -209,6 +209,11 @@ test("phase 4 editorial replacements teach the reviewed lexeme and contextual re
   assert.match(item("v-jlpt-n4-0537").example, /^彼は/);
   assert.match(item("v-jlpt-n4-0290").example, /^港に/);
   assert.match(item("v-jlpt-n4-0700").example, /読み終わりました/);
+  const languageSuffix = item("v-jlpt-n5-0310");
+  assert.equal(languageSuffix.meaning, "-language");
+  assert.deepEqual(languageSuffix.vocabulary.targetSpans, [
+    { start: 3, end: 5, surface: "英語", lemma: "～語", match: "counter" },
+  ]);
 });
 
 test("retired cards are skipped in an in-progress session without creating a review", () => {
