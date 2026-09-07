@@ -8,4 +8,5 @@ out/
 test-results/
 playwright-report/
 .DS_Store
+HANDOFF.md
 
