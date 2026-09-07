@@ -10160,17 +10160,6 @@
     ]
   },
   {
-    "id": "v-jlpt-n4-0154",
-    "expression": "案内",
-    "reading": "あんない",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0154: example requires editorial review"
-    ]
-  },
-  {
     "id": "v-jlpt-n4-0155",
     "expression": "以下",
     "reading": "いか",

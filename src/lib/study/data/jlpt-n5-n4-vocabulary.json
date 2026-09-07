@@ -726,7 +726,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces a hostile register example with a neutral request.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -2442,7 +2442,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces an example that only contained an unrelated substring."
           ]
@@ -2581,7 +2581,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the adverbial most/best sense and avoids the separate compound いちばん星 (いちばんぼし).",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -3473,7 +3473,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses 空く in the hungry sense (すく), avoiding the earlier あく contextual-reading error.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -6025,7 +6025,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Stores the disambiguating phrase so it cannot be confused with 出かける."
           ]
@@ -7590,7 +7590,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces an unrelated sentence about pangrams.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -8474,7 +8474,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Pins the demonstrative この to JMdict 1582920 rather than the homophonous 九 entry.",
             "Expression segmentation was generated from its stored reading and needs review.",
@@ -11196,7 +11196,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Corrects a homograph that had the unrelated meaning “economy”."
           ]
@@ -12270,7 +12270,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces an example of the unrelated verb 逸れる.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -17638,7 +17638,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Teaches the non-exhaustive や…など listing use, rather than the dismissive sense.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -21925,7 +21925,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses a neutral travel request instead of a blunt command.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -25680,7 +25680,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the duration spelling ひと月 so it cannot be confused with January (一月/いちがつ)."
           ]
@@ -28537,7 +28537,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Pins the button example to the press/push-a-button sense rather than interpersonal pressure.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -30928,7 +30928,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Reviewed contextual compound reading: 火曜日 is かようび.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -37638,7 +37638,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Reviewed contextual compound reading: 金曜日 is きんようび."
           ]
@@ -40344,7 +40344,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Expression combined two spellings (見る 観る) in one field; kept the general-purpose 見る."
           ]
@@ -41549,7 +41549,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses a reviewed suffix occurrence in 英語; raw substring matching is not accepted for other compounds.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -43342,7 +43342,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces the compound 早口 with the primary anatomical sense."
           ]
@@ -48478,7 +48478,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces the unrelated compound 山羊座 (Capricorn) with the ordinary mountain sense."
           ]
@@ -48592,10 +48592,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -49123,7 +49123,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the native counter reading 四つ/よっつ rather than a compound reading."
           ]
@@ -51539,7 +51539,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Prefers everyday English and avoids the more advanced turning vocabulary (Phase 3 chunk 1 polish)."
           ]
@@ -52131,7 +52131,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Reviewed native-counter sequence, including 四つ/よっつ, 六つ/むっつ, 八つ/やっつ, and 十/とお.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -54213,7 +54213,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Reading field combined two native/Sino-Japanese readings (じゅう とお); kept the Sino-Japanese counting reading and replaced the unrelated idiom example."
           ]
@@ -54362,7 +54362,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the date sense without a weekday reading that previously rendered incorrectly."
           ]
@@ -59545,7 +59545,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces an example of the unrelated word 一服 (Phase 3 chunk 1)."
           ]
@@ -60097,7 +60097,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses a concrete time and the more explanatory gloss (Phase 3 chunk 1 polish)."
           ]
@@ -63421,10 +63421,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -64639,7 +64639,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces the unrelated word 大体 with the anatomical body sense."
           ]
@@ -73855,7 +73855,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the date sense and avoids the previously incorrect 金曜日 reading."
           ]
@@ -76979,7 +76979,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Reviewed native-counter reading 八つ/やっつ."
           ]
@@ -81096,10 +81096,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -81768,7 +81768,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Removes the misleading primary meaning irritated.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -88938,10 +88938,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -89395,7 +89395,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Reviewed native-counter sequence, including 四つ/よっつ, 六つ/むっつ, 八つ/やっつ, and 十/とお.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -90104,7 +90104,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces a placeholder and avoids presenting gentleman as an automatic gloss.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -91427,7 +91427,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "reviewed",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the native-count reading 十/とお, rather than the clock-time reading じゅう."
           ]
@@ -91774,7 +91774,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Corrects the English question: 誰か asks whether anyone is present, not who is present."
           ]
@@ -96000,7 +96000,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces a metalinguistic placeholder with a numbered-duration example (Phase 3 chunk 1).",
             "Expression segmentation was generated from its stored reading and needs review.",
@@ -100214,7 +100214,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces an imported child-speech fragment with a simple teaching sentence."
           ]
@@ -101679,7 +101679,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces a fallback with the humble receive sense."
           ]
@@ -102092,7 +102092,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the humble visit verb 伺う, not the unrelated 窺う (to peek)."
           ]
@@ -103242,7 +103242,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Teaches the beneficial-result construction のおかげで, not a sarcastic fragment.",
             "Expression segmentation was generated from its stored reading and needs review.",
@@ -109689,7 +109689,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the duration sense rather than the reunion greeting しばらくね.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -116175,7 +116175,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces a cross-token は + ずぶぬれ false match with the expectation construction.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -117209,7 +117209,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Removes the unrelated English name Bill and teaches the building sense.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -120430,11 +120430,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "The existing polite guidance example was reviewed with the canonical noun + suru representation.",
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -122687,10 +122688,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -122958,10 +122959,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -123495,10 +123496,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -134487,7 +134488,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces an example of 人形 (doll) with the physical-shape sense of 形."
           ]
@@ -134742,10 +134743,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -135012,10 +135013,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -135293,7 +135294,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the meeting/welcoming sense before the separate reaching-an-age sense."
           ]
@@ -137836,10 +137837,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -139441,7 +139442,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces the unrelated compound 空港 (airport) with the port sense."
           ]
@@ -144491,7 +144492,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Meaning made specific to the jewelry sense; short imported example kept pending attribution (Phase 3 chunk 1 polish).",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -144618,10 +144619,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -149535,7 +149536,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Removes the misleading primary gloss manners and teaches the everyday habit sense."
           ]
@@ -150630,10 +150631,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -150756,10 +150757,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -150878,10 +150879,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -152024,10 +152025,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -152149,10 +152150,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -154262,10 +154263,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -154798,10 +154799,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -157528,10 +157529,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -158338,10 +158339,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -158480,10 +158481,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -161134,10 +161135,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -162973,7 +162974,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses the physical hit sense before the figurative idiom 打つ手がない."
           ]
@@ -163099,10 +163100,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -172330,10 +172331,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -172467,10 +172468,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": []
         },
         "approval": {
@@ -172727,10 +172728,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -173973,7 +173974,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces the distinct word 彼女 with the ordinary male pronoun sense."
           ]
@@ -176369,7 +176370,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaces a colloquial sentence whose contextual 干し reading the generator stored incorrectly as ぼし (Phase 3 chunk 1)."
           ]
@@ -179575,7 +179576,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses a more natural example and a less stiff gloss (Phase 3 chunk 1 polish)."
           ]
@@ -179838,10 +179839,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -183057,10 +183058,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": []
         },
         "approval": {
@@ -183184,10 +183185,10 @@
           }
         ],
         "review": {
-          "lexical": "pending",
+          "lexical": "reviewed",
           "example": "pending",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -183852,7 +183853,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "POS display corrected: headword is 予約, not 予約する (Phase 3 chunk 1 polish).",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
@@ -187619,7 +187620,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Uses a gender-neutral primary meaning and a short first example."
           ]
@@ -189859,7 +189860,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "automated",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Introduces the polite request preface rather than a metalinguistic placeholder."
           ]
@@ -190450,7 +190451,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Folded a parenthetical “(タイム)” annotation out of the headword and replaced the placeholder example.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -190905,7 +190906,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Expression was missing its leading ～; added it to match the reading and replaced the placeholder example.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -191484,7 +191485,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Folded the inline “(て)” usage note into the headword and cleaned the reading field.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -192824,7 +192825,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Folded the inline “(に)” usage note into the headword and cleaned the reading field.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -193117,7 +193118,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Makes the stem-plus-終わる pattern visible and uses a reviewed inflected example.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -193724,7 +193725,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Pins the interval suffix to JMdict 置き, not 沖 (open sea).",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -193854,7 +193855,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Replaced the placeholder example for the 御～ honorific prefix.",
             "Expression segmentation was generated from its stored reading and needs review.",
@@ -193983,7 +193984,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Folded a parenthetical “(マーケット)” annotation out of the headword and replaced the placeholder example.",
             "Expression segmentation was generated from its stored reading and needs review."
@@ -194115,7 +194116,7 @@
           "lexical": "reviewed",
           "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": "phase2-agent",
+          "reviewer": "phase4-agent",
           "notes": [
             "Folded the inline “(に)” usage note into the headword and cleaned the reading field.",
             "Expression segmentation was generated from its stored reading and needs review."

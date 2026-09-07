@@ -234,6 +234,9 @@ OVERRIDES = {
         "exampleKind": "editorial", "dictionaryEntryId": "2854117", "dictionarySenseIndex": 0,
         "notes": ["Pins the interval suffix to JMdict 置き, not 沖 (open sea)."],
     },
+    "v-jlpt-n4-0154": {
+        "notes": ["The existing polite guidance example was reviewed with the canonical noun + suru representation."],
+    },
     # Phase 4: high-confidence semantic and pedagogical repairs from the
     # fixed Phase 3 audit. These sentences are original editorial examples.
     "v-jlpt-n5-0193": {
@@ -1097,10 +1100,10 @@ def main() -> None:
             },
             "targetSpans": spans,
             "review": {
-                "lexical": "reviewed" if item["id"] in OVERRIDES else "pending",
+                "lexical": "reviewed" if item["id"] in OVERRIDES or item["id"] in NOUN_SURU_HEADWORDS else "pending",
                 "example": "reviewed" if item["id"] in OVERRIDES else "pending",
                 "furigana": "reviewed" if "exampleFurigana" in override else "automated" if word_exact and sentence_complete else "uncertain",
-                "reviewer": "phase2-agent" if item["id"] in OVERRIDES else None,
+                "reviewer": "phase4-agent" if item["id"] in OVERRIDES or item["id"] in NOUN_SURU_HEADWORDS else None,
                 "notes": notes,
             },
             "approval": {
