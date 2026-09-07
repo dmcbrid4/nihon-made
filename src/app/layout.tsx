@@ -6,13 +6,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: "日本まで · Nihon Made", template: "%s · Nihon Made" },
-  description: "A little closer to Japan. Your personal Japanese study space.",
+  description:
+    "Japanese vocabulary, kanji, grammar, and daily review. Study N5, N4, and kana with 日本まで.",
   appleWebApp: { capable: true, statusBarStyle: "default", title: "日本まで" },
 };
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#fbfaf4",
+  themeColor: "#f8f6ee",
 };
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,9 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <StudyProvider mode={getAppConfig().mode === "database" ? "database" : "browser"}>
+        <StudyProvider
+          mode={getAppConfig().mode === "database" ? "database" : "browser"}
+        >
           <AppShell>{children}</AppShell>
         </StudyProvider>
       </body>

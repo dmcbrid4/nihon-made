@@ -32,13 +32,11 @@ export function StudySessionView() {
     const items = planSession(state, now);
     return (
       <div className="empty-state panel">
-        <span className="eyebrow">A MOMENT FOR JAPANESE</span>
-        <h1>
-          {items.length ? "Your session is ready." : "You’re all caught up."}
-        </h1>
+        <span className="eyebrow">STUDY SESSION</span>
+        <h1>{items.length ? "Ready to study" : "No cards due"}</h1>
         <p>
           {items.length
-            ? `${items.length} steps · About ${sessionMinutes(items)} minutes · Your pace`
+            ? `${items.length} cards · About ${sessionMinutes(items)} minutes`
             : "Your next reviews will appear when they’re due. Take a look around the collection in the meantime."}
         </p>
         {!!items.length && (
@@ -49,7 +47,7 @@ export function StudySessionView() {
               void dispatch({ type: "start", id: crypto.randomUUID() })
             }
           >
-            Start Today’s Japanese
+            Start session
             <ArrowRight size={17} />
           </button>
         )}
@@ -77,9 +75,9 @@ export function StudySessionView() {
         <span className="completion-icon">
           <Check size={27} strokeWidth={1.6} />
         </span>
-        <span className="eyebrow">TODAY’S PRACTICE, COMPLETE</span>
-        <h1>A little more understood.</h1>
-        <p>You made time for Japanese. That’s a good day.</p>
+        <span className="eyebrow">SESSION SUMMARY</span>
+        <h1>Session complete</h1>
+        <p>{reviews.length} cards reviewed. Your progress is saved.</p>
         <div className="completion-stats">
           <div>
             <strong>{reviews.length}</strong>

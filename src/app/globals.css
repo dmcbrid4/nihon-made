@@ -5,50 +5,51 @@
 @import "../styles/study.css";
 @import "../styles/workspace.css";
 @import "../styles/responsive.css";
+@import "../styles/editorial.css";
 
 :root {
-  --background: #fbfaf4;
-  --surface: #ffffff;
-  --sidebar: #e8eef3;
-  --text: #14232d;
-  --muted: #657681;
-  --line: #d6e0e6;
-  --accent: #c74336;
-  --accent-soft: #fbe9e5;
-  --green: #236b62;
-  --green-soft: #e1f0ec;
-  --button: #152d39;
-  --shadow: 0 12px 30px #1834440a, 0 2px 6px #1834440b;
+  --background: #f8f6ee;
+  --surface: #fffef9;
+  --sidebar: #eeece2;
+  --text: #292c27;
+  --muted: #66685f;
+  --line: #d9d7cb;
+  --accent: #a03f30;
+  --accent-soft: #f1e5dc;
+  --green: #486856;
+  --green-soft: #e7ece1;
+  --button: #303b31;
+  --shadow: none;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --background: #101b24;
-  --surface: #172732;
-  --sidebar: #13232e;
-  --text: #e4edf1;
-  --muted: #9cafb8;
-  --line: #2c414d;
-  --accent: #ef8a73;
-  --accent-soft: #3c292a;
-  --green: #83c9bc;
-  --green-soft: #1d3939;
-  --button: #d8ebe9;
+  --background: #20231f;
+  --surface: #282c26;
+  --sidebar: #242820;
+  --text: #ecebdf;
+  --muted: #b6b7a9;
+  --line: #44483d;
+  --accent: #eda18b;
+  --accent-soft: #42312a;
+  --green: #adc5a6;
+  --green-soft: #324032;
+  --button: #e0e7d6;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --background: #101b24;
-    --surface: #172732;
-    --sidebar: #13232e;
-    --text: #e4edf1;
-    --muted: #9cafb8;
-    --line: #2c414d;
-    --accent: #ef8a73;
-    --accent-soft: #3c292a;
-    --green: #83c9bc;
-    --green-soft: #1d3939;
-    --button: #d8ebe9;
+    --background: #20231f;
+    --surface: #282c26;
+    --sidebar: #242820;
+    --text: #ecebdf;
+    --muted: #b6b7a9;
+    --line: #44483d;
+    --accent: #eda18b;
+    --accent-soft: #42312a;
+    --green: #adc5a6;
+    --green-soft: #324032;
+    --button: #e0e7d6;
     color-scheme: dark;
   }
 }
@@ -67,10 +68,6 @@
 body {
   margin: 0;
   background-color: var(--background);
-  background-image:
-    linear-gradient(#1d526d0a 1px, transparent 1px),
-    linear-gradient(90deg, #1d526d0a 1px, transparent 1px);
-  background-size: 34px 34px;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 14px;

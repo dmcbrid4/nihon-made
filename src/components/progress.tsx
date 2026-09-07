@@ -24,18 +24,20 @@ export function ProgressView() {
   const mastered = state.progress.filter(
     (item) =>
       item.status === "mastered" &&
-      concepts.find((concept) => concept.id === item.conceptId)?.level === activeMode,
+      concepts.find((concept) => concept.id === item.conceptId)?.level ===
+        activeMode,
   ).length;
   const reviews = state.reviews.filter(
     (review) =>
-      concepts.find((concept) => concept.id === review.conceptId)?.level === activeMode,
+      concepts.find((concept) => concept.id === review.conceptId)?.level ===
+      activeMode,
   );
   return (
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">N4 JOURNEY</div>
-          <h1>How close am I to N4?</h1>
+          <div className="eyebrow">STUDY RECORD</div>
+          <h1>Progress</h1>
           <p>Your curriculum progress, pace, and what to focus on next.</p>
         </div>
       </div>
@@ -134,7 +136,7 @@ export function ProgressView() {
             </div>
           ) : (
             <div className="history-empty">
-              <p>Your story starts with one session.</p>
+              <p>No completed sessions yet.</p>
               <span>Your reviews will appear here as you practice.</span>
               <Link href="/study" className="text-link">
                 Start your first session
@@ -145,7 +147,7 @@ export function ProgressView() {
         </section>
         <aside className="panel understanding-panel">
           <span className="eyebrow">WHAT THE NUMBERS MEAN</span>
-          <h2>Practice, without the guesswork.</h2>
+          <h2>How progress is counted</h2>
           <p>
             <strong>Unseen</strong> means the concept has not appeared in a
             reviewed card yet.
@@ -159,9 +161,8 @@ export function ProgressView() {
             ratings, with a review interval of at least seven days.
           </p>
           <div className="data-note">
-            These are self-assessments of recall, not a test score. Reading is
-            tracked through passage reviews; listening has no scores until audio
-            practice is added.
+            Reading and listening progress comes from your review ratings.
+            These are self-assessments, not JLPT test scores.
           </div>
         </aside>
       </div>

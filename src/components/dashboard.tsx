@@ -8,7 +8,7 @@ import {
   BookOpen,
   Check,
   Clock3,
-  Compass,
+  Headphones,
   Languages,
   Layers3,
   PenLine,
@@ -51,6 +51,12 @@ const sections = [
     description: "Short reading practice",
     icon: BookOpen,
   },
+  {
+    type: "listening",
+    label: "Listening",
+    description: "Audio comprehension",
+    icon: Headphones,
+  },
 ] as const;
 
 export function Dashboard() {
@@ -68,6 +74,13 @@ export function Dashboard() {
     ? state.reviews.filter((review) => review.sessionId === session.id).length
     : 0;
   const completed = !!session?.completedAt;
+  const modeLabel =
+    state.goal.studyMode === "tae-kim" ? "Tae Kim" : state.goal.studyMode;
+  const modeConcepts = concepts.filter(
+    (item) => item.level === state.goal.studyMode,
+  );
+  const priorIds = new Set(state.progress.map((item) => item.conceptId));
+  const newCount = items.filter((item) => !priorIds.has(item.id)).length;
   const date = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
     month: "long",
@@ -91,28 +104,23 @@ export function Dashboard() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">
-            TODAY
-          </div>
-          <h1>{state.goal.studyMode} Japanese study</h1>
+          <div className="eyebrow">{modeLabel} · DAILY STUDY</div>
+          <h1>Today</h1>
           <p>
-            {state.goal.studyMode === "N5"
-              ? "Build the foundations before moving on."
-              : state.goal.studyMode === "N4"
-                ? "Focus on N4-only material, separate from your N5 work."
-                : "Real sentences and words mined from the Tae Kim/anime course, with audio and screenshots."}
+            {completed
+              ? "Your session is saved."
+              : "Review due cards, then study new material."}
           </p>
         </div>
         <div className="heading-date">
           <span>{date}</span>
-          <span className="level-badge">{state.goal.studyMode} mode</span>
         </div>
       </div>
       <div className="dashboard-grid">
         <section className="today-card panel" aria-labelledby="today-heading">
           <div className="card-topline">
             <span className="eyebrow">
-              <span className="status-dot" /> {state.goal.studyMode} SESSION
+              <span lang="ja">学習</span> / SESSION
             </span>
             <span className="time-pill">
               <Clock3 size={13} />
@@ -134,37 +142,41 @@ export function Dashboard() {
                 : `${items.length} activities selected for today.`}
           </p>
           <div className="session-list">
-            {sections.map(({ type, label, description, icon: Icon }) => {
-              const count = items.filter((item) => item.type === type).length;
-              const noun =
-                type === "grammar"
-                  ? "concept"
-                  : type === "reading"
-                    ? "passage"
-                    : type === "kanji"
-                      ? "character"
-                      : "word";
-              return (
-                <div key={type} className="session-row">
-                  <span className={`subject-icon subject-${type}`}>
-                    <Icon size={19} strokeWidth={1.7} />
-                  </span>
-                  <div className="session-row-text">
-                    <h3>
-                      {label}
-                      <span>
-                        {count} {noun}
-                        {count !== 1 ? "s" : ""}
-                      </span>
-                    </h3>
-                    <p>{description}</p>
+            {sections
+              .filter(({ type }) => items.some((item) => item.type === type))
+              .map(({ type, label, description, icon: Icon }) => {
+                const count = items.filter((item) => item.type === type).length;
+                const noun =
+                  type === "grammar"
+                    ? "concept"
+                    : type === "listening"
+                      ? "clip"
+                      : type === "reading"
+                        ? "passage"
+                        : type === "kanji"
+                          ? "character"
+                          : "word";
+                return (
+                  <div key={type} className="session-row">
+                    <span className={`subject-icon subject-${type}`}>
+                      <Icon size={19} strokeWidth={1.7} />
+                    </span>
+                    <div className="session-row-text">
+                      <h3>
+                        {label}
+                        <span>
+                          {count} {noun}
+                          {count !== 1 ? "s" : ""}
+                        </span>
+                      </h3>
+                      <p>{description}</p>
+                    </div>
+                    <span className="row-duration">
+                      {count * minutesPerType[type]} min
+                    </span>
                   </div>
-                  <span className="row-duration">
-                    {count * minutesPerType[type]} min
-                  </span>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
           {completed ? (
             <div className="completion-actions">
@@ -199,26 +211,47 @@ export function Dashboard() {
             </button>
           )}
           <p className="session-footnote">
-            {completed
-              ? "Progress saved."
-              : "Progress saves automatically."}
+            {completed ? "Progress saved." : "Progress saves automatically."}
           </p>
         </section>
+        <aside className="session-index" aria-label="Session details">
+          <span className="eyebrow">{modeLabel} / OVERVIEW</span>
+          <h2>{completed ? "Recorded" : "Session details"}</h2>
+          <dl>
+            <div>
+              <dt>{session ? "Cards reviewed" : "New cards"}</dt>
+              <dd>{session ? reviewed : newCount}</dd>
+            </div>
+            <div>
+              <dt>{session ? "Cards remaining" : "Due reviews"}</dt>
+              <dd>
+                {session
+                  ? Math.max(0, items.length - reviewed)
+                  : items.length - newCount}
+              </dd>
+            </div>
+            <div>
+              <dt>Daily time budget</dt>
+              <dd>
+                {state.goal.dailyMinutes}
+                <small> min</small>
+              </dd>
+            </div>
+          </dl>
+          <Link href="/settings" className="text-link">
+            Adjust study settings <ArrowUpRight size={15} />
+          </Link>
+          <div className="collection-index">
+            <span className="eyebrow">REFERENCE</span>
+            <h3>{modeLabel} collection</h3>
+            <p>{modeConcepts.length.toLocaleString()} items in this course.</p>
+            <Link href="/collection" className="text-link">
+              Browse material <ArrowUpRight size={15} />
+            </Link>
+          </div>
+        </aside>
       </div>
       <ProgressOverview />
-      <section className="travel-focus">
-        <span className="focus-icon">
-          <Compass size={23} strokeWidth={1.5} />
-        </span>
-        <div>
-          <div className="eyebrow">STUDY MATERIAL</div>
-          <h2>N5–N4 foundations</h2>
-          <p>Vocabulary, kanji, grammar, and reading practice.</p>
-        </div>
-        <Link href="/collection" className="text-link">
-          Explore {concepts.length} concepts <ArrowUpRight size={16} />
-        </Link>
-      </section>
     </>
   );
 }

@@ -149,7 +149,7 @@ export function KanaHome() {
       <div className="page-heading">
         <div>
           <div className="eyebrow">WRITING SYSTEMS</div>
-          <h1>Kana foundations.</h1>
+          <h1>Kana</h1>
           <p>
             Hiragana overall {overview.hiragana}% · Katakana overall {overview.katakana}%
           </p>

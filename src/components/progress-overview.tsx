@@ -34,8 +34,9 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
     <section className="progress-section" aria-labelledby="progress-heading">
       <div className="section-heading">
         <div>
-          <h2 id="progress-heading">Your {activeMode} foundations</h2>
-          <p lang="ja">学びは、少しずつ深まる。</p>
+          <h2 id="progress-heading">
+            {activeMode === "tae-kim" ? "Tae Kim" : activeMode} progress
+          </h2>
         </div>
         {showLink && (
           <Link href="/progress" className="text-link">
@@ -43,7 +44,10 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
           </Link>
         )}
       </div>
-      <div className="vocabulary-progress-grid" aria-label="Vocabulary progress">
+      <div
+        className="vocabulary-progress-grid"
+        aria-label="Vocabulary progress"
+      >
         {vocabulary.map((cohort) => {
           const introducedOrFurther =
             cohort.introduced + cohort.learning + cohort.mastered;
@@ -70,11 +74,14 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
                 />
                 <span
                   className="progress-mastered"
-                  style={{ width: `${(cohort.mastered / cohort.total) * 100}%` }}
+                  style={{
+                    width: `${(cohort.mastered / cohort.total) * 100}%`,
+                  }}
                 />
               </div>
               <small>
-                {cohort.unseen} unseen · {cohort.introduced} introduced · {cohort.learning} learning
+                {cohort.unseen} unseen · {cohort.introduced} introduced ·{" "}
+                {cohort.learning} learning
               </small>
             </div>
           );
@@ -83,9 +90,7 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
       <div className="progress-grid">
         {skills.map(({ type, label, icon: Icon }) => {
           const ids = concepts
-            .filter(
-              (item) => item.type === type && item.level === activeMode,
-            )
+            .filter((item) => item.type === type && item.level === activeMode)
             .map((item) => item.id);
           const introduced = state.progress.filter((item) =>
             ids.includes(item.conceptId),
@@ -106,7 +111,7 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
                     <span>/ {ids.length}</span>
                   </>
                 ) : (
-                  <strong className="not-yet">Coming later</strong>
+                  <strong className="not-yet">—</strong>
                 )}
               </div>
               <div
@@ -133,9 +138,7 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
                 />
               </div>
               <p>
-                {ids.length
-                  ? "concepts introduced"
-                  : "Audio practice is on the way"}
+                {ids.length ? "concepts introduced" : "No items in this course"}
               </p>
             </div>
           );
@@ -143,7 +146,8 @@ export function ProgressOverview({ showLink = true }: { showLink?: boolean }) {
       </div>
       <p className="progress-note">
         Mastered requires three consecutive Good or Easy ratings and a review
-        interval of at least seven days. This is not an estimate of JLPT readiness.
+        interval of at least seven days. This is not an estimate of JLPT
+        readiness.
       </p>
     </section>
   );

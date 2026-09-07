@@ -63,7 +63,9 @@ export function CollectionView() {
       <div className="page-heading">
         <div>
           <div className="eyebrow">{activeMode} STUDY MODE</div>
-          <h1>{activeMode} collection.</h1>
+          <h1>
+            {activeMode === "tae-kim" ? "Tae Kim" : activeMode} collection
+          </h1>
           <p>
             {activeMode === "N5"
               ? "Foundation vocabulary, kanji, grammar, reading, and listening."
@@ -85,16 +87,18 @@ export function CollectionView() {
           >
             All concepts
           </button>
-          {conceptTypes.filter((type) => type !== "kana").map((type) => (
-            <button
-              key={type}
-              aria-pressed={filter === type}
-              className={filter === type ? "selected" : ""}
-              onClick={() => setFilter(type)}
-            >
-              {typeLabels[type]}
-            </button>
-          ))}
+          {conceptTypes
+            .filter((type) => type !== "kana")
+            .map((type) => (
+              <button
+                key={type}
+                aria-pressed={filter === type}
+                className={filter === type ? "selected" : ""}
+                onClick={() => setFilter(type)}
+              >
+                {typeLabels[type]}
+              </button>
+            ))}
         </div>
         <div
           className="filter-tabs commonality-tabs"

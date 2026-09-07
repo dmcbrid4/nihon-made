@@ -1,9 +1,16 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { ArrowRight, KeyRound, Mail, ShieldCheck, UserPlus } from "lucide-react";
+import {
+  ArrowRight,
+  KeyRound,
+  Mail,
+  ShieldCheck,
+  UserPlus,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { BrandMark } from "@/components/brand";
 
 type Method = "link" | "password" | "invite";
 
@@ -66,7 +73,7 @@ export default function SignInPage() {
       short while.
     </>
   ) : method === "password" ? (
-    "Use the password for your private study space."
+    "Sign in with your account password."
   ) : method === "invite" ? (
     "New here? Enter the invite password you were given, along with your email."
   ) : (
@@ -76,7 +83,7 @@ export default function SignInPage() {
   return (
     <main className="auth-page">
       <div className="auth-mark">
-        日<span />
+        <BrandMark />
       </div>
       <p className="auth-japanese" lang="ja">
         日本まで
@@ -84,12 +91,16 @@ export default function SignInPage() {
       <p className="auth-english">Nihon Made</p>
       <section className="auth-card panel">
         <div className="auth-icon">{icon}</div>
-        <span className="eyebrow">PRIVATE STUDY SPACE</span>
-        <h1>{sent ? "Check your email." : "Welcome back."}</h1>
+        <span className="eyebrow">ACCOUNT</span>
+        <h1>{sent ? "Check your email" : "Sign in"}</h1>
         <p>{description}</p>
         {!sent && (
           <>
-            <div className="auth-methods" role="group" aria-label="Sign-in method">
+            <div
+              className="auth-methods"
+              role="group"
+              aria-label="Sign-in method"
+            >
               <button
                 type="button"
                 className={method === "password" ? "active" : ""}
@@ -172,8 +183,7 @@ export default function SignInPage() {
             </form>
             {method === "password" && (
               <p className="auth-password-note">
-                Password sign-in is ready once a password has been set for
-                this Supabase account.
+                Use the password already set for your account.
               </p>
             )}
           </>

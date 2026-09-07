@@ -60,9 +60,11 @@ function GoalForm({ state }: { state: StudyState }) {
       }}
     >
       <div className="settings-section-heading">
-        <span className="eyebrow">YOUR TARGET DATE</span>
-        <h2>Give your practice a deadline.</h2>
-        <p>The Progress page tracks your countdown and pace against this date.</p>
+        <span className="eyebrow">STUDY PLAN</span>
+        <h2>Schedule and daily pace</h2>
+        <p>
+          The Progress page tracks your countdown and pace against this date.
+        </p>
       </div>
       <label className="field-label" htmlFor="target-date">
         N4 target date
@@ -143,16 +145,15 @@ function GoalForm({ state }: { state: StudyState }) {
         </div>
       </div>
       <p className="field-help">
-        N5 mode uses foundation content only. N4 mode uses N4-only content.
-        Tae Kim mode is a separate personal-use course mined from real
-        anime/drama dialogue, with its own audio and screenshots. Kana mode
-        replaces Today with the hiragana/katakana chart, study, and quiz
-        tools -- it has no daily queue of its own. All four tracks keep
-        separate progress. Each non-Kana mode has its own new-card pace. The
-        selected mode setting scales how many never-seen concepts a session
-        pulls in, split proportionally across
-        vocabulary/kanji/grammar/reading/listening -- it does not apply to
-        Kana mode.
+        N5 mode uses foundation content only. N4 mode uses N4-only content. Tae
+        Kim mode is a separate personal-use course mined from real anime/drama
+        dialogue, with its own audio and screenshots. Kana mode replaces Today
+        with the hiragana/katakana chart, study, and quiz tools -- it has no
+        daily queue of its own. All four tracks keep separate progress. Each
+        non-Kana mode has its own new-card pace. The selected mode setting
+        scales how many never-seen concepts a session pulls in, split
+        proportionally across vocabulary/kanji/grammar/reading/listening -- it
+        does not apply to Kana mode.
       </p>
       <label className="field-label" htmlFor="time-zone">
         Your time zone
@@ -207,7 +208,12 @@ export function SettingsView() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   async function importBrowserHistory() {
-    if (!window.confirm("Import this browser history into your empty cloud workspace? The browser copy will be kept.")) return;
+    if (
+      !window.confirm(
+        "Import this browser history into your empty cloud workspace? The browser copy will be kept.",
+      )
+    )
+      return;
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       setImportMessage("No browser history was found on this device.");
@@ -217,7 +223,9 @@ export function SettingsView() {
     try {
       history = stateSchema.parse(JSON.parse(raw));
     } catch {
-      setImportMessage("That browser history could not be read. Export it before resetting storage.");
+      setImportMessage(
+        "That browser history could not be read. Export it before resetting storage.",
+      );
       return;
     }
     setImporting(true);
@@ -229,11 +237,16 @@ export function SettingsView() {
         body: JSON.stringify(history),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? "Your history could not be imported.");
+      if (!response.ok)
+        throw new Error(data.error ?? "Your history could not be imported.");
       await reload();
       setImportMessage("Browser history imported. Your local copy was kept.");
     } catch (error) {
-      setImportMessage(error instanceof Error ? error.message : "Your history could not be imported.");
+      setImportMessage(
+        error instanceof Error
+          ? error.message
+          : "Your history could not be imported.",
+      );
     } finally {
       setImporting(false);
     }
@@ -242,24 +255,22 @@ export function SettingsView() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow" lang="ja">学習の設定</div>
-          <h1 lang="ja">自分のペースで。</h1>
-          <p lang="ja">毎日の日本語を、あなたらしく。</p>
+          <div className="eyebrow" lang="ja">
+            学習の設定
+          </div>
+          <h1>Settings</h1>
+          <p>Study modes, daily pace, and saved history.</p>
         </div>
       </div>
       <div className="settings-layout">
         {state ? <GoalForm state={state} /> : !error ? <Loading /> : null}
         <aside className="panel data-panel">
           <span className="eyebrow">YOUR STUDY HISTORY</span>
-          <h2>
-            {mode === "browser"
-              ? "At home on this device."
-              : "Saved to your workspace."}
-          </h2>
+          <h2>{mode === "browser" ? "Browser history" : "Account history"}</h2>
           <p>
             {mode === "browser"
               ? "Reviews and settings are saved in this browser. They stay here when you close the app, but won’t follow you to another device."
-              : "Reviews and settings are saved to your PostgreSQL database, so you can pick up on another device."}
+              : "Reviews and settings are saved to your account and available on your other devices."}
           </p>
           <p>Keep a copy of your progress whenever you like.</p>
           <button className="secondary-button" onClick={exportData}>
@@ -268,11 +279,17 @@ export function SettingsView() {
           </button>
           {mode === "database" ? (
             <>
-              <button className="secondary-button" disabled={importing} onClick={() => void importBrowserHistory()}>
+              <button
+                className="secondary-button"
+                disabled={importing}
+                onClick={() => void importBrowserHistory()}
+              >
                 <Upload size={16} />
                 {importing ? "Importing…" : "Import browser history"}
               </button>
-              <div className="data-note" role="status">{importMessage}</div>
+              <div className="data-note" role="status">
+                {importMessage}
+              </div>
             </>
           ) : null}
           <div className="data-note">

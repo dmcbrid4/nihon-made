@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  ArrowUpRight,
   BookOpen,
   ChartNoAxesColumnIncreasing,
-  ChevronRight,
   House,
   Settings2,
 } from "lucide-react";
@@ -14,6 +12,7 @@ import type { ReactNode } from "react";
 import type { StudyMode } from "@/lib/study/types";
 import { ThemeToggle } from "./theme-toggle";
 import { useStudy } from "./study-provider";
+import { Brand } from "./brand";
 
 const navigation = [
   { href: "/", label: "Today", icon: House },
@@ -33,9 +32,13 @@ export function AppShell({ children }: { children: ReactNode }) {
     busy,
   } = useStudy();
   if (pathname.startsWith("/guest")) return <>{children}</>;
-  const current = pathname.startsWith("/kana")
-    ? "Kana"
-    : (navigation.find((item) => item.href === pathname)?.label ?? "Daily study");
+  const current =
+    pathname === "/design-preview"
+      ? "Design review"
+      : pathname.startsWith("/kana")
+        ? "Kana"
+        : (navigation.find((item) => item.href === pathname)?.label ??
+          "Daily study");
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -43,19 +46,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <aside className="sidebar">
         <Link href="/" className="brand" aria-label="Nihon Made home">
-          <span className="brand-mark" aria-hidden="true">
-            日<span />
-          </span>
-          <span>
-            <span className="brand-japanese" lang="ja">
-              日本まで
-            </span>
-            <span className="brand-english">Nihon Made</span>
-          </span>
+          <Brand />
         </Link>
         {state && (
           <label className="study-mode-picker">
-            <span>STUDY MODE</span>
+            <span>Study mode</span>
             <select
               aria-label="Active study mode"
               disabled={busy}
@@ -70,10 +65,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                 })
               }
             >
-              <option value="N5">N5 mode</option>
-              <option value="N4">N4 mode</option>
-              <option value="tae-kim">Tae Kim mode</option>
-              <option value="kana">Kana mode</option>
+              <option value="N5">N5 · Foundation</option>
+              <option value="N4">N4 · Intermediate</option>
+              <option value="tae-kim">Tae Kim</option>
+              <option value="kana">Kana</option>
             </select>
           </label>
         )}
@@ -81,35 +76,29 @@ export function AppShell({ children }: { children: ReactNode }) {
           {navigation.map(({ href, label, icon: Icon }) => {
             const isActive =
               pathname === href ||
-              (href === "/" && (pathname === "/study" || pathname.startsWith("/kana")));
+              (href === "/" &&
+                (pathname === "/study" || pathname.startsWith("/kana")));
             return (
-            <Link
-              key={href}
-              href={href}
-              className={`nav-link ${isActive ? "active" : ""}`}
-              aria-current={pathname === href ? "page" : undefined}
-            >
-              <Icon size={18} strokeWidth={1.7} />
-              <span>{label}</span>
-              {isActive && <span className="nav-dot" />}
-            </Link>
+              <Link
+                key={href}
+                href={href}
+                className={`nav-link ${isActive ? "active" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                <Icon size={18} strokeWidth={1.7} />
+                <span>{label}</span>
+              </Link>
             );
           })}
         </nav>
         <div className="sidebar-bottom">
-          <div className="journey-label">
-            <span className="status-dot" /> JLPT N4 を目指して
-          </div>
-          <p>
-            毎日の復習が、
-            <br />
-            力になる。
-          </p>
-          <Link href="/settings">
-            学習設定 <ArrowUpRight size={14} />
-          </Link>
+          {process.env.NODE_ENV === "development" && (
+            <Link href="/design-preview" className="design-preview-link">
+              Logo options ↗
+            </Link>
+          )}
           <div className="sidebar-footer">
-            <span lang="ja">少しずつ、着実に。</span>
+            <span>Appearance</span>
             <ThemeToggle />
           </div>
         </div>
@@ -117,19 +106,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="workspace">
         <header className="topbar">
           <div className="breadcrumb">
-            <span className="desktop-crumb">My learning</span>
-            <ChevronRight size={13} className="desktop-crumb" />
             <span>{current}</span>
           </div>
           <div className="topbar-right">
             <span className="storage-label">
-              <span className="status-dot" />
               {storageMode === "browser"
                 ? "Saved on this device"
-                : "Personal workspace"}
-            </span>
-            <span className="profile-avatar" aria-label="Personal workspace">
-              私
+                : "Account storage"}
             </span>
             <div className="mobile-theme">
               <ThemeToggle />
@@ -150,7 +133,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
         <footer className="page-footer">
           <span lang="ja">日本まで</span>
-          <span lang="ja">学びは積み重なる。</span>
+          <span>Japanese study</span>
         </footer>
       </div>
     </div>
