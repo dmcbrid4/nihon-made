@@ -8,6 +8,7 @@
 @import "../styles/editorial.css";
 
 :root {
+  /* Theme 2 (default): warmer editorial palette. */
   --background: #f8f6ee;
   --surface: #fffef9;
   --sidebar: #eeece2;
@@ -21,6 +22,22 @@
   --button: #303b31;
   --shadow: none;
   color-scheme: light;
+}
+
+:root[data-design="1"] {
+  /* Theme 1 (original): blue-tinted palette with a soft drop shadow. */
+  --background: #fbfaf4;
+  --surface: #ffffff;
+  --sidebar: #e8eef3;
+  --text: #14232d;
+  --muted: #657681;
+  --line: #d6e0e6;
+  --accent: #c74336;
+  --accent-soft: #fbe9e5;
+  --green: #236b62;
+  --green-soft: #e1f0ec;
+  --button: #152d39;
+  --shadow: 0 12px 30px #1834440a, 0 2px 6px #1834440b;
 }
 
 :root[data-theme="dark"] {
@@ -37,6 +54,19 @@
   --button: #e0e7d6;
   color-scheme: dark;
 }
+:root[data-design="1"][data-theme="dark"] {
+  --background: #101b24;
+  --surface: #172732;
+  --sidebar: #13232e;
+  --text: #e4edf1;
+  --muted: #9cafb8;
+  --line: #2c414d;
+  --accent: #ef8a73;
+  --accent-soft: #3c292a;
+  --green: #83c9bc;
+  --green-soft: #1d3939;
+  --button: #d8ebe9;
+}
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --background: #20231f;
@@ -51,6 +81,19 @@
     --green-soft: #324032;
     --button: #e0e7d6;
     color-scheme: dark;
+  }
+  :root[data-design="1"]:not([data-theme="light"]) {
+    --background: #101b24;
+    --surface: #172732;
+    --sidebar: #13232e;
+    --text: #e4edf1;
+    --muted: #9cafb8;
+    --line: #2c414d;
+    --accent: #ef8a73;
+    --accent-soft: #3c292a;
+    --green: #83c9bc;
+    --green-soft: #1d3939;
+    --button: #d8ebe9;
   }
 }
 
@@ -73,6 +116,12 @@ body {
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
+}
+:root[data-design="1"] body {
+  background-image:
+    linear-gradient(#1d526d0a 1px, transparent 1px),
+    linear-gradient(90deg, #1d526d0a 1px, transparent 1px);
+  background-size: 34px 34px;
 }
 button,
 input,

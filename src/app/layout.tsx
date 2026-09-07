@@ -17,7 +17,7 @@ export const viewport: Viewport = {
 };
 export const dynamic = "force-dynamic";
 
-const themeScript = `try{var t=localStorage.getItem('nihon-made:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}`;
+const themeScript = `try{var t=localStorage.getItem('nihon-made:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;var d=localStorage.getItem('nihon-made:design');if(d==='1')document.documentElement.dataset.design=d}catch{}`;
 
 export default function RootLayout({
   children,

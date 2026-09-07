@@ -32,13 +32,10 @@ export function AppShell({ children }: { children: ReactNode }) {
     busy,
   } = useStudy();
   if (pathname.startsWith("/guest")) return <>{children}</>;
-  const current =
-    pathname === "/design-preview"
-      ? "Design review"
-      : pathname.startsWith("/kana")
-        ? "Kana"
-        : (navigation.find((item) => item.href === pathname)?.label ??
-          "Daily study");
+  const current = pathname.startsWith("/kana")
+    ? "Kana"
+    : (navigation.find((item) => item.href === pathname)?.label ??
+      "Daily study");
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -92,11 +89,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="sidebar-bottom">
-          {process.env.NODE_ENV === "development" && (
-            <Link href="/design-preview" className="design-preview-link">
-              Logo options ↗
-            </Link>
-          )}
           <div className="sidebar-footer">
             <span>Appearance</span>
             <ThemeToggle />

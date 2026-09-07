@@ -11,6 +11,7 @@ import {
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
 import { STORAGE_KEY } from "@/lib/storage/browser";
+import { DesignThemePicker } from "./design-theme";
 
 const cardPaceModes = [
   { id: "N5", label: "N5 foundations" },
@@ -264,40 +265,50 @@ export function SettingsView() {
       </div>
       <div className="settings-layout">
         {state ? <GoalForm state={state} /> : !error ? <Loading /> : null}
-        <aside className="panel data-panel">
-          <span className="eyebrow">YOUR STUDY HISTORY</span>
-          <h2>{mode === "browser" ? "Browser history" : "Account history"}</h2>
-          <p>
-            {mode === "browser"
-              ? "Reviews and settings are saved in this browser. They stay here when you close the app, but won’t follow you to another device."
-              : "Reviews and settings are saved to your account and available on your other devices."}
-          </p>
-          <p>Keep a copy of your progress whenever you like.</p>
-          <button className="secondary-button" onClick={exportData}>
-            <Download size={16} />
-            Export study history
-          </button>
-          {mode === "database" ? (
-            <>
-              <button
-                className="secondary-button"
-                disabled={importing}
-                onClick={() => void importBrowserHistory()}
-              >
-                <Upload size={16} />
-                {importing ? "Importing…" : "Import browser history"}
-              </button>
-              <div className="data-note" role="status">
-                {importMessage}
-              </div>
-            </>
-          ) : null}
-          <div className="data-note">
-            {mode === "browser"
-              ? "Clearing browser data also clears your study history. Export a copy first."
-              : "Browser history from before database setup is kept separately and is not automatically imported."}
-          </div>
-        </aside>
+        <div className="settings-aside">
+          <aside className="panel appearance-panel">
+            <span className="eyebrow">APPEARANCE</span>
+            <h2>Theme</h2>
+            <p>Switch between the original look and the current one.</p>
+            <DesignThemePicker />
+          </aside>
+          <aside className="panel data-panel">
+            <span className="eyebrow">YOUR STUDY HISTORY</span>
+            <h2>
+              {mode === "browser" ? "Browser history" : "Account history"}
+            </h2>
+            <p>
+              {mode === "browser"
+                ? "Reviews and settings are saved in this browser. They stay here when you close the app, but won’t follow you to another device."
+                : "Reviews and settings are saved to your account and available on your other devices."}
+            </p>
+            <p>Keep a copy of your progress whenever you like.</p>
+            <button className="secondary-button" onClick={exportData}>
+              <Download size={16} />
+              Export study history
+            </button>
+            {mode === "database" ? (
+              <>
+                <button
+                  className="secondary-button"
+                  disabled={importing}
+                  onClick={() => void importBrowserHistory()}
+                >
+                  <Upload size={16} />
+                  {importing ? "Importing…" : "Import browser history"}
+                </button>
+                <div className="data-note" role="status">
+                  {importMessage}
+                </div>
+              </>
+            ) : null}
+            <div className="data-note">
+              {mode === "browser"
+                ? "Clearing browser data also clears your study history. Export a copy first."
+                : "Browser history from before database setup is kept separately and is not automatically imported."}
+            </div>
+          </aside>
+        </div>
       </div>
     </>
   );

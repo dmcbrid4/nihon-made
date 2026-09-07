@@ -38,38 +38,36 @@ test("session breakdown includes listening and review progress survives a reload
   expect(errors).toEqual([]);
 });
 
-test("logo options persist across routes and themes without touching study progress", async ({
+test("the theme-1/theme-2 switcher persists across routes and reloads without touching study progress", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(
     page.getByRole("heading", { name: "Today", exact: true }),
   ).toBeVisible();
+  await expect(page.locator(".sidebar .identity-bookplate")).toBeVisible();
   const history = await page.evaluate(() =>
     localStorage.getItem("nihon-made:study:v1"),
   );
-  await page.goto("/design-preview");
-  await expect(page.locator(".logo-option")).toHaveCount(3);
-  for (const [name, style] of [
-    ["Margin", "margin"],
-    ["Index", "index"],
-    ["Bookplate", "bookplate"],
-  ]) {
-    const option = page.getByRole("button", { name: new RegExp(name) });
-    await option.click();
-    await expect(option).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator(`.sidebar .identity-${style}`)).toBeVisible();
-  }
-  await page.getByRole("button", { name: /Margin/ }).click();
+  await page.getByRole("link", { name: "Settings", exact: true }).click();
+  await expect(page.locator(".design-option")).toHaveCount(2);
+  const theme1 = page.getByRole("button", { name: /Theme 1/ });
+  await theme1.click();
+  await expect(theme1).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("html")).toHaveAttribute("data-design", "1");
   await page.reload();
-  await expect(page.locator(".sidebar .identity-margin")).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-design", "1");
+  await expect(theme1).toHaveAttribute("aria-pressed", "true");
   await page
     .getByRole("button", { name: "Toggle light and dark mode" })
     .filter({ visible: true })
     .click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator("html")).toHaveAttribute("data-design", "1");
   await page.goto("/guest");
-  await expect(page.locator(".guest-sidebar .identity-margin")).toBeVisible();
+  await expect(
+    page.locator(".guest-sidebar .identity-bookplate"),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Guest demo", exact: true }),
   ).toBeVisible();
@@ -81,6 +79,10 @@ test("logo options persist across routes and themes without touching study progr
   expect(
     await page.evaluate(() => localStorage.getItem("nihon-made:study:v1")),
   ).toBe(history);
+  const theme2 = page.getByRole("button", { name: /Theme 2/ });
+  await page.goto("/settings");
+  await theme2.click();
+  await expect(page.locator("html")).not.toHaveAttribute("data-design", "1");
 });
 
 test("mode controls and independent pace sliders remain usable", async ({

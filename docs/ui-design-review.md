@@ -70,3 +70,17 @@ authentication or full curriculum audit.
 
 Choose a logo and review the typography, warmth, density, and phone layout.
 Continue adjustments on `dev`; do not publish until the design is accepted.
+
+## Resolution — September 7, 2026
+
+Bookplate is the logo; the other two options and the `/design-preview`
+comparison route were removed (`BrandMark` no longer takes a `variant`).
+Rather than replacing the original design outright, both looks now ship
+together: a "Theme 1 / Theme 2" switcher in Settings (`design-theme.tsx`,
+`data-design` attribute on `<html>`, alongside the existing `data-theme`
+light/dark attribute) lets a learner pick the original graph-paper/blue-ink
+look or this warmer one, same as the light/dark toggle. Theme 2 (this
+design) is the default for everyone. The switch covers palette, shadow,
+paper texture, and the typographic/spacing rules in `editorial.css`; it does
+not revert the copy and layout simplifications from the findings table above
+(those apply either way).
