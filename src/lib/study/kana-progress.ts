@@ -37,20 +37,20 @@ function rank(progress?: ConceptProgress): 0 | 1 | 2 | 3 {
   return 1;
 }
 
-/** A character is "mastered" only once BOTH recognition and recall reach
- * mastery -- see types.ts's KanaDirection doc comment. It's "unseen" only
- * when neither direction has ever been reviewed, and never regresses back
- * to "unseen" once either direction has started (so a character mid-way
- * through its pair doesn't look untouched). */
+/** A character's status is the better of its two directions -- mastering
+ * either recognition or recall alone is enough to master the character (a
+ * 5-correct streak masters "a kana", per the quiz's mastery rule, not "a
+ * kana in one specific direction"). Recognition and recall still track and
+ * quiz separately; this only combines them for the character-level badge.
+ * It's "unseen" only when neither direction has ever been reviewed. */
 export function characterStatus(
   recognition: ConceptProgress | undefined,
   recall: ConceptProgress | undefined,
 ): CurriculumStage {
-  const r = rank(recognition);
-  const c = rank(recall);
-  if (r === 0 && c === 0) return "unseen";
-  if (r === 3 && c === 3) return "mastered";
-  return Math.min(r, c) >= 2 ? "learning" : "introduced";
+  const best = Math.max(rank(recognition), rank(recall));
+  if (best === 0) return "unseen";
+  if (best === 3) return "mastered";
+  return best >= 2 ? "learning" : "introduced";
 }
 
 export function characterStatusFor(
@@ -152,7 +152,8 @@ export type KanaMilestone = {
 };
 
 /** Meaningful completion milestones, based on real per-character mastery
- * (both directions), not "viewed every card once". Always includes: Basic
+ * (either direction, via characterStatus), not "viewed every card once".
+ * Always includes: Basic
  * Hiragana, Hiragana voiced sounds, Hiragana complete, Basic Katakana,
  * Katakana complete, and Kana foundation complete (both scripts) -- plus a
  * couple of natural extras (Hiragana combinations, Katakana voiced/

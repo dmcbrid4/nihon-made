@@ -102,7 +102,7 @@ test("kana concept id round-trips through kanaConceptId/parseKanaConceptId", () 
   assert.equal(parseKanaConceptId("kana-not-a-real-entry-recognition"), null);
 });
 
-test("mastery calculation: a character requires both recognition and recall to master", () => {
+test("mastery calculation: a character masters once either recognition or recall masters", () => {
   const mastered: ConceptProgress = {
     conceptId: "x",
     status: "mastered",
@@ -114,10 +114,12 @@ test("mastery calculation: a character requires both recognition and recall to m
   };
   const learning: ConceptProgress = { ...mastered, status: "learning", successStreak: 1 };
   assert.equal(characterStatus(undefined, undefined), "unseen");
-  assert.equal(characterStatus(mastered, undefined), "introduced");
-  assert.equal(characterStatus(mastered, learning), "learning");
+  assert.equal(characterStatus(mastered, undefined), "mastered");
+  assert.equal(characterStatus(undefined, mastered), "mastered");
+  assert.equal(characterStatus(mastered, learning), "mastered");
   assert.equal(characterStatus(mastered, mastered), "mastered");
   assert.equal(characterStatus(learning, learning), "learning");
+  assert.equal(characterStatus(learning, undefined), "learning");
 
   const entry = kanaEntries.hiragana.find((e) => e.category === "basic")!;
   const progressById = new Map<string, ConceptProgress>([

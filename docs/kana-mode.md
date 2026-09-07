@@ -69,8 +69,9 @@ status = successStreak >= 5 ? "mastered" : previous ? "learning" : "introduced"
 Every kana character is **two** `Concept`s -- one `direction: "recognition"`
 (show か, ask "ka") and one `direction: "recall"` (show "ka", ask for か) --
 each with its own streak. A character shows as "mastered" on the chart/
-Progress page only once **both** directions reach it (`characterStatus` in
-`kana-progress.ts`, unchanged); "unseen" only if neither has started.
+Progress page once **either** direction reaches it (`characterStatus` in
+`kana-progress.ts` takes the better of the two ranks); "unseen" only if
+neither has started.
 
 A quiz question allows two attempts before revealing the answer
 (`KanaQuizQuestion` in `kana-study.tsx`). **Any eventually-correct answer
