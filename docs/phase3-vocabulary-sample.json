@@ -160,6 +160,23 @@
       ],
       "report": "phase3-vocabulary-audit.md",
       "status": "reviewed at aacb5b6; corrections proposed, not applied; resume position 16 in each level"
+    },
+    {
+      "chunk": 4,
+      "recordIds": [
+        "v-jlpt-n5-0214",
+        "v-jlpt-n5-0193",
+        "v-jlpt-n5-0131",
+        "v-jlpt-n5-0378",
+        "v-jlpt-n5-0175",
+        "v-jlpt-n4-0255",
+        "v-jlpt-n4-0073",
+        "v-jlpt-n4-0473",
+        "v-jlpt-n4-0359",
+        "v-jlpt-n4-0349"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at c30a8a1; corrections proposed, not applied; resume position 21 per level"
     }
   ]
 }

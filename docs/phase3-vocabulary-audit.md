@@ -1,7 +1,7 @@
 # Phase 3 vocabulary audit
 
-Status: **30 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunks 2–3 findings below await Phase 4. Resume position 16 in each level.
+Status: **40 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunks 2–4 findings below await Phase 4. Resume position 21 in each level.
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -631,3 +631,56 @@ Verified 30 unique reviewed IDs, exactly positions 1–15 per level, all still
 present; original sample seed/hash/order and current corpus unchanged.
 `git diff --check` passed. No application tests/build rerun for a documentation-only
 audit. Next: **chunk 4, positions 16–20 per level; 70 sampled records remain**.
+
+## Chunk 4 — compact audit, positions 16–20 per level (2026-09-07)
+
+Reviewed at `c30a8a1`; **40/100 inspected, 20 per level**. Same unchanged
+catalog hash as chunk 2. Compact packets covered term/reading, gloss/POS,
+examples/translations, every ruby segment, source/sense, target spans, status,
+priority and supporting metadata. Decisions below are agent review and proposed
+Phase 4 work, not applied data changes or native-speaker certification.
+
+| Record | Decision and correction |
+| --- | --- |
+| N5 `0214` 押す | **Polish; active.** Word 押(お)す and example ボタンを押す。 have correct readings. Natural instructional dictionary form; “Press the button” fits that context, though it is not an explicit imperative inflection. Prefer primary “to push; to press”; keep stamping secondary. **Required provenance repair:** stored `1180470:4` is interpersonal pressure; the button example uses sense 1. Gloss-overlap selection has favored the wrong sense. |
+| N5 `0193` 一月 | **Required; active.** 一(ひと)月(つき), “one month,” noun match `1162130:0`. 一月に彼に会いました。 / “I met him in January” instead uses いちがつ. Existing ruby 一→いち, 月→がつ, 彼→かれ, 会→あ + いました is correct for January, but not the target lexeme. Prefer natural disambiguating spelling **ひと月** (same stable ID/reading) and original example **ひと月日本にいます。 / “I'll be in Japan for a month.”** Ruby: ひと月(つき)日本(にほん)にいます。 Record the dictionary-backed spelling alias; do not conflate January progress with duration progress. |
+| N5 `0131` など | **Required; active.** Kana/particle/“et cetera” fit `1582300:0`, but 神などいない。 uses dismissive “such a thing as,” closer to sense 2. Japanese is natural; the problem is sense alignment, not its religious subject. 神→かみ is correct; word needs no ruby. Original: **スーパーでパンや卵などを買いました。 / “I bought bread, eggs, and other things at the supermarket.”** Ruby: スーパーでパンや卵(たまご)などを買(か)いました。 Explain the non-exhaustive や…など list; preserve kana spelling. |
+| N5 `0378` 時々 | **Polish; active.** “Sometimes” and `1598680:0` fit. Add **adverb** to the teaching POS; dictionary の-adjective support does not explain this example. 彼は時々変です。 is natural; “Sometimes he acts strangely” is a reasonable smoother translation, or retain the current contextual translation. All ruby correct: 彼→かれ, 時→とき / 々→どき (compound ときどき also valid), 変→へん. No compulsory sentence rewrite. |
+| N5 `0175` ラジオ | **Accept linguistically; active.** Noun/radio, `1138860:0`; preserve modern ラジオ. ラジオ、切った？ / “Did you turn off the radio?” is natural casual speech with omitted を. 切→き + った is correct; no headword ruby. Add a register note if retained rather than rejecting punctuation/ellipsis. |
+| N4 `0255` 形 | **Required; quarantined.** 形→かたち, noun/shape match `1250220:0`, but あの人形怖い。 / “That doll is scary” teaches 人形→にんぎょう. Existing ruby, including 怖→こわ + い, is correct; gate properly rejects target mismatch. Original: **このパンは星の形をしています。 / “This bread is shaped like a star.”** Ruby: このパンは星(ほし)の形(かたち)をしています。 Explain ～の形をしている as a shape-description pattern. |
+| N4 `0073` しばらく | **Required teaching replacement; active.** Adverbial `1304420:1` is “for a while; for some time,” a better gloss than “little while.” しばらくね。 is a valid reunion greeting (sense 3), not a duration example; “It's been a while” is closer than the generic “Nice to see you again.” Original duration example: **ここでしばらく待ってください。 / “Please wait here for a while.”** Ruby: ここでしばらく待(ま)ってください。 Existing kana-only word/sentence are correctly unannotated. |
+| N4 `0473` 恥ずかしい | **Accept linguistically; active.** i-adjective, `1421630:0`. 恥ずかしいなぁ！ / “How embarrassing!” is natural emotional speech. Optionally broaden gloss to “embarrassed; embarrassing.” 恥→は + ずかしい correctly respects visible okurigana; do not move ず into ruby while retaining it below. Preserve なぁ punctuation and register. |
+| N4 `0359` 周り | **Polish; active.** Noun/surroundings, `1604290:1`; 僕は周りを見回した。 / “I looked around me” is natural and demonstrates the term. All ruby correct: 僕→ぼく, 周→まわ + り, 見回→みまわ + した (a compound ruby span is acceptable). Add a brief 見回す “look around” aid for N4 accessibility; sentence replacement is optional. |
+| N4 `0349` 社長 | **Accept linguistically; active.** Company president/noun, `1322920:0`. 社長は外出中です。 / “The president is out now” is useful workplace language. Optionally specify “company president” in English. 社→しゃ / 長→ちょう and compound しゃちょう, 外出→がいしゅつ, 中→ちゅう are correct. Explain 外出中 “currently out” if needed. |
+
+IDs above have prefix `v-jlpt-<level>-`. All ten lexical entries/senses were
+checked in the cached full JMdict snapshot used in previous chunks; all stored
+canonical readings and word ruby appear correct. All current sentence readings
+are plausible for their actual sentences, including January's いちがつ;
+correct readings do not establish target-word/sense alignment.
+
+**Apply existing systemic requirements, with two new regression cases:**
+- 一月/ひとつき must not accept a January/いちがつ example merely because text
+  and token boundaries match. Match intended lexeme/reading and context, allowing
+  reviewed spelling aliases and inflections. This extends chunk 3's lexical
+  identity requirement; avoid universal same-reading rules for legitimate variants.
+- 押す demonstrates why overlapping gloss words cannot certify a selected sense.
+  Reuse the sense-alignment work already specified for たくさん and 近い.
+
+All ten are plausible level assignments, in the common priority band, claiming
+high confidence from the same Waller lineage; no independent JLPT consensus or
+numerical frequency was established. Duration/list-making/frequency deserve
+foundation sequencing; teach company titles after everyday nouns. All ten
+examples are imported without recovered attribution, so linguistic acceptance
+is not release approval. Original proposals above are not copied source examples.
+Duplicate-example scan: 押す shares its example with `v-jlpt-n5-0158`; 形 with
+`v-jlpt-n4-0411`. Shared examples alone are not invalid, but target sense must
+be evaluated separately for each card. No additional sampled records counted.
+
+**Result:** four required example/teaching replacements; three polish decisions
+(one also needs a dictionary-sense metadata fix); three linguistic accepts.
+Nine active, one quarantined. Ten correct word ruby representations; no new
+incorrect sentence-reading finding, but one homograph/reading target mismatch.
+Verified 40 unique reviewed IDs, positions 1–20 per level; sample and corpus
+unchanged. `git diff --check` passed. No app tests/build needed for this
+documentation-only audit. **Next: positions 21–25 per level; 60 remain.**
