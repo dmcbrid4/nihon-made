@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BrandMark } from "@/components/brand";
 
-type Method = "link" | "password" | "invite";
+type Method = "link" | "password";
 
 export default function SignInPage() {
   const searchParams = useSearchParams();
@@ -21,6 +21,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [invitePassword, setInvitePassword] = useState("");
   const [method, setMethod] = useState<Method>("link");
+  const [newHere, setNewHere] = useState(false);
   const [sent, setSent] = useState(false);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
@@ -33,7 +34,7 @@ export default function SignInPage() {
     const body =
       method === "password"
         ? { email, password }
-        : method === "invite"
+        : newHere
           ? { email, invitePassword }
           : { email };
     try {
@@ -62,7 +63,7 @@ export default function SignInPage() {
     <ShieldCheck size={23} />
   ) : method === "password" ? (
     <KeyRound size={23} />
-  ) : method === "invite" ? (
+  ) : newHere ? (
     <UserPlus size={23} />
   ) : (
     <Mail size={23} />
@@ -74,8 +75,8 @@ export default function SignInPage() {
     </>
   ) : method === "password" ? (
     "Sign in with your account password."
-  ) : method === "invite" ? (
-    "New here? Enter the invite password you were given, along with your email."
+  ) : newHere ? (
+    "Enter the invite password you were given, along with your email."
   ) : (
     "Sign in to keep your Japanese progress with you across devices."
   );
@@ -103,16 +104,6 @@ export default function SignInPage() {
             >
               <button
                 type="button"
-                className={method === "password" ? "active" : ""}
-                onClick={() => {
-                  setMethod("password");
-                  setMessage("");
-                }}
-              >
-                Password
-              </button>
-              <button
-                type="button"
                 className={method === "link" ? "active" : ""}
                 onClick={() => {
                   setMethod("link");
@@ -123,13 +114,14 @@ export default function SignInPage() {
               </button>
               <button
                 type="button"
-                className={method === "invite" ? "active" : ""}
+                className={method === "password" ? "active" : ""}
                 onClick={() => {
-                  setMethod("invite");
+                  setMethod("password");
+                  setNewHere(false);
                   setMessage("");
                 }}
               >
-                New here
+                Password
               </button>
             </div>
             <form onSubmit={(event) => void submit(event)}>
@@ -157,7 +149,7 @@ export default function SignInPage() {
                   />
                 </>
               )}
-              {method === "invite" && (
+              {method === "link" && newHere && (
                 <>
                   <label htmlFor="invite-password">Invite password</label>
                   <input
@@ -175,12 +167,26 @@ export default function SignInPage() {
                   ? "One moment…"
                   : method === "password"
                     ? "Sign in"
-                    : method === "invite"
+                    : newHere
                       ? "Create account"
                       : "Send sign-in link"}
                 <ArrowRight size={17} />
               </button>
             </form>
+            {method === "link" && (
+              <button
+                type="button"
+                className="text-link auth-new-here"
+                onClick={() => {
+                  setNewHere((current) => !current);
+                  setMessage("");
+                }}
+              >
+                {newHere
+                  ? "Already have an account? Use the sign-in link instead."
+                  : "New here?"}
+              </button>
+            )}
             {method === "password" && (
               <p className="auth-password-note">
                 Use the password already set for your account.

@@ -34,12 +34,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (!config.ownerEmails.includes(input.email))
-    return NextResponse.json(
-      { error: "Use the email address for this private workspace." },
-      { status: 403, headers: noStore },
-    );
-
   const response = NextResponse.json({ ok: true }, { headers: noStore });
   const supabase = createServerClient(
     config.supabaseUrl,

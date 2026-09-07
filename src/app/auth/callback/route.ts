@@ -59,6 +59,17 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // First sign-in ever (no password set, never offered one before): send
+  // them to set a password so future sign-ins don't depend on email at all.
+  const metadata = user?.user_metadata as
+    | { password_set?: boolean; password_prompt_shown?: boolean }
+    | undefined;
+  if (!metadata?.password_set && !metadata?.password_prompt_shown)
+    response.headers.set(
+      "Location",
+      new URL("/auth/set-password", request.url).toString(),
+    );
+
   response.cookies.set(REAUTH_COOKIE, String(Date.now()), {
     httpOnly: true,
     maxAge: REAUTH_INTERVAL_SECONDS,
