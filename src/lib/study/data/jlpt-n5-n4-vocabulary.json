@@ -27,9 +27,9 @@
     "total": 1409
   },
   "approvedCounts": {
-    "n5": 576,
-    "n4Only": 560,
-    "total": 1136
+    "n5": 580,
+    "n4Only": 566,
+    "total": 1146
   },
   "retired": [
     {
@@ -2459,11 +2459,11 @@
       "expression": "いちばん",
       "kanjiForm": null,
       "reading": "いちばん",
-      "meaning": "best; first",
+      "meaning": "best; most",
       "level": "N5",
-      "partOfSpeech": "no-adjective",
-      "example": "いちばん星みぃつけた。",
-      "exampleMeaning": "I found the first star.",
+      "partOfSpeech": "adverb",
+      "example": "この本がいちばん好きです。",
+      "exampleMeaning": "I like this book best.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -2481,27 +2481,31 @@
         ],
         "exampleFurigana": [
           {
+            "text": "この",
+            "reading": null
+          },
+          {
+            "text": "本",
+            "reading": "ほん"
+          },
+          {
+            "text": "が",
+            "reading": null
+          },
+          {
             "text": "いちばん",
             "reading": null
           },
           {
-            "text": "星",
-            "reading": "ほし"
+            "text": "好",
+            "reading": "す"
           },
           {
-            "text": "み",
+            "text": "き",
             "reading": null
           },
           {
-            "text": "ぃ",
-            "reading": null
-          },
-          {
-            "text": "つけ",
-            "reading": null
-          },
-          {
-            "text": "た",
+            "text": "です",
             "reading": null
           },
           {
@@ -2509,7 +2513,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "いちばんほしみぃつけた。",
+        "exampleReading": "このほんがいちばんすきです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -2551,36 +2555,36 @@
           "dictionary": {
             "entryId": "1165970",
             "senseIds": [
-              "1165970:0"
+              "1165970:1"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "generated",
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 4,
+            "start": 4,
+            "end": 8,
             "surface": "いちばん",
             "lemma": "いちばん",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the adverbial most/best sense and avoids the separate compound いちばん星 (いちばんぼし).",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
@@ -3370,8 +3374,8 @@
       "meaning": "stomach",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "おなか空いた！",
-      "exampleMeaning": "I'm starving!",
+      "example": "おなかが空きました。",
+      "exampleMeaning": "I am hungry.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -3389,27 +3393,19 @@
         ],
         "exampleFurigana": [
           {
-            "text": "おなか",
+            "text": "おなかが",
             "reading": null
           },
           {
             "text": "空",
-            "reading": "あ"
+            "reading": "す"
           },
           {
-            "text": "い",
-            "reading": null
-          },
-          {
-            "text": "た",
-            "reading": null
-          },
-          {
-            "text": "！",
+            "text": "きました。",
             "reading": null
           }
         ],
-        "exampleReading": "おなかあいた！",
+        "exampleReading": "おなかがすきました。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -3460,7 +3456,7 @@
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
@@ -3474,13 +3470,13 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "uncertain",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses 空く in the hungry sense (すく), avoiding the earlier あく contextual-reading error.",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
@@ -17504,11 +17500,11 @@
       "expression": "など",
       "kanjiForm": null,
       "reading": "など",
-      "meaning": "et cetera",
+      "meaning": "and so on; etc.",
       "level": "N5",
       "partOfSpeech": "particle",
-      "example": "神などいない。",
-      "exampleMeaning": "There is no god.",
+      "example": "スーパーでパンや卵などを買いました。",
+      "exampleMeaning": "I bought bread, eggs, and other things at the supermarket.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -17526,19 +17522,47 @@
         ],
         "exampleFurigana": [
           {
-            "text": "神",
-            "reading": "かみ"
+            "text": "スーパー",
+            "reading": null
+          },
+          {
+            "text": "で",
+            "reading": null
+          },
+          {
+            "text": "パン",
+            "reading": null
+          },
+          {
+            "text": "や",
+            "reading": null
+          },
+          {
+            "text": "卵",
+            "reading": "たまご"
           },
           {
             "text": "など",
             "reading": null
           },
           {
+            "text": "を",
+            "reading": null
+          },
+          {
+            "text": "買",
+            "reading": "か"
+          },
+          {
             "text": "い",
             "reading": null
           },
           {
-            "text": "ない",
+            "text": "まし",
+            "reading": null
+          },
+          {
+            "text": "た",
             "reading": null
           },
           {
@@ -17546,7 +17570,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "かみなどいない。",
+        "exampleReading": "すーぱーでぱんやたまごなどをかいました。",
         "secondaryMeanings": [],
         "itemKind": "expression",
         "linkedKanji": [],
@@ -17597,27 +17621,27 @@
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 1,
-            "end": 3,
+            "start": 9,
+            "end": 11,
             "surface": "など",
             "lemma": "など",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Teaches the non-exhaustive や…など listing use, rather than the dismissive sense.",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
@@ -21777,9 +21801,9 @@
       "reading": "まっすぐ",
       "meaning": "straight ahead; direct",
       "level": "N5",
-      "partOfSpeech": "na-adjective",
-      "example": "まっすぐ行け。",
-      "exampleMeaning": "Go straight on.",
+      "partOfSpeech": "adverb; na-adjective",
+      "example": "この道をまっすぐ行ってください。",
+      "exampleMeaning": "Please go straight along this road.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -21797,6 +21821,18 @@
         ],
         "exampleFurigana": [
           {
+            "text": "この",
+            "reading": null
+          },
+          {
+            "text": "道",
+            "reading": "みち"
+          },
+          {
+            "text": "を",
+            "reading": null
+          },
+          {
             "text": "まっすぐ",
             "reading": null
           },
@@ -21805,7 +21841,15 @@
             "reading": "い"
           },
           {
-            "text": "け",
+            "text": "っ",
+            "reading": null
+          },
+          {
+            "text": "て",
+            "reading": null
+          },
+          {
+            "text": "ください",
             "reading": null
           },
           {
@@ -21813,7 +21857,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "まっすぐいけ。",
+        "exampleReading": "このみちをまっすぐいってください。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -21864,27 +21908,27 @@
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 4,
+            "start": 4,
+            "end": 8,
             "surface": "まっすぐ",
             "lemma": "まっすぐ",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses a neutral travel request instead of a blunt command.",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
@@ -25521,14 +25565,14 @@
     {
       "id": "v-jlpt-n5-0193",
       "type": "vocabulary",
-      "expression": "一月",
-      "kanjiForm": "一月",
+      "expression": "ひと月",
+      "kanjiForm": "ひと月",
       "reading": "ひとつき",
       "meaning": "one month",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "一月に彼に会いました。",
-      "exampleMeaning": "I met him in January.",
+      "example": "ひと月日本にいます。",
+      "exampleMeaning": "I will be in Japan for a month.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -25540,8 +25584,8 @@
       "vocabulary": {
         "expressionFurigana": [
           {
-            "text": "一",
-            "reading": "ひと"
+            "text": "ひと",
+            "reading": null
           },
           {
             "text": "月",
@@ -25550,77 +25594,53 @@
         ],
         "exampleFurigana": [
           {
-            "text": "一",
-            "reading": "いち"
+            "text": "ひと",
+            "reading": null
           },
           {
             "text": "月",
-            "reading": "がつ"
+            "reading": "つき"
           },
           {
-            "text": "に",
-            "reading": null
+            "text": "日本",
+            "reading": "にほん"
           },
           {
-            "text": "彼",
-            "reading": "かれ"
-          },
-          {
-            "text": "に",
-            "reading": null
-          },
-          {
-            "text": "会",
-            "reading": "あ"
-          },
-          {
-            "text": "い",
-            "reading": null
-          },
-          {
-            "text": "まし",
-            "reading": null
-          },
-          {
-            "text": "た",
-            "reading": null
-          },
-          {
-            "text": "。",
+            "text": "にいます。",
             "reading": null
           }
         ],
-        "exampleReading": "いちがつにかれにあいました。",
+        "exampleReading": "ひとつきにほんにいます。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
-          "一月"
+          "月"
         ],
         "priority": {
-          "rank": 293,
-          "band": "common",
+          "rank": 100293,
+          "band": "additional",
           "reason": "Dictionary commonness is used as a supporting signal after the curated foundation; within that band, the imported catalog order is retained pending Phase 3 editorial reprioritization."
         },
         "classification": {
-          "confidence": "high",
+          "confidence": "medium",
           "evidence": [
             {
               "sourceId": "waller",
               "lineage": "Waller-derived community list",
               "level": "N5",
-              "agrees": true
+              "agrees": null
             },
             {
               "sourceId": "open-anki-jlpt",
               "lineage": "Waller-derived community list",
               "level": "N5",
-              "agrees": true
+              "agrees": null
             },
             {
               "sourceId": "openjlpt",
               "lineage": "Waller-derived community list",
               "level": "N5",
-              "agrees": true
+              "agrees": null
             }
           ],
           "reason": "Source records share Waller lineage; agreement is not counted as independent frequency evidence. \"agrees\" compares each source's own raw list to the assigned level; null means the term could not be relocated in that source's raw list (for example after an editorial spelling correction)."
@@ -25643,26 +25663,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
             "start": 0,
-            "end": 2,
-            "surface": "一月",
-            "lemma": "一月",
+            "end": 3,
+            "surface": "ひと月",
+            "lemma": "ひと月",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
-          "furigana": "automated",
-          "reviewer": null,
+          "lexical": "reviewed",
+          "example": "reviewed",
+          "furigana": "reviewed",
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the duration spelling ひと月 so it cannot be confused with January (一月/いちがつ)."
           ]
         },
         "approval": {
@@ -28401,7 +28421,7 @@
       "expression": "押す",
       "kanjiForm": "押す",
       "reading": "おす",
-      "meaning": "to push; to stamp something",
+      "meaning": "to push; to press",
       "level": "N5",
       "partOfSpeech": "Godan verb",
       "example": "ボタンを押す。",
@@ -28491,7 +28511,7 @@
           "dictionary": {
             "entryId": "1180470",
             "senseIds": [
-              "1180470:4"
+              "1180470:1"
             ],
             "glossOverlap": 2
           },
@@ -28514,11 +28534,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
+            "Pins the button example to the press/push-a-button sense rather than interpersonal pressure.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -43218,11 +43239,11 @@
       "expression": "口",
       "kanjiForm": "口",
       "reading": "くち",
-      "meaning": "mouth; opening",
+      "meaning": "mouth",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "彼は早口だ。",
-      "exampleMeaning": "He is a fast speaker.",
+      "example": "口を大きく開けてください。",
+      "exampleMeaning": "Please open your mouth wide.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -43240,19 +43261,35 @@
         ],
         "exampleFurigana": [
           {
-            "text": "彼",
-            "reading": "かれ"
+            "text": "口",
+            "reading": "くち"
           },
           {
-            "text": "は",
+            "text": "を",
             "reading": null
           },
           {
-            "text": "早口",
-            "reading": "はやくち"
+            "text": "大",
+            "reading": "おお"
           },
           {
-            "text": "だ",
+            "text": "きく",
+            "reading": null
+          },
+          {
+            "text": "開",
+            "reading": "あ"
+          },
+          {
+            "text": "け",
+            "reading": null
+          },
+          {
+            "text": "て",
+            "reading": null
+          },
+          {
+            "text": "ください",
             "reading": null
           },
           {
@@ -43260,7 +43297,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "かれははやくちだ。",
+        "exampleReading": "くちをおおきくあけてください。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -43313,25 +43350,31 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 0,
+            "end": 1,
+            "surface": "口",
+            "lemma": "口",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces the compound 早口 with the primary anatomical sense."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -48338,9 +48381,9 @@
       "reading": "やま",
       "meaning": "mountain",
       "level": "N5",
-      "partOfSpeech": "counter",
-      "example": "山羊座です。",
-      "exampleMeaning": "I'm a Capricorn.",
+      "partOfSpeech": "noun",
+      "example": "あの山はとても高いです。",
+      "exampleMeaning": "That mountain is very high.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -48358,8 +48401,28 @@
         ],
         "exampleFurigana": [
           {
-            "text": "山羊座",
-            "reading": "やぎざ"
+            "text": "あの",
+            "reading": null
+          },
+          {
+            "text": "山",
+            "reading": "やま"
+          },
+          {
+            "text": "は",
+            "reading": null
+          },
+          {
+            "text": "とても",
+            "reading": null
+          },
+          {
+            "text": "高",
+            "reading": "たか"
+          },
+          {
+            "text": "い",
+            "reading": null
           },
           {
             "text": "です",
@@ -48370,7 +48433,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "やぎざです。",
+        "exampleReading": "あのやまはとてもたかいです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -48423,25 +48486,31 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 2,
+            "end": 3,
+            "surface": "山",
+            "lemma": "山",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces the unrelated compound 山羊座 (Capricorn) with the ordinary mountain sense."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -54237,11 +54306,11 @@
       "expression": "十日",
       "kanjiForm": "十日",
       "reading": "とおか",
-      "meaning": "ten days; the tenth day",
+      "meaning": "the tenth day of the month; ten days",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "明日は十月十日火曜日です。",
-      "exampleMeaning": "Tomorrow is Tuesday, the tenth of October.",
+      "example": "十月十日は休みです。",
+      "exampleMeaning": "October 10 is a day off.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -54263,14 +54332,6 @@
         ],
         "exampleFurigana": [
           {
-            "text": "明日",
-            "reading": "あす"
-          },
-          {
-            "text": "は",
-            "reading": null
-          },
-          {
             "text": "十",
             "reading": "じゅう"
           },
@@ -54287,12 +54348,16 @@
             "reading": "か"
           },
           {
-            "text": "火曜",
-            "reading": "かよう"
+            "text": "は",
+            "reading": null
           },
           {
-            "text": "日",
-            "reading": "ひ"
+            "text": "休",
+            "reading": "やす"
+          },
+          {
+            "text": "み",
+            "reading": null
           },
           {
             "text": "です",
@@ -54303,7 +54368,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "あすはじゅうがつとおかかようひです。",
+        "exampleReading": "じゅうがつとおかはやすみです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -54347,7 +54412,7 @@
           "dictionary": {
             "entryId": "1335000",
             "senseIds": [
-              "1335000:1"
+              "1335000:0"
             ],
             "glossOverlap": 2
           },
@@ -54356,26 +54421,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 5,
-            "end": 7,
+            "start": 2,
+            "end": 4,
             "surface": "十日",
             "lemma": "十日",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the date sense without a weekday reading that previously rendered incorrectly."
           ]
         },
         "approval": {
@@ -64533,8 +64598,8 @@
       "meaning": "body",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "大体正しい。",
-      "exampleMeaning": "That is almost correct.",
+      "example": "運動は体にいいです。",
+      "exampleMeaning": "Exercise is good for your body.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -64552,15 +64617,27 @@
         ],
         "exampleFurigana": [
           {
-            "text": "大体",
-            "reading": "だいたい"
+            "text": "運動",
+            "reading": "うんどう"
           },
           {
-            "text": "正",
-            "reading": "ただ"
+            "text": "は",
+            "reading": null
           },
           {
-            "text": "しい",
+            "text": "体",
+            "reading": "からだ"
+          },
+          {
+            "text": "に",
+            "reading": null
+          },
+          {
+            "text": "いい",
+            "reading": null
+          },
+          {
+            "text": "です",
             "reading": null
           },
           {
@@ -64568,7 +64645,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "だいたいただしい。",
+        "exampleReading": "うんどうはからだにいいです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -64621,25 +64698,31 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 3,
+            "end": 4,
+            "surface": "体",
+            "lemma": "体",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces the unrelated word 大体 with the anatomical body sense."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -73724,11 +73807,11 @@
       "expression": "二十日",
       "kanjiForm": "二十日",
       "reading": "はつか",
-      "meaning": "twenty days; twentieth",
+      "meaning": "the twentieth day of the month; twenty days",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "今日は金曜日、十月二十日だ。",
-      "exampleMeaning": "Today is Friday, the twentieth of October.",
+      "example": "今日は十月二十日です。",
+      "exampleMeaning": "Today is October 20.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -73754,18 +73837,6 @@
             "reading": null
           },
           {
-            "text": "金曜",
-            "reading": "きんよう"
-          },
-          {
-            "text": "日",
-            "reading": "ひ"
-          },
-          {
-            "text": "、",
-            "reading": null
-          },
-          {
             "text": "十",
             "reading": "じゅう"
           },
@@ -73782,7 +73853,7 @@
             "reading": "か"
           },
           {
-            "text": "だ",
+            "text": "です",
             "reading": null
           },
           {
@@ -73790,7 +73861,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "きょうはきんようひ、じゅうがつはつかだ。",
+        "exampleReading": "きょうはじゅうがつはつかです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -73834,35 +73905,35 @@
           "dictionary": {
             "entryId": "1600850",
             "senseIds": [
-              "1600850:1"
+              "1600850:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 9,
-            "end": 12,
+            "start": 5,
+            "end": 8,
             "surface": "二十日",
             "lemma": "二十日",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the date sense and avoids the previously incorrect 金曜日 reading."
           ]
         },
         "approval": {
@@ -81665,7 +81736,7 @@
       "expression": "忙しい",
       "kanjiForm": "忙しい",
       "reading": "いそがしい",
-      "meaning": "busy; irritated",
+      "meaning": "busy; occupied",
       "level": "N5",
       "partOfSpeech": "i-adjective",
       "example": "僕は忙しい。",
@@ -81757,7 +81828,7 @@
             "senseIds": [
               "1519290:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
@@ -81778,11 +81849,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
+            "Removes the misleading primary meaning irritated.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -90029,11 +90101,11 @@
       "expression": "おじさん",
       "kanjiForm": null,
       "reading": "おじさん",
-      "meaning": "uncle, middle aged gentleman",
+      "meaning": "uncle; middle-aged man",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "「おじさん」という言葉を練習しています。",
-      "exampleMeaning": "I am practising the word “おじさん”.",
+      "example": "おじさんに写真を見せました。",
+      "exampleMeaning": "I showed my uncle the photos.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -90050,10 +90122,6 @@
         ],
         "exampleFurigana": [
           {
-            "text": "「",
-            "reading": null
-          },
-          {
             "text": "おじ",
             "reading": null
           },
@@ -90062,43 +90130,31 @@
             "reading": null
           },
           {
-            "text": "」",
+            "text": "に",
             "reading": null
           },
           {
-            "text": "と",
-            "reading": null
-          },
-          {
-            "text": "いう",
-            "reading": null
-          },
-          {
-            "text": "言葉",
-            "reading": "ことば"
+            "text": "写真",
+            "reading": "しゃしん"
           },
           {
             "text": "を",
             "reading": null
           },
           {
-            "text": "練習",
-            "reading": "れんしゅう"
+            "text": "見",
+            "reading": "み"
           },
           {
-            "text": "し",
+            "text": "せ",
             "reading": null
           },
           {
-            "text": "て",
+            "text": "まし",
             "reading": null
           },
           {
-            "text": "い",
-            "reading": null
-          },
-          {
-            "text": "ます",
+            "text": "た",
             "reading": null
           },
           {
@@ -90106,7 +90162,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "「おじさん」ということばをれんしゅうしています。",
+        "exampleReading": "おじさんにしゃしんをみせました。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -90150,34 +90206,32 @@
             "wordExact": false
           },
           "example": {
-            "kind": "fallback",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 1,
-            "end": 5,
+            "start": 0,
+            "end": 4,
             "surface": "おじさん",
             "lemma": "おじさん",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Inherited fallback example requires Phase 3 editorial review.",
+            "Replaces a placeholder and avoids presenting gentleman as an automatic gloss.",
             "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "placeholder example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -91693,7 +91747,7 @@
       "level": "N5",
       "partOfSpeech": "pronoun",
       "example": "「誰か車の中にいるのですか」「トムがいます」",
-      "exampleMeaning": "\"Who is in the car?\" \"Tom is.\"",
+      "exampleMeaning": "Is anyone in the car? Tom is.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -91849,11 +91903,13 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
-          "notes": []
+          "reviewer": "phase2-agent",
+          "notes": [
+            "Corrects the English question: 誰か asks whether anyone is present, not who is present."
+          ]
         },
         "approval": {
           "approved": true,
@@ -103168,11 +103224,11 @@
       "expression": "おかげ",
       "kanjiForm": null,
       "reading": "おかげ",
-      "meaning": "owing to",
+      "meaning": "thanks to; because of",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "おかげでほぼ完徹だ。",
-      "exampleMeaning": "Thanks to which I was up nearly all night.",
+      "example": "先生のおかげで、日本語が好きになりました。",
+      "exampleMeaning": "Thanks to my teacher, I have come to like Japanese.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -103190,6 +103246,14 @@
         ],
         "exampleFurigana": [
           {
+            "text": "先生",
+            "reading": "せんせい"
+          },
+          {
+            "text": "の",
+            "reading": null
+          },
+          {
             "text": "おかげ",
             "reading": null
           },
@@ -103198,15 +103262,43 @@
             "reading": null
           },
           {
-            "text": "ほぼ",
+            "text": "、",
             "reading": null
           },
           {
-            "text": "完徹",
-            "reading": "かんてつ"
+            "text": "日本",
+            "reading": "にっぽん"
           },
           {
-            "text": "だ",
+            "text": "語",
+            "reading": "ご"
+          },
+          {
+            "text": "が",
+            "reading": null
+          },
+          {
+            "text": "好",
+            "reading": "す"
+          },
+          {
+            "text": "き",
+            "reading": null
+          },
+          {
+            "text": "に",
+            "reading": null
+          },
+          {
+            "text": "なり",
+            "reading": null
+          },
+          {
+            "text": "まし",
+            "reading": null
+          },
+          {
+            "text": "た",
             "reading": null
           },
           {
@@ -103214,7 +103306,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "おかげでほぼかんてつだ。",
+        "exampleReading": "せんせいのおかげで、にっぽんごがすきになりました。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -103256,7 +103348,7 @@
           "dictionary": {
             "entryId": "1001640",
             "senseIds": [
-              "1001640:0"
+              "1001640:1"
             ],
             "glossOverlap": 0
           },
@@ -103265,28 +103357,26 @@
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
-            "attribution": {
-              "sourceId": "tatoeba",
-              "sentenceId": "76827"
-            }
+            "kind": "editorial",
+            "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 3,
+            "start": 3,
+            "end": 6,
             "surface": "おかげ",
             "lemma": "おかげ",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
+            "Teaches the beneficial-result construction のおかげで, not a sarcastic fragment.",
             "Expression segmentation was generated from its stored reading and needs review.",
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed."
           ]
@@ -109609,11 +109699,11 @@
       "expression": "しばらく",
       "kanjiForm": null,
       "reading": "しばらく",
-      "meaning": "little while",
+      "meaning": "for a while; for some time",
       "level": "N4",
       "partOfSpeech": "adverb",
-      "example": "しばらくね。",
-      "exampleMeaning": "Nice to see you again.",
+      "example": "ここでしばらく待ってください。",
+      "exampleMeaning": "Please wait here for a while.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -109631,11 +109721,31 @@
         ],
         "exampleFurigana": [
           {
+            "text": "ここ",
+            "reading": null
+          },
+          {
+            "text": "で",
+            "reading": null
+          },
+          {
             "text": "しばらく",
             "reading": null
           },
           {
-            "text": "ね",
+            "text": "待",
+            "reading": "ま"
+          },
+          {
+            "text": "っ",
+            "reading": null
+          },
+          {
+            "text": "て",
+            "reading": null
+          },
+          {
+            "text": "ください",
             "reading": null
           },
           {
@@ -109643,7 +109753,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "しばらくね。",
+        "exampleReading": "ここでしばらくまってください。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -109687,34 +109797,34 @@
             "senseIds": [
               "1304420:1"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 3
           },
           "ruby": {
             "source": "generated",
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 4,
+            "start": 3,
+            "end": 7,
             "surface": "しばらく",
             "lemma": "しばらく",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the duration sense rather than the reunion greeting しばらくね.",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
@@ -116071,11 +116181,11 @@
       "expression": "はず",
       "kanjiForm": null,
       "reading": "はず",
-      "meaning": "it should be so",
+      "meaning": "should; expected to",
       "level": "N4",
       "partOfSpeech": "auxiliary",
-      "example": "君はずぶぬれだ。",
-      "exampleMeaning": "You're wet through.",
+      "example": "電車はもうすぐ来るはずです。",
+      "exampleMeaning": "The train should arrive soon.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -116093,19 +116203,35 @@
         ],
         "exampleFurigana": [
           {
-            "text": "君",
-            "reading": "きみ"
+            "text": "電車",
+            "reading": "でんしゃ"
           },
           {
             "text": "は",
             "reading": null
           },
           {
-            "text": "ずぶぬれ",
+            "text": "もう",
             "reading": null
           },
           {
-            "text": "だ",
+            "text": "すぐ",
+            "reading": null
+          },
+          {
+            "text": "来",
+            "reading": "く"
+          },
+          {
+            "text": "る",
+            "reading": null
+          },
+          {
+            "text": "はず",
+            "reading": null
+          },
+          {
+            "text": "です",
             "reading": null
           },
           {
@@ -116113,7 +116239,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "きみはずぶぬれだ。",
+        "exampleReading": "でんしゃはもうすぐくるはずです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -116157,33 +116283,39 @@
             "senseIds": [
               "1476430:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "generated",
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 9,
+            "end": 11,
+            "surface": "はず",
+            "lemma": "はず",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces a cross-token は + ずぶぬれ false match with the expectation construction.",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -117075,11 +117207,11 @@
       "expression": "ビル",
       "kanjiForm": null,
       "reading": "ビル",
-      "meaning": "building or bill",
+      "meaning": "multi-story building",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "ねえ、ビル。",
-      "exampleMeaning": "Come on, Bill.",
+      "example": "あの高いビルで働いています。",
+      "exampleMeaning": "I work in that tall building.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -117097,11 +117229,15 @@
         ],
         "exampleFurigana": [
           {
-            "text": "ねえ",
+            "text": "あの",
             "reading": null
           },
           {
-            "text": "、",
+            "text": "高",
+            "reading": "たか"
+          },
+          {
+            "text": "い",
             "reading": null
           },
           {
@@ -117109,11 +117245,35 @@
             "reading": null
           },
           {
+            "text": "で",
+            "reading": null
+          },
+          {
+            "text": "働",
+            "reading": "はたら"
+          },
+          {
+            "text": "い",
+            "reading": null
+          },
+          {
+            "text": "て",
+            "reading": null
+          },
+          {
+            "text": "い",
+            "reading": null
+          },
+          {
+            "text": "ます",
+            "reading": null
+          },
+          {
             "text": "。",
             "reading": null
           }
         ],
-        "exampleReading": "ねえ、びる。",
+        "exampleReading": "あのたかいびるではたらいています。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -117157,34 +117317,34 @@
             "senseIds": [
               "1106010:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "generated",
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 3,
-            "end": 5,
+            "start": 4,
+            "end": 6,
             "surface": "ビル",
             "lemma": "ビル",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Expression segmentation was generated from its stored reading and needs review.",
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Removes the unrelated English name Bill and teaches the building sense.",
+            "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
@@ -134322,8 +134482,8 @@
       "meaning": "shape",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "あの人形怖い。",
-      "exampleMeaning": "That doll is scary.",
+      "example": "このパンは星の形をしています。",
+      "exampleMeaning": "This bread is shaped like a star.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -134341,19 +134501,47 @@
         ],
         "exampleFurigana": [
           {
-            "text": "あの",
+            "text": "この",
             "reading": null
           },
           {
-            "text": "人形",
-            "reading": "にんぎょう"
+            "text": "パン",
+            "reading": null
           },
           {
-            "text": "怖",
-            "reading": "こわ"
+            "text": "は",
+            "reading": null
+          },
+          {
+            "text": "星",
+            "reading": "ほし"
+          },
+          {
+            "text": "の",
+            "reading": null
+          },
+          {
+            "text": "形",
+            "reading": "かたち"
+          },
+          {
+            "text": "を",
+            "reading": null
+          },
+          {
+            "text": "し",
+            "reading": null
+          },
+          {
+            "text": "て",
+            "reading": null
           },
           {
             "text": "い",
+            "reading": null
+          },
+          {
+            "text": "ます",
             "reading": null
           },
           {
@@ -134361,7 +134549,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "あのにんぎょうこわい。",
+        "exampleReading": "このぱんはほしのかたちをしています。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -134414,25 +134602,31 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 7,
+            "end": 8,
+            "surface": "形",
+            "lemma": "形",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces an example of 人形 (doll) with the physical-shape sense of 形."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -135103,11 +135297,11 @@
       "expression": "迎える",
       "kanjiForm": "迎える",
       "reading": "むかえる",
-      "meaning": "to go out to meet",
+      "meaning": "to meet; to welcome",
       "level": "N4",
       "partOfSpeech": "Ichidan verb",
-      "example": "トムは来年100歳を迎える。",
-      "exampleMeaning": "Tom will be a hundred years old next year.",
+      "example": "駅で友達を迎えます。",
+      "exampleMeaning": "I will meet my friend at the station.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -135129,24 +135323,16 @@
         ],
         "exampleFurigana": [
           {
-            "text": "トム",
+            "text": "駅",
+            "reading": "えき"
+          },
+          {
+            "text": "で",
             "reading": null
           },
           {
-            "text": "は",
-            "reading": null
-          },
-          {
-            "text": "来年",
-            "reading": "らいねん"
-          },
-          {
-            "text": "100",
-            "reading": null
-          },
-          {
-            "text": "歳",
-            "reading": "さい"
+            "text": "友達",
+            "reading": "ともだち"
           },
           {
             "text": "を",
@@ -135157,7 +135343,11 @@
             "reading": "むか"
           },
           {
-            "text": "える",
+            "text": "え",
+            "reading": null
+          },
+          {
+            "text": "ます",
             "reading": null
           },
           {
@@ -135165,7 +135355,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "とむはらいねん100さいをむかえる。",
+        "exampleReading": "えきでともだちをむかえます。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -135211,33 +135401,33 @@
             "senseIds": [
               "1253190:0"
             ],
-            "glossOverlap": 3
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 10,
-            "end": 13,
-            "surface": "迎える",
+            "start": 5,
+            "end": 7,
+            "surface": "迎え",
             "lemma": "迎える",
-            "match": "exact"
+            "match": "inflected"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Uses the meeting/welcoming sense before the separate reaching-an-age sense."
           ]
         },
         "approval": {
@@ -139243,11 +139433,11 @@
       "expression": "港",
       "kanjiForm": "港",
       "reading": "みなと",
-      "meaning": "harbour",
+      "meaning": "harbor; port",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "空港まで行く。",
-      "exampleMeaning": "I'm going as far as the airport.",
+      "example": "港に大きな船が止まっています。",
+      "exampleMeaning": "A large ship is stopped in the harbor.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -139265,19 +139455,47 @@
         ],
         "exampleFurigana": [
           {
-            "text": "空港",
-            "reading": "くうこう"
+            "text": "港",
+            "reading": "みなと"
           },
           {
-            "text": "まで",
+            "text": "に",
             "reading": null
           },
           {
-            "text": "行",
-            "reading": "い"
+            "text": "大",
+            "reading": "おお"
           },
           {
-            "text": "く",
+            "text": "きな",
+            "reading": null
+          },
+          {
+            "text": "船",
+            "reading": "ふね"
+          },
+          {
+            "text": "が",
+            "reading": null
+          },
+          {
+            "text": "止",
+            "reading": "と"
+          },
+          {
+            "text": "まっ",
+            "reading": null
+          },
+          {
+            "text": "て",
+            "reading": null
+          },
+          {
+            "text": "い",
+            "reading": null
+          },
+          {
+            "text": "ます",
             "reading": null
           },
           {
@@ -139285,7 +139503,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "くうこうまでいく。",
+        "exampleReading": "みなとにおおきなふねがとまっています。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -139331,32 +139549,38 @@
             "senseIds": [
               "1279990:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 0,
+            "end": 1,
+            "surface": "港",
+            "lemma": "港",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces the unrelated compound 空港 (airport) with the port sense."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -149307,11 +149531,11 @@
       "expression": "習慣",
       "kanjiForm": "習慣",
       "reading": "しゅうかん",
-      "meaning": "custom; manners",
+      "meaning": "habit; custom",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "習慣化しました。",
-      "exampleMeaning": "It became a habit.",
+      "example": "毎朝歩くのが私の習慣です。",
+      "exampleMeaning": "I make a habit of walking every morning.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -149333,23 +149557,39 @@
         ],
         "exampleFurigana": [
           {
+            "text": "毎朝",
+            "reading": "まいあさ"
+          },
+          {
+            "text": "歩",
+            "reading": "ある"
+          },
+          {
+            "text": "く",
+            "reading": null
+          },
+          {
+            "text": "の",
+            "reading": null
+          },
+          {
+            "text": "が",
+            "reading": null
+          },
+          {
+            "text": "私",
+            "reading": "わたくし"
+          },
+          {
+            "text": "の",
+            "reading": null
+          },
+          {
             "text": "習慣",
             "reading": "しゅうかん"
           },
           {
-            "text": "化",
-            "reading": "か"
-          },
-          {
-            "text": "し",
-            "reading": null
-          },
-          {
-            "text": "まし",
-            "reading": null
-          },
-          {
-            "text": "た",
+            "text": "です",
             "reading": null
           },
           {
@@ -149357,7 +149597,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "しゅうかんかしました。",
+        "exampleReading": "まいあさあるくのがわたくしのしゅうかんです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -149401,7 +149641,7 @@
           "dictionary": {
             "entryId": "1333090",
             "senseIds": [
-              "1333090:1"
+              "1333090:0"
             ],
             "glossOverlap": 1
           },
@@ -149410,26 +149650,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 2,
+            "start": 8,
+            "end": 10,
             "surface": "習慣",
             "lemma": "習慣",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Removes the misleading primary gloss manners and teaches the everyday habit sense."
           ]
         },
         "approval": {
@@ -162733,11 +162973,11 @@
       "expression": "打つ",
       "kanjiForm": "打つ",
       "reading": "うつ",
-      "meaning": "to hit",
+      "meaning": "to hit; to strike",
       "level": "N4",
       "partOfSpeech": "Godan verb",
-      "example": "打つ手がないね。",
-      "exampleMeaning": "I'm all out of tricks.",
+      "example": "バットでボールを打ちました。",
+      "exampleMeaning": "I hit the ball with a bat.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -162759,27 +162999,35 @@
         ],
         "exampleFurigana": [
           {
+            "text": "バット",
+            "reading": null
+          },
+          {
+            "text": "で",
+            "reading": null
+          },
+          {
+            "text": "ボール",
+            "reading": null
+          },
+          {
+            "text": "を",
+            "reading": null
+          },
+          {
             "text": "打",
             "reading": "う"
           },
           {
-            "text": "つ",
+            "text": "ち",
             "reading": null
           },
           {
-            "text": "手",
-            "reading": "て"
-          },
-          {
-            "text": "が",
+            "text": "まし",
             "reading": null
           },
           {
-            "text": "ない",
-            "reading": null
-          },
-          {
-            "text": "ね",
+            "text": "た",
             "reading": null
           },
           {
@@ -162787,7 +163035,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "うつてがないね。",
+        "exampleReading": "ばっとでぼーるをうちました。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -162833,35 +163081,34 @@
             "senseIds": [
               "1408810:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
-            "attribution": {
-              "sourceId": "tatoeba",
-              "sentenceId": "138026"
-            }
+            "kind": "editorial",
+            "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 2,
-            "surface": "打つ",
+            "start": 8,
+            "end": 10,
+            "surface": "打ち",
             "lemma": "打つ",
-            "match": "exact"
+            "match": "inflected"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
-          "notes": []
+          "reviewer": "phase2-agent",
+          "notes": [
+            "Uses the physical hit sense before the figurative idiom 打つ手がない."
+          ]
         },
         "approval": {
           "approved": true,
@@ -173722,11 +173969,11 @@
       "expression": "彼",
       "kanjiForm": "彼",
       "reading": "かれ",
-      "meaning": "he; boyfriend",
+      "meaning": "he; him",
       "level": "N4",
       "partOfSpeech": "pronoun",
-      "example": "彼女は歩く。",
-      "exampleMeaning": "She walks.",
+      "example": "彼は毎朝バスで会社に行きます。",
+      "exampleMeaning": "He takes the bus to work every morning.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -173744,19 +173991,43 @@
         ],
         "exampleFurigana": [
           {
-            "text": "彼女",
-            "reading": "かのじょ"
+            "text": "彼",
+            "reading": "かれ"
           },
           {
             "text": "は",
             "reading": null
           },
           {
-            "text": "歩",
-            "reading": "ある"
+            "text": "毎朝",
+            "reading": "まいあさ"
           },
           {
-            "text": "く",
+            "text": "バス",
+            "reading": null
+          },
+          {
+            "text": "で",
+            "reading": null
+          },
+          {
+            "text": "会社",
+            "reading": "かいしゃ"
+          },
+          {
+            "text": "に",
+            "reading": null
+          },
+          {
+            "text": "行",
+            "reading": "い"
+          },
+          {
+            "text": "き",
+            "reading": null
+          },
+          {
+            "text": "ます",
             "reading": null
           },
           {
@@ -173764,7 +174035,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "かのじょはあるく。",
+        "exampleReading": "かれはまいあさばすでかいしゃにいきます。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -173810,32 +174081,38 @@
             "senseIds": [
               "1483070:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
-        "targetSpans": [],
+        "targetSpans": [
+          {
+            "start": 0,
+            "end": 1,
+            "surface": "彼",
+            "lemma": "彼",
+            "match": "exact"
+          }
+        ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
+            "Replaces the distinct word 彼女 with the ordinary male pronoun sense."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "no validated target span in the example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -187358,11 +187635,11 @@
       "expression": "お金持ち",
       "kanjiForm": "お金持ち",
       "reading": "おかねもち",
-      "meaning": "rich man",
+      "meaning": "wealthy person",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "叔母は非常なお金持ちだからといって、それだけ幸せというわけではない。",
-      "exampleMeaning": "My aunt is none the happier for her great wealth.",
+      "example": "彼女はお金持ちです。",
+      "exampleMeaning": "She is wealthy.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -187390,19 +187667,11 @@
         ],
         "exampleFurigana": [
           {
-            "text": "叔母",
-            "reading": "おば"
+            "text": "彼女",
+            "reading": "かのじょ"
           },
           {
             "text": "は",
-            "reading": null
-          },
-          {
-            "text": "非常",
-            "reading": "ひじょう"
-          },
-          {
-            "text": "な",
             "reading": null
           },
           {
@@ -187418,67 +187687,7 @@
             "reading": null
           },
           {
-            "text": "だ",
-            "reading": null
-          },
-          {
-            "text": "から",
-            "reading": null
-          },
-          {
-            "text": "と",
-            "reading": null
-          },
-          {
-            "text": "いっ",
-            "reading": null
-          },
-          {
-            "text": "て",
-            "reading": null
-          },
-          {
-            "text": "、",
-            "reading": null
-          },
-          {
-            "text": "それ",
-            "reading": null
-          },
-          {
-            "text": "だけ",
-            "reading": null
-          },
-          {
-            "text": "幸",
-            "reading": "しあわ"
-          },
-          {
-            "text": "せ",
-            "reading": null
-          },
-          {
-            "text": "と",
-            "reading": null
-          },
-          {
-            "text": "いう",
-            "reading": null
-          },
-          {
-            "text": "わけ",
-            "reading": null
-          },
-          {
-            "text": "で",
-            "reading": null
-          },
-          {
-            "text": "は",
-            "reading": null
-          },
-          {
-            "text": "ない",
+            "text": "です",
             "reading": null
           },
           {
@@ -187486,7 +187695,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "おばはひじょうなおかねもちだからといって、それだけしあわせというわけではない。",
+        "exampleReading": "かのじょはおかねもちです。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -187518,35 +187727,34 @@
             "senseIds": [
               "2429350:0"
             ],
-            "glossOverlap": 1
+            "glossOverlap": 2
           },
           "ruby": {
             "source": "jmdict-furigana",
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
-            "attribution": {
-              "sourceId": "tatoeba",
-              "sentenceId": "227567"
-            }
+            "kind": "editorial",
+            "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 6,
-            "end": 10,
+            "start": 3,
+            "end": 7,
             "surface": "お金持ち",
             "lemma": "お金持ち",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
-          "notes": []
+          "reviewer": "phase2-agent",
+          "notes": [
+            "Uses a gender-neutral primary meaning and a short first example."
+          ]
         },
         "approval": {
           "approved": true,
@@ -189655,11 +189863,11 @@
       "expression": "失礼",
       "kanjiForm": "失礼",
       "reading": "しつれい",
-      "meaning": "discourtesy, impoliteness; Excuse me",
+      "meaning": "excuse me; impoliteness",
       "level": "N4",
-      "partOfSpeech": "na-adjective",
-      "example": "「失礼」という言葉を練習しています。",
-      "exampleMeaning": "I am practising the word “失礼”.",
+      "partOfSpeech": "expression; noun; na-adjective",
+      "example": "失礼ですが、お名前を教えてください。",
+      "exampleMeaning": "Excuse me, could you tell me your name?",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -189679,39 +189887,39 @@
         ],
         "exampleFurigana": [
           {
-            "text": "「",
-            "reading": null
-          },
-          {
             "text": "失礼",
             "reading": "しつれい"
           },
           {
-            "text": "」",
+            "text": "です",
             "reading": null
           },
           {
-            "text": "と",
+            "text": "が",
             "reading": null
           },
           {
-            "text": "いう",
+            "text": "、",
             "reading": null
           },
           {
-            "text": "言葉",
-            "reading": "ことば"
+            "text": "お",
+            "reading": null
+          },
+          {
+            "text": "名前",
+            "reading": "なまえ"
           },
           {
             "text": "を",
             "reading": null
           },
           {
-            "text": "練習",
-            "reading": "れんしゅう"
+            "text": "教",
+            "reading": "おし"
           },
           {
-            "text": "し",
+            "text": "え",
             "reading": null
           },
           {
@@ -189719,11 +189927,7 @@
             "reading": null
           },
           {
-            "text": "い",
-            "reading": null
-          },
-          {
-            "text": "ます",
+            "text": "ください",
             "reading": null
           },
           {
@@ -189731,7 +189935,7 @@
             "reading": null
           }
         ],
-        "exampleReading": "「しつれい」ということばをれんしゅうしています。",
+        "exampleReading": "しつれいですが、おなまえをおしえてください。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -189761,7 +189965,7 @@
           "dictionary": {
             "entryId": "1320230",
             "senseIds": [
-              "1320230:0"
+              "1320230:1"
             ],
             "glossOverlap": 2
           },
@@ -189770,33 +189974,31 @@
             "wordExact": true
           },
           "example": {
-            "kind": "fallback",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 1,
-            "end": 3,
+            "start": 0,
+            "end": 2,
             "surface": "失礼",
             "lemma": "失礼",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Inherited fallback example requires Phase 3 editorial review."
+            "Introduces the polite request preface rather than a metalinguistic placeholder."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "placeholder example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },
@@ -192920,14 +193122,14 @@
     {
       "id": "v-jlpt-n4-0700",
       "type": "vocabulary",
-      "expression": "～おわる",
-      "kanjiForm": null,
+      "expression": "～終わる",
+      "kanjiForm": "～終わる",
       "reading": "～おわる",
       "meaning": "to finish doing ~",
       "level": "N4",
-      "partOfSpeech": "Godan verb",
-      "example": "「～おわる」という言葉を練習しています。",
-      "exampleMeaning": "I am practising the word “～おわる”.",
+      "partOfSpeech": "suffix expression",
+      "example": "その本を読み終わりました。",
+      "exampleMeaning": "I finished reading that book.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -192937,61 +193139,53 @@
       "vocabulary": {
         "expressionFurigana": [
           {
-            "text": "～おわる",
+            "text": "～",
+            "reading": null
+          },
+          {
+            "text": "終",
+            "reading": "お"
+          },
+          {
+            "text": "わる",
             "reading": null
           }
         ],
         "exampleFurigana": [
           {
-            "text": "「",
+            "text": "その",
             "reading": null
           },
           {
-            "text": "～",
-            "reading": null
-          },
-          {
-            "text": "おわる",
-            "reading": null
-          },
-          {
-            "text": "」",
-            "reading": null
-          },
-          {
-            "text": "と",
-            "reading": null
-          },
-          {
-            "text": "いう",
-            "reading": null
-          },
-          {
-            "text": "言葉",
-            "reading": "ことば"
+            "text": "本",
+            "reading": "ほん"
           },
           {
             "text": "を",
             "reading": null
           },
           {
-            "text": "練習",
-            "reading": "れんしゅう"
+            "text": "読",
+            "reading": "よ"
           },
           {
-            "text": "し",
+            "text": "み",
             "reading": null
           },
           {
-            "text": "て",
+            "text": "終",
+            "reading": "お"
+          },
+          {
+            "text": "わり",
             "reading": null
           },
           {
-            "text": "い",
+            "text": "まし",
             "reading": null
           },
           {
-            "text": "ます",
+            "text": "た",
             "reading": null
           },
           {
@@ -192999,10 +193193,12 @@
             "reading": null
           }
         ],
-        "exampleReading": "「～おわる」ということばをれんしゅうしています。",
+        "exampleReading": "そのほんをよみおわりました。",
         "secondaryMeanings": [],
         "itemKind": "expression",
-        "linkedKanji": [],
+        "linkedKanji": [
+          "終"
+        ],
         "priority": {
           "rank": 2440,
           "band": "common",
@@ -193015,7 +193211,7 @@
               "sourceId": "open-anki-jlpt",
               "lineage": "Waller-derived community list",
               "level": "N4",
-              "agrees": true
+              "agrees": null
             }
           ],
           "reason": "Source records share Waller lineage; agreement is not counted as independent frequency evidence. \"agrees\" compares each source's own raw list to the assigned level; null means the term could not be relocated in that source's raw list (for example after an editorial spelling correction)."
@@ -193036,34 +193232,32 @@
             "wordExact": false
           },
           "example": {
-            "kind": "fallback",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 1,
-            "end": 5,
-            "surface": "～おわる",
-            "lemma": "～おわる",
-            "match": "exact"
+            "start": 6,
+            "end": 9,
+            "surface": "終わり",
+            "lemma": "終わる",
+            "match": "inflected"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase2-agent",
           "notes": [
-            "Inherited fallback example requires Phase 3 editorial review.",
+            "Makes the stem-plus-終わる pattern visible and uses a reviewed inflected example.",
             "Expression segmentation was generated from its stored reading and needs review."
           ]
         },
         "approval": {
-          "approved": false,
-          "reasons": [
-            "placeholder example"
-          ]
+          "approved": true,
+          "reasons": []
         }
       }
     },

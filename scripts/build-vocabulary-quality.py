@@ -234,6 +234,179 @@ OVERRIDES = {
         "exampleKind": "editorial", "dictionaryEntryId": "2854117", "dictionarySenseIndex": 0,
         "notes": ["Pins the interval suffix to JMdict 置き, not 沖 (open sea)."],
     },
+    # Phase 4: high-confidence semantic and pedagogical repairs from the
+    # fixed Phase 3 audit. These sentences are original editorial examples.
+    "v-jlpt-n5-0193": {
+        "expression": "ひと月", "kanjiForm": "ひと月", "reading": "ひとつき",
+        "meaning": "one month", "partOfSpeech": "noun",
+        "example": "ひと月日本にいます。", "exampleMeaning": "I will be in Japan for a month.",
+        "exampleFurigana": [
+            {"text": "ひと", "reading": None}, {"text": "月", "reading": "つき"},
+            {"text": "日本", "reading": "にほん"}, {"text": "にいます。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1162130", "dictionarySenseIndex": 0,
+        "notes": ["Uses the duration spelling ひと月 so it cannot be confused with January (一月/いちがつ)."],
+    },
+    "v-jlpt-n5-0131": {
+        "meaning": "and so on; etc.", "partOfSpeech": "particle",
+        "example": "スーパーでパンや卵などを買いました。",
+        "exampleMeaning": "I bought bread, eggs, and other things at the supermarket.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1582300", "dictionarySenseIndex": 0,
+        "notes": ["Teaches the non-exhaustive や…など listing use, rather than the dismissive sense."],
+    },
+    "v-jlpt-n4-0255": {
+        "example": "このパンは星の形をしています。",
+        "exampleMeaning": "This bread is shaped like a star.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1250220", "dictionarySenseIndex": 0,
+        "notes": ["Replaces an example of 人形 (doll) with the physical-shape sense of 形."],
+    },
+    "v-jlpt-n4-0073": {
+        "meaning": "for a while; for some time", "partOfSpeech": "adverb",
+        "example": "ここでしばらく待ってください。", "exampleMeaning": "Please wait here for a while.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1304420", "dictionarySenseIndex": 1,
+        "notes": ["Uses the duration sense rather than the reunion greeting しばらくね."],
+    },
+    "v-jlpt-n5-0681": {
+        "exampleMeaning": "Is anyone in the car? Tom is.",
+        "dictionaryEntryId": "1416840", "dictionarySenseIndex": 0,
+        "notes": ["Corrects the English question: 誰か asks whether anyone is present, not who is present."],
+    },
+    "v-jlpt-n5-0404": {
+        "meaning": "the tenth day of the month; ten days", "partOfSpeech": "noun",
+        "example": "十月十日は休みです。", "exampleMeaning": "October 10 is a day off.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1335000", "dictionarySenseIndex": 0,
+        "notes": ["Uses the date sense without a weekday reading that previously rendered incorrectly."],
+    },
+    "v-jlpt-n4-0122": {
+        "meaning": "should; expected to", "partOfSpeech": "auxiliary",
+        "example": "電車はもうすぐ来るはずです。", "exampleMeaning": "The train should arrive soon.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1476430", "dictionarySenseIndex": 0,
+        "notes": ["Replaces a cross-token は + ずぶぬれ false match with the expectation construction."],
+    },
+    "v-jlpt-n5-0361": {
+        "meaning": "mountain", "partOfSpeech": "noun",
+        "example": "あの山はとても高いです。", "exampleMeaning": "That mountain is very high.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1302680", "dictionarySenseIndex": 0,
+        "notes": ["Replaces the unrelated compound 山羊座 (Capricorn) with the ordinary mountain sense."],
+    },
+    "v-jlpt-n5-0164": {
+        "partOfSpeech": "adverb; na-adjective",
+        "example": "この道をまっすぐ行ってください。", "exampleMeaning": "Please go straight along this road.",
+        "exampleKind": "editorial",
+        "notes": ["Uses a neutral travel request instead of a blunt command."],
+    },
+    "v-jlpt-n5-0018": {
+        "meaning": "best; most", "partOfSpeech": "adverb",
+        "example": "この本がいちばん好きです。", "exampleMeaning": "I like this book best.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1165970", "dictionarySenseIndex": 1,
+        "notes": ["Uses the adverbial most/best sense and avoids the separate compound いちばん星 (いちばんぼし)."],
+    },
+    "v-jlpt-n4-0290": {
+        "meaning": "harbor; port", "partOfSpeech": "noun",
+        "example": "港に大きな船が止まっています。", "exampleMeaning": "A large ship is stopped in the harbor.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1279990", "dictionarySenseIndex": 0,
+        "notes": ["Replaces the unrelated compound 空港 (airport) with the port sense."],
+    },
+    "v-jlpt-n4-0677": {
+        "meaning": "excuse me; impoliteness", "partOfSpeech": "expression; noun; na-adjective",
+        "example": "失礼ですが、お名前を教えてください。",
+        "exampleMeaning": "Excuse me, could you tell me your name?",
+        "exampleKind": "editorial", "dictionaryEntryId": "1320230", "dictionarySenseIndex": 1,
+        "notes": ["Introduces the polite request preface rather than a metalinguistic placeholder."],
+    },
+    "v-jlpt-n4-0537": {
+        "meaning": "he; him", "partOfSpeech": "pronoun",
+        "example": "彼は毎朝バスで会社に行きます。", "exampleMeaning": "He takes the bus to work every morning.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1483070", "dictionarySenseIndex": 0,
+        "notes": ["Replaces the distinct word 彼女 with the ordinary male pronoun sense."],
+    },
+    "v-jlpt-n4-0362": {
+        "meaning": "habit; custom", "partOfSpeech": "noun",
+        "example": "毎朝歩くのが私の習慣です。", "exampleMeaning": "I make a habit of walking every morning.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1333090", "dictionarySenseIndex": 0,
+        "notes": ["Removes the misleading primary gloss manners and teaches the everyday habit sense."],
+    },
+    "v-jlpt-n4-0458": {
+        "meaning": "to hit; to strike", "partOfSpeech": "Godan verb",
+        "example": "バットでボールを打ちました。", "exampleMeaning": "I hit the ball with a bat.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1408810", "dictionarySenseIndex": 0,
+        "notes": ["Uses the physical hit sense before the figurative idiom 打つ手がない."],
+    },
+    "v-jlpt-n4-0025": {
+        "meaning": "thanks to; because of", "partOfSpeech": "noun",
+        "example": "先生のおかげで、日本語が好きになりました。",
+        "exampleMeaning": "Thanks to my teacher, I have come to like Japanese.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1001640", "dictionarySenseIndex": 1,
+        "notes": ["Teaches the beneficial-result construction のおかげで, not a sarcastic fragment."],
+    },
+    "v-jlpt-n5-0548": {
+        "meaning": "the twentieth day of the month; twenty days", "partOfSpeech": "noun",
+        "example": "今日は十月二十日です。", "exampleMeaning": "Today is October 20.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1600850", "dictionarySenseIndex": 0,
+        "notes": ["Uses the date sense and avoids the previously incorrect 金曜日 reading."],
+    },
+    "v-jlpt-n5-0025": {
+        "example": "おなかが空きました。", "exampleMeaning": "I am hungry.",
+        "exampleFurigana": [
+            {"text": "おなかが", "reading": None}, {"text": "空", "reading": "す"},
+            {"text": "きました。", "reading": None},
+        ],
+        "exampleKind": "editorial", "dictionaryEntryId": "1002610", "dictionarySenseIndex": 0,
+        "notes": ["Uses 空く in the hungry sense (すく), avoiding the earlier あく contextual-reading error."],
+    },
+    "v-jlpt-n4-0261": {
+        "meaning": "to meet; to welcome", "partOfSpeech": "Ichidan verb",
+        "example": "駅で友達を迎えます。", "exampleMeaning": "I will meet my friend at the station.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1253190", "dictionarySenseIndex": 0,
+        "notes": ["Uses the meeting/welcoming sense before the separate reaching-an-age sense."],
+    },
+    "v-jlpt-n5-0480": {
+        "meaning": "body", "partOfSpeech": "noun",
+        "example": "運動は体にいいです。", "exampleMeaning": "Exercise is good for your body.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1409140", "dictionarySenseIndex": 0,
+        "notes": ["Replaces the unrelated word 大体 with the anatomical body sense."],
+    },
+    "v-jlpt-n5-0323": {
+        "meaning": "mouth", "partOfSpeech": "noun",
+        "example": "口を大きく開けてください。", "exampleMeaning": "Please open your mouth wide.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1275640", "dictionarySenseIndex": 0,
+        "notes": ["Replaces the compound 早口 with the primary anatomical sense."],
+    },
+    "v-jlpt-n5-0606": {
+        "meaning": "busy; occupied", "partOfSpeech": "i-adjective",
+        "dictionaryEntryId": "1519290", "dictionarySenseIndex": 0,
+        "notes": ["Removes the misleading primary meaning irritated."],
+    },
+    "v-jlpt-n5-0667": {
+        "meaning": "uncle; middle-aged man", "partOfSpeech": "noun",
+        "example": "おじさんに写真を見せました。", "exampleMeaning": "I showed my uncle the photos.",
+        "exampleKind": "editorial", "dictionaryEntryId": "2261490", "dictionarySenseIndex": 0,
+        "notes": ["Replaces a placeholder and avoids presenting gentleman as an automatic gloss."],
+    },
+    "v-jlpt-n4-0640": {
+        "meaning": "wealthy person", "partOfSpeech": "noun",
+        "example": "彼女はお金持ちです。", "exampleMeaning": "She is wealthy.",
+        "exampleKind": "editorial", "dictionaryEntryId": "2429350", "dictionarySenseIndex": 0,
+        "notes": ["Uses a gender-neutral primary meaning and a short first example."],
+    },
+    "v-jlpt-n4-0700": {
+        "expression": "～終わる", "kanjiForm": "～終わる", "reading": "～おわる",
+        "meaning": "to finish doing ~", "partOfSpeech": "suffix expression",
+        "example": "その本を読み終わりました。", "exampleMeaning": "I finished reading that book.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1589600", "dictionarySenseIndex": 2,
+        "notes": ["Makes the stem-plus-終わる pattern visible and uses a reviewed inflected example."],
+    },
+    "v-jlpt-n4-0130": {
+        "meaning": "multi-story building", "partOfSpeech": "noun",
+        "example": "あの高いビルで働いています。", "exampleMeaning": "I work in that tall building.",
+        "exampleKind": "editorial", "dictionaryEntryId": "1106010", "dictionarySenseIndex": 0,
+        "notes": ["Removes the unrelated English name Bill and teaches the building sense."],
+    },
+    "v-jlpt-n5-0214": {
+        "meaning": "to push; to press", "partOfSpeech": "Godan verb",
+        "dictionaryEntryId": "1180470", "dictionarySenseIndex": 1,
+        "notes": ["Pins the button example to the press/push-a-button sense rather than interpersonal pressure."],
+    },
 }
 
 # These are source-format defects, not automatic transformations. Each stable
@@ -251,7 +424,9 @@ NOUN_SURU_HEADWORDS = {
     "v-jlpt-n4-0603", "v-jlpt-n4-0604",
 }
 
-OVERRIDE_CONTROL_KEYS = {"exampleKind", "notes", "dictionaryEntryId", "dictionarySenseIndex"}
+OVERRIDE_CONTROL_KEYS = {
+    "exampleKind", "notes", "dictionaryEntryId", "dictionarySenseIndex", "exampleFurigana",
+}
 
 RETIRED = {
     "v-jlpt-n4-0070": "Ambiguous しかる entry; its sense and POS conflict and require a separately sourced decision.",
@@ -728,6 +903,15 @@ def main() -> None:
             # input), kept separate from the word_exact/dictionary-sourced flag.
             word_reading_valid = generated_ok
         example_furigana, example_reading, sentence_complete = sentence_segments(tagger, item["example"])
+        if "exampleFurigana" in override:
+            example_furigana = override["exampleFurigana"]
+            if "".join(part["text"] for part in example_furigana) != item["example"]:
+                raise ValueError(f"{item['id']}: editorial sentence ruby does not reconstruct the example")
+            example_reading = "".join(
+                part["reading"] if part["reading"] is not None else hira(part["text"])
+                for part in example_furigana
+            )
+            sentence_complete = True
         source_ids = [SOURCE_IDS[source] for source in item["sources"]]
         notes = list(override.get("notes", []))
         if was_fallback:
@@ -821,7 +1005,7 @@ def main() -> None:
             "review": {
                 "lexical": "reviewed" if item["id"] in OVERRIDES else "pending",
                 "example": "reviewed" if item["id"] in OVERRIDES else "pending",
-                "furigana": "automated" if word_exact and sentence_complete else "uncertain",
+                "furigana": "reviewed" if "exampleFurigana" in override else "automated" if word_exact and sentence_complete else "uncertain",
                 "reviewer": "phase2-agent" if item["id"] in OVERRIDES else None,
                 "notes": notes,
             },

@@ -184,6 +184,33 @@ test("reviewed homographs pin the intended JMdict entries", () => {
   assert.match(humbleVisit?.example ?? "", /伺います/);
 });
 
+test("phase 4 editorial replacements teach the reviewed lexeme and contextual reading", () => {
+  const item = (id: string) => {
+    const found = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(found, `${id} should remain in the corpus`);
+    assert.equal(found.vocabulary.approval.approved, true, `${id} should be available to learners`);
+    return found;
+  };
+  const oneMonth = item("v-jlpt-n5-0193");
+  assert.equal(oneMonth.expression, "ひと月");
+  assert.equal(oneMonth.vocabulary.exampleReading, "ひとつきにほんにいます。");
+  assert.equal(oneMonth.vocabulary.provenance.example.kind, "editorial");
+  const stomach = item("v-jlpt-n5-0025");
+  assert.equal(stomach.vocabulary.exampleReading, "おなかがすきました。");
+  assert.equal(stomach.vocabulary.provenance.example.kind, "editorial");
+  assert.equal(item("v-jlpt-n5-0131").meaning, "and so on; etc.");
+  assert.equal(item("v-jlpt-n4-0362").meaning, "habit; custom");
+  assert.equal(item("v-jlpt-n5-0606").meaning, "busy; occupied");
+  assert.equal(item("v-jlpt-n4-0640").meaning, "wealthy person");
+  assert.equal(item("v-jlpt-n4-0130").meaning, "multi-story building");
+  const hit = item("v-jlpt-n4-0458");
+  assert.match(hit.example, /ボールを打ちました/);
+  assert.equal(hit.vocabulary.provenance.example.kind, "editorial");
+  assert.match(item("v-jlpt-n4-0537").example, /^彼は/);
+  assert.match(item("v-jlpt-n4-0290").example, /^港に/);
+  assert.match(item("v-jlpt-n4-0700").example, /読み終わりました/);
+});
+
 test("retired cards are skipped in an in-progress session without creating a review", () => {
   const retiredId = "v-jlpt-n4-0690";
   const activeId = concepts.find((item) => item.type === "vocabulary")!.id;
