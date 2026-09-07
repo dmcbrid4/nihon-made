@@ -1,7 +1,7 @@
 # Phase 3 vocabulary audit
 
-Status: **20 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunk 2 findings below await Phase 4. Resume position 11 in each level.
+Status: **30 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunks 2–3 findings below await Phase 4. Resume position 16 in each level.
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -429,3 +429,205 @@ current records exist and the baseline sample remains unchanged. The read-only
 validator probe passes despite the documented counter defects. `git diff --check`
 passed; app tests/build were not rerun for this documentation-only increment.
 Next: **chunk 3, positions 11–15 in each level; 80 sample records remain**.
+
+## Chunk 3 — positions 11–15 per level (2026-09-07)
+
+Reviewed ten complete records against `aacb5b6`: **30/100 sampled records
+inspected (15 per level)**. Dataset unchanged, with the same SHA-256 recorded
+for chunk 2. Read each full record including source evidence, priority, sense,
+POS, sentence, translation, every ruby segment, and target spans. This is
+agent linguistic review, not native-speaker certification. Findings and
+original editorial candidates below are not applied corrections.
+
+### Individual decisions
+
+**N5 `v-jlpt-n5-0062` — この: required POS/dictionary correction; active.**
+Kana spelling, reading, “this,” and この本です。 / “It's this book.” are
+correct. The sentence is a natural short identification answer; 本→ほん is
+correct and no word ruby is needed. But “number” is wrong for this word.
+Stored dictionary entry `1578150` is 九 (nine), whose readings include an
+uncommon この. The intended entry is `1582920` (此の/この), sense 0,
+`adj-pn`: teach “determiner / pre-noun modifier,” followed by a noun, unlike
+これ. Waller's raw N5 row already supplies the correct entry ID and 此の
+spelling. `glossOverlap: 0` records the bad match but does not block approval.
+[St. Olaf's demonstrative lesson](https://wp.stolaf.edu/japanese/grammar-index/genki-i-ii-grammar-index/kono-sono-ano-dono-genki-i-chapter-2/)
+independently supports the noun-following construction; no lesson examples
+copied. Keep the existing example if attribution is recovered. This is core
+foundation material and merits priority with the other demonstratives.
+
+**N5 `v-jlpt-n5-0654` — 緑: required example replacement; quarantined.**
+緑→みどり, “green,” and noun/の-adjective usage agree with JMdict `1555300:0`.
+“No-adjective” is defensible but should be explained as 緑の + noun. The
+current 緑茶は無理。 / “I can't drink green tea.” is conversationally plausible
+with context; it teaches 緑茶 (りょくちゃ), not 緑 (みどり). Both existing
+sentence readings, 緑茶→りょくちゃ and 無理→むり, are correct. The gate properly
+rejects the target mismatch. Original proposal: 緑のシャツを着ています。 /
+“I'm wearing a green shirt.” Ruby: 緑(みどり)のシャツを着(き)ています。
+Reading: みどりのしゃつをきています。 Preserve the natural kanji headword.
+
+**N5 `v-jlpt-n5-0296` — 嫌: required example replacement; quarantined.**
+嫌→いや, “unpleasant,” and na-adjective match JMdict `1587610:1`. However,
+みんな嫌い。 / “I don't like any of them.” demonstrates 嫌い (きらい,
+`1257240`), a distinct word, not an inflection of 嫌. Its stored ruby
+嫌→きら + い is correct for the example; replacing it with いや would corrupt
+that sentence. The same example occurs on みんな and 嫌い cards. Gate correctly
+quarantines this target mismatch. Original proposal: 嫌なにおいがします。 /
+“There's an unpleasant smell.” Ruby: 嫌(いや)なにおいがします。
+Reading: いやなにおいがします。 This demonstrates the selected sense and な;
+add a short note on においがする (“to smell / there is a smell”).
+
+**N5 `v-jlpt-n5-0541` — 曇り: accept linguistic content; active.**
+JMdict `1592340:0` supports “cloudy weather,” noun, and くもり. Word and
+sentence 曇→くも + り, and 日→ひ, are correct. 曇りの日です。 / “It's a cloudy
+day.” is an understandable weather statement with beginner grammar. Explicit
+今日は曇りです。 would supply a time topic, but a short sentence alone is not
+a defect requiring replacement. Keep noun usage clear rather than implying
+曇り is an i-adjective. Imported attribution remains unresolved.
+
+**N5 `v-jlpt-n5-0279` — 近い: recommended pedagogical simplification; active.**
+近→ちか + い, i-adjective and “near” are correct (`1242130`). 決断の日は近い。
+/ “The day of decision is at hand.” is grammatical but abstract and formal
+for an introductory N5 distance word; 決断 adds unnecessary vocabulary. All
+ruby is correct: 決断→けつだん, 日→ひ, 近→ちか + い. The sentence uses temporal
+closeness (dictionary sense 1), while stored sense 0 describes distance. Both
+are valid meanings of 近い; explain the distinction if retained. Prefer an
+original first example: 家から駅まで近いです。 / “The station is close to my
+house.” Ruby: 家(いえ)から駅(えき)まで近(ちか)いです。
+Reading: いえからえきまでちかいです。 Keep temporal use as a secondary meaning.
+The imported sentence and English translation were found together in the
+local JMdict snapshot under 決断 `1254370:0`, Tatoeba ID `175904`; this is
+recovered provenance, not proof of N5 suitability. Live Tatoeba page retrieval
+failed during this pass, so current contributor/license details were not rechecked.
+
+**N4 `v-jlpt-n4-0708` — ～について: accept linguistic content; active.**
+The expression “about; concerning,” kana spelling and noun + について usage
+match JMdict `1009780:0`. 日本の歴史について話しましょう。 / “Let's talk about
+Japanese history.” is a useful N4 sentence. 日本→にっぽん is valid (`1582710`
+also lists にほん); do not label it wrong merely because にほん is often taught
+first. 歴史→れきし and 話→はな + しましょう are correct. The headword needs no
+ruby. The leading ～ is a slot marker, not pronounced kana or an inflection.
+Required metadata cleanup: `kanjiForm` should be null (there is no kanji), and
+matching について after removing a slot marker should not be described as
+an inflection. Keep a documented phrase/slot exception in the existing matcher.
+N4 is plausible but the low-confidence single-source label should remain.
+Source is an original Phase 2 editorial sentence, not an imported quotation.
+
+**N4 `v-jlpt-n4-0528` — 拝見: required canonical-reading/furigana repair; active.**
+The headword is 拝見 but its reading is はいけんする, all placed above those
+two kanji. This is incorrect word ruby even though it reconstructs the stored
+(bad) reading. JMdict `1472270` supplies 拝見 / はいけん, noun + suru verb,
+marked humble/polite. Prefer retaining the stable ID/headword with reading
+はいけん and ruby 拝見→はいけん; label “noun; suru verb” and explain 拝見する
+as humble “to look at / see.” If choosing 拝見する as the headword instead,
+する must be visible kana outside the ruby. Do not create a duplicate card.
+Current dictionary provenance is null because the mismatched reading prevents
+lookup; correcting it should recover `1472270` and its commonness signal.
+搭乗券を拝見します。 is natural service language, and sentence ruby
+搭乗→とうじょう, 券→けん, 拝見→はいけん + します is correct. “May I see your
+boarding pass, please?” is a plausible functional translation, not a literal
+question encoded by します. Explain that context or use an explicit request.
+Original simpler proposal: 写真を拝見してもいいですか。 / “May I look at the
+photos?” Ruby: 写真(しゃしん)を拝見(はいけん)してもいいですか。
+Reading: しゃしんをはいけんしてもいいですか。 Teach ordinary 見る first, then
+this humble usage. Current attribution remains unresolved.
+
+**N4 `v-jlpt-n4-0035` — お宅: accept linguistic content; active.**
+“(polite) your house,” noun and おたく match JMdict `1002400:0`. Keep お as
+kana, 宅→たく as ruby. 明日お宅に伺います。 / “I'll pay you a visit at your
+house tomorrow.” is natural, with an appropriately respectful home reference
+and humble 伺う. 明日→あす is valid (`1584660`) and appropriate in this register;
+あした is another valid reading, not a mandatory correction. 伺→うかが + います
+is correct. Useful N4 honorific material after basic visiting verbs. Retain the
+home sense without introducing the unrelated hobby-fan meaning of オタク.
+Explain respectful register in the usage note; imported attribution still missing.
+
+**N4 `v-jlpt-n4-0164` — 一生懸命: recommended gloss/POS polish; active.**
+JMdict `1164010:0` supports the canonical spelling, いっしょうけんめい, and
+adverb/na-adjective/noun categories. “With utmost effort” is accurate but
+“hard; with all one's effort” is easier learner English. 一生懸命働いた。 /
+“He worked hard.” is natural; Japanese omits the subject, so “he” is one
+contextual interpretation, not grammatically specified gender. No replacement
+required on that basis. Display the adverbial use exemplified here alongside
+other POS support, rather than only “na-adjective.” All ruby is correct:
+word 一→いっ / 生→しょう / 懸→けん / 命→めい; sentence 一生→いっしょう,
+懸命→けんめい, 働→はたら + いた. Compound segmentation differences are valid.
+Imported attribution remains unresolved.
+
+**N4 `v-jlpt-n4-0504` — 途中: recommended usage/POS clarification; active.**
+途中→とちゅう and “on the way” agree with JMdict `1582200:0` (noun/adverb).
+家に帰る途中なの？ / “Are you on your way home?” is natural and useful N4
+conversation. 家→いえ, 帰→かえ + る, 途中→とちゅう are correct; the word's
+途→と / 中→ちゅう segmentation is also valid. “Adverb” alone fails to explain
+the nominal construction shown here: verb dictionary form + 途中, with なの？
+as a casual explanatory question. Add noun usage and a register note; optionally
+show the polite equivalent with 途中ですか. Retain the current sentence if
+attribution can be recovered.
+
+### Systematic findings and Phase 4 requirements
+
+1. **Dictionary entry selection must consider homographs/homophones.**
+   `jmdict_index()` stores only the first entry for each form/reading using
+   `by_form.setdefault`. `select_sense()` then searches only that entry. For
+   この this retains 九 and discards the correct demonstrative entry even
+   though the gloss is exactly “this.” Retain candidate entries, respect
+   reading/spelling restrictions and commonness, and select using intended
+   sense/POS plus source IDs. Test that この resolves to `1582920` and that
+   genuine 九 remains a number. Do not assume zero English overlap always
+   proves an error, but route unresolved matches to review instead of certifying
+   the first match. POS also needs correction at its authoritative import source;
+   fixing provenance alone does not update the learner-facing label.
+2. **Canonical consistency is not lexical correctness.** The same malformed
+   headword/reading pattern as 拝見 appears in **30 active candidates (4 N5,
+   26 N4)**: reading ends in する, headword does not, and all 30 put する in
+   ruby over the headword. Targeted scan, not 30 extra full audits. IDs:
+   N5 `0362`, `0471`, `0601`, `0659`; N4 `0154`, `0170`, `0172`, `0176`,
+   `0257`, `0259`, `0279`, `0327`, `0370`, `0371`, `0372`, `0380`, `0381`,
+   `0396`, `0400`, `0419`, `0425`, `0426`, `0445`, `0459`, `0525`, `0526`,
+   `0528`, `0579`, `0603`, `0604` (prefix `v-jlpt-<level>-`). Validate each
+   base noun against the dictionary before normalizing; never strip する
+   indiscriminately from legitimate verbs. Retain IDs/progress and check for
+   collisions with prior retired variants. Use explicit reviewed fixtures for
+   拝見 / はいけん and, if supported, 拝見する / はいけんする.
+3. **The target gate helps but does not certify content.** 緑/緑茶 and
+   嫌/嫌い are correctly held back. この and 拝見 are active despite serious
+   lexical defects. 近い has recovered attribution but remains a poor first
+   teaching example. Approval must keep mechanical checks, lexical review,
+   pedagogical review and source/licensing review visibly distinct.
+4. **Preserve legitimate contextual alternatives.** 日本→にっぽん and
+   明日→あす are valid in these samples. Regression coverage should prevent
+   broad corrections from replacing all alternative readings automatically.
+5. **Classification and order:** eight records claim high confidence from the
+   same Waller lineage, 拝見 medium, ～について low. All ten placements are
+   plausible curriculum choices; independent source agreement was not verified.
+   Waller N4 has 拝見/はいけん, while Anki N4 stores 拝見/はいけんする: record
+   the latter as a source-format defect rather than a JLPT disagreement.
+   Waller N5 contains 此の/この with the correct dictionary ID despite the
+   kana card's null evidence match. Retain source-row identity across repairs.
+   Nine records are in the common band; 拝見's additional band is plausibly
+   influenced by its failed dictionary match. Recalculate after repair, then
+   sequence honorifics after basic verbs instead of treating import rank as
+   curriculum evidence. This scan did not establish numerical frequency ranks.
+
+### Evidence and verification
+
+Full JMdict entries/senses inspected from the local snapshot recorded in prior
+chunks; relevant entry IDs appear in the decisions above. Word source rows
+were cross-checked for この and 拝見. No external examples imported. Nine
+sentences are imported: eight lack recovered attribution, while 近い has a
+matching Japanese/English pair in the local Tatoeba-derived snapshot. One
+sentence (～について) is original Phase 2 editorial content. Licensing of
+unattributed imports remains unresolved; lexical approval is not permission
+to redistribute examples.
+
+Result: **4 required lexical/example corrections, 3 recommended teaching
+improvements, 3 linguistically acceptable records** (～について also needs
+metadata cleanup). Eight active, two quarantined. Nine word ruby representations
+appear correct and one (拝見) is wrong; all ten current sentence ruby sequences
+appear correct. 嫌's example is shared with two other cards; no other sampled
+example in this batch is duplicated in the current catalog. These are findings
+for the sample, not a full-corpus quality estimate.
+
+Verified 30 unique reviewed IDs, exactly positions 1–15 per level, all still
+present; original sample seed/hash/order and current corpus unchanged.
+`git diff --check` passed. No application tests/build rerun for a documentation-only
+audit. Next: **chunk 4, positions 16–20 per level; 70 sampled records remain**.
