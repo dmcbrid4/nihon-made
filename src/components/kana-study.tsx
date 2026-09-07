@@ -34,6 +34,38 @@ function speak(character: string) {
   }
 }
 
+let dingContext: AudioContext | null = null;
+
+/** A short two-note chime for a correct quiz answer -- synthesized rather
+ * than a bundled audio file, so there's no asset to ship or load. Reuses
+ * one AudioContext across calls (creating a fresh one per note is what
+ * triggers browser warnings/limits). */
+function playCorrectChime() {
+  try {
+    dingContext ??= new AudioContext();
+    const ctx = dingContext;
+    const start = ctx.currentTime;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0, start);
+    gain.gain.linearRampToValueAtTime(0.2, start + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.35);
+    gain.connect(ctx.destination);
+    for (const [freq, delay] of [
+      [880, 0],
+      [1318.5, 0.03],
+    ] as const) {
+      const oscillator = ctx.createOscillator();
+      oscillator.type = "sine";
+      oscillator.frequency.value = freq;
+      oscillator.connect(gain);
+      oscillator.start(start + delay);
+      oscillator.stop(start + 0.35);
+    }
+  } catch {
+    /* optional */
+  }
+}
+
 function shuffled<T>(items: T[]): T[] {
   const copy = [...items];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -75,6 +107,7 @@ function KanaQuizQuestion({
     if (result || busy) return;
     if (choiceId === entry!.id) {
       setResult("correct");
+      playCorrectChime();
       timeout.current = window.setTimeout(() => onSettled(true), 650);
     } else {
       setWrong(new Set([choiceId]));
