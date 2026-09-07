@@ -15,6 +15,23 @@
   gap: 12px;
   padding: 0 10px;
 }
+/* Baseline size for both themes -- without this, a bare <svg> with only a
+   viewBox (no width/height) can size itself against the flex container's
+   available space instead of its intended small icon size. */
+.identity-mark {
+  width: 42px;
+  height: 46px;
+  color: var(--text);
+}
+.auth-mark .identity-mark {
+  width: 54px;
+  height: 58px;
+}
+@media (max-width: 1100px) {
+  .identity-mark {
+    width: 34px;
+  }
+}
 .brand-mark {
   position: relative;
   display: grid;

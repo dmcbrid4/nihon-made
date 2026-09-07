@@ -1,9 +1,4 @@
 /* Shared visual treatment; component layouts remain in their own stylesheets. */
-:root:not([data-design="1"]) .identity-mark {
-  width: 42px;
-  height: 46px;
-  color: var(--text);
-}
 :root:not([data-design="1"]) .theme-toggle {
   min-width: 44px;
   min-height: 44px;
@@ -266,10 +261,6 @@
   background: transparent;
   border-radius: 0;
 }
-:root:not([data-design="1"]) .auth-mark .identity-mark {
-  width: 54px;
-  height: 58px;
-}
 :root:not([data-design="1"]) .auth-card h1,
 :root:not([data-design="1"]) .completion h1 {
   font-family: Georgia, "Hiragino Mincho ProN", serif;
@@ -282,9 +273,6 @@
   }
   :root:not([data-design="1"]) .brand-japanese {
     font-size: 19px;
-  }
-  :root:not([data-design="1"]) .identity-mark {
-    width: 34px;
   }
   :root:not([data-design="1"]) .today-card {
     padding: 22px;
