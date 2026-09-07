@@ -66,6 +66,17 @@ function playCorrectChime() {
   }
 }
 
+/** A quick vibration on a correct quiz answer. Only Android (Chrome/Firefox)
+ * implements the Vibration API -- iOS Safari doesn't expose it to web pages
+ * at all, so this is a no-op there rather than a broken feature. */
+function hapticSuccess() {
+  try {
+    navigator.vibrate?.(20);
+  } catch {
+    /* optional */
+  }
+}
+
 function shuffled<T>(items: T[]): T[] {
   const copy = [...items];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -108,6 +119,7 @@ function KanaQuizQuestion({
     if (choiceId === entry!.id) {
       setResult("correct");
       playCorrectChime();
+      hapticSuccess();
       timeout.current = window.setTimeout(() => onSettled(true), 650);
     } else {
       setWrong(new Set([choiceId]));
