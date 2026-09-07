@@ -76,7 +76,7 @@ export function CollectionView() {
           >
             All concepts
           </button>
-          {conceptTypes.map((type) => (
+          {conceptTypes.filter((type) => type !== "kana").map((type) => (
             <button
               key={type}
               aria-pressed={filter === type}

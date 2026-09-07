@@ -1,8 +1,14 @@
 import { conceptById, retiredConceptIds } from "./content";
 import { dateInZone } from "./dates";
 import { currentSession, planSession } from "./planner";
+import { recordKanaQuizAnswer } from "./kana-progress";
 import { scheduleReview } from "./scheduler";
-import { actionSchema, type StudyAction, type StudyState } from "./types";
+import {
+  actionSchema,
+  type ConceptProgress,
+  type StudyAction,
+  type StudyState,
+} from "./types";
 
 export function initialState(timeZone = "America/New_York"): StudyState {
   return {
@@ -47,6 +53,48 @@ export function applyAction(
           startedAt: now.toISOString(),
           completedAt: null,
         },
+      ],
+    };
+  }
+
+  if (action.type === "kanaQuizAnswer") {
+    if (conceptById.get(action.conceptId)?.type !== "kana") return state;
+    const nextProgress = recordKanaQuizAnswer(
+      action.conceptId,
+      action.correct,
+      now,
+      state.progress.find((item) => item.conceptId === action.conceptId),
+    );
+    return {
+      ...state,
+      progress: [
+        ...state.progress.filter((item) => item.conceptId !== action.conceptId),
+        nextProgress,
+      ],
+    };
+  }
+
+  if (action.type === "markKanaKnown") {
+    const dueAt = new Date(now.getTime() + 30 * 86_400_000).toISOString();
+    const nowIso = now.toISOString();
+    const targetIds = new Set(
+      action.conceptIds.filter((id) => conceptById.get(id)?.type === "kana"),
+    );
+    if (!targetIds.size) return state;
+    const marked: ConceptProgress[] = [...targetIds].map((conceptId) => ({
+      conceptId,
+      status: "mastered",
+      reviewCount: 3,
+      successStreak: 3,
+      intervalDays: 30,
+      dueAt,
+      lastReviewedAt: nowIso,
+    }));
+    return {
+      ...state,
+      progress: [
+        ...state.progress.filter((item) => !targetIds.has(item.conceptId)),
+        ...marked,
       ],
     };
   }

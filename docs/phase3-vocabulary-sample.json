@@ -126,6 +126,159 @@
       ],
       "report": "phase3-vocabulary-audit.md",
       "status": "reviewed; required and polish corrections applied in the Phase 2 completion pass (2026-09-06); see docs/vocabulary-quality-plan.md"
+    },
+    {
+      "chunk": 2,
+      "recordIds": [
+        "v-jlpt-n5-0415",
+        "v-jlpt-n5-0095",
+        "v-jlpt-n5-0114",
+        "v-jlpt-n5-0388",
+        "v-jlpt-n5-0633",
+        "v-jlpt-n4-0062",
+        "v-jlpt-n4-0707",
+        "v-jlpt-n4-0097",
+        "v-jlpt-n4-0057",
+        "v-jlpt-n4-0461"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed: positions 6–10 in each level; first two at ba4d863, remaining eight at 8c0e655; corrections proposed, not applied; resume position 11 in each level"
+    },
+    {
+      "chunk": 3,
+      "recordIds": [
+        "v-jlpt-n5-0062",
+        "v-jlpt-n5-0654",
+        "v-jlpt-n5-0296",
+        "v-jlpt-n5-0541",
+        "v-jlpt-n5-0279",
+        "v-jlpt-n4-0708",
+        "v-jlpt-n4-0528",
+        "v-jlpt-n4-0035",
+        "v-jlpt-n4-0164",
+        "v-jlpt-n4-0504"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at aacb5b6; corrections proposed, not applied; resume position 16 in each level"
+    },
+    {
+      "chunk": 4,
+      "recordIds": [
+        "v-jlpt-n5-0214",
+        "v-jlpt-n5-0193",
+        "v-jlpt-n5-0131",
+        "v-jlpt-n5-0378",
+        "v-jlpt-n5-0175",
+        "v-jlpt-n4-0255",
+        "v-jlpt-n4-0073",
+        "v-jlpt-n4-0473",
+        "v-jlpt-n4-0359",
+        "v-jlpt-n4-0349"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at c30a8a1; corrections proposed, not applied; resume position 21 per level"
+    },
+    {
+      "chunk": 5,
+      "recordIds": [
+        "v-jlpt-n5-0317",
+        "v-jlpt-n5-0057",
+        "v-jlpt-n5-0681",
+        "v-jlpt-n5-0581",
+        "v-jlpt-n5-0404",
+        "v-jlpt-n4-0317",
+        "v-jlpt-n4-0198",
+        "v-jlpt-n4-0240",
+        "v-jlpt-n4-0122",
+        "v-jlpt-n4-0038"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at aee69a6; corrections proposed, not applied; resume position 26 per level"
+    },
+    {
+      "chunk": 6,
+      "recordIds": [
+        "v-jlpt-n5-0026",
+        "v-jlpt-n5-0361",
+        "v-jlpt-n5-0242",
+        "v-jlpt-n5-0164",
+        "v-jlpt-n5-0227",
+        "v-jlpt-n4-0544",
+        "v-jlpt-n4-0290",
+        "v-jlpt-n4-0677",
+        "v-jlpt-n4-0537",
+        "v-jlpt-n4-0124"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at 560cb6b as combined chunks 6–7; corrections proposed, not applied; resume position 36 per level"
+    },
+    {
+      "chunk": 7,
+      "recordIds": [
+        "v-jlpt-n5-0018",
+        "v-jlpt-n5-0303",
+        "v-jlpt-n5-0310",
+        "v-jlpt-n5-0377",
+        "v-jlpt-n5-0056",
+        "v-jlpt-n4-0362",
+        "v-jlpt-n4-0458",
+        "v-jlpt-n4-0626",
+        "v-jlpt-n4-0025",
+        "v-jlpt-n4-0590"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at 560cb6b as combined chunks 6–7; corrections proposed, not applied; resume position 36 per level"
+    },
+    {
+      "chunk": 8,
+      "recordIds": [
+        "v-jlpt-n5-0345",
+        "v-jlpt-n5-0548",
+        "v-jlpt-n5-0376",
+        "v-jlpt-n5-0025",
+        "v-jlpt-n5-0190",
+        "v-jlpt-n4-0154",
+        "v-jlpt-n4-0017",
+        "v-jlpt-n4-0229",
+        "v-jlpt-n4-0261",
+        "v-jlpt-n4-0139"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at d3f5cf4; corrections pending Phase 4; resume position 41 per level"
+    },
+    {
+      "chunk": 9,
+      "recordIds": [
+        "v-jlpt-n5-0141",
+        "v-jlpt-n5-0480",
+        "v-jlpt-n5-0323",
+        "v-jlpt-n5-0121",
+        "v-jlpt-n5-0169",
+        "v-jlpt-n4-0640",
+        "v-jlpt-n4-0156",
+        "v-jlpt-n4-0704",
+        "v-jlpt-n4-0402",
+        "v-jlpt-n4-0066"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at 2669c5b; corrections pending Phase 4; fixed sample complete"
+    },
+    {
+      "chunk": 10,
+      "recordIds": [
+        "v-jlpt-n5-0606",
+        "v-jlpt-n5-0420",
+        "v-jlpt-n5-0211",
+        "v-jlpt-n5-0484",
+        "v-jlpt-n5-0667",
+        "v-jlpt-n4-0700",
+        "v-jlpt-n4-0224",
+        "v-jlpt-n4-0133",
+        "v-jlpt-n4-0507",
+        "v-jlpt-n4-0130"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at 2669c5b; corrections pending Phase 4; fixed sample complete"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { initialState, applyAction } from "../lib/study/state";
 import {
@@ -250,6 +250,49 @@ export class PostgresRepository implements StudyRepository {
             position,
           })),
         );
+      } else if (action.type === "markKanaKnown") {
+        const marked = next.progress.filter((item) =>
+          action.conceptIds.includes(item.conceptId),
+        );
+        if (marked.length)
+          await tx
+            .insert(s.userConceptProgress)
+            .values(marked.map((entry) => ({ ...entry, userId })))
+            .onConflictDoUpdate({
+              target: [
+                s.userConceptProgress.userId,
+                s.userConceptProgress.conceptId,
+              ],
+              set: {
+                status: sql`excluded.status`,
+                reviewCount: sql`excluded.review_count`,
+                successStreak: sql`excluded.success_streak`,
+                intervalDays: sql`excluded.interval_days`,
+                dueAt: sql`excluded.due_at`,
+                lastReviewedAt: sql`excluded.last_reviewed_at`,
+              },
+            });
+      } else if (action.type === "kanaQuizAnswer") {
+        const entry = next.progress.find(
+          (item) => item.conceptId === action.conceptId,
+        )!;
+        await tx
+          .insert(s.userConceptProgress)
+          .values({ ...entry, userId })
+          .onConflictDoUpdate({
+            target: [
+              s.userConceptProgress.userId,
+              s.userConceptProgress.conceptId,
+            ],
+            set: {
+              status: sql`excluded.status`,
+              reviewCount: sql`excluded.review_count`,
+              successStreak: sql`excluded.success_streak`,
+              intervalDays: sql`excluded.interval_days`,
+              dueAt: sql`excluded.due_at`,
+              lastReviewedAt: sql`excluded.last_reviewed_at`,
+            },
+          });
       } else if (action.type === "completeRetired") {
         const session = next.sessions.find(
           (item) => item.id === action.sessionId,

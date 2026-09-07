@@ -1,25 +1,17 @@
 # Vocabulary quality: audit and implementation plan
 
-> Phase 2 completion pass (2026-09-06): the four systematic gaps the first
-> Phase 3 audit chunk found — no canonical word-reading validation, substring
-> target matching, cosmetic provenance, and no approval gate — are now
-> implemented and covered by regression tests. See "Implementation and review
-> gates" below for exactly what this pass does and does not establish. The
-> [Phase 3 audit](phase3-vocabulary-audit.md) and its 10 already-reviewed
-> records remain the authoritative line-by-line findings for the IDs it
-> covers; this pass applies their required/polish corrections and continues
-> the same kind of structural cleanup, but does not substitute for the
-> remaining 90-record sample.
+> Current status (2026-09-07): **Phase 3's fixed 100-record sample is complete**
+> (50 N5, 50 N4). The [audit](phase3-vocabulary-audit.md) records individual
+> decisions; the [Phase 4 handoff](phase4-vocabulary-corrections.md) consolidates
+> correction priorities and release gates. No claim of full-corpus certification.
 
-Phase 1 completed research and architecture on 2026-09-06. Phase 2 produced a
-candidate implementation on `dev`: structured source/review metadata, stored
-word and sentence ruby, validation, a review queue, and retirement safeguards.
-The first Phase 3 chunk found that sense reconciliation, provenance, reading
-validation, and approval gating still needed work. This pass closes those
-four gaps mechanically (see below) and applies the specific corrections the
-Phase 3 chunk 1 report already decided. It changed no production database or
-deployment. Phase 3's remaining 90-record sample and Phase 4 still need to
-run; this is not a claim that the corpus is linguistically certified.
+Phase 1 completed research/architecture. Phase 2 implemented structured source
+and review metadata, word/sentence ruby, validation, a review queue and retirement
+safeguards. Its completion pass corrected the first ten sampled records and
+added mechanical controls. Later audit chunks still found wrong dictionary
+matches, contextual readings and selected senses passing those controls.
+Phase 4 must repair the remaining content and systemic defects before release.
+The resumed Phase 3 work changed documentation only, not the dataset or production.
 
 ## Baseline and reproducibility
 
@@ -286,8 +278,10 @@ answer behavior; furigana availability is intentional reading assistance.
      defects the new validator surfaced along the way (annotated readings,
      a missing お, a combined 見る/観る field, three more duplicate pairs)
      were also fixed or retired.
-   - Net result: catalog 734 N5 + 705 N4-only = 1439 candidates (13 retired
-     total). **Approved/active 580 N5 + 584 N4-only = 1164** reach the app;
+   - Historical Phase 2 result: catalog 734 N5 + 705 N4-only = 1439 candidates
+     (13 retired total). Phase 4 later retired 30 additional duplicates while
+     canonicalizing noun-plus-する heads: **730 N5 + 679 N4-only = 1409**
+     candidates. **Approved/active 581 N5 + 566 N4-only = 1147** reach the app;
      the remaining candidates are quarantined pending correction, mostly for
      a placeholder example (130) or a target span the stricter matcher
      could not confirm (142) — see the "Why records are not approved" table
@@ -301,16 +295,21 @@ answer behavior; furigana availability is intentional reading assistance.
      that a human or agent has read the sentence for naturalness, register,
      or JLPT-appropriateness. That is Phase 3's job.
    Do not push or seed production automatically.
-3. **Phase 3 — Astra, high: in progress (10/100).** Inspect a reproducible
-   random 100 records (50 per level, fixed recorded seed), plus targeted
-   high-risk cases. The first ten are documented in
-   `docs/phase3-vocabulary-audit.md`; nine subsequent chunks remain. Log
-   individual judgments for meanings, natural Japanese/English, target sense,
-   reading/ruby, grammar level, and provenance. Identify systematic correction
-   rules. This review is not interchangeable with structural validation.
-4. **Phase 4 — Terra, high: pending.** Apply corrections across affected groups,
-   rerun checks, revisit failed samples and a fresh holdout. Report residual
-   uncertainties; prepare a reviewable release before any production rollout.
+3. **Phase 3 — Astra, high: fixed-sample review complete (100/100).** All
+   50 N5 and 50 N4 IDs in the original reproducible sample have individual
+   decisions in `docs/phase3-vocabulary-audit.md`, with targeted systematic
+   probes recorded separately. This establishes diagnosis, not release approval.
+   See `docs/phase4-vocabulary-corrections.md` for consolidated implementation
+   requirements. Source-confidence, attribution and full-corpus quality gaps remain.
+4. **Phase 4 — Terra, high: corrections partially implemented; release blocked.**
+   Reproducible repairs and regressions exist, but the previous “all 33 repaired”
+   claim missed original prose findings. The [fresh holdout](phase4-holdout-review.md)
+   is complete: 7 required corrections, 8 polish and 5 linguistic accepts across
+   20 new records, all with unresolved example attribution. Targeted checks also
+   found at least six unchanged required records from Phase 3. Reconcile the
+   full original decisions and apply the bounded correction batch, then recheck
+   failures, verify rendered UI ruby and rerun release checks. No automatic
+   production rollout.
 
 In Phase 2, keep unresolved candidates outside the approved active deck.
 Replace unsuitable examples rather than shipping placeholders. Report both
@@ -356,5 +355,6 @@ Independent, openly reusable JLPT classification corroboration remains weaker
 than the apparent three-list agreement suggests. No source researched here
 justifies calling the entire inventory high-confidence. Sentence attribution
 recovery and a full semantic duplicate audit also remain implementation work.
-No records have yet been added, removed, replaced, or linguistically certified
-by this phase; the Phase 3 sample and Phase 4 final measurements remain due.
+The resumed Phase 3 audit added no data or production changes. The fixed sample
+is now complete; Phase 4 corrections, holdout review, UI verification and final
+measurements remain due.

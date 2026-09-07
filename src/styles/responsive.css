@@ -633,6 +633,47 @@
   .kanji-cell {
     font-size: 15px;
   }
+  .kana-script-grid {
+    grid-template-columns: 1fr;
+  }
+  .kana-script-card {
+    padding: 20px;
+  }
+  .kana-chart-layout,
+  .kana-quiz-configure {
+    grid-template-columns: 1fr;
+  }
+  .kana-detail-panel,
+  .kana-quiz-settings {
+    position: static;
+  }
+  .kana-selector-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .kana-bucket-row {
+    grid-template-columns: 84px 1fr 34px;
+    font-size: 10px;
+  }
+  .kana-progress-section,
+  .kana-milestones,
+  .kana-shortcuts {
+    padding: 19px;
+  }
+  .kana-card {
+    padding: 20px 18px;
+  }
+  .kana-character {
+    font-size: clamp(52px, 20vw, 96px);
+  }
+  .kana-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .kana-option {
+    font-size: 17px;
+    padding: 14px 8px;
+  }
 }
 @media (max-width: 370px) {
   .main-content {

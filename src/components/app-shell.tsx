@@ -9,6 +9,7 @@ import {
   ChevronRight,
   House,
   Settings2,
+  Type,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { ThemeToggle } from "./theme-toggle";
@@ -16,6 +17,7 @@ import { useStudy } from "./study-provider";
 
 const navigation = [
   { href: "/", label: "Today", icon: House },
+  { href: "/kana", label: "Kana", icon: Type },
   { href: "/collection", label: "Collection", icon: BookOpen },
   { href: "/progress", label: "Progress", icon: ChartNoAxesColumnIncreasing },
   { href: "/settings", label: "Settings", icon: Settings2 },
@@ -75,18 +77,24 @@ export function AppShell({ children }: { children: ReactNode }) {
           </label>
         )}
         <nav className="main-nav" aria-label="Main navigation">
-          {navigation.map(({ href, label, icon: Icon }) => (
+          {navigation.map(({ href, label, icon: Icon }) => {
+            const isActive =
+              pathname === href ||
+              (href === "/" && pathname === "/study") ||
+              (href === "/kana" && pathname.startsWith("/kana"));
+            return (
             <Link
               key={href}
               href={href}
-              className={`nav-link ${pathname === href || (href === "/" && pathname === "/study") ? "active" : ""}`}
+              className={`nav-link ${isActive ? "active" : ""}`}
               aria-current={pathname === href ? "page" : undefined}
             >
               <Icon size={18} strokeWidth={1.7} />
               <span>{label}</span>
-              {pathname === href && <span className="nav-dot" />}
+              {isActive && <span className="nav-dot" />}
             </Link>
-          ))}
+            );
+          })}
         </nav>
         <div className="sidebar-bottom">
           <div className="journey-label">

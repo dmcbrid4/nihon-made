@@ -15,8 +15,8 @@ import {
 test("vocabulary data has valid, stored furigana and internally consistent counts", () => {
   const result = validateVocabularyDataset(vocabularyData);
   assert.deepEqual(result.issues, []);
-  assert.deepEqual(result.data.counts, { n5: 734, n4Only: 705, total: 1439 });
-  assert.equal(result.data.items.length, 1439);
+  assert.deepEqual(result.data.counts, { n5: 730, n4Only: 679, total: 1409 });
+  assert.equal(result.data.items.length, 1409);
   for (const item of result.data.items) {
     assert.equal(rubyText(item.vocabulary.expressionFurigana), item.expression);
     assert.equal(rubyText(item.vocabulary.exampleFurigana), item.example);
@@ -139,6 +139,99 @@ test("corrected cards have sense-aligned replacements and usable ruby", () => {
       (candidate) => candidate.id === "v-jlpt-n4-0690",
     ),
   );
+});
+
+test("reviewed noun-plus-suru heads retain their noun reading and dictionary identity", () => {
+  const ids = [
+    "v-jlpt-n5-0362", "v-jlpt-n5-0471", "v-jlpt-n5-0601", "v-jlpt-n5-0659",
+    "v-jlpt-n4-0154", "v-jlpt-n4-0170", "v-jlpt-n4-0172", "v-jlpt-n4-0176",
+    "v-jlpt-n4-0257", "v-jlpt-n4-0259", "v-jlpt-n4-0279", "v-jlpt-n4-0327",
+    "v-jlpt-n4-0370", "v-jlpt-n4-0371", "v-jlpt-n4-0372", "v-jlpt-n4-0380",
+    "v-jlpt-n4-0381", "v-jlpt-n4-0396", "v-jlpt-n4-0400", "v-jlpt-n4-0419",
+    "v-jlpt-n4-0425", "v-jlpt-n4-0426", "v-jlpt-n4-0445", "v-jlpt-n4-0459",
+    "v-jlpt-n4-0525", "v-jlpt-n4-0526", "v-jlpt-n4-0528", "v-jlpt-n4-0579",
+    "v-jlpt-n4-0603", "v-jlpt-n4-0604",
+  ];
+  assert.equal(ids.length, 30);
+  for (const id of ids) {
+    const item = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(item, `${id} should remain in the corpus`);
+    assert.ok(!item.reading.endsWith("する"), `${id} should not put する inside word ruby`);
+    assert.equal(item.partOfSpeech, "noun; suru verb");
+    assert.ok(item.vocabulary.provenance.dictionary, `${id} should recover a JMdict entry`);
+    assert.equal(phoneticRubyText(item.vocabulary.expressionFurigana), item.reading);
+  }
+  const haiken = vocabularyData.items.find((item) => item.id === "v-jlpt-n4-0528");
+  assert.equal(haiken?.reading, "はいけん");
+  assert.equal(rubyText(haiken?.vocabulary.expressionFurigana ?? []), "拝見");
+  assert.equal(phoneticRubyText(haiken?.vocabulary.expressionFurigana ?? []), "はいけん");
+  assert.ok(retiredVocabulary.has("v-jlpt-n4-0665"));
+});
+
+test("reviewed homographs pin the intended JMdict entries", () => {
+  const expected: Record<string, string> = {
+    "v-jlpt-n5-0062": "1582920", // demonstrative この, not 九
+    "v-jlpt-n4-0017": "1305700", // humble 伺う, not 窺う
+    "v-jlpt-n4-0704": "2854117", // interval ～おき, not 沖
+  };
+  for (const [id, entryId] of Object.entries(expected)) {
+    const item = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(item, `${id} should remain in the corpus`);
+    assert.equal(item.vocabulary.provenance.dictionary?.entryId, entryId);
+  }
+  const humbleVisit = vocabularyData.items.find((item) => item.id === "v-jlpt-n4-0017");
+  assert.equal(humbleVisit?.expression, "伺う");
+  assert.match(humbleVisit?.example ?? "", /伺います/);
+});
+
+test("phase 4 editorial replacements teach the reviewed lexeme and contextual reading", () => {
+  const item = (id: string) => {
+    const found = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(found, `${id} should remain in the corpus`);
+    assert.equal(found.vocabulary.approval.approved, true, `${id} should be available to learners`);
+    return found;
+  };
+  const oneMonth = item("v-jlpt-n5-0193");
+  assert.equal(oneMonth.expression, "ひと月");
+  assert.equal(oneMonth.vocabulary.exampleReading, "ひとつきにほんにいます。");
+  assert.equal(oneMonth.vocabulary.provenance.example.kind, "editorial");
+  const stomach = item("v-jlpt-n5-0025");
+  assert.equal(stomach.vocabulary.exampleReading, "おなかがすきました。");
+  assert.equal(stomach.vocabulary.provenance.example.kind, "editorial");
+  assert.equal(item("v-jlpt-n5-0131").meaning, "and so on; etc.");
+  assert.equal(item("v-jlpt-n4-0362").meaning, "habit; custom");
+  assert.equal(item("v-jlpt-n5-0606").meaning, "busy; occupied");
+  assert.equal(item("v-jlpt-n4-0640").meaning, "wealthy person");
+  assert.equal(item("v-jlpt-n4-0130").meaning, "multi-story building");
+  const hit = item("v-jlpt-n4-0458");
+  assert.match(hit.example, /ボールを打ちました/);
+  assert.equal(hit.vocabulary.provenance.example.kind, "editorial");
+  assert.match(item("v-jlpt-n4-0537").example, /^彼は/);
+  assert.match(item("v-jlpt-n4-0290").example, /^港に/);
+  assert.match(item("v-jlpt-n4-0700").example, /読み終わりました/);
+  const languageSuffix = item("v-jlpt-n5-0310");
+  assert.equal(languageSuffix.meaning, "-language");
+  assert.deepEqual(languageSuffix.vocabulary.targetSpans, [
+    { start: 3, end: 5, surface: "英語", lemma: "～語", match: "counter" },
+  ]);
+});
+
+test("contextual ruby fixtures preserve weekday and native-counter readings", () => {
+  const reading = (id: string) => {
+    const item = vocabularyData.items.find((candidate) => candidate.id === id);
+    assert.ok(item, `${id} should remain in the corpus`);
+    assert.equal(item.vocabulary.review.furigana, "reviewed");
+    return item.vocabulary.exampleReading;
+  };
+  assert.equal(reading("v-jlpt-n5-0232"), "きょうはかようびです。");
+  assert.equal(reading("v-jlpt-n5-0281"), "きんようびにともだちとあいます。");
+  assert.equal(reading("v-jlpt-n5-0366"), "りんごをよっつください。");
+  assert.equal(
+    reading("v-jlpt-n5-0388"),
+    "ひとつ、ふたつ、みっつ、よっつ、いつつ、むっつ、ななつ、やっつ、ここのつ、とお。",
+  );
+  assert.equal(reading("v-jlpt-n5-0571"), "かのじょはやっつです。");
+  assert.equal(reading("v-jlpt-n5-0678"), "りんごをひとつからとおまでかぞえます。");
 });
 
 test("retired cards are skipped in an in-progress session without creating a review", () => {

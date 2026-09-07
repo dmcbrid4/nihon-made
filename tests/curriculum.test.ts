@@ -15,9 +15,9 @@ test("the N5–N4 curriculum is balanced, complete, and uniquely identifiable", 
   // The full candidate catalog (approved and unapproved together) is a
   // stable regression snapshot; it only moves when source data changes.
   assert.deepEqual(vocabularyCatalogCounts, {
-    n5: 734,
-    n4Only: 705,
-    total: 1439,
+    n5: 730,
+    n4Only: 679,
+    total: 1409,
   });
   // What actually reaches learners is the approved subset. This grows as
   // Phase 3/4 review and correct more candidates, so assert a floor rather
@@ -80,12 +80,25 @@ test("the N5–N4 curriculum is balanced, complete, and uniquely identifiable", 
     );
   }
 
-  for (const concept of concepts) {
+  // Kana cards are deliberately sparser than every other concept type: no
+  // example sentence, no English meaning, no JLPT/Tae Kim source lineage --
+  // see docs/kana-mode.md. They get their own invariants below instead of
+  // the shared example/source checks that apply to every other concept.
+  for (const concept of concepts.filter((item) => item.level !== "kana")) {
     assert.ok(concept.example.trim());
     assert.ok(concept.exampleMeaning.trim());
     assert.ok(concept.note.trim());
     if (concept.level !== "tae-kim") assert.ok(concept.source.includes("JLPT"));
     else assert.ok(concept.source.includes("Tae Kim"));
+  }
+  for (const concept of concepts.filter((item) => item.level === "kana")) {
+    assert.equal(concept.type, "kana");
+    assert.equal(concept.example, "");
+    assert.equal(concept.exampleMeaning, "");
+    assert.equal(concept.meaning, "");
+    assert.ok(concept.expression.trim());
+    assert.ok(concept.reading.trim());
+    assert.ok(concept.kanaDetails);
   }
   for (const concept of jlptVocabulary) {
     assert.ok(

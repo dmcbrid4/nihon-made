@@ -8,6 +8,10 @@ export const minutesPerType = {
   grammar: 3,
   reading: 4,
   listening: 4,
+  // Kana never reaches planSession (its level is never state.goal.studyMode),
+  // but Concept.type is generically "kana"-able, so this key keeps the
+  // Record indexing in add() below type-safe.
+  kana: 1,
 };
 
 export function currentSession(state: StudyState, now: Date) {

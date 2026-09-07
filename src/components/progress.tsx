@@ -12,6 +12,7 @@ import { ProgressKnowledgeState } from "./progress-knowledge";
 import { ProgressHistoryChart } from "./progress-history-chart";
 import { ProgressKanjiGrid } from "./progress-kanji-grid";
 import { ProgressPacing } from "./progress-pacing";
+import { ProgressKana } from "./progress-kana";
 
 export function ProgressView() {
   const { state } = useStudy();
@@ -39,6 +40,7 @@ export function ProgressView() {
         </div>
       </div>
       <ProgressCountdown />
+      <ProgressKana />
       <ProgressCurriculum />
       <ProgressKnowledgeState />
       <ProgressHistoryChart />
