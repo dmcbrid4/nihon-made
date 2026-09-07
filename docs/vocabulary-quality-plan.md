@@ -301,11 +301,15 @@ answer behavior; furigana availability is intentional reading assistance.
    probes recorded separately. This establishes diagnosis, not release approval.
    See `docs/phase4-vocabulary-corrections.md` for consolidated implementation
    requirements. Source-confidence, attribution and full-corpus quality gaps remain.
-4. **Phase 4 — Terra, high: audited-correction implementation complete.** The
-   fixed sample's 33 required repairs were applied in reproducible generator
-   overrides and regression-tested. An Astra-high independent holdout, rendered
-   UI ruby review, and the full release check suite remain before any production
-   rollout.
+4. **Phase 4 — Terra, high: corrections partially implemented; release blocked.**
+   Reproducible repairs and regressions exist, but the previous “all 33 repaired”
+   claim missed original prose findings. The [fresh holdout](phase4-holdout-review.md)
+   is complete: 7 required corrections, 8 polish and 5 linguistic accepts across
+   20 new records, all with unresolved example attribution. Targeted checks also
+   found at least six unchanged required records from Phase 3. Reconcile the
+   full original decisions and apply the bounded correction batch, then recheck
+   failures, verify rendered UI ruby and rerun release checks. No automatic
+   production rollout.
 
 In Phase 2, keep unresolved candidates outside the approved active deck.
 Replace unsuitable examples rather than shipping placeholders. Report both

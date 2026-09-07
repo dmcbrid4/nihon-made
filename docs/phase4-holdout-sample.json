@@ -1,0 +1,20 @@
+{
+  "seed": "nihon-made-phase4-holdout-2026-09-07",
+  "algorithm": "Sort SHA-256(seed + NUL + record ID) ascending within each level; select first 10.",
+  "population": "Active records with both lexical and example review pending, excluding all 100 Phase 3 sample IDs. This tests previously unreviewed learner-facing content, not the quarantined catalog.",
+  "baselineCommit": "829f5e6fcdafa906878bdefa592a49e0c3cb52e0",
+  "datasetSha256": "bc0a3ba60f3a8ffd0cae051d9c8e3aabfe3b24ea3d5ccba79c3b6717c9ea7971",
+  "eligibleCounts": { "N5": 517, "N4": 487 },
+  "sample": {
+    "N5": [
+      "v-jlpt-n5-0218", "v-jlpt-n5-0126", "v-jlpt-n5-0276", "v-jlpt-n5-0639",
+      "v-jlpt-n5-0202", "v-jlpt-n5-0265", "v-jlpt-n5-0615", "v-jlpt-n5-0638",
+      "v-jlpt-n5-0369", "v-jlpt-n5-0346"
+    ],
+    "N4": [
+      "v-jlpt-n4-0472", "v-jlpt-n4-0179", "v-jlpt-n4-0128", "v-jlpt-n4-0439",
+      "v-jlpt-n4-0357", "v-jlpt-n4-0272", "v-jlpt-n4-0239", "v-jlpt-n4-0246",
+      "v-jlpt-n4-0452", "v-jlpt-n4-0232"
+    ]
+  }
+}
