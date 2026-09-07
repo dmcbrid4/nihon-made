@@ -194,6 +194,40 @@
       ],
       "report": "phase3-vocabulary-audit.md",
       "status": "reviewed at aee69a6; corrections proposed, not applied; resume position 26 per level"
+    },
+    {
+      "chunk": 6,
+      "recordIds": [
+        "v-jlpt-n5-0026",
+        "v-jlpt-n5-0361",
+        "v-jlpt-n5-0242",
+        "v-jlpt-n5-0164",
+        "v-jlpt-n5-0227",
+        "v-jlpt-n4-0544",
+        "v-jlpt-n4-0290",
+        "v-jlpt-n4-0677",
+        "v-jlpt-n4-0537",
+        "v-jlpt-n4-0124"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at 560cb6b as combined chunks 6–7; corrections proposed, not applied; resume position 36 per level"
+    },
+    {
+      "chunk": 7,
+      "recordIds": [
+        "v-jlpt-n5-0018",
+        "v-jlpt-n5-0303",
+        "v-jlpt-n5-0310",
+        "v-jlpt-n5-0377",
+        "v-jlpt-n5-0056",
+        "v-jlpt-n4-0362",
+        "v-jlpt-n4-0458",
+        "v-jlpt-n4-0626",
+        "v-jlpt-n4-0025",
+        "v-jlpt-n4-0590"
+      ],
+      "report": "phase3-vocabulary-audit.md",
+      "status": "reviewed at 560cb6b as combined chunks 6–7; corrections proposed, not applied; resume position 36 per level"
     }
   ]
 }

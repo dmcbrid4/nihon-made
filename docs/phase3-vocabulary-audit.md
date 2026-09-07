@@ -1,7 +1,7 @@
 # Phase 3 vocabulary audit
 
-Status: **50 / 100 sampled records inspected.** Chunk 1 corrections applied;
-chunks 2–5 findings below await Phase 4. Resume position 26 in each level.
+Status: **70 / 100 sampled records inspected.** Chunk 1 corrections applied;
+chunks 2–7 findings below await Phase 4. Resume position 36 in each level.
 
 ## Chunk 1 (historical findings and subsequent corrections)
 Five N5 and five N4 records inspected from candidate commit `03bce1f`. The
@@ -738,3 +738,70 @@ correct, one contains a wrong weekday reading. No claim of native-speaker or
 release approval. Verified 50 unique IDs (positions 1–25 per level), original
 sample and catalog unchanged; `git diff --check` passed. No app tests/build for
 this documentation-only pass. **Next: positions 26–30 per level; 50 remain.**
+
+## Chunks 6–7 — larger compact batch, positions 26–35 per level (2026-09-07)
+
+Reviewed 20 records at `560cb6b`; **70/100 inspected (35 per level)**. Same
+unchanged catalog hash as chunk 2. Compact review covered canonical form,
+reading, gloss/POS, every word/sentence ruby segment, English, source/sense,
+status, target spans, classification and priority. Proposed sentences are
+original editorial candidates, not applied corrections or native-speaker certification.
+
+| Record | Decision and Phase 4 action |
+| --- | --- |
+| N5 `0026` おばあさん | **Polish; active.** Noun and kana reading match `1002330`; grandmother and older-woman senses both valid, example uses sense 1. Replace awkward “female senior-citizen” with “elderly woman”; translate おばあさんはバスから降りた。 as “The elderly woman got off the bus.” 降→お + りた is correct. Keep kana, with long あ distinguishing おばさん; explain family/address register if needed. |
+| N5 `0361` 山 | **Required; quarantined.** 山→やま and “mountain” match `1302680:0`, but teach noun rather than only counter (dictionary does permit counting uses). 山羊座です。 / “I'm a Capricorn” uses 山羊座→やぎざ, not 山; ruby itself is correct. Original replacement: **あの山はとても高いです。 / “That mountain is very high.”** Ruby: あの山(やま)はとても高(たか)いです。 Keep stable ID and common mountain sense. |
+| N5 `0242` 絵 | **Accept linguistically; active.** Noun/picture `1202270:0`; 壁の絵を見て。 / “Look at the picture on the wall” is a natural casual request. All ruby correct: 壁→かべ, 絵→え, 見→み + て. Retain; optional “drawing; painting” secondary gloss. |
+| N5 `0164` まっすぐ | **Register/POS polish; active.** `1580600:0` includes adverb as well as na-adjective. まっすぐ行け。 is grammatical but a blunt command, not neutral travel advice. 行→い + け is correct. Prefer original **この道をまっすぐ行ってください。 / “Please go straight along this road.”** Ruby: この道(みち)をまっすぐ行(い)ってください。 Preserve kana and teach adverbial direction use. |
+| N5 `0227` 家庭 | **Pedagogical polish; active.** Noun/home/household `1192280:0`; 家庭は円満だ。 is possible, but 円満 makes an abstract first N5 example. “I have peace at home” adds a speaker; “Family life is harmonious” is closer given context. 家→か / 庭→てい, sentence 家庭→かてい and 円満→えんまん are correct. Optional original **家庭で使う日本語を勉強しています。 / “I'm studying Japanese used at home.”** Ruby: 家庭(かてい)で使(つか)う日本語(にほんご)を勉強(べんきょう)しています。 Teach after basic home/family vocabulary. |
+| N5 `0018` いちばん | **Required reading/teaching correction; active.** Kana reading is correct; `1165970` distinguishes first/no. 1 (sense 0) from most/best (adverb, sense 1). いちばん星みぃつけた。 is recognizable playful speech, but **いちばん星 is いちばんぼし**, not stored いちばんほし (`1728210`). Preserve expressive みぃ only if intentionally teaching it. Prefer original **この本がいちばん好きです。 / “I like this book best.”** Ruby: この本(ほん)がいちばん好(す)きです。 Add adverb to POS, select sense 1 for that example; keep first as secondary. |
+| N5 `0303` 玄関 | **Accept linguistically; active.** `1263400:0`, noun, entryway/entrance. だれか玄関にいる。 / “Someone is at the door” is natural casual speech with omitted が; “entry hall” gloss can be broadened to “entrance; entryway.” 玄→げん / 関→かん and whole-compound sentence reading are correct. No mandatory rewrite. |
+| N5 `0310` ～語 | **Required placeholder/POS repair; quarantined.** 語→ご is correct, but the placeholder does not teach language names. `1270910:1` is the language suffix; sense 0/counter applies to counted words. Teach suffix “-language,” e.g. 日本語/英語, rather than confusing it with a word counter. Original **学校で英語を勉強しています。 / “I study English at school.”** Ruby: 学校(がっこう)で英語(えいご)を勉強(べんきょう)しています。 Use a reviewed suffix match within 英語, not blanket substring matching. Existing placeholder ruby 言葉→ことば, 練習→れんしゅう is correct but irrelevant pedagogically. |
+| N5 `0377` 持つ | **Accept linguistically; active.** `1315720:0`, godan/transitive, hold/carry. 僕が持つよ。 / “Let me carry it for you” is a natural offer; English makes the helpful intention explicit. 僕→ぼく, 持→も + つ are correct. Add “carry” to gloss; note familiar 僕/よ register without inventing an object. |
+| N5 `0056` コート | **Sense-organization polish; active.** Noun, kana and いいコートだね。 / “That's a nice coat” are correct. Coat/coating are `1049000`; sports court is a separate homophonous lexical entry `2842174`. Keep coat primary for this card and, if court remains secondary, give it its own dictionary evidence and context. Do not add an untracked duplicate or let one entry ID certify both etymologies. No ruby needed. |
+| N4 `0544` 美しい | **Context polish; active.** `1486360:0`, i-adjective/beautiful, 美→うつく + しい correct. 私は美しい。 / “I'm beautiful” is grammatical but a weak isolated teaching situation. 私→わたくし is a valid formal reading, not a mechanical error; it further affects register here. Prefer original **この公園は秋にとても美しいです。 / “This park is very beautiful in autumn.”** Ruby: この公園(こうえん)は秋(あき)にとても美(うつく)しいです。 |
+| N4 `0290` 港 | **Required target correction; quarantined.** 港→みなと/noun/harbour match `1279990:0`. 空港まで行く。 teaches airport, not port. 空港→くうこう and 行→い + く are correct for that sentence. Original **港に大きな船が止まっています。 / “A large ship is stopped in the harbor.”** Ruby: 港(みなと)に大(おお)きな船(ふね)が止(と)まっています。 Keep natural 港 and verify the replacement's readings after generation. |
+| N4 `0677` 失礼 | **Required placeholder replacement; quarantined.** しつれい and word/sentence compound ruby correct. `1320230` supports noun/na-adjective impoliteness and expression “excuse me.” Choose an explicit first usage rather than a placeholder. Original **失礼ですが、お名前を教えてください。 / “Excuse me, could you tell me your name?”** Ruby: 失礼(しつれい)ですが、お + 名前(なまえ) + を教(おし)えてください。 Explain the polite request preface and select appropriate usage evidence; retain impolite/rude as a secondary adjectival use. |
+| N4 `0537` 彼 | **Required target correction; quarantined.** 彼→かれ, he (`1483070:0`); boyfriend is a separate noun sense. 彼女は歩く。 / “She walks” teaches 彼女→かのじょ; cannot validate 彼 by its shared character. 歩→ある + く is correct. Original **彼は毎朝バスで会社に行きます。 / “He takes the bus to work every morning.”** Ruby: 彼(かれ)は毎朝(まいあさ)バスで会社(かいしゃ)に行(い)きます。 State that the male referent is already known; do not imply Japanese routinely requires pronouns in every sentence. |
+| N4 `0124` はっきり | **Register/translation polish; active.** Adverb/clearly `1010150:0`; はっきり言えよ。 is a forceful demand. “Say it clearly!” is closer than “Get to the point,” which can mean brevity instead of clarity. 言→い + えよ is correct. Optional neutral original **もう少しはっきり話してください。 / “Please speak a little more clearly.”** Ruby: もう少(すこ)しはっきり話(はな)してください。 Preserve kana. |
+| N4 `0362` 習慣 | **Required primary-gloss/sense repair; active.** `1333090` supports “habit; custom,” not beginner “manners” in the politeness sense. 習慣化しました。 is grammatical but its nominalization/suru construction adds burden; it demonstrates habit (sense 0), not stored social-custom sense 1. All ruby correct: 習→しゅう / 慣→かん, compound 習慣→しゅうかん and 化→か. Original **毎朝歩くのが私の習慣です。 / “I make a habit of walking every morning.”** Ruby: 毎朝(まいあさ)歩(ある)くのが私(わたし)の習慣(しゅうかん)です。 Explain の nominalization. |
+| N4 `0458` 打つ | **Required primary-sense example; active.** Godan/transitive hit/strike `1408810:0`; 打つ手がないね。 means having no move/measure left, not physically hitting. “I'm all out of tricks” is plausible but figurative and subject-dependent. 打→う + つ, 手→て correct. Original **バットでボールを打ちました。 / “I hit the ball with a bat.”** Ruby: バットでボールを打(う)ちました。 Teach the physical sense first; keep idiom separately if useful. Imported pair confirmed in cached Tatoeba `138026`. |
+| N4 `0626` 力 | **Accept linguistically; active.** Noun/strength `1554820:0`. 力が尽きた。 / “My strength is all gone” is natural, though its subject is implicit. 力→ちから and 尽→つ + きた correctly render 尽きる; do not confuse with 尽くす. Gloss 尽きる (“run out”) if needed at N4. No compulsory replacement. |
+| N4 `0025` おかげ | **Required teaching/sense repair; active.** Noun `1001640` is valid, but selected divine-blessing sense 0 does not substantiate “owing to.” Teach **thanks to; because of**, with noun + のおかげで and the usual beneficial-result nuance. おかげでほぼ完徹だ。 plausibly uses sarcasm, an unstated cause and colloquial 完徹; English “Thanks to which…” also depends on missing context. 完徹→かんてつ is correct, not a reading error. Prefer original **先生のおかげで、日本語が好きになりました。 / “Thanks to my teacher, I've come to like Japanese.”** Ruby: 先生(せんせい)のおかげで、日本語(にほんご)が好(す)きになりました。 Retain kana and record construction-level evidence instead of forcing the divine sense. Cached Tatoeba `76827` confirms the existing pair, not its teaching suitability. |
+| N4 `0590` 眠い | **Accept linguistically; active.** i-adjective/sleepy `1529330:0`; 眠いですか？ / “Are you sleepy?” is natural, clear and useful. 眠→ねむ + い is correct in both word and sentence. No need to expand a complete short question merely for length. |
+
+**Evidence and shared follow-up:** full entry senses above inspected in the
+cached JMdict snapshot. 一番星 `1728210` confirms いちばんぼし, corroborated by
+[the dictionary entry on Kotobank](https://kotobank.jp/word/%E4%B8%80%E7%95%AA%E6%98%9F-433618).
+Only reading facts consulted; no external examples copied. Searching the catalog
+found this first-star phrase only on `v-jlpt-n5-0018`; add it to existing contextual
+ruby regression work. The right token boundary does not guarantee a valid compound
+reading. Source aliases 一番/いちばん and お陰/おかげ exist in cached Anki rows,
+explaining null evidence matches; apply the alias strategy already documented.
+
+Continue existing sense/POS work rather than inventing another pipeline. In
+particular, language suffix 語 inside 英語 needs an explicit, reviewed exception,
+while 港 inside 空港 and 彼 inside 彼女 do not demonstrate the intended headwords.
+Avoid treating blunt commands or formal pronouns as ungrammatical; mark register
+and prefer neutral first teaching examples where useful. No systematic change
+should globally replace わたくし with わたし or 星→ほし with 星→ぼし.
+
+Duplicate-example scan found 家庭 shared with N5 `0518`, 港 with N4 `0252`,
+and 彼 with N5 `0417`, N5 `0602`, N4 `0539`; these are shared-example references,
+not additional reviewed records or automatic deletion decisions. 18 examples
+are imported (16 without recovered attribution, two cached Tatoeba pairs); two
+are placeholders. Proposed sentences remain editorial candidates for Phase 4.
+All 20 level placements are plausible curriculum choices, not certified JLPT
+assignments: 18 confidence labels are high with shared lineage, ～語/失礼 low
+with one source. No independent consensus established. Nineteen priority bands
+are common; おかげ is additional. Prioritize concrete mountain/port/pronoun and
+language-name uses, then abstract habit/causal expressions. Current imported
+ranks do not establish frequency or prerequisite order.
+
+**Result:** nine required corrections, six polish decisions, five linguistic
+accepts; 15 active and five quarantined. All 20 word ruby representations appear
+correct; 19 sentence ruby sequences appear correct, one has the first-star
+reading error. The sample total is 70, not a full-corpus approval. Verified IDs
+are exactly positions 1–35 per level and the corpus/sample remain unchanged;
+`git diff --check` passed. No app tests/build for this documentation-only audit.
+**Next: positions 36–40 per level; 30 sampled records remain.**
