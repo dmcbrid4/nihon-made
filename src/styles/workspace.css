@@ -311,15 +311,28 @@ input[readonly] {
 .history-list {
   margin-top: 15px;
 }
-.history-list > div {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.history-list > details {
   padding: 17px 0;
   border-bottom: 1px solid var(--line);
 }
-.history-list > div:last-child {
+.history-list > details:last-child {
   border: none;
+}
+.history-list > details > summary {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+.history-list > details > summary::-webkit-details-marker {
+  display: none;
+}
+.history-list > details[open] > summary {
+  margin-bottom: 10px;
+}
+.history-list > details > .completion-reviews {
+  margin-left: 45px;
 }
 .history-icon {
   display: grid;

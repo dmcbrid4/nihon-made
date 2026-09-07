@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Eye } from "lucide-react";
 import { typeLabels } from "@/lib/study/content";
 import { intervalFor } from "@/lib/study/scheduler";
@@ -25,6 +25,10 @@ export function ReviewCard({
 }) {
   const [revealed, setRevealed] = useState(false);
   const passage = concept.type === "reading" || concept.type === "listening";
+  const audioRef = useRef<HTMLAudioElement>(null);
+  useEffect(() => {
+    audioRef.current?.play().catch(() => {});
+  }, []);
   useEffect(() => {
     function keydown(event: KeyboardEvent) {
       if (
@@ -106,7 +110,7 @@ export function ReviewCard({
                 />
               )}
               {concept.media.audio && (
-                <audio controls src={concept.media.audio} />
+                <audio ref={audioRef} controls src={concept.media.audio} />
               )}
             </div>
           )}
