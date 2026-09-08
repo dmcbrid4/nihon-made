@@ -65,7 +65,7 @@ test("a kanji cell links into the collection filtered to that character", async 
   const firstKanji = page.locator(".kanji-cell").first();
   const expression = await firstKanji.textContent();
   await firstKanji.click();
-  await expect(page).toHaveURL(/\/collection\?type=kanji&q=/);
+  await expect(page).toHaveURL(/\/collection\?type=kanji&level=(N5|N4)&q=/);
   await expect(page.locator(".collection-item")).toHaveCount(1);
   await expect(
     page.locator(".collection-item").getByText(expression!, { exact: true }),
