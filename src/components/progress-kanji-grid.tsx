@@ -21,17 +21,30 @@ const stageClass: Record<(typeof stages)[number], string> = {
 export function ProgressKanjiGrid() {
   const { state } = useStudy();
   if (!state) return null;
-  const progressById = new Map(state.progress.map((item) => [item.conceptId, item]));
+  const progressById = new Map(
+    state.progress.map((item) => [item.conceptId, item]),
+  );
   const kanji = concepts
-    .filter((item) => item.type === "kanji" && (item.level === "N5" || item.level === "N4"))
-    .sort((a, b) => (a.level === b.level ? a.sequence - b.sequence : a.level === "N5" ? -1 : 1));
+    .filter(
+      (item) =>
+        item.type === "kanji" && (item.level === "N5" || item.level === "N4"),
+    )
+    .sort((a, b) =>
+      a.level === b.level ? a.sequence - b.sequence : a.level === "N5" ? -1 : 1,
+    );
 
   return (
-    <section className="panel kanji-grid-section" aria-label="Kanji knowledge map">
+    <section
+      className="panel kanji-grid-section"
+      aria-label="Kanji knowledge map"
+    >
       <div className="section-heading">
         <div>
           <h2>Kanji knowledge map</h2>
-          <p>All {kanji.length} N5 and N4 kanji. Click a character to find it in your collection.</p>
+          <p>
+            All {kanji.length} N5 and N4 kanji. Click a character to find it in
+            your collection.
+          </p>
         </div>
       </div>
       <div className="kanji-grid">
@@ -40,7 +53,7 @@ export function ProgressKanjiGrid() {
           return (
             <Link
               key={item.id}
-              href={`/collection?type=kanji&q=${encodeURIComponent(item.expression)}`}
+              href={`/collection?type=kanji&level=${item.level}&q=${encodeURIComponent(item.expression)}`}
               className={`kanji-cell ${stageClass[status]}`}
               title={`${item.expression} — ${item.meaning} (${item.level}, ${status})`}
               lang="ja"

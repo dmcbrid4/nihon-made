@@ -38,11 +38,20 @@ export function CollectionView() {
   >("all");
   const [search, setSearch] = useState(searchParams.get("q") ?? "");
   if (isKana) return <Loading />;
+  // A deep link (e.g. from the Progress page's kanji map, which spans both
+  // N5 and N4) can name a specific level to view -- that's a one-off lookup,
+  // not a request to switch the active study mode, so it only overrides
+  // filtering/display here.
+  const levelParam = searchParams.get("level");
+  const viewLevel =
+    levelParam === "N5" || levelParam === "N4" || levelParam === "tae-kim"
+      ? levelParam
+      : activeMode;
   const visible = concepts
     .filter(
       (item) =>
         (filter === "all" || item.type === filter) &&
-        item.level === activeMode &&
+        item.level === viewLevel &&
         (commonalityFilter === "all" ||
           (item.type === "vocabulary" &&
             item.commonality === commonalityFilter)) &&
@@ -62,20 +71,18 @@ export function CollectionView() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">{activeMode} STUDY MODE</div>
-          <h1>
-            {activeMode === "tae-kim" ? "Tae Kim" : activeMode} collection
-          </h1>
+          <div className="eyebrow">{viewLevel} STUDY MODE</div>
+          <h1>{viewLevel === "tae-kim" ? "Tae Kim" : viewLevel} collection</h1>
           <p>
-            {activeMode === "N5"
+            {viewLevel === "N5"
               ? "Foundation vocabulary, kanji, grammar, reading, and listening."
-              : activeMode === "N4"
+              : viewLevel === "N4"
                 ? "N4-only material, kept separate from your N5 foundation."
                 : "Words and sentences mined from the Tae Kim/anime course."}
           </p>
         </div>
         <span className="level-badge">
-          {visible.length} {activeMode} concepts
+          {visible.length} {viewLevel} concepts
         </span>
       </div>
       <div className="collection-toolbar">
@@ -282,7 +289,9 @@ export function CollectionView() {
         )}
       </div>
       <p className="progress-note">
-        Switch study modes from the sidebar or Settings to view the other level.
+        {viewLevel === activeMode
+          ? "Switch study modes from the sidebar or Settings to view the other level."
+          : `Showing your ${viewLevel} collection -- your active study mode is still ${activeMode}.`}
       </p>
     </>
   );

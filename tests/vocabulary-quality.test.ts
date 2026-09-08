@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 import vocabularyData from "../src/lib/study/data/jlpt-n5-n4-vocabulary.json";
-import { concepts } from "../src/lib/study/content";
+import {
+  conceptById,
+  concepts,
+  retiredConceptIds,
+} from "../src/lib/study/content";
 import { retiredVocabulary } from "../src/lib/study/jlpt-vocabulary";
 import { applyAction, initialState } from "../src/lib/study/state";
 import {
@@ -143,28 +147,64 @@ test("corrected cards have sense-aligned replacements and usable ruby", () => {
 
 test("reviewed noun-plus-suru heads retain their noun reading and dictionary identity", () => {
   const ids = [
-    "v-jlpt-n5-0362", "v-jlpt-n5-0471", "v-jlpt-n5-0601", "v-jlpt-n5-0659",
-    "v-jlpt-n4-0154", "v-jlpt-n4-0170", "v-jlpt-n4-0172", "v-jlpt-n4-0176",
-    "v-jlpt-n4-0257", "v-jlpt-n4-0259", "v-jlpt-n4-0279", "v-jlpt-n4-0327",
-    "v-jlpt-n4-0370", "v-jlpt-n4-0371", "v-jlpt-n4-0372", "v-jlpt-n4-0380",
-    "v-jlpt-n4-0381", "v-jlpt-n4-0396", "v-jlpt-n4-0400", "v-jlpt-n4-0419",
-    "v-jlpt-n4-0425", "v-jlpt-n4-0426", "v-jlpt-n4-0445", "v-jlpt-n4-0459",
-    "v-jlpt-n4-0525", "v-jlpt-n4-0526", "v-jlpt-n4-0528", "v-jlpt-n4-0579",
-    "v-jlpt-n4-0603", "v-jlpt-n4-0604",
+    "v-jlpt-n5-0362",
+    "v-jlpt-n5-0471",
+    "v-jlpt-n5-0601",
+    "v-jlpt-n5-0659",
+    "v-jlpt-n4-0154",
+    "v-jlpt-n4-0170",
+    "v-jlpt-n4-0172",
+    "v-jlpt-n4-0176",
+    "v-jlpt-n4-0257",
+    "v-jlpt-n4-0259",
+    "v-jlpt-n4-0279",
+    "v-jlpt-n4-0327",
+    "v-jlpt-n4-0370",
+    "v-jlpt-n4-0371",
+    "v-jlpt-n4-0372",
+    "v-jlpt-n4-0380",
+    "v-jlpt-n4-0381",
+    "v-jlpt-n4-0396",
+    "v-jlpt-n4-0400",
+    "v-jlpt-n4-0419",
+    "v-jlpt-n4-0425",
+    "v-jlpt-n4-0426",
+    "v-jlpt-n4-0445",
+    "v-jlpt-n4-0459",
+    "v-jlpt-n4-0525",
+    "v-jlpt-n4-0526",
+    "v-jlpt-n4-0528",
+    "v-jlpt-n4-0579",
+    "v-jlpt-n4-0603",
+    "v-jlpt-n4-0604",
   ];
   assert.equal(ids.length, 30);
   for (const id of ids) {
     const item = vocabularyData.items.find((candidate) => candidate.id === id);
     assert.ok(item, `${id} should remain in the corpus`);
-    assert.ok(!item.reading.endsWith("する"), `${id} should not put する inside word ruby`);
+    assert.ok(
+      !item.reading.endsWith("する"),
+      `${id} should not put する inside word ruby`,
+    );
     assert.equal(item.partOfSpeech, "noun; suru verb");
-    assert.ok(item.vocabulary.provenance.dictionary, `${id} should recover a JMdict entry`);
-    assert.equal(phoneticRubyText(item.vocabulary.expressionFurigana), item.reading);
+    assert.ok(
+      item.vocabulary.provenance.dictionary,
+      `${id} should recover a JMdict entry`,
+    );
+    assert.equal(
+      phoneticRubyText(item.vocabulary.expressionFurigana),
+      item.reading,
+    );
   }
-  const haiken = vocabularyData.items.find((item) => item.id === "v-jlpt-n4-0528");
+  const haiken = vocabularyData.items.find(
+    (item) => item.id === "v-jlpt-n4-0528",
+  );
   assert.equal(haiken?.reading, "はいけん");
   assert.equal(rubyText(haiken?.vocabulary.expressionFurigana ?? []), "拝見");
-  assert.equal(phoneticRubyText(haiken?.vocabulary.expressionFurigana ?? []), "はいけん");
+  assert.equal(
+    phoneticRubyText(haiken?.vocabulary.expressionFurigana ?? []),
+    "はいけん",
+  );
   assert.ok(retiredVocabulary.has("v-jlpt-n4-0665"));
 });
 
@@ -179,7 +219,9 @@ test("reviewed homographs pin the intended JMdict entries", () => {
     assert.ok(item, `${id} should remain in the corpus`);
     assert.equal(item.vocabulary.provenance.dictionary?.entryId, entryId);
   }
-  const humbleVisit = vocabularyData.items.find((item) => item.id === "v-jlpt-n4-0017");
+  const humbleVisit = vocabularyData.items.find(
+    (item) => item.id === "v-jlpt-n4-0017",
+  );
   assert.equal(humbleVisit?.expression, "伺う");
   assert.match(humbleVisit?.example ?? "", /伺います/);
 });
@@ -188,7 +230,11 @@ test("phase 4 editorial replacements teach the reviewed lexeme and contextual re
   const item = (id: string) => {
     const found = vocabularyData.items.find((candidate) => candidate.id === id);
     assert.ok(found, `${id} should remain in the corpus`);
-    assert.equal(found.vocabulary.approval.approved, true, `${id} should be available to learners`);
+    assert.equal(
+      found.vocabulary.approval.approved,
+      true,
+      `${id} should be available to learners`,
+    );
     return found;
   };
   const oneMonth = item("v-jlpt-n5-0193");
@@ -220,10 +266,22 @@ test("fresh-holdout and missed-audit repairs teach their intended word and sense
   const item = (id: string, expectsEditorial = false) => {
     const found = vocabularyData.items.find((candidate) => candidate.id === id);
     assert.ok(found, `${id} should remain in the corpus`);
-    assert.equal(found.vocabulary.approval.approved, true, `${id} should be active`);
+    assert.equal(
+      found.vocabulary.approval.approved,
+      true,
+      `${id} should be active`,
+    );
     if (expectsEditorial) {
-      assert.equal(found.vocabulary.provenance.example.kind, "editorial", `${id} should document its replacement example`);
-      assert.equal(found.vocabulary.review.furigana, "reviewed", `${id} should use reviewed sentence ruby`);
+      assert.equal(
+        found.vocabulary.provenance.example.kind,
+        "editorial",
+        `${id} should document its replacement example`,
+      );
+      assert.equal(
+        found.vocabulary.review.furigana,
+        "reviewed",
+        `${id} should use reviewed sentence ruby`,
+      );
     }
     return found;
   };
@@ -239,10 +297,15 @@ test("fresh-holdout and missed-audit repairs teach their intended word and sense
   assert.deepEqual(hundredMillion.vocabulary.targetSpans, [
     { start: 5, end: 7, surface: "一億", lemma: "億", match: "counter" },
   ]);
-  assert.equal(item("v-jlpt-n4-0128").vocabulary.provenance.dictionary?.entryId, "1226360");
+  assert.equal(
+    item("v-jlpt-n4-0128").vocabulary.provenance.dictionary?.entryId,
+    "1226360",
+  );
   const shallow = item("v-jlpt-n4-0439");
   assert.equal(shallow.meaning, "shallow; light (sleep)");
-  assert.deepEqual(shallow.vocabulary.provenance.dictionary?.senseIds, ["1390800:1"]);
+  assert.deepEqual(shallow.vocabulary.provenance.dictionary?.senseIds, [
+    "1390800:1",
+  ]);
   assert.match(item("v-jlpt-n4-0357", true).example, /試験を受けます/);
   assert.equal(item("v-jlpt-n4-0239").meaning, "express train");
   assert.equal(item("v-jlpt-n4-0239").partOfSpeech, "noun");
@@ -274,7 +337,10 @@ test("contextual ruby fixtures preserve weekday and native-counter readings", ()
     "ひとつ、ふたつ、みっつ、よっつ、いつつ、むっつ、ななつ、やっつ、ここのつ、とお。",
   );
   assert.equal(reading("v-jlpt-n5-0571"), "かのじょはやっつです。");
-  assert.equal(reading("v-jlpt-n5-0678"), "りんごをひとつからとおまでかぞえます。");
+  assert.equal(
+    reading("v-jlpt-n5-0678"),
+    "りんごをひとつからとおまでかぞえます。",
+  );
 });
 
 test("retired cards are skipped in an in-progress session without creating a review", () => {
@@ -331,4 +397,65 @@ test("a session containing only retired cards can complete without invented revi
   );
   assert.equal(next.reviews.length, 0);
   assert.equal(next.sessions[0].completedAt, "2026-09-06T12:05:00.000Z");
+});
+
+test("an interrupted session whose only remaining card was retired can still complete, preserving earlier reviews", () => {
+  // Regression for a blank-page bug: a session reviewed partway, then
+  // interrupted, then the specific card(s) left unreviewed get retired by a
+  // curriculum-quality deploy before the session is resumed. The UI must
+  // offer the same "curriculum update" recovery as an all-retired session --
+  // not silently render nothing. This pins the state-layer half of that fix:
+  // completeRetired must succeed and keep the review already recorded
+  // *before* the retirement happened, exactly the ordering that matters (see
+  // src/components/study-session.tsx's merged !concept branch).
+  const [firstId, secondId] = concepts
+    .filter((item) => item.type === "vocabulary")
+    .slice(0, 2)
+    .map((item) => item.id);
+  const sessionId = randomUUID();
+  const state = initialState();
+  state.sessions = [
+    {
+      id: sessionId,
+      mode: "N5",
+      date: "2026-09-06",
+      conceptIds: [firstId, secondId],
+      startedAt: "2026-09-06T12:00:00.000Z",
+      completedAt: null,
+    },
+  ];
+  const reviewed = applyAction(
+    state,
+    {
+      type: "review",
+      id: randomUUID(),
+      sessionId,
+      conceptId: firstId,
+      rating: "good",
+    },
+    new Date("2026-09-06T12:05:00.000Z"),
+  );
+  // Interrupted: one card answered, the other never reached, session left open.
+  assert.equal(reviewed.sessions[0].completedAt, null);
+
+  // Simulate a curriculum-quality deploy retiring the still-unreviewed card
+  // in between -- both `conceptById` and `retiredConceptIds` update together
+  // in production; restore them after so other tests see the real dataset.
+  const secondConcept = conceptById.get(secondId);
+  assert.ok(secondConcept);
+  conceptById.delete(secondId);
+  retiredConceptIds.add(secondId);
+  try {
+    const next = applyAction(
+      reviewed,
+      { type: "completeRetired", sessionId },
+      new Date("2026-09-07T09:00:00.000Z"),
+    );
+    assert.equal(next.reviews.length, 1);
+    assert.equal(next.reviews[0].conceptId, firstId);
+    assert.equal(next.sessions[0].completedAt, "2026-09-07T09:00:00.000Z");
+  } finally {
+    conceptById.set(secondId, secondConcept);
+    retiredConceptIds.delete(secondId);
+  }
 });

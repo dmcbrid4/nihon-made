@@ -130,7 +130,12 @@ export function StudySessionView() {
       </div>
     );
   }
-  if (!concept && activeConceptIds.length === 0)
+  if (!concept)
+    // Covers both "every card in this session got retired" and "the only
+    // card(s) left unreviewed got retired while others were already
+    // answered" -- an interrupted session can land in either shape, and
+    // both need the same recovery screen instead of silently rendering
+    // nothing (see completeRetired below).
     return (
       <div className="empty-state panel">
         <span className="eyebrow">CURRICULUM UPDATE</span>
@@ -153,7 +158,6 @@ export function StudySessionView() {
         </Link>
       </div>
     );
-  if (!concept) return null;
   function rate(rating: Rating) {
     if (!session || !concept) return;
     void dispatch({
