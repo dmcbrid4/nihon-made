@@ -82,12 +82,24 @@ function mediaPath(file: string | null) {
   return file ? `/tae-kim/media/${file}` : undefined;
 }
 
+// A handful of the deck's own romaji strings carry stray Unicode bidi
+// control characters (left-to-right embedding markers) and the whitespace
+// right next to them, copy-paste artifacts from the original Anki notes --
+// invisible, but they throw off centered text since the browser counts them
+// toward the line's width. Strip Unicode "format" (Cf) characters and trim.
+function cleanRomaji(value: string) {
+  return Array.from(value)
+    .filter((char) => /\p{Cf}/u.test(char) === false)
+    .join("")
+    .trim();
+}
+
 const phraseConcepts: CurriculumDraft[] = parsed.phrases.map((phrase) => ({
   id: phrase.id,
   type: "listening",
   expression: phrase.japanese,
   reading: phrase.reading,
-  romaji: phrase.romaji,
+  romaji: cleanRomaji(phrase.romaji),
   expressionFurigana: furiganaById[phrase.id],
   meaning: phrase.translation,
   level: "tae-kim",
