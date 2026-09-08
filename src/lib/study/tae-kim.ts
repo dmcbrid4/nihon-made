@@ -1,6 +1,8 @@
 import { z } from "zod";
 import taeKimData from "./data/tae-kim-deck.json";
+import taeKimFurigana from "./data/tae-kim-furigana.json";
 import type { CurriculumDraft } from "./curriculum-expansion";
+import type { RubySegment } from "./types";
 
 // Mined from "Japanese course based on Tae Kim's grammar guide (anime)"
 // (the "Japanese Like a Breeze" Anki deck): real sentences pulled from
@@ -70,7 +72,10 @@ const POS_LABELS: Record<string, string> = {
 export const taeKimSource =
   "Mined from \"Japanese course based on Tae Kim's grammar guide (anime)\" (the “Japanese Like a Breeze” Anki deck), which follows Tae Kim's grammar guide illustrated with real anime/drama dialogue. Audio and screenshots are taken from copyrighted anime/drama episodes for this user's personal study only; see docs/tae-kim-mode.md.";
 
-const phrasesById = new Map(parsed.phrases.map((phrase) => [phrase.id, phrase]));
+const phrasesById = new Map(
+  parsed.phrases.map((phrase) => [phrase.id, phrase]),
+);
+const furiganaById = taeKimFurigana as Record<string, RubySegment[]>;
 
 function mediaPath(file: string | null) {
   return file ? `/tae-kim/media/${file}` : undefined;
@@ -81,6 +86,8 @@ const phraseConcepts: CurriculumDraft[] = parsed.phrases.map((phrase) => ({
   type: "listening",
   expression: phrase.japanese,
   reading: phrase.reading,
+  romaji: phrase.romaji,
+  expressionFurigana: furiganaById[phrase.id],
   meaning: phrase.translation,
   level: "tae-kim",
   example: phrase.japanese,
@@ -122,5 +129,8 @@ const wordConcepts: CurriculumDraft[] = parsed.words.map((word) => {
   };
 });
 
-export const taeKimConcepts: CurriculumDraft[] = [...wordConcepts, ...phraseConcepts];
+export const taeKimConcepts: CurriculumDraft[] = [
+  ...wordConcepts,
+  ...phraseConcepts,
+];
 export const taeKimCounts = parsed.counts;

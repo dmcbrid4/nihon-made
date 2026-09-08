@@ -82,6 +82,12 @@
 .review-question h1.kanji-expression {
   font-size: 90px;
 }
+.romaji-line {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
 .reveal-area {
   padding: 20px 0 5px;
   border-top: 1px solid var(--line);

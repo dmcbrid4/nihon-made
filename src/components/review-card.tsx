@@ -86,9 +86,13 @@ export function ReviewCard({
           >
             <FuriganaText
               fallback={concept.expression}
-              segments={concept.vocabulary?.expressionFurigana}
+              segments={
+                concept.expressionFurigana ??
+                concept.vocabulary?.expressionFurigana
+              }
             />
           </h1>
+          {concept.romaji && <p className="romaji-line">{concept.romaji}</p>}
           {passage && (
             <>
               <p className="reading-passage" lang="ja">
@@ -123,7 +127,11 @@ export function ReviewCard({
                   {concept.reading}
                 </p>
               )}
-              <h2>{passage ? (concept.answer ?? concept.meaning) : concept.meaning}</h2>
+              <h2>
+                {passage
+                  ? (concept.answer ?? concept.meaning)
+                  : concept.meaning}
+              </h2>
             </div>
             {passage ? (
               <details className="translation" open={!concept.answer}>

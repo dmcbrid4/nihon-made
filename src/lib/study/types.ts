@@ -120,7 +120,11 @@ export type VocabularyDetails = {
   provenance: {
     lexicalSourceIds: string[];
     /** A real JMdict entry/sense match, independent of ruby sourcing below. */
-    dictionary: { entryId: string; senseIds: string[]; glossOverlap: number } | null;
+    dictionary: {
+      entryId: string;
+      senseIds: string[];
+      glossOverlap: number;
+    } | null;
     /** Whether JmdictFurigana supplied the word ruby, vs. a generated fallback. */
     ruby: { source: "jmdict-furigana" | "generated"; wordExact: boolean };
     example: {
@@ -153,6 +157,16 @@ export interface Concept {
   type: ConceptType;
   expression: string;
   reading: string;
+  /** Romaji transliteration of `expression`, mined from the Tae Kim course's
+   * source Anki deck. Only populated for that course's sentence cards. */
+  romaji?: string;
+  /** Mechanically-generated furigana for `expression`, only kept when its
+   * reconstructed reading exactly matched the Tae Kim deck's own stored
+   * reading (scripts/generate-tae-kim-furigana.py) -- sentences where the
+   * tagger wasn't confident are simply left without this field rather than
+   * risk showing a wrong reading. JLPT vocabulary uses the richer, reviewed
+   * `vocabulary.expressionFurigana` instead; this is the Tae Kim-only path. */
+  expressionFurigana?: RubySegment[];
   meaning: string;
   level: StudyMode;
   curriculumUnit: string;
