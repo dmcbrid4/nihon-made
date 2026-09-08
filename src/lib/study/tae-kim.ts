@@ -1,6 +1,7 @@
 import { z } from "zod";
 import taeKimData from "./data/tae-kim-deck.json";
 import taeKimFurigana from "./data/tae-kim-furigana.json";
+import taeKimWordRomaji from "./data/tae-kim-word-romaji.json";
 import type { CurriculumDraft } from "./curriculum-expansion";
 import type { RubySegment } from "./types";
 
@@ -103,6 +104,8 @@ const phraseConcepts: CurriculumDraft[] = parsed.phrases.map((phrase) => ({
   },
 }));
 
+const wordRomajiById = taeKimWordRomaji as Record<string, string>;
+
 const wordConcepts: CurriculumDraft[] = parsed.words.map((word) => {
   const example = phrasesById.get(word.examplePhraseIds[0]);
   return {
@@ -110,6 +113,7 @@ const wordConcepts: CurriculumDraft[] = parsed.words.map((word) => {
     type: "vocabulary",
     expression: word.lemma,
     reading: word.reading,
+    romaji: wordRomajiById[word.id],
     meaning:
       word.dictionary.gloss ??
       "Not found in JMdict -- likely a character or place name from the source show.",

@@ -44,6 +44,8 @@ python3 scripts/mine-tae-kim-deck.py \
 
 Requires `fugashi` and `unidic-lite` (`pip install fugashi unidic-lite`;
 the same interpreter already used for `scripts/build-vocabulary-quality.py`).
+Regenerating furigana/word-romaji (below) also needs `cutlet`
+(`pip install cutlet`, which pulls in `fugashi` again plus `jaconv`/`mojimoji`).
 `JMDICT_JSON` must be the **full** dictionary snapshot (`commonOnly: false`),
 not the common-only subset -- word mining needs the long tail of proper
 nouns and less common terms real dialogue actually uses.
@@ -75,10 +77,20 @@ point, not a certified one.
 
 ## Romaji and furigana
 
-Sentence cards show romaji (mined straight from the deck's own
-`Jlab-ListeningFront` field, see `phrase.romaji` in
-`src/lib/study/tae-kim.ts`) and, for most sentences, furigana on the
-Japanese text -- both directly under the heading on the review card.
+Every card (sentence and word) shows romaji, and sentence cards also show
+furigana on the Japanese text -- both directly under the heading on the
+review card.
+
+Sentence-card romaji is mined straight from the deck's own
+`Jlab-ListeningFront` field (see `phrase.romaji` in `src/lib/study/tae-kim.ts`).
+Word cards never had romaji in the deck at all, so theirs is instead
+mechanically transliterated from their own trusted `reading` field by
+`scripts/generate-tae-kim-word-romaji.py` (`cutlet`'s `map_kana`, a plain
+kana-to-romaji table lookup with no dictionary re-analysis involved --
+unlike furigana below, there's no reading to disambiguate, so no confidence
+gate is needed; 675 of 708 word cards got romaji, the rest have a reading
+`map_kana` couldn't parse). Output lives in
+`src/lib/study/data/tae-kim-word-romaji.json`, keyed by word id.
 
 The deck itself has no per-character furigana segmentation (only a flat,
 space-tokenized whole-sentence reading), so furigana here is mechanically

@@ -157,8 +157,12 @@ export interface Concept {
   type: ConceptType;
   expression: string;
   reading: string;
-  /** Romaji transliteration of `expression`, mined from the Tae Kim course's
-   * source Anki deck. Only populated for that course's sentence cards. */
+  /** Romaji transliteration of `expression`, only populated for the Tae Kim
+   * course. Sentence cards carry the source Anki deck's own hand-written
+   * romaji straight through; word cards have no such source data, so their
+   * romaji is instead mechanically transliterated from their own reading
+   * (see scripts/generate-tae-kim-word-romaji.py -- a plain, unambiguous
+   * kana-to-romaji conversion, not a guess). */
   romaji?: string;
   /** Mechanically-generated furigana for `expression`, only kept when its
    * reconstructed reading exactly matched the Tae Kim deck's own stored
