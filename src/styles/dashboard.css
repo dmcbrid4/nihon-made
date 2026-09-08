@@ -285,6 +285,9 @@
   gap: 15px;
   margin-bottom: 18px;
 }
+.curriculum-mastery-section > .section-heading {
+  padding: 0 30px;
+}
 .section-heading h2 {
   font-size: 17px;
   font-weight: 500;

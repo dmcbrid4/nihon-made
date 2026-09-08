@@ -19,7 +19,8 @@ const typeLabel: Record<CurriculumType, string> = {
 
 function MasteryCard({ cohort }: { cohort: CurriculumCohort }) {
   const complete = cohort.total > 0 && cohort.mastered === cohort.total;
-  const introducedOrFurther = cohort.introduced + cohort.learning + cohort.mastered;
+  const introducedOrFurther =
+    cohort.introduced + cohort.learning + cohort.mastered;
   return (
     <div className="vocabulary-progress-card">
       <span>{cohort.label}</span>
@@ -37,24 +38,38 @@ function MasteryCard({ cohort }: { cohort: CurriculumCohort }) {
       >
         <span
           className="progress-learning"
-          style={{ width: `${cohort.total ? (introducedOrFurther / cohort.total) * 100 : 0}%` }}
+          style={{
+            width: `${cohort.total ? (introducedOrFurther / cohort.total) * 100 : 0}%`,
+          }}
         />
         <span
           className="progress-mastered"
-          style={{ width: `${cohort.total ? (cohort.mastered / cohort.total) * 100 : 0}%` }}
+          style={{
+            width: `${cohort.total ? (cohort.mastered / cohort.total) * 100 : 0}%`,
+          }}
         />
       </div>
       <small>
-        {cohort.unseen} unseen · {cohort.introduced} introduced · {cohort.learning} learning
+        {cohort.unseen} unseen · {cohort.introduced} introduced ·{" "}
+        {cohort.learning} learning
       </small>
     </div>
   );
 }
 
-function CurriculumMasterySection({ state, type }: { state: StudyState; type: CurriculumType }) {
+function CurriculumMasterySection({
+  state,
+  type,
+}: {
+  state: StudyState;
+  type: CurriculumType;
+}) {
   const cohorts = curriculumProgress(state, type);
   return (
-    <section className="panel" aria-label={`${typeLabel[type]} mastery`}>
+    <section
+      className="panel curriculum-mastery-section"
+      aria-label={`${typeLabel[type]} mastery`}
+    >
       <div className="section-heading">
         <h2>{typeLabel[type]}</h2>
       </div>
@@ -74,7 +89,10 @@ export function ProgressCurriculum() {
   const done = milestones(state).filter((item) => item.complete);
   return (
     <>
-      <section className="panel curriculum-overview" aria-label="N4 curriculum progress">
+      <section
+        className="panel curriculum-overview"
+        aria-label="N4 curriculum progress"
+      >
         <div className="section-heading">
           <div>
             <h2>N4 curriculum progress</h2>
@@ -89,7 +107,10 @@ export function ProgressCurriculum() {
             <div key={type} className="curriculum-overview-row">
               <span>{typeLabel[type]}</span>
               <div className="progress-track">
-                <span className="progress-mastered" style={{ width: `${overview[type]}%` }} />
+                <span
+                  className="progress-mastered"
+                  style={{ width: `${overview[type]}%` }}
+                />
               </div>
               <strong>{overview[type]}%</strong>
             </div>
