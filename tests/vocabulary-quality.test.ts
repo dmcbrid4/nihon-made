@@ -439,8 +439,7 @@ test("an interrupted session whose only remaining card was retired can still com
   assert.equal(reviewed.sessions[0].completedAt, null);
 
   // Simulate a curriculum-quality deploy retiring the still-unreviewed card
-  // in between -- both `conceptById` and `retiredConceptIds` update together
-  // in production; restore them after so other tests see the real dataset.
+  // in between; restore it after so other tests see the real dataset.
   const secondConcept = conceptById.get(secondId);
   assert.ok(secondConcept);
   conceptById.delete(secondId);
@@ -457,5 +456,66 @@ test("an interrupted session whose only remaining card was retired can still com
   } finally {
     conceptById.set(secondId, secondConcept);
     retiredConceptIds.delete(secondId);
+  }
+});
+
+test("an interrupted session can still complete when the missing card was quarantined rather than explicitly retired", () => {
+  // Regression for a real production bug: a concept can drop out of
+  // conceptById by losing mechanical approval (vocabulary-data.ts's
+  // approval gate quarantines it for Phase 3/4 review) WITHOUT ever being
+  // added to the separate, explicit retiredConceptIds set -- that set only
+  // covers the "deliberately retired" path (data-quality-report.md's
+  // "Retired records"). completeRetired used to check membership in
+  // retiredConceptIds specifically, so it threw "This session still has an
+  // available card" for this case even though the UI (which checks
+  // conceptById directly, same as here) had already decided there was
+  // nothing left to review and shown the recovery screen -- the user could
+  // see "Finish updated session" but clicking it always failed to save.
+  const [firstId, secondId] = concepts
+    .filter((item) => item.type === "vocabulary")
+    .slice(2, 4)
+    .map((item) => item.id);
+  const sessionId = randomUUID();
+  const state = initialState();
+  state.sessions = [
+    {
+      id: sessionId,
+      mode: "N4",
+      date: "2026-09-06",
+      conceptIds: [firstId, secondId],
+      startedAt: "2026-09-06T12:00:00.000Z",
+      completedAt: null,
+    },
+  ];
+  const reviewed = applyAction(
+    state,
+    {
+      type: "review",
+      id: randomUUID(),
+      sessionId,
+      conceptId: firstId,
+      rating: "good",
+    },
+    new Date("2026-09-06T12:05:00.000Z"),
+  );
+  assert.equal(reviewed.sessions[0].completedAt, null);
+
+  // Quarantined, not explicitly retired: gone from conceptById, but
+  // retiredConceptIds is deliberately left untouched.
+  const secondConcept = conceptById.get(secondId);
+  assert.ok(secondConcept);
+  assert.equal(retiredConceptIds.has(secondId), false);
+  conceptById.delete(secondId);
+  try {
+    const next = applyAction(
+      reviewed,
+      { type: "completeRetired", sessionId },
+      new Date("2026-09-07T09:00:00.000Z"),
+    );
+    assert.equal(next.reviews.length, 1);
+    assert.equal(next.reviews[0].conceptId, firstId);
+    assert.equal(next.sessions[0].completedAt, "2026-09-07T09:00:00.000Z");
+  } finally {
+    conceptById.set(secondId, secondConcept);
   }
 });

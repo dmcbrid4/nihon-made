@@ -1,4 +1,4 @@
-import { conceptById, retiredConceptIds } from "./content";
+import { conceptById } from "./content";
 import { dateInZone } from "./dates";
 import { currentSession, planSession } from "./planner";
 import { recordKanaQuizAnswer } from "./kana-progress";
@@ -177,10 +177,13 @@ export function applyAction(
         .map((review) => review.conceptId),
     );
     const unresolved = session.conceptIds.filter((id) => !reviewed.has(id));
-    if (
-      !unresolved.length ||
-      unresolved.some((id) => !retiredConceptIds.has(id))
-    )
+    // "Retired" here means "no longer resolvable", not specifically listed
+    // in retiredConceptIds -- a concept can also drop out of conceptById by
+    // losing mechanical approval (see vocabulary-data.ts's approval gate)
+    // without ever being added to that narrower, explicit-retirement set.
+    // Match the same check the UI already uses to decide there's nothing
+    // left to review (see study-session.tsx's activeConceptIds).
+    if (!unresolved.length || unresolved.some((id) => conceptById.has(id)))
       throw new Error("This session still has an available card.");
     return {
       ...state,
