@@ -106,6 +106,7 @@ export default function SignInPage() {
               <button
                 type="button"
                 className={method === "link" ? "active" : ""}
+                aria-pressed={method === "link"}
                 onClick={() => {
                   setMethod("link");
                   setMessage("");
@@ -116,6 +117,7 @@ export default function SignInPage() {
               <button
                 type="button"
                 className={method === "password" ? "active" : ""}
+                aria-pressed={method === "password"}
                 onClick={() => {
                   setMethod("password");
                   setNewHere(false);
@@ -140,12 +142,11 @@ export default function SignInPage() {
               {method === "password" && (
                 <>
                   <label htmlFor="password">Password</label>
-                  <input
+                  <PasswordInput
                     id="password"
-                    type="password"
                     autoComplete="current-password"
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={setPassword}
                     required
                   />
                 </>
@@ -204,6 +205,7 @@ export default function SignInPage() {
         )}
         {sent && (
           <button
+            type="button"
             className="text-link auth-back"
             onClick={() => {
               setSent(false);

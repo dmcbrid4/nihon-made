@@ -251,9 +251,6 @@
 :root:not([data-design="1"]) .filter-tabs button {
   font-size: 12px;
 }
-:root:not([data-design="1"]) .form-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 :root:not([data-design="1"]) .settings-layout > * {
   min-width: 0;
 }
@@ -323,31 +320,6 @@
   }
 }
 @media (max-width: 700px) {
-  :root:not([data-design="1"]) .sidebar:has(.study-mode-picker) {
-    height: 124px;
-    align-items: flex-start;
-  }
-  :root:not([data-design="1"]) .app-shell:has(.study-mode-picker) .workspace {
-    padding-top: 124px;
-  }
-  :root:not([data-design="1"]) .study-mode-picker {
-    position: absolute;
-    bottom: 10px;
-    left: 20px;
-    right: 20px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  :root:not([data-design="1"]) .study-mode-picker > span {
-    white-space: nowrap;
-  }
-  :root:not([data-design="1"]) .study-mode-picker select {
-    font-size: 16px;
-    padding: 8px;
-    min-height: 40px;
-  }
   :root:not([data-design="1"]) .topbar {
     height: 74px;
   }
@@ -420,9 +392,6 @@
   }
   :root:not([data-design="1"]) .skill-card:last-child > p {
     margin-top: 9px;
-  }
-  :root:not([data-design="1"]) .new-card-pacing .form-grid {
-    grid-template-columns: 1fr;
   }
   :root:not([data-design="1"]) .guest-workspace {
     padding-bottom: 70px;

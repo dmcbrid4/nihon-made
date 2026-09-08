@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, RotateCcw, Volume2 } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Eye,
+  RotateCcw,
+  Volume2,
+} from "lucide-react";
 import {
   buildQuizQuestions,
   distractorsFor,
@@ -539,9 +546,11 @@ function KanaStudyBrowse({ script }: { script: KanaScript }) {
         ) : (
           <div className="reveal-area">
             <button
+              type="button"
               className="primary-button reveal-button"
               onClick={() => setRevealed(true)}
             >
+              <Eye size={17} />
               Reveal
             </button>
           </div>

@@ -171,6 +171,13 @@ input[type="range"] {
   line-height: 1.8;
   color: var(--muted);
 }
+.account-password strong,
+.account-password p {
+  display: block;
+}
+.account-password p {
+  margin: 5px 0 8px;
+}
 .collection-toolbar {
   display: flex;
   flex-wrap: wrap;

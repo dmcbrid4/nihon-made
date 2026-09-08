@@ -240,6 +240,35 @@
     padding-top: 74px;
     padding-bottom: 75px;
   }
+  /* The study-mode picker needs room in the mobile header bar when it's
+     present -- grow the bar and pin the picker into the extra space.
+     Structural, not a theme choice (see .identity-mark for the bug this
+     pattern caused when it lived only inside one theme's stylesheet). */
+  .sidebar:has(.study-mode-picker) {
+    height: 124px;
+    align-items: flex-start;
+  }
+  .app-shell:has(.study-mode-picker) .workspace {
+    padding-top: 124px;
+  }
+  .study-mode-picker {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .study-mode-picker > span {
+    white-space: nowrap;
+  }
+  .study-mode-picker select {
+    font-size: 16px;
+    padding: 8px;
+    min-height: 40px;
+  }
   .topbar {
     position: fixed;
     right: 17px;
@@ -520,6 +549,9 @@
   }
   .form-grid {
     gap: 12px;
+  }
+  .new-card-pacing .form-grid {
+    grid-template-columns: 1fr;
   }
   .form-footer {
     flex-wrap: wrap;

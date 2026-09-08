@@ -193,6 +193,34 @@
   color: var(--muted);
   margin-top: 11px;
 }
+/* Structural base -- theme-specific type sizing lives in editorial.css, but
+   layout/spacing needs a fallback for both themes (see .identity-mark for
+   the bug this pattern caused when only one theme had it). */
+.session-index {
+  border-top: 2px solid var(--text);
+  padding: 22px 0;
+}
+.session-index h2 {
+  margin-top: 12px;
+}
+.session-index dl {
+  margin: 18px 0 12px;
+}
+.session-index dl > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.session-index dd {
+  margin: 0;
+  line-height: 1.2;
+}
+.collection-index {
+  margin-top: 40px;
+}
 .trip-card {
   position: relative;
   overflow: hidden;

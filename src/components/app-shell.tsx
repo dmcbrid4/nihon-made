@@ -31,7 +31,12 @@ export function AppShell({ children }: { children: ReactNode }) {
     dispatch,
     busy,
   } = useStudy();
-  if (pathname.startsWith("/guest")) return <>{children}</>;
+  if (
+    pathname.startsWith("/guest") ||
+    pathname.startsWith("/auth/") ||
+    pathname === "/sign-in"
+  )
+    return <>{children}</>;
   const current = pathname.startsWith("/kana")
     ? "Kana"
     : (navigation.find((item) => item.href === pathname)?.label ??

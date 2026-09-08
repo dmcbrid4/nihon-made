@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Check, Download, Save, Upload } from "lucide-react";
+import { Check, Download, KeyRound, Save, Upload } from "lucide-react";
+import Link from "next/link";
 import {
   goalSchema,
   stateSchema,
@@ -283,13 +284,18 @@ export function SettingsView() {
                 : "Reviews and settings are saved to your account and available on your other devices."}
             </p>
             <p>Keep a copy of your progress whenever you like.</p>
-            <button className="secondary-button" onClick={exportData}>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={exportData}
+            >
               <Download size={16} />
               Export study history
             </button>
             {mode === "database" ? (
               <>
                 <button
+                  type="button"
                   className="secondary-button"
                   disabled={importing}
                   onClick={() => void importBrowserHistory()}
@@ -299,6 +305,14 @@ export function SettingsView() {
                 </button>
                 <div className="data-note" role="status">
                   {importMessage}
+                </div>
+                <div className="data-note account-password">
+                  <strong>Account</strong>
+                  <p>Set or change the password you use to sign in.</p>
+                  <Link href="/auth/set-password" className="text-link">
+                    <KeyRound size={15} />
+                    Set or change password
+                  </Link>
                 </div>
               </>
             ) : null}
