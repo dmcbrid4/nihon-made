@@ -192,6 +192,7 @@ function GoalForm({ state }: { state: StudyState }) {
 }
 
 export function SettingsView() {
+  const [showMatsuyaCows, setShowMatsuyaCows] = useState(false);
   const { state, mode, error, reload } = useStudy();
   const [importing, setImporting] = useState(false);
   const [importMessage, setImportMessage] = useState("");
@@ -263,6 +264,14 @@ export function SettingsView() {
           <h1>Settings</h1>
           <p>Study modes, daily pace, and saved history.</p>
         </div>
+        <button
+          type="button"
+          className="settings-easter-egg"
+          aria-label="Open a Matsuya surprise"
+          onClick={() => setShowMatsuyaCows(true)}
+        >
+          ?
+        </button>
       </div>
       <div className="settings-layout">
         {state ? <GoalForm state={state} /> : !error ? <Loading /> : null}
@@ -324,6 +333,30 @@ export function SettingsView() {
           </aside>
         </div>
       </div>
+      {showMatsuyaCows ? (
+        <div
+          className="matsuya-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Matsuya cows"
+          onClick={() => setShowMatsuyaCows(false)}
+        >
+          <button
+            type="button"
+            className="matsuya-lightbox-close"
+            aria-label="Close image"
+            onClick={() => setShowMatsuyaCows(false)}
+          >
+            ×
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/matsuya-cows.jpeg"
+            alt="Two cheerful Matsuya cow mascots enjoying a bowl of food"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      ) : null}
     </>
   );
 }

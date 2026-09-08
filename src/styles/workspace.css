@@ -13,6 +13,55 @@
 .settings-panel {
   padding: 30px;
 }
+.settings-easter-egg {
+  align-self: flex-start;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+.settings-easter-egg:hover,
+.settings-easter-egg:focus-visible {
+  color: var(--ink);
+  border-color: var(--ink);
+  transform: rotate(8deg);
+}
+.matsuya-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(20 35 42 / 72%);
+}
+.matsuya-lightbox img {
+  display: block;
+  max-width: min(560px, 92vw);
+  max-height: 82vh;
+  border-radius: 12px;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 28%);
+}
+.matsuya-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
 .settings-section-heading {
   margin-bottom: 25px;
 }
