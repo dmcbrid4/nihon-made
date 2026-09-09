@@ -1387,7 +1387,6 @@
     "approved": true,
     "approvalReasons": [],
     "issues": [
-      "v-jlpt-n5-0120: example requires editorial review",
       "v-jlpt-n5-0120: furigana segmentation is uncertain"
     ]
   },
@@ -3372,17 +3371,6 @@
     ]
   },
   {
-    "id": "v-jlpt-n5-0297",
-    "expression": "嫌い",
-    "reading": "きらい",
-    "level": "N5",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n5-0297: example requires editorial review"
-    ]
-  },
-  {
     "id": "v-jlpt-n5-0298",
     "expression": "建物",
     "reading": "たてもの",
@@ -4701,17 +4689,6 @@
     ]
   },
   {
-    "id": "v-jlpt-n5-0421",
-    "expression": "少し",
-    "reading": "すこし",
-    "level": "N5",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n5-0421: example requires editorial review"
-    ]
-  },
-  {
     "id": "v-jlpt-n5-0422",
     "expression": "少ない",
     "reading": "すくない",
@@ -5423,17 +5400,6 @@
     "approvalReasons": [],
     "issues": [
       "v-jlpt-n5-0486: example requires editorial review"
-    ]
-  },
-  {
-    "id": "v-jlpt-n5-0487",
-    "expression": "大好き",
-    "reading": "だいすき",
-    "level": "N5",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n5-0487: example requires editorial review"
     ]
   },
   {
@@ -6414,17 +6380,6 @@
     "issues": [
       "v-jlpt-n5-0574: no exact or recognized inflected target span",
       "v-jlpt-n5-0574: example requires editorial review"
-    ]
-  },
-  {
-    "id": "v-jlpt-n5-0575",
-    "expression": "半分",
-    "reading": "はんぶん",
-    "level": "N5",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n5-0575: example requires editorial review"
     ]
   },
   {
@@ -9950,7 +9905,6 @@
     "approved": true,
     "approvalReasons": [],
     "issues": [
-      "v-jlpt-n4-0144: example requires editorial review",
       "v-jlpt-n4-0144: furigana segmentation is uncertain"
     ]
   },

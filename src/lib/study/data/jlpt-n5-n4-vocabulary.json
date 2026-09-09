@@ -16071,7 +16071,7 @@
       "expression": "どうも",
       "kanjiForm": null,
       "reading": "どうも",
-      "meaning": "thanks",
+      "meaning": "thanks; sorry",
       "level": "N5",
       "partOfSpeech": "interjection",
       "example": "どうも失礼。",
@@ -16174,11 +16174,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"thanks\" didn't cover the record's own example (どうも失礼, \"terribly sorry\"); Kaishi 1.5k independently confirms どうも's core sense is an intensifier used with apologies/thanks, not just \"thanks\" alone.",
             "Expression segmentation was generated from its stored reading and needs review.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -39646,7 +39647,7 @@
       "expression": "嫌い",
       "kanjiForm": "嫌い",
       "reading": "きらい",
-      "meaning": "hate",
+      "meaning": "dislike",
       "level": "N5",
       "partOfSpeech": "na-adjective",
       "example": "みんな嫌い。",
@@ -39755,11 +39756,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"hate\" overstated 嫌い; Kaishi 1.5k independently confirms \"dislike\".",
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -56545,7 +56547,7 @@
       "expression": "少し",
       "kanjiForm": "少し",
       "reading": "すこし",
-      "meaning": "few",
+      "meaning": "a little",
       "level": "N5",
       "partOfSpeech": "adverb",
       "example": "少し疲れた。",
@@ -56662,11 +56664,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"few\" contradicted the record's own example (少し疲れた, \"a bit tired\"); Kaishi 1.5k independently confirms \"a little\".",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -65449,7 +65452,7 @@
       "expression": "大好き",
       "kanjiForm": "大好き",
       "reading": "だいすき",
-      "meaning": "to be very likeable",
+      "meaning": "to really like; to love",
       "level": "N5",
       "partOfSpeech": "na-adjective",
       "example": "彼が大好き！",
@@ -65566,11 +65569,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"to be very likeable\" had the direction backwards (describes the subject's feeling, not the object's likeability); Kaishi 1.5k independently confirms \"love\".",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -77420,7 +77424,7 @@
       "expression": "半分",
       "kanjiForm": "半分",
       "reading": "はんぶん",
-      "meaning": "half minute",
+      "meaning": "half",
       "level": "N5",
       "partOfSpeech": "adverb",
       "example": "半分よこせ。",
@@ -77525,11 +77529,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"half minute\" was wrong; the record's own example (半分よこせ, \"give me half\") already showed it, confirmed independently by Kaishi 1.5k.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -118871,9 +118876,9 @@
       "expression": "もっとも",
       "kanjiForm": null,
       "reading": "もっとも",
-      "meaning": "extremely",
+      "meaning": "reasonable; understandable",
       "level": "N4",
-      "partOfSpeech": "adverb",
+      "partOfSpeech": "na-adjective",
       "example": "君が怒るのももっともだ。",
       "exampleMeaning": "You have good reason to be angry.",
       "note": "Review the most useful meaning first, then say the example aloud.",
@@ -118994,11 +118999,13 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"extremely\" was the wrong sense of もっとも (that's 最も); the record's own example (君が怒るのももっともだ) demonstrates the 尤も \"reasonable\" sense, confirmed independently by Kaishi 1.5k.",
+            "Part of speech corrected from \"adverb\" to \"na-adjective\" to match the corrected もっとも sense.",
             "Expression segmentation was generated from its stored reading and needs review.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]

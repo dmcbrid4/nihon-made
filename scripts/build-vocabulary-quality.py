@@ -615,6 +615,40 @@ OVERRIDES = {
         "exampleKind": "editorial",
         "notes": ["Uses the native-count reading 十/とお, rather than the clock-time reading じゅう."],
     },
+    # Kaishi 1.5k cross-check corrections. Kaishi 1.5k (Core 2k/6k + Tango
+    # N5/N4, independently merged and hand-corrected; see
+    # scripts/mine-kaishi-deck.py) shares no lineage with Waller/OpenJLPT/
+    # Open Anki, so an actual disagreement here is real independent
+    # corroboration, not the same list counted three times. All 546 exact
+    # word+reading matches between the active corpus and the mined Kaishi
+    # data were read manually; these are the confirmed gloss errors (a
+    # meaning contradicting the record's own example, or a plain wrong
+    # gloss), each rewritten in this project's own words rather than
+    # copied from Kaishi's text/translations, which carry no reuse licence.
+    "v-jlpt-n4-0144": {
+        "meaning": "reasonable; understandable", "partOfSpeech": "na-adjective",
+        "notes": ["Stored meaning \"extremely\" was the wrong sense of もっとも (that's 最も, an adverb); the record's own example (君が怒るのももっともだ) demonstrates the 尤も \"reasonable\" na-adjective sense, confirmed independently by Kaishi 1.5k. Part of speech corrected from \"adverb\" to match."],
+    },
+    "v-jlpt-n5-0120": {
+        "meaning": "thanks; sorry",
+        "notes": ["Stored meaning \"thanks\" didn't cover the record's own example (どうも失礼, \"terribly sorry\"); Kaishi 1.5k independently confirms どうも's core sense is an intensifier used with apologies/thanks, not just \"thanks\" alone."],
+    },
+    "v-jlpt-n5-0297": {
+        "meaning": "dislike",
+        "notes": ["Stored meaning \"hate\" overstated 嫌い; Kaishi 1.5k independently confirms \"dislike\"."],
+    },
+    "v-jlpt-n5-0421": {
+        "meaning": "a little",
+        "notes": ["Stored meaning \"few\" contradicted the record's own example (少し疲れた, \"a bit tired\"); Kaishi 1.5k independently confirms \"a little\"."],
+    },
+    "v-jlpt-n5-0487": {
+        "meaning": "to really like; to love",
+        "notes": ["Stored meaning \"to be very likeable\" had the direction backwards (describes the subject's feeling, not the object's likeability); Kaishi 1.5k independently confirms \"love\"."],
+    },
+    "v-jlpt-n5-0575": {
+        "meaning": "half",
+        "notes": ["Stored meaning \"half minute\" was wrong; the record's own example (半分よこせ, \"give me half\") already showed it, confirmed independently by Kaishi 1.5k."],
+    },
 }
 
 # These are source-format defects, not automatic transformations. Each stable
