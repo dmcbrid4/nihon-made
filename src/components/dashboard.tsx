@@ -23,7 +23,6 @@ import {
 } from "@/lib/study/planner";
 import { useStudy } from "./study-provider";
 import { Loading } from "./loading";
-import { ProgressOverview } from "./progress-overview";
 import { KanaHome } from "./kana-home";
 
 const sections = [
@@ -251,7 +250,6 @@ export function Dashboard() {
           </div>
         </aside>
       </div>
-      <ProgressOverview />
     </>
   );
 }
