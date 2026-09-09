@@ -57,6 +57,13 @@
       "when": 1788810242533,
       "tag": "0007_add_per_mode_new_cards",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788922055129,
+      "tag": "0008_add_concept_flags",
+      "breakpoints": true
     }
   ]
 }

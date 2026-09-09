@@ -317,7 +317,10 @@ export class PostgresRepository implements StudyRepository {
             position,
           })),
         );
-      } else if (action.type === "markKanaKnown") {
+      } else if (
+        action.type === "markKanaKnown" ||
+        action.type === "markVocabularyKnown"
+      ) {
         const marked = next.progress.filter((item) =>
           action.conceptIds.includes(item.conceptId),
         );

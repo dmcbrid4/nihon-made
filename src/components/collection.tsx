@@ -1,72 +1,30 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Fragment } from "react";
+import Link from "next/link";
 import { ChevronDown, Search } from "lucide-react";
-import { concepts, typeLabels } from "@/lib/study/content";
-import {
-  commonalityLevels,
-  conceptTypes,
-  type Commonality,
-  type ConceptType,
-} from "@/lib/study/types";
+import { typeLabels } from "@/lib/study/content";
+import { commonalityLevels, conceptTypes } from "@/lib/study/types";
+import { useConceptFilters } from "@/lib/study/use-concept-filters";
 import { useStudy } from "./study-provider";
 import { FuriganaText } from "./furigana";
 import { Loading } from "./loading";
 
-function isConceptType(value: string | null): value is ConceptType {
-  return conceptTypes.includes(value as ConceptType);
-}
-
 export function CollectionView() {
   const { state } = useStudy();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const activeMode = state?.goal.studyMode ?? "N5";
-  const isKana = activeMode === "kana";
-  useEffect(() => {
-    // Kana's chart, not the vocabulary-shaped collection list, is its
-    // reference view -- redirect rather than show a list of blank cards.
-    if (isKana) router.replace("/kana?tab=chart");
-  }, [isKana, router]);
-  const initialType = searchParams.get("type");
-  const [filter, setFilter] = useState<ConceptType | "all">(
-    isConceptType(initialType) ? initialType : "all",
-  );
-  const [commonalityFilter, setCommonalityFilter] = useState<
-    Commonality | "all"
-  >("all");
-  const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  const {
+    activeMode,
+    isKana,
+    viewLevel,
+    filter,
+    setFilter,
+    commonalityFilter,
+    setCommonalityFilter,
+    search,
+    setSearch,
+    visible,
+  } = useConceptFilters();
   if (isKana) return <Loading />;
-  // A deep link (e.g. from the Progress page's kanji map, which spans both
-  // N5 and N4) can name a specific level to view -- that's a one-off lookup,
-  // not a request to switch the active study mode, so it only overrides
-  // filtering/display here.
-  const levelParam = searchParams.get("level");
-  const viewLevel =
-    levelParam === "N5" || levelParam === "N4" || levelParam === "tae-kim"
-      ? levelParam
-      : activeMode;
-  const visible = concepts
-    .filter(
-      (item) =>
-        (filter === "all" || item.type === filter) &&
-        item.level === viewLevel &&
-        (commonalityFilter === "all" ||
-          (item.type === "vocabulary" &&
-            item.commonality === commonalityFilter)) &&
-        [item.expression, item.reading, item.meaning, item.topic]
-          .join(" ")
-          .toLowerCase()
-          .includes(search.toLowerCase()),
-    )
-    .sort((a, b) => {
-      const rank = (item: (typeof concepts)[number]) =>
-        item.type !== "vocabulary"
-          ? 3
-          : commonalityLevels.indexOf(item.commonality ?? "additional");
-      return rank(a) - rank(b) || a.sequence - b.sequence;
-    });
   return (
     <>
       <div className="page-heading">
@@ -85,6 +43,14 @@ export function CollectionView() {
           {visible.length} {viewLevel} concepts
         </span>
       </div>
+      <p className="collection-links">
+        <Link href="/quick-sort" className="text-link">
+          Quick sort -- mark words you already know
+        </Link>
+        <Link href="/admin/browse" className="text-link">
+          Admin browse -- flip through every card
+        </Link>
+      </p>
       <div className="collection-toolbar">
         <div className="filter-tabs" role="group" aria-label="Filter concepts">
           <button

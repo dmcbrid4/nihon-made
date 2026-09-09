@@ -7,6 +7,7 @@ import { drizzle } from "drizzle-orm/pglite";
 import type { Database } from "../src/db/client";
 import * as schema from "../src/db/schema";
 import { PostgresRepository } from "../src/db/repository";
+import { createFlag, listFlags, resolveFlag } from "../src/db/flags";
 import { seedContent } from "../src/db/seed-content";
 import { concepts } from "../src/lib/study/content";
 
@@ -42,6 +43,9 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
     `);
     await client.exec(
       await readFile("drizzle/0007_add_per_mode_new_cards.sql", "utf8"),
+    );
+    await client.exec(
+      await readFile("drizzle/0008_add_concept_flags.sql", "utf8"),
     );
     // The driver differs, but Drizzle's PostgreSQL query and transaction APIs are shared.
     const db = drizzle(client, { schema }) as unknown as Database;
@@ -256,6 +260,49 @@ test("SQL migration, idempotent seeds, ratings, rollback, completion, and goals 
       1,
     );
     assert.deepEqual(await new PostgresRepository(db, userId).load(), paceDown);
+
+    const [n5Concept] = concepts.filter(
+      (concept) => concept.type === "vocabulary" && concept.level === "N5",
+    );
+    const knownState = await repository.dispatch({
+      type: "markVocabularyKnown",
+      conceptIds: [n5Concept.id],
+    });
+    const knownProgress = knownState.progress.find(
+      (item) => item.conceptId === n5Concept.id,
+    );
+    assert.equal(knownProgress?.status, "mastered");
+    assert.deepEqual(
+      await new PostgresRepository(db, userId).load(),
+      knownState,
+    );
+
+    const flagId = randomUUID();
+    const flag = await createFlag(db, userId, {
+      id: flagId,
+      conceptId: n5Concept.id,
+      note: "Gloss looks off.",
+    });
+    assert.equal(flag.conceptId, n5Concept.id);
+    assert.equal(flag.resolvedAt, null);
+    await assert.rejects(
+      createFlag(db, userId, {
+        id: randomUUID(),
+        conceptId: "not-a-real-concept",
+        note: "Should be rejected.",
+      }),
+    );
+    const openFlags = await listFlags(db, userId);
+    assert.equal(openFlags.length, 1);
+    assert.equal(openFlags[0].id, flagId);
+    const resolvedAt = new Date().toISOString();
+    const resolved = await resolveFlag(db, userId, flagId, resolvedAt);
+    assert.equal(resolved?.resolvedAt, resolvedAt);
+    assert.equal(
+      (await listFlags(db, userId)).find((item) => item.id === flagId)
+        ?.resolvedAt,
+      resolvedAt,
+    );
   } finally {
     await client.close();
   }

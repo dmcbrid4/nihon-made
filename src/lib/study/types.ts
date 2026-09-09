@@ -297,6 +297,13 @@ export const actionSchema = z.discriminatedUnion("type", [
     conceptIds: z.array(z.string().max(100)).min(1).max(500),
   }),
   z.object({
+    /** Quick Sort's "already know this" shortcut (quick-sort.tsx): the
+     * vocabulary equivalent of markKanaKnown, for a learner who already
+     * knows a word without having gone through real SRS review for it. */
+    type: z.literal("markVocabularyKnown"),
+    conceptIds: z.array(z.string().max(100)).min(1).max(500),
+  }),
+  z.object({
     /** One Kana Quiz mode answer (kana-quiz.tsx). Kana has no daily SRS
      * session -- this is a direct, immediate progress write, not tied to a
      * StudySession, since a quiz is a freely customized selection the

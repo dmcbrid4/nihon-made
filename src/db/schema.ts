@@ -203,3 +203,25 @@ export const reviews = pgTable(
     index("reviews_user_idx").on(table.userId, table.reviewedAt),
   ],
 );
+
+// Admin Browse's "flag this card" queue. Deliberately separate from a
+// concept's own review/approval metadata (which lives in the corpus JSON
+// and is edited via scripts/build-vocabulary-quality.py) -- a flag here is
+// just "a human spotted something while browsing, pending triage", not a
+// content edit. resolvedAt null means still open; no separate status enum.
+export const conceptFlags = pgTable(
+  "concept_flags",
+  {
+    id: uuid("id").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    conceptId: text("concept_id")
+      .notNull()
+      .references(() => studyConcepts.id),
+    note: text("note").notNull(),
+    createdAt: at("created_at").notNull(),
+    resolvedAt: at("resolved_at"),
+  },
+  (table) => [index("flags_open_idx").on(table.userId, table.resolvedAt)],
+);

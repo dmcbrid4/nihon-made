@@ -169,6 +169,61 @@
 .rating-area {
   margin-top: 22px;
 }
+.sort-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 22px;
+}
+.sort-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+}
+.flag-area {
+  margin-top: 14px;
+}
+.flag-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.flag-form textarea {
+  min-height: 70px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  font: inherit;
+  resize: vertical;
+}
+.flag-form button {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.open-flags {
+  margin-top: 22px;
+}
+.open-flags ul {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.open-flags li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
 .rating-area > p:first-child {
   text-align: center;
   font-size: 12px;

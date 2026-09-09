@@ -137,6 +137,36 @@ export function applyAction(
     };
   }
 
+  if (action.type === "markVocabularyKnown") {
+    const dueAt = new Date(now.getTime() + 30 * 86_400_000).toISOString();
+    const nowIso = now.toISOString();
+    const targetIds = new Set(
+      action.conceptIds.filter((id) => {
+        // Tae Kim vocabulary concepts also have type "vocabulary" but
+        // aren't part of the N5/N4 SRS queue Quick Sort triages.
+        const concept = conceptById.get(id);
+        return concept?.type === "vocabulary" && concept.level !== "tae-kim";
+      }),
+    );
+    if (!targetIds.size) return state;
+    const marked: ConceptProgress[] = [...targetIds].map((conceptId) => ({
+      conceptId,
+      status: "mastered",
+      reviewCount: 3,
+      successStreak: 3,
+      intervalDays: 30,
+      dueAt,
+      lastReviewedAt: nowIso,
+    }));
+    return {
+      ...state,
+      progress: [
+        ...state.progress.filter((item) => !targetIds.has(item.conceptId)),
+        ...marked,
+      ],
+    };
+  }
+
   if (action.type === "repeatSession") {
     const session = state.sessions.find((item) => item.id === action.sessionId);
     if (!session || !session.completedAt)

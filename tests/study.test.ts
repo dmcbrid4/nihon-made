@@ -499,3 +499,31 @@ test("all curriculum concepts have unique identities, teaching content, and trac
     false,
   );
 });
+
+test("markVocabularyKnown instantly masters a vocabulary concept, excluding tae-kim vocabulary and non-vocabulary ids", () => {
+  const [n5] = concepts.filter(
+    (concept) => concept.type === "vocabulary" && concept.level === "N5",
+  );
+  const [taeKimWord] = concepts.filter(
+    (concept) => concept.type === "vocabulary" && concept.level === "tae-kim",
+  );
+  const [kana] = concepts.filter((concept) => concept.level === "kana");
+  const state = applyAction(
+    initialState(),
+    {
+      type: "markVocabularyKnown",
+      conceptIds: [n5.id, taeKimWord.id, kana.id, "not-a-real-id"],
+    },
+    now,
+  );
+  assert.equal(state.progress.length, 1);
+  assert.equal(state.progress[0].conceptId, n5.id);
+  assert.equal(state.progress[0].status, "mastered");
+  // Re-marking known is idempotent, not additive.
+  const again = applyAction(
+    state,
+    { type: "markVocabularyKnown", conceptIds: [n5.id] },
+    now,
+  );
+  assert.equal(again.progress.length, 1);
+});
