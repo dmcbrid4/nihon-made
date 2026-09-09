@@ -649,6 +649,68 @@ OVERRIDES = {
         "meaning": "half",
         "notes": ["Stored meaning \"half minute\" was wrong; the record's own example (半分よこせ, \"give me half\") already showed it, confirmed independently by Kaishi 1.5k."],
     },
+    # Unanchored internal review of the 593 approved records the Kaishi
+    # cross-check above has no entry to compare against (no independent
+    # source corroborates these -- lower confidence than the corrections
+    # above, but each is either a plain internal contradiction (meaning vs.
+    # the record's own example/reading) or, for v-jlpt-n5-0160, content that
+    # needed removing regardless of methodology.
+    "v-jlpt-n4-0187": {
+        "meaning": "(one's own) wife",
+        "notes": ["Stored meaning \"housewife\" contradicted the record's own example (家内は医師です, \"my wife is a doctor\" -- not a housewife); 家内 is a humble term for one's own wife, not a description of her occupation."],
+    },
+    "v-jlpt-n5-0479": {
+        "meaning": "thick",
+        "notes": ["Stored meaning \"fat\" contradicted the record's own example (首が太い, \"a thick neck\"); 太い's core sense is \"thick\", not \"fat\" (that's 太った/太っている)."],
+    },
+    "v-jlpt-n4-0184": {
+        "reading": "くだる",
+        "expressionFurigana": [{"text": "下", "reading": "くだ"}, {"text": "る", "reading": None}],
+        "notes": ["Stored reading さがる was for a different word (下がる); the record's own example (坂を下ると, \"as the slope descends\") already correctly used くだる in its example furigana -- only the headword reading was wrong."],
+    },
+    "v-jlpt-n4-0387": {
+        "reading": "のぼる",
+        "expressionFurigana": [{"text": "上", "reading": "のぼ"}, {"text": "る", "reading": None}],
+        "notes": ["Stored reading あがる was for a different word (上がる); the record's own example (月は東から上る, \"the moon rises\") already correctly used のぼる in its example furigana -- only the headword reading was wrong."],
+    },
+    "v-jlpt-n5-0160": {
+        "example": "ほんとうに疲れた。", "exampleMeaning": "I'm really tired.",
+        "exampleFurigana": [
+            {"text": "ほんとう", "reading": None}, {"text": "に", "reading": None},
+            {"text": "疲", "reading": "つか"}, {"text": "れた。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Replaces a vulgar mistranslated example unsuitable for an N5 card."],
+    },
+    "v-jlpt-n4-0192": {
+        "example": "花見に行きましょう。", "exampleMeaning": "Let's go cherry-blossom viewing.",
+        "exampleFurigana": [
+            {"text": "花見", "reading": "はなみ"}, {"text": "に", "reading": None},
+            {"text": "行", "reading": "い"}, {"text": "きましょう。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Replaces an example that was actually お花・見て (\"look at the flower\"), a different parse of the same characters, and never demonstrated 花見 at all."],
+    },
+    "v-jlpt-n4-0195": {
+        "example": "明日、会議があります。", "exampleMeaning": "There's a meeting tomorrow.",
+        "exampleFurigana": [
+            {"text": "明日", "reading": "あした"}, {"text": "、", "reading": None},
+            {"text": "会議", "reading": "かいぎ"}, {"text": "が", "reading": None},
+            {"text": "あります。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Replaces an example that was a duplicate of v-jlpt-n4-0196's (会議室はどこですか) and demonstrated the compound 会議室, not the bare word 会議."],
+    },
+    "v-jlpt-n4-0446": {
+        "example": "庭に草があります。", "exampleMeaning": "There is grass in the garden.",
+        "exampleFurigana": [
+            {"text": "庭", "reading": "にわ"}, {"text": "に", "reading": None},
+            {"text": "草", "reading": "くさ"}, {"text": "が", "reading": None},
+            {"text": "あります。", "reading": None},
+        ],
+        "exampleKind": "editorial",
+        "notes": ["Replaces an internet-slang example (草 as netspeak for \"lol\") with one demonstrating the literal noun \"grass\" the record's meaning teaches."],
+    },
 }
 
 # These are source-format defects, not automatic transformations. Each stable

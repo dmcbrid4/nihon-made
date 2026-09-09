@@ -5,8 +5,11 @@
 > decisions; the [Phase 4 handoff](phase4-vocabulary-corrections.md) consolidates
 > correction priorities and release gates. A Kaishi 1.5k cross-check (see
 > "Kaishi 1.5k cross-check" below) has since manually reviewed all 546 exact
-> word+reading matches against the active corpus and corrected 6 records;
-> that is still short of full-corpus certification.
+> word+reading matches against the active corpus and corrected 6 records; an
+> unanchored internal review then covered the remaining 593 Kaishi-uncovered
+> records and corrected 8 more (see "Unanchored internal review" below). That
+> is still short of full-corpus certification -- the unanchored pass in
+> particular has no independent check on its own judgment.
 
 Phase 1 completed research/architecture. Phase 2 implemented structured source
 and review metadata, word/sentence ruby, validation, a review queue and retirement
@@ -402,9 +405,60 @@ conjunction それで at all -- it reads as an unrelated それ+できる; and
 v-jlpt-n5-0408 出す's example (口を出すな) teaches the idiom "to meddle" rather
 than 出す's own base sense. Leave both for the next example-authoring pass.
 
-The remaining 593 unmatched and ~460 non-flagged matched records were not
-individually re-verified against Kaishi to this depth; this pass raises
-confidence in, but does not certify, the records it actually reviewed.
+(Correction to the phrasing above at the time of the original pass: all 546
+exact matches, not just the ~99 a crude word-overlap heuristic flagged, were
+read individually -- もっとも, それで, and 出す were caught by that full read,
+not the heuristic. What the Kaishi cross-check could not reach at all is the
+593 records with no Kaishi entry to compare against; see "Unanchored internal
+review" below for that gap.)
+
+## Unanchored internal review of Kaishi-uncovered records (2026-09-08)
+
+The 593 approved records with no Kaishi match were read the same way, minus
+the independent corroboration: judged on internal consistency (does the
+meaning match the record's own example/reading) rather than agreement with a
+second source. Lower confidence per record than the Kaishi-anchored
+corrections above, precisely because nothing independent checks the reviewer
+here -- treat these as real but not independently verified.
+
+Eight records were corrected via the same `OVERRIDES` mechanism (and
+hand-applied to the active JSON for the same SOURCE_ROOT-availability reason
+as above):
+
+- v-jlpt-n4-0187 家内 ("housewife" → "(one's own) wife" -- contradicted its
+  own example, a working professional).
+- v-jlpt-n5-0479 太い ("fat" → "thick" -- contradicted its own example, 首が
+  太い "a thick neck").
+- v-jlpt-n4-0184 下る and v-jlpt-n4-0387 上る: both had the headword reading
+  of a *different* word (下がる's さがる and 上がる's あがる respectively).
+  In both cases the example's own furigana already had the correct reading
+  (くだる, のぼる) -- only the headword `reading`/`expressionFurigana` were
+  wrong, so no example change was needed.
+- v-jlpt-n5-0160 ほんとう: its example contained vulgar, mistranslated
+  content unsuitable for an N5 card at all, independent of any methodology
+  question. Replaced outright with an original sentence.
+- v-jlpt-n4-0192 花見: its example (あのお花見て) doesn't contain 花見 as a
+  word -- お花・見て ("look at the flower") is a different parse of the same
+  characters. Replaced.
+- v-jlpt-n4-0195 会議: its example was a verbatim duplicate of v-jlpt-n4-0196
+  会議室's, and demonstrated the compound 会議室, not the bare word. Replaced.
+- v-jlpt-n4-0446 草: its example used 草 as internet slang for "lol", not the
+  literal noun "grass" the record's meaning teaches. Replaced.
+
+The four example replacements required new `exampleFurigana`/`exampleReading`/
+`targetSpans`, hand-built and then checked against `validateVocabularyDataset()`
+(0 structural errors) rather than trusted blind. `docs/data-quality-report.md`
+was regenerated: the flagged-record queue dropped from 1353 to 1346, and
+repeated-example groups from 74 to 73 (the 会議/会議室 duplicate).
+
+This pass was not exhaustive line-editing of all 593 -- it flags what a
+careful read surfaced with reasonable confidence, not a certification that
+the rest are correct. A few borderline calls were noted but deliberately not
+auto-corrected for being too close to call without a second source: 盛ん's
+"popularity" gloss reads oddly for a na-adjective, and 代わり's example
+demonstrates the related verb 代わる's conjugated stem rather than the noun
+headword. Leave both for a future pass, ideally one with some form of
+independent check rather than another unanchored read.
 
 ## Remaining research limits
 

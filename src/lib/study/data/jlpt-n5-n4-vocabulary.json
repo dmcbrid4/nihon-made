@@ -21284,8 +21284,8 @@
       "meaning": "truth",
       "level": "N5",
       "partOfSpeech": "noun",
-      "example": "ほんとうに男らしくないよね。",
-      "exampleMeaning": "He really does have small dick energy.",
+      "example": "ほんとうに疲れた。",
+      "exampleMeaning": "I'm really tired.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -21311,31 +21311,15 @@
             "reading": null
           },
           {
-            "text": "男",
-            "reading": "おとこ"
+            "text": "疲",
+            "reading": "つか"
           },
           {
-            "text": "らしく",
-            "reading": null
-          },
-          {
-            "text": "ない",
-            "reading": null
-          },
-          {
-            "text": "よ",
-            "reading": null
-          },
-          {
-            "text": "ね",
-            "reading": null
-          },
-          {
-            "text": "。",
+            "text": "れた。",
             "reading": null
           }
         ],
-        "exampleReading": "ほんとうにおとこらしくないよね。",
+        "exampleReading": "ほんとうにつかれた。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [],
@@ -21386,7 +21370,7 @@
             "wordExact": false
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
@@ -21400,11 +21384,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "uncertain",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Replaces a vulgar mistranslated example unsuitable for an N5 card.",
             "Expression segmentation was generated from its stored reading and needs review.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -64356,7 +64341,7 @@
       "expression": "太い",
       "kanjiForm": "太い",
       "reading": "ふとい",
-      "meaning": "fat",
+      "meaning": "thick",
       "level": "N5",
       "partOfSpeech": "i-adjective",
       "example": "トムは首が太いんだ。",
@@ -64485,11 +64470,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"fat\" contradicted the record's own example (首が太い, \"a thick neck\"); 太い's core sense is \"thick\", not \"fat\" (that's 太った/太っている).",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -124477,7 +124463,7 @@
       "type": "vocabulary",
       "expression": "下る",
       "kanjiForm": "下る",
-      "reading": "さがる",
+      "reading": "くだる",
       "meaning": "to get down; to descend",
       "level": "N4",
       "partOfSpeech": "Godan verb",
@@ -124495,7 +124481,7 @@
         "expressionFurigana": [
           {
             "text": "下",
-            "reading": "さが"
+            "reading": "くだ"
           },
           {
             "text": "る",
@@ -124627,11 +124613,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored reading さがる was for a different word (下がる); the record's own example (坂を下ると, \"as the slope descends\") already correctly used くだる in its example furigana -- only the headword reading was wrong.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -124933,7 +124920,7 @@
       "expression": "家内",
       "kanjiForm": "家内",
       "reading": "かない",
-      "meaning": "housewife",
+      "meaning": "(one's own) wife",
       "level": "N4",
       "partOfSpeech": "noun",
       "example": "家内は医師です。",
@@ -125046,11 +125033,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored meaning \"housewife\" contradicted the record's own example (家内は医師です, \"my wife is a doctor\" -- not a housewife); 家内 is a humble term for one's own wife, not a description of her occupation.",
             "Matched a JMdict entry by form, but no sense's English gloss shares a word with the stored meaning; sense identity is unconfirmed.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
@@ -125595,8 +125583,8 @@
       "meaning": "cherry-blossom viewing",
       "level": "N4",
       "partOfSpeech": "suru verb",
-      "example": "あのお花見て。",
-      "exampleMeaning": "Look at those flowers.",
+      "example": "花見に行きましょう。",
+      "exampleMeaning": "Let's go cherry-blossom viewing.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -125618,27 +125606,23 @@
         ],
         "exampleFurigana": [
           {
-            "text": "あの",
-            "reading": null
-          },
-          {
-            "text": "お",
-            "reading": null
-          },
-          {
             "text": "花見",
             "reading": "はなみ"
           },
           {
-            "text": "て",
+            "text": "に",
             "reading": null
           },
           {
-            "text": "。",
+            "text": "行",
+            "reading": "い"
+          },
+          {
+            "text": "きましょう。",
             "reading": null
           }
         ],
-        "exampleReading": "あのおはなみて。",
+        "exampleReading": "はなみにいきましょう。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -125691,25 +125675,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 3,
-            "end": 5,
+            "start": 0,
+            "end": 2,
             "surface": "花見",
             "lemma": "花見",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Replaces an example that was actually お花・見て (\"look at the flower\"), a different parse of the same characters, and never demonstrated 花見 at all.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -126007,8 +125992,8 @@
       "meaning": "meeting",
       "level": "N4",
       "partOfSpeech": "suru verb",
-      "example": "会議室はどこ？",
-      "exampleMeaning": "Where is the meeting room?",
+      "example": "明日、会議があります。",
+      "exampleMeaning": "There's a meeting tomorrow.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -126030,27 +126015,27 @@
         ],
         "exampleFurigana": [
           {
+            "text": "明日",
+            "reading": "あした"
+          },
+          {
+            "text": "、",
+            "reading": null
+          },
+          {
             "text": "会議",
             "reading": "かいぎ"
           },
           {
-            "text": "室",
-            "reading": "しつ"
-          },
-          {
-            "text": "は",
+            "text": "が",
             "reading": null
           },
           {
-            "text": "どこ",
-            "reading": null
-          },
-          {
-            "text": "？",
+            "text": "あります。",
             "reading": null
           }
         ],
-        "exampleReading": "かいぎしつはどこ？",
+        "exampleReading": "あした、かいぎがあります。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -126103,25 +126088,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 0,
-            "end": 2,
+            "start": 3,
+            "end": 5,
             "surface": "会議",
             "lemma": "会議",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Replaces an example that was a duplicate of v-jlpt-n4-0196's (会議室はどこですか) and demonstrated the compound 会議室, not the bare word 会議.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -152787,7 +152773,7 @@
       "type": "vocabulary",
       "expression": "上る",
       "kanjiForm": "上る",
-      "reading": "あがる",
+      "reading": "のぼる",
       "meaning": "to rise",
       "level": "N4",
       "partOfSpeech": "Godan verb",
@@ -152805,7 +152791,7 @@
         "expressionFurigana": [
           {
             "text": "上",
-            "reading": "あが"
+            "reading": "のぼ"
           },
           {
             "text": "る",
@@ -152909,11 +152895,12 @@
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Stored reading あがる was for a different word (上がる); the record's own example (月は東から上る, \"the moon rises\") already correctly used のぼる in its example furigana -- only the headword reading was wrong.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },
@@ -161092,8 +161079,8 @@
       "meaning": "grass",
       "level": "N4",
       "partOfSpeech": "noun",
-      "example": "草草の草ァ！",
-      "exampleMeaning": "LOLOLOLOL!",
+      "example": "庭に草があります。",
+      "exampleMeaning": "There is grass in the garden.",
       "note": "Review the most useful meaning first, then say the example aloud.",
       "topic": "Core vocabulary",
       "sources": [
@@ -161111,11 +161098,11 @@
         ],
         "exampleFurigana": [
           {
-            "text": "草草",
-            "reading": "そうそう"
+            "text": "庭",
+            "reading": "にわ"
           },
           {
-            "text": "の",
+            "text": "に",
             "reading": null
           },
           {
@@ -161123,15 +161110,15 @@
             "reading": "くさ"
           },
           {
-            "text": "ァ",
+            "text": "が",
             "reading": null
           },
           {
-            "text": "！",
+            "text": "あります。",
             "reading": null
           }
         ],
-        "exampleReading": "そうそうのくさぁ！",
+        "exampleReading": "にわにくさがあります。",
         "secondaryMeanings": [],
         "itemKind": "word",
         "linkedKanji": [
@@ -161184,25 +161171,26 @@
             "wordExact": true
           },
           "example": {
-            "kind": "imported",
+            "kind": "editorial",
             "attribution": null
           }
         },
         "targetSpans": [
           {
-            "start": 3,
-            "end": 4,
+            "start": 2,
+            "end": 3,
             "surface": "草",
             "lemma": "草",
             "match": "exact"
           }
         ],
         "review": {
-          "lexical": "pending",
-          "example": "pending",
+          "lexical": "reviewed",
+          "example": "reviewed",
           "furigana": "automated",
-          "reviewer": null,
+          "reviewer": "phase4-agent",
           "notes": [
+            "Replaces an internet-slang example (草 as netspeak for \"lol\") with one demonstrating the literal noun \"grass\" the record's meaning teaches.",
             "Imported example has no recovered Tatoeba attribution; replace with an original sentence or recover its source before release."
           ]
         },

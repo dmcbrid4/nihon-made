@@ -1878,7 +1878,6 @@
     "approved": true,
     "approvalReasons": [],
     "issues": [
-      "v-jlpt-n5-0160: example requires editorial review",
       "v-jlpt-n5-0160: furigana segmentation is uncertain"
     ]
   },
@@ -5323,17 +5322,6 @@
     "approvalReasons": [],
     "issues": [
       "v-jlpt-n5-0478: example requires editorial review"
-    ]
-  },
-  {
-    "id": "v-jlpt-n5-0479",
-    "expression": "太い",
-    "reading": "ふとい",
-    "level": "N5",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n5-0479: example requires editorial review"
     ]
   },
   {
@@ -10333,17 +10321,6 @@
     ]
   },
   {
-    "id": "v-jlpt-n4-0184",
-    "expression": "下る",
-    "reading": "さがる",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0184: example requires editorial review"
-    ]
-  },
-  {
     "id": "v-jlpt-n4-0185",
     "expression": "下宿",
     "reading": "げしゅく",
@@ -10363,17 +10340,6 @@
     "approvalReasons": [],
     "issues": [
       "v-jlpt-n4-0186: example requires editorial review"
-    ]
-  },
-  {
-    "id": "v-jlpt-n4-0187",
-    "expression": "家内",
-    "reading": "かない",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0187: example requires editorial review"
     ]
   },
   {
@@ -10421,17 +10387,6 @@
     ]
   },
   {
-    "id": "v-jlpt-n4-0192",
-    "expression": "花見",
-    "reading": "はなみ",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0192: example requires editorial review"
-    ]
-  },
-  {
     "id": "v-jlpt-n4-0193",
     "expression": "課長",
     "reading": "かちょう",
@@ -10451,17 +10406,6 @@
     "approvalReasons": [],
     "issues": [
       "v-jlpt-n4-0194: example requires editorial review"
-    ]
-  },
-  {
-    "id": "v-jlpt-n4-0195",
-    "expression": "会議",
-    "reading": "かいぎ",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0195: example requires editorial review"
     ]
   },
   {
@@ -12552,17 +12496,6 @@
     ]
   },
   {
-    "id": "v-jlpt-n4-0387",
-    "expression": "上る",
-    "reading": "あがる",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0387: example requires editorial review"
-    ]
-  },
-  {
     "id": "v-jlpt-n4-0388",
     "expression": "乗り換える",
     "reading": "のりかえる",
@@ -13202,17 +13135,6 @@
     "approvalReasons": [],
     "issues": [
       "v-jlpt-n4-0445: example requires editorial review"
-    ]
-  },
-  {
-    "id": "v-jlpt-n4-0446",
-    "expression": "草",
-    "reading": "くさ",
-    "level": "N4",
-    "approved": true,
-    "approvalReasons": [],
-    "issues": [
-      "v-jlpt-n4-0446: example requires editorial review"
     ]
   },
   {
