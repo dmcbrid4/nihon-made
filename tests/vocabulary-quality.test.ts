@@ -519,3 +519,89 @@ test("an interrupted session can still complete when the missing card was quaran
     conceptById.set(secondId, secondConcept);
   }
 });
+
+test("completeRetired finishes a session where every card was reviewed but the auto-complete check never fired", () => {
+  // Regression for a real stuck production session: 12 items, 12 reviews,
+  // completedAt still null. The per-review auto-complete check
+  // (state.ts's "review" branch) compares reviewed.size+1 against
+  // activeConceptIds.length *computed fresh at that review's own dispatch*
+  // -- if a concept gets quarantined between two reviews in the same
+  // session, that denominator permanently shrinks while the numerator
+  // keeps climbing toward the original total, so they can never match
+  // again for the rest of the session, even once literally every card has
+  // a review. completeRetired must treat "nothing left unresolved" as
+  // trivially completable, not throw "still has an available card".
+  const [a, b, c] = concepts
+    .filter((item) => item.type === "vocabulary")
+    .slice(4, 7)
+    .map((item) => item.id);
+  const sessionId = randomUUID();
+  const state = initialState();
+  state.sessions = [
+    {
+      id: sessionId,
+      mode: "N4",
+      date: "2026-09-06",
+      conceptIds: [a, b, c],
+      startedAt: "2026-09-06T12:00:00.000Z",
+      completedAt: null,
+    },
+  ];
+  let next = applyAction(
+    state,
+    {
+      type: "review",
+      id: randomUUID(),
+      sessionId,
+      conceptId: a,
+      rating: "good",
+    },
+    new Date("2026-09-06T12:01:00.000Z"),
+  );
+  next = applyAction(
+    next,
+    {
+      type: "review",
+      id: randomUUID(),
+      sessionId,
+      conceptId: b,
+      rating: "good",
+    },
+    new Date("2026-09-06T12:02:00.000Z"),
+  );
+  assert.equal(next.sessions[0].completedAt, null);
+
+  // Quarantine the already-reviewed `a` between reviews, exactly like a
+  // curriculum-quality deploy landing mid-session in production.
+  const conceptA = conceptById.get(a);
+  assert.ok(conceptA);
+  conceptById.delete(a);
+  try {
+    next = applyAction(
+      next,
+      {
+        type: "review",
+        id: randomUUID(),
+        sessionId,
+        conceptId: c,
+        rating: "good",
+      },
+      new Date("2026-09-06T12:03:00.000Z"),
+    );
+    // Every card now has a review, but the shrunk activeConceptIds.length
+    // (2, since `a` dropped out) never matches reviewed.size+1 (3) again --
+    // completedAt stays null despite nothing being left to do.
+    assert.equal(next.reviews.length, 3);
+    assert.equal(next.sessions[0].completedAt, null);
+
+    const finished = applyAction(
+      next,
+      { type: "completeRetired", sessionId },
+      new Date("2026-09-07T09:00:00.000Z"),
+    );
+    assert.equal(finished.reviews.length, 3);
+    assert.equal(finished.sessions[0].completedAt, "2026-09-07T09:00:00.000Z");
+  } finally {
+    conceptById.set(a, conceptA);
+  }
+});

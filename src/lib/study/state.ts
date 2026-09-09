@@ -182,8 +182,14 @@ export function applyAction(
     // losing mechanical approval (see vocabulary-data.ts's approval gate)
     // without ever being added to that narrower, explicit-retirement set.
     // Match the same check the UI already uses to decide there's nothing
-    // left to review (see study-session.tsx's activeConceptIds).
-    if (!unresolved.length || unresolved.some((id) => conceptById.has(id)))
+    // left to review (see study-session.tsx's activeConceptIds). Note this
+    // is deliberately fine with unresolved.length === 0 (every card already
+    // has a review): the normal per-review auto-complete check compares
+    // against activeConceptIds.length at review time, which can shrink
+    // between two reviews in the same session as concepts get quarantined
+    // -- so a session can end up with every single card reviewed and
+    // completedAt still null. That's not a reason to refuse finishing it.
+    if (unresolved.some((id) => conceptById.has(id)))
       throw new Error("This session still has an available card.");
     return {
       ...state,
